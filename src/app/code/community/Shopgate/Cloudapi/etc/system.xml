@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <shopgate_cloudapi translate="label" module="shopgate_cloudapi">
+            <label>Shopgate Cloud</label>
+            <sort_order>2</sort_order>
+        </shopgate_cloudapi>
+    </tabs>
+    <sections>
+        <shopgate_cloudapi translate="label" module="shopgate_cloudapi">
+            <label>Configuration</label>
+            <tab>shopgate_cloudapi</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <authentication translate="label" module="shopgate_cloudapi">
+                    <label>Authentication</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>0</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <customer_number translate="label">
+                            <label>Customer number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number validate-length
+                                minimum-length-5
+                            </validate>
+                        </customer_number>
+                        <shop_number translate="label">
+                            <label>Shop number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>11</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-number validate-length
+                                minimum-length-5
+                            </validate>
+                        </shop_number>
+                        <api_key translate="label">
+                            <label>API key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-alphanum validate-length
+                                minimum-length-20 maximum-length-20
+                            </validate>
+                        </api_key>
+                    </fields>
+                </authentication>
+                <layout>
+                    <label>Layout</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <styles translate="comment tooltip">
+                            <backend_model>shopgate_cloudapi/system_config_source_validation_css</backend_model>
+                            <label>Shopgate App CSS</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Styles for App browser pages</comment>
+                            <tooltip>Example: .page-title { display: none }</tooltip>
+                        </styles>
+                    </fields>
+                </layout>
+            </groups>
+        </shopgate_cloudapi>
+    </sections>
+</config>

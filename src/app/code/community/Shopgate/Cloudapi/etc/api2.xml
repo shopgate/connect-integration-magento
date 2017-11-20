@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<config>
+    <api2>
+        <resource_groups>
+            <shopgate_cloudapi translate="title" module="Shopgate_Cloudapi">
+                <title>Shopgate Cloud API</title>
+                <sort_order>10</sort_order>
+                <children>
+                    <shopgate_cloudapi_v2_auth translate="title" module="Shopgate_Cloudapi">
+                        <title>Auth</title>
+                        <sort_order>10</sort_order>
+                        <children>
+                            <shopgate_cloudapi_v2_auth_token translate="title" module="Shopgate_Cloudapi">
+                                <title>Token</title>
+                                <sort_order>10</sort_order>
+                            </shopgate_cloudapi_v2_auth_token>
+                        </children>
+                    </shopgate_cloudapi_v2_auth>
+                    <shopgate_cloudapi_v2_carts translate="title" module="Shopgate_Cloudapi">
+                        <title>Cart</title>
+                        <sort_order>20</sort_order>
+                        <children>
+                            <shopgate_cloudapi_v2_carts_items translate="title" module="Shopgate_Cloudapi">
+                                <title>Cart Items</title>
+                                <sort_order>10</sort_order>
+                            </shopgate_cloudapi_v2_carts_items>
+                            <shopgate_cloudapi_v2_carts_url translate="title" module="Shopgate_Cloudapi">
+                                <title>Url</title>
+                                <sort_order>20</sort_order>
+                            </shopgate_cloudapi_v2_carts_url>
+                            <shopgate_cloudapi_v2_carts_customer translate="title" module="Shopgate_Cloudapi">
+                                <title>Customer</title>
+                                <sort_order>30</sort_order>
+                            </shopgate_cloudapi_v2_carts_customer>
+                        </children>
+                    </shopgate_cloudapi_v2_carts>
+                    <shopgate_cloudapi_v2_products>
+                        <title>Products</title>
+                        <sort_order>30</sort_order>
+                    </shopgate_cloudapi_v2_products>
+                </children>
+            </shopgate_cloudapi>
+        </resource_groups>
+        <resources>
+            <shopgate_cloudapi_v2_auth_token translate="title" module="Shopgate_Cloudapi">
+                <group>shopgate_cloudapi_v2_auth_token</group>
+                <model>shopgate_cloudapi/api2_auth_token</model>
+                <working_model>customer/customer</working_model>
+                <title>Create for REST session</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <guest>
+                        <create>1</create>
+                    </guest>
+                </privileges>
+                <attributes translate="type user password" module="Shopgate_Cloudapi">
+                    <type>Type</type>
+                    <email>User</email>
+                    <password>Password</password>
+                </attributes>
+                <force_attributes>
+                    <guest>
+                        <email>User</email>
+                        <password>Password</password>
+                        <grant_type>Grant Type</grant_type>
+                    </guest>
+                </force_attributes>
+                <routes>
+                    <route_v2_auth_token>
+                        <route>/v2/auth/token</route>
+                        <action_type>collection</action_type>
+                    </route_v2_auth_token>
+                </routes>
+                <versions>2</versions><!-- Should be comma delimited when we produce version 3, e.g. 2,3 -->
+            </shopgate_cloudapi_v2_auth_token>
+            <shopgate_cloudapi_v2_carts>
+                <group>shopgate_cloudapi_v2_carts</group>
+                <model>shopgate_cloudapi/api2_carts</model>
+                <working_model>checkout/cart</working_model>
+                <title>User cart</title>
+                <sort_order>30</sort_order>
+                <privileges>
+                    <!-- The Guest users uses admin privileges to get things done -->
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <customer>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                    </customer>
+                </privileges>
+                <routes>
+                    <route_v2_carts>
+                        <route>/v2/carts</route>
+                        <action_type>collection</action_type>
+                    </route_v2_carts>
+                    <route_v2_carts_id>
+                        <route>/v2/carts/:cartId</route>
+                        <action_type>entity</action_type>
+                    </route_v2_carts_id>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_carts>
+            <shopgate_cloudapi_v2_carts_items>
+                <group>shopgate_cloudapi_v2_carts_items</group>
+                <model>shopgate_cloudapi/api2_carts_items</model>
+                <title>Item manipulation</title>
+                <sort_order>40</sort_order>
+                <privileges>
+                    <customer>
+                        <create>1</create>
+                        <delete>1</delete>
+                    </customer>
+                    <admin>
+                        <create>1</create>
+                        <delete>1</delete>
+                    </admin>
+                </privileges>
+                <force_attributes>
+                    <admin>
+                        <product>Product Data</product>
+                        <coupon>Coupon Data</coupon>
+                        <cartItemId>Cart Item ID to update</cartItemId>
+                        <cartItemIds>Cart item IDs to delete inside the cart</cartItemIds>
+                    </admin>
+                    <customer>
+                        <product>Product Data</product>
+                        <coupon>Coupon Data</coupon>
+                        <cartItemId>Cart Item ID to update</cartItemId>
+                        <cartItemIds>Cart item IDs to delete inside the cart</cartItemIds>
+                    </customer>
+                </force_attributes>
+                <routes>
+                    <route_v2_carts_id_items>
+                        <route>/v2/carts/:cartId/items</route>
+                        <action_type>collection</action_type>
+                    </route_v2_carts_id_items>
+                    <route_v2_carts_id_items_id>
+                        <route>/v2/carts/:cartId/items/:itemId</route>
+                        <action_type>collection</action_type>
+                    </route_v2_carts_id_items_id>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_carts_items>
+            <shopgate_cloudapi_v2_carts_url>
+                <group>shopgate_cloudapi_v2_carts_url</group>
+                <model>shopgate_cloudapi/api2_carts_url</model>
+                <title>Checkout</title>
+                <sort_order>50</sort_order>
+                <privileges>
+                    <customer>
+                        <create>1</create>
+                    </customer>
+                    <admin>
+                        <create>1</create>
+                    </admin>
+                </privileges>
+                <routes>
+                    <route_v2_carts_id_checkout_url>
+                        <route>/v2/carts/:cartId/checkoutUrl</route>
+                        <action_type>collection</action_type>
+                    </route_v2_carts_id_checkout_url>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_carts_url>
+            <shopgate_cloudapi_v2_carts_customer>
+                <group>shopgate_cloudapi_v2_carts_customer</group>
+                <model>shopgate_cloudapi/api2_carts_customer</model>
+                <title>Cart Merge</title>
+                <sort_order>60</sort_order>
+                <privileges>
+                    <customer>
+                        <create>1</create>
+                    </customer>
+                </privileges>
+                <routes>
+                    <route_v2_carts_id_customer>
+                        <route>/v2/carts/:cartId/customer</route>
+                        <action_type>collection</action_type>
+                    </route_v2_carts_id_customer>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_carts_customer>
+            <shopgate_cloudapi_v2_products>
+                <group>shopgate_cloudapi_v2_products</group>
+                <model>shopgate_cloudapi/api2_products</model>
+                <title>Product retrieval</title>
+                <sort_order>70</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                </privileges>
+                <routes>
+                    <route_v2_products>
+                        <route>/v2/products</route>
+                        <action_type>collection</action_type>
+                    </route_v2_products>
+                    <route_v2_products_id>
+                        <route>/v2/products/:id</route>
+                        <action_type>entity</action_type>
+                    </route_v2_products_id>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_products>
+        </resources>
+    </api2>
+</config>

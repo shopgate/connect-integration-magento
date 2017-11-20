@@ -1,0 +1,15 @@
+{
+  "name": "shopgate/cloud-integration-magento",
+  "description": "Magento 1.X plugin for Shopgate Cloud",
+  "homepage": "https://github.com/shopgate/cloud-integration-magento",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Shopgate",
+      "email": "interfaces@shopgate.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.9"
+  }
+}

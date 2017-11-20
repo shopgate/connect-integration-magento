@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Shopgate_Cloudapi>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Api2 />
+            </depends>
+        </Shopgate_Cloudapi>
+    </modules>
+</config>

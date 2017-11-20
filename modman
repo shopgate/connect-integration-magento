@@ -1,0 +1,6 @@
+src/app/code/community/Shopgate/*                               app/code/community/Shopgate
+src/app/design/frontend/base/default/layout/shopgate/*          app/design/frontend/base/default/layout/shopgate
+src/app/design/frontend/base/default/template/shopgate/*        app/design/frontend/base/default/template/shopgate
+src/app/etc/modules/Shopgate_*.xml                              app/etc/modules
+src/app/locale/de_DE/*                                          app/locale/de_DE
+src/lib/Shopgate/*                                              lib/Shopgate
