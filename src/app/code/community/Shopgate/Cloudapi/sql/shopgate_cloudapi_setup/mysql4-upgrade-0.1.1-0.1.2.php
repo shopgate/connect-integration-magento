@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `{$this->getTable('shopgate_order_sources')}` (
  `order_id` int(11) NOT NULL,
  `source` ENUM ('webcheckout'),
  PRIMARY KEY (`entity_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ");
 
 $installer->endSetup();
