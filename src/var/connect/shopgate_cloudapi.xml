@@ -1,0 +1,115 @@
+<_>
+   <form_key>G2cH1onoboNyPyl3</form_key>
+   <name>shopgate_cloudapi</name>
+   <channel>community</channel>
+   <version_ids>
+      <version_ids>2</version_ids>
+   </version_ids>
+   <summary>Magento 1.X plugin for Shopgate Cloud</summary>
+   <description>The Shopgate Cloud integration for Magento enables you to utilize the Shopgate API endpoints to connect to via the App.</description>
+   <license>Apache License</license>
+   <license_uri>https://github.com/shopgate/cloud-integration-magento/blob/master/LICENSE</license_uri>
+   <version>3.0.0</version>
+   <stability>stable</stability>
+   <notes>Shopgate Cloudapi Module</notes>
+   <authors>
+      <name>
+         <name>Alexander Wesselburg</name>
+         <name>André Kraus</name>
+         <name>Konstantin Kiritsenko</name>
+      </name>
+      <user>
+         <user>Shopgate</user>
+         <user>Shopgate</user>
+         <user>Shopgate</user>
+      </user>
+      <email>
+         <email>alexander.wesselburg@shopgate.com</email>
+         <email>andre.kraus@shopgate.com</email>
+         <email>konstantin@kiritsenko.com</email>
+      </email>
+   </authors>
+   <depends_php_min>5.3.9</depends_php_min>
+   <depends_php_max>7.0.2</depends_php_max>
+   <depends>
+      <package>
+         <name>
+            <name/>
+         </name>
+         <channel>
+            <channel/>
+         </channel>
+         <min>
+            <min/>
+         </min>
+         <max>
+            <max/>
+         </max>
+         <files>
+            <files>  </files>
+         </files>
+      </package>
+      <extension>
+         <name>
+            <name>Core</name>
+         </name>
+         <min>
+            <min/>
+         </min>
+         <max>
+            <max/>
+         </max>
+      </extension>
+   </depends>
+   <contents>
+      <target>
+         <target>magelocal</target>
+         <target>magecommunity</target>
+         <target>mageetc</target>
+         <target>magelocale</target>
+         <target>magedesign</target>
+         <target>magedesign</target>
+         <target>magelib</target>
+      </target>
+      <path>
+         <path/>
+         <path>Shopgate/Cloudapi</path>
+         <path>modules/Shopgate_Cloudapi.xml</path>
+         <path>de_DE/Shopgate_Cloudapi.csv</path>
+         <path>frontend/base/default/layout/shopgate/cloudapi</path>
+         <path>frontend/base/default/template/shopgate/cloudapi</path>
+         <path>Shopgate</path>
+      </path>
+      <type>
+         <type>file</type>
+         <type>dir</type>
+         <type>file</type>
+         <type>file</type>
+         <type>dir</type>
+         <type>dir</type>
+         <type>dir</type>
+      </type>
+      <include>
+         <include/>
+         <include/>
+         <include/>
+         <include/>
+         <include/>
+         <include/>
+         <include/>
+      </include>
+      <ignore>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+         <ignore/>
+      </ignore>
+   </contents>
+   <page>1</page>
+   <limit>200</limit>
+   <folder/>
+   <package/>
+</_>
