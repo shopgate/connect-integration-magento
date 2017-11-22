@@ -10,9 +10,10 @@ jobs:
   include:
   - stage: deploy
     php: 5.6
-    before_script: skip
+    before_script:
+      - sudo apt-get install xmlstarlet
     script:
-    - if [[ "$TRAVIS_TAG" ]]; then ./release/build_release_package.sh ; fi
+      - if [[ "$TRAVIS_TAG" ]]; then ./release/build_release_package.sh ; fi
     deploy:
       provider: releases
       api_key: ${GITHUB_TOKEN}
