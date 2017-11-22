@@ -35,6 +35,10 @@ try {
 }
 $extension = Mage::getModel('connect/extension');
 $extension->setData($data);
+if (isset($argv[1])) {
+    echo 'Received version: ' . $argv[1];
+    $extension->setData('version', ltrim($argv[1], 'v'));
+}
 
 echo "Create Package pear...\n";
 $extension->createPackageV1x();
@@ -63,6 +67,7 @@ if (empty($shopgateModuleName)) {
 }
 
 echo 'Shopgate Module: ' . $shopgateModuleName . " is moved\n";
-rename('./var/connect/' . $shopgateModuleName, './../../cloud-integration-magento.tgz');
+$travisFile = "./../../cloud-integration-magento-v{$extension->getData('version')}.tgz";
+rename('./var/connect/' . $shopgateModuleName, $travisFile);
 
 echo "done!\n";

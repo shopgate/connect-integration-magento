@@ -7,13 +7,13 @@ rm -rf vendor
 
 composer install -vvv --no-dev
 
-wget -O release/magento1702.zip http://files.shopgate.com/magento/magento1702.zip
-unzip release/magento1702.zip -d release/magento
+wget -O release/magento1702.zip http://files.shopgate.com/magento/magento1702.zip > /dev/null
+unzip release/magento1702.zip -d release/magento > /dev/null
 
-rsync -av src/ release/magento
+rsync -av src/ release/magento > /dev/null
 rsync -av CHANGELOG.md release/magento/app/code/community/Shopgate/Cloudapi/CHANGELOG.md
 rsync -av release/magento_package.php release/magento/magento_package.php
 
 cd release/magento/
 chmod -R 777 var
-php magento_package.php
+php magento_package.php ${TRAVIS_TAG}

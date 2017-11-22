@@ -9,15 +9,14 @@ before_script:
 jobs:
   include:
   - stage: deploy
-    php: 5.3.9
+    php: 5.6
     before_script: skip
     script:
     - if [[ "$TRAVIS_TAG" ]]; then ./release/build_release_package.sh ; fi
     deploy:
       provider: releases
-      api_key:
-        secure: Dxce85SFmFc0zSO3GxdS3iK/g4L0dWivScfsgw9pwDJpTJT/XbQPP/cylSbufFgGfpzEm8LTwpShCLigJ2Dv37b/fmP/O5JVVoIJGk8+vqYQSEorkEOeKUCUDHTyZQZcZoxf3gw9qE+0x5rWhMx1qJ1y6CQO5g9aZlmTMUm20Fw9F2kVG8Ged1roxccVjRi8mbwz34K/uEnDzv+F7HI/QUaBFaBJ2uoCyRI5OxR8s7B/uBCsdKfLpriCI7k4UTW2FAIjoXTJJyMby6doZlematZbaOHFTFSVbV38fPcJwt1b8rv5VwMSy6NOvIJxvZEiHxlH8MdBZsXjOjzYrWdvkAQK5HYIkH5xPUy7MVtCEZDe0hpkGtvNi9aH/KV7grVnWPGVFV2kQTKSifiRNNUgn2ORbnXBeLJ5DsKUeauHqOAUsODeW0oubyGaqLYXo43epHULBw1CEiv6D2w/yytf9KmlEHTgLArIF47EQ85OiI864TaFbr3fcX1k+Vx9nCN8WlZAtwyUZxfnw1UUIt/n3u1ACNM3UKMOZevcPqhMVR3S0D02BpqfqmyZxgUY9uVHYyzG7GXe6UY6TfXVc20QUSlmqMX3U9Ags0KATaeJhI/dtZni0Z7tqZnyxhhilVvKhDf8eahNSI7oCavH6bM/FIIvBntGHsdUExokSNUteLE=
-      file: cloud-integration-magento.tgz
+      api_key: ${GITHUB_TOKEN}
+      file: cloud-integration-magento-${TRAVIS_TAG}.tgz
       skip_cleanup: true
       on:
         tags: true
