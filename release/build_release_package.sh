@@ -1,8 +1,6 @@
 #!/bin/sh
 
-# Strip "v" from tag -> v1.0.0
-VERSION=${TRAVIS_TAG#?}
-rm -f cloud-integration-magento-v${VERSION}.tgz
+rm -f cloud-integration-magento-*.tgz
 rm -f release/magento1702.zip
 rm -rf release/magento
 rm -rf vendor
@@ -10,8 +8,8 @@ rm -rf vendor
 composer install -vvv --no-dev
 
 # Modify version in magento files just in case it was forgotten
-xmlstarlet edit -L -S -O -u "/_/version" -v "$VERSION" src/var/connect/shopgate_cloudapi.xml
-xmlstarlet edit -L -S -u "/config/modules/Shopgate_Cloudapi/version" -v "$VERSION" src/app/code/community/Shopgate/Cloudapi/etc/config.xml
+xmlstarlet edit -L -S -O -u "/_/version" -v "${TRAVIS_TAG}" src/var/connect/shopgate_cloudapi.xml
+xmlstarlet edit -L -S -u "/config/modules/Shopgate_Cloudapi/version" -v "${TRAVIS_TAG}" src/app/code/community/Shopgate/Cloudapi/etc/config.xml
 
 # Install magento to create package
 wget --quiet -O release/magento1702.zip http://files.shopgate.com/magento/magento1702.zip > /dev/null
