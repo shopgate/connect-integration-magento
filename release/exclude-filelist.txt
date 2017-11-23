@@ -6,4 +6,4 @@
 .travis.yml
 build_release_package.sh
 release/
-cloud-integration-magento.tgz
+cloud-integration-magento-*.tgz
