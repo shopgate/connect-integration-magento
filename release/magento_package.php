@@ -63,7 +63,7 @@ if (empty($shopgateModuleName)) {
 }
 
 echo 'Shopgate Module: ' . $shopgateModuleName . " is moved\n";
-$travisFile = "./../../cloud-integration-magento-v{$extension->getData('version')}.tgz";
+$travisFile = "./../../cloud-integration-magento-{$extension->getData('version')}.tgz";
 rename('./var/connect/' . $shopgateModuleName, $travisFile);
 
 echo "done!\n";
