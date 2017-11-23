@@ -34,7 +34,13 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
         $session = Mage::getSingleton('checkout/session');
 
         if ($session->getData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT)) {
-            $order = $observer->getEvent()->getOrder();
+            if (!Mage::registry('prevent_observer')) {
+                $order = $observer->getEvent()->getOrder();
+                /** @var Shopgate_Cloudapi_Model_Order_Source $orderSourceModel */
+                $orderSourceModel = Mage::getModel('shopgate_cloudapi/order_source');
+                $orderSourceModel->addForWebCheckout($order->getId());
+                Mage::register('prevent_observer', true);
+            }
         }
     }
 }
