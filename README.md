@@ -1,6 +1,7 @@
 # Shopgate Cloud Integration Magento
 
 [![GitHub license](http://dmlc.github.io/img/apache2.svg)](LICENSE.md)
+[![Build Status](https://travis-ci.org/shopgate/cloud-integration-magento.svg?branch=master)](https://travis-ci.org/shopgate/cloud-integration-magento)
 
 The Shopgate Cloud integration for Magento enables you to utilize the Shopgate API endpoints to connect to via the App.
 
