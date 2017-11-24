@@ -24,8 +24,6 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     /**
      * Checks if the order is received from Shopgate API call.
      *
-     * @todo-sg: send the order to the pipeline for tracking
-     *
      * @param Varien_Event_Observer $observer
      */
     public function execute(Varien_Event_Observer $observer)
@@ -33,6 +31,18 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
         $session = Mage::getSingleton('checkout/session');
 
         if ($session->getData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT)) {
+            $orderIds = $observer->getEvent()->getOrderIds();
+            if (isset($orderIds[0])) {
+                $newOrderId = $orderIds[0];
+                $layout     = Mage::app()->getLayout();
+                /** @var Shopgate_Cloudapi_Block_Broadcast $broadcastBlock */
+                $broadcastBlock = $layout->createBlock('shopgate_cloudapi/broadcast');
+                $broadcastBlock->setEvent(Shopgate_Cloudapi_Block_Broadcast::BROADCAST_EVENT_CHECKOUT_FINISHED);
+                $broadcastBlock->setParameters(sprintf('"%s", %s', "orderId", $newOrderId));
+                $broadcastBlock->setTemplate('shopgate/cloudapi/broadcast.phtml');
+                $layout->getBlock('head')->addJs('shopgate/broadcast.js');
+                $layout->getBlock('head')->append($broadcastBlock);
+            }
             $session->unsetData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT);
         }
     }
