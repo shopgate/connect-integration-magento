@@ -4,6 +4,9 @@ language: php
 
 services:
   - mysql
+cache:
+  directories:
+  - ${WEB_PATH}/${MAGE_FOLDER1}
 
 jobs:
   include:
@@ -33,7 +36,13 @@ jobs:
       - wget --quiet https://files.magerun.net/n98-magerun.phar
       - chmod +x ./n98-magerun.phar
       - sudo mv ./n98-magerun.phar /usr/local/bin/n98
+      - sudo mkdir -p /usr/local/share/n98-magerun/scripts
+      - sudo cp -a ./release/postman/n98-scripts/. /usr/local/share/n98-magerun/scripts/
+      - sudo chown -R travis:travis /usr/local/share/n98-magerun
+      - sudo chmod +x /usr/local/share/n98-magerun/scripts/*.magerun
       #todo-sg: install newman
+    env:
+      - MAGE_FOLDER1="mage1702"
     script:
       - chmod +x ./release/postman/magento_setup.sh
       - ./release/postman/magento_setup.sh
@@ -61,4 +70,10 @@ notifications:
     on_failure: always
 
 env:
-  WEB_PATH="/var/www"
+  global:
+    WEB_PATH="/var/www"
+    CFG_API_CUSTOMER_NUMBER="11223344"
+    CFG_API_SHOP_NUMBER="12345"
+    CFG_API_KEY="11111111111111111111"
+    USER1_EMAIL="konstantin.kiritsenko+1@shopgate.com"
+    USER_PASS="test123"

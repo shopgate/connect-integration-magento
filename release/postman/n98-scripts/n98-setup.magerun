@@ -1,0 +1,18 @@
+#!/usr/bin/env magento installation script
+
+install --dbHost="127.0.0.1" --dbUser="root" --dbPass="" --dbName="${folder}" --installSampleData=yes --useDefaultConfigParams=yes --magentoVersionByName="magento-mirror-1.7.0.2" --installationFolder="${folder}" --baseUrl="http://127.0.0.1/${folder}/" --no-interaction "${no_download}"
+# in magento folder right now
+
+config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/customer_number" ${customer_number}
+config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/shop_number" ${shop_number}
+config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/api_key" ${api_key}
+
+# creates in General group by default, no good way to set up without using php scripts
+customer:create ${user1_email} ${user_pass} "Test1" "Mock1" "1"
+
+# add cloud api plugin to magento structure
+! rsync -a ${TRAVIS_BUILD_DIR}/src/ ${WEB_PATH}/${folder} > /dev/null
+
+# flush cache and get out of folder to preserve state
+cache:clean
+! cd ..

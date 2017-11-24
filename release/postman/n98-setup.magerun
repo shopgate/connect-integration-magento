@@ -1,4 +1,0 @@
-#!/usr/bin/env n98-magerun.phar script
-
-! echo 'hello checking travis variables:'
-! echo ${TRAVIS_BRANCH}

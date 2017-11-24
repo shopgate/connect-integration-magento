@@ -79,6 +79,13 @@
                     <frontName>shopgate-checkout</frontName>
                 </args>
             </shopgate_cloudapi_checkout_redirect>
+            <shopgate><!-- todo-konstantin: dependency on framework forgotten -->
+                <use>standard</use>
+                <args>
+                    <module>Shopgate_Cloudapi</module>
+                    <frontName>shopgate</frontName>
+                </args>
+            </shopgate>
         </routers>
         <events>
             <checkout_onepage_controller_success_action>
