@@ -2,25 +2,56 @@ dist: precise
 sudo: false
 language: php
 
-before_script:
-- phpenv config-rm xdebug.ini || return 0
-- composer install
+services:
+  - mysql
 
 jobs:
   include:
-  - stage: deploy
-    php: 5.6
+  - stage: Testing Postman
+    php: 5.4
     before_script:
-      - sudo apt-get install xmlstarlet
+      - phpenv config-rm xdebug.ini || return 0
+      - sudo apt-get update
+      - sudo apt-get install apache2 libapache2-mod-fastcgi
+      # enable php-fpm
+      - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+      #- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv
+       #version-name)/etc/php-fpm.d/www.conf
+      - sudo a2enmod rewrite actions fastcgi alias
+      - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+      - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
+      - sudo chown -R travis:travis /var/lib/apache2/fastcgi
+      - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+      # configure apache virtual hosts
+      - sudo cp -f ./release/postman/travis-ci-apache /etc/apache2/sites-available/default
+      #- sudo sed -e "s?%TRAVIS_BUILD_DIR%?${WEB_PATH}?g" --in-place /etc/apache2/sites-available/default
+      - sudo chown -R travis:travis ${WEB_PATH}
+      - sudo chmod 750 ${WEB_PATH}
+      - sudo chown -R travis:travis /var/lock/apache2/
+      - sudo service apache2 restart
+      # environment related
+      - wget --quiet https://files.magerun.net/n98-magerun.phar
+      - chmod +x ./n98-magerun.phar
+      - sudo mv ./n98-magerun.phar /usr/local/bin/n98
+      #todo-sg: install newman
     script:
-      - if [[ "$TRAVIS_TAG" ]]; then ./release/build_release_package.sh ; fi
-    deploy:
-      provider: releases
-      api_key: ${GITHUB_TOKEN}
-      file: cloud-integration-magento-${TRAVIS_TAG}.tgz
-      skip_cleanup: true
-      on:
-        tags: true
+      - chmod +x ./release/postman/magento_setup.sh
+      - ./release/postman/magento_setup.sh
+      - sudo less -FX /var/log/apache2/error.log #todo-sg: remove error check after done
+
+#  - stage: deploy
+#    php: 5.6
+#    before_script:
+#      - sudo apt-get install xmlstarlet
+#    script:
+#      - if [[ "$TRAVIS_TAG" ]]; then ./release/build_release_package.sh ; fi
+#    deploy:
+#      provider: releases
+#      api_key: ${GITHUB_TOKEN}
+#      file: cloud-integration-magento-${TRAVIS_TAG}.tgz
+#      skip_cleanup: true
+#      on:
+#        tags: true
 
 notifications:
   slack:
@@ -28,3 +59,6 @@ notifications:
       secure: y40pECJxcziSDPLqL/xjAUYR2wcgEYK8lLAh+qGrwwnQd19PVqZzcht0LfPiFC0HHO+lULvzwBZe1iMLLt91h2IDKvtkXHrwPIOr5RJiciPifKnhA/QK28Xc2XEfrooL4IPsf+eTSyB3Y6EmSqnSOPiIhOXW8YogzgNvfUbFnsUKReX3z1F+vfvy2vZ4einL1E5Qkyclk89apvans+0bFvnJHrlfw+6rXsrGLhkjr2f2GopmAA6sHOZqBTvwCEKbtxYfWB3gZl9LMfdWjUJv1VhX3CsieQKPGdzIagZY3GLX3pFX8vk08/8k4ystmmHWetvceKQBfrdZ/NcT25lqtKPtL6Wus4gVcKqhmVXyqElGNirrLK0CeuZ2lGbgkt1h2YDUYhbs0lPu4hv2LfP6wj5Ct3fvfiYCBiGPO5Ql9hGNFUNJJjkmtiaolqbHZ1XbD5ODftMMGUsIZWKnXe97gizbofHEvjIxfcbG+npQZ3yunaMwOzQhfV/Gay4enR08Rq67k2g1A0kCdY/G6hb5kKP5gfvXlp75cqaVeW2p1zbx8nhTYlU84YAHtxm2bMWPXrn/Gesc3jZZzWjGV01YO7qnhn54s5DeSePQIWLNzymxghJ+vCbju0GAmznUJrjwjylRaRpm+yQbkS5RaFaA94hdTLT5PzqjC2H8uVuYAOU=
     on_success: change
     on_failure: always
+
+env:
+  WEB_PATH="/var/www"
