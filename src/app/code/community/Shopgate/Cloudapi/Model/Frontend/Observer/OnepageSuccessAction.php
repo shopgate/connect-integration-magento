@@ -35,13 +35,20 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
             if (isset($orderIds[0])) {
                 $newOrderId = $orderIds[0];
                 $layout     = Mage::app()->getLayout();
-                /** @var Shopgate_Cloudapi_Block_Broadcast $broadcastBlock */
-                $broadcastBlock = $layout->createBlock('shopgate_cloudapi/broadcast');
-                $broadcastBlock->setEvent(Shopgate_Cloudapi_Block_Broadcast::BROADCAST_EVENT_CHECKOUT_FINISHED);
-                $broadcastBlock->setParameters(sprintf('"%s", %s', "orderId", $newOrderId));
-                $broadcastBlock->setTemplate('shopgate/cloudapi/broadcast.phtml');
-                $layout->getBlock('head')->addJs('shopgate/broadcast.js');
-                $layout->getBlock('head')->append($broadcastBlock);
+                /** @var Shopgate_Cloudapi_Block_PipelineRequest $pipelineRequestBlock */
+                $pipelineRequestBlock = $layout->createBlock('shopgate_cloudapi/pipelineRequest');
+                $pipelineRequestBlock->addMethod(
+                    array(
+                        'serial' => '4711', //@todo evaluate the right serial
+                        'name'   => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_CHECKOUT_FINISHED,
+                        'input'  => [
+                            'orderId' => $newOrderId
+                        ]
+                    )
+                );
+                $pipelineRequestBlock->setTemplate('shopgate/cloudapi/pipelineRequest.phtml');
+                $layout->getBlock('head')->addJs('shopgate/pipelineRequest.js');
+                $layout->getBlock('head')->append($pipelineRequestBlock);
             }
             $session->unsetData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT);
         }

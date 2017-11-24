@@ -19,52 +19,48 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Block_Broadcast extends Mage_Adminhtml_Block_Template
+class Shopgate_Cloudapi_Block_PipelineRequest extends Mage_Adminhtml_Block_Template
 {
     /**
-     * bc event checkout finished
+     * pipeline event checkout finished
      */
-    const BROADCAST_EVENT_CHECKOUT_FINISHED = 'checkoutFinished_v1';
-
-    /**
-     * @var string
-     */
-    protected $_event;
+    const PIPELINE_REQUEST_CHECKOUT_FINISHED = 'checkoutFinished_v1';
 
     /**
      * @var array
      */
-    protected $_parameters;
+    protected $_methods = [];
 
     /**
-     * @return string
+     * @return array
      */
-    public function getEvent()
+    public function getMethods()
     {
-        return $this->_event;
-    }
-
-    /**
-     * @param string $event
-     */
-    public function setEvent($event)
-    {
-        $this->_event = $event;
+        return $this->_methods;
     }
 
     /**
      * @return string
      */
-    public function getParameters()
+    public function getJsonMethods()
     {
-        return $this->_parameters;
+        return json_encode($this->getMethods());
     }
 
     /**
-     * @param array $parameter
+     * @param array $methods
      */
-    public function setParameters($parameter)
+    public function setMethods($methods)
     {
-        $this->_parameters = $parameter;
+        $this->_methods = $methods;
     }
+
+    /**
+     * @param array $method
+     */
+    public function addMethod($method)
+    {
+        array_push($this->_methods, $method);
+    }
+
 }
