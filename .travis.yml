@@ -1,13 +1,15 @@
 dist: precise
 sudo: false
 language: php
-
 services:
   - mysql
-cache:
-  directories:
-  - ${WEB_PATH}/${MAGE_FOLDER1}
-
+install:
+  # handles node update
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
+  - composer update -d ${TRAVIS_BUILD_DIR}/src/lib/Shopgate/cloud-integration-magento-oauth2
+#cache:
+#  directories:
+#  - ${WEB_PATH}/${MAGE_FOLDER1}
 jobs:
   include:
   - stage: Testing Postman
@@ -32,7 +34,7 @@ jobs:
       - sudo chmod 750 ${WEB_PATH}
       - sudo chown -R travis:travis /var/lock/apache2/
       - sudo service apache2 restart
-      # environment related
+      # n98 related
       - wget --quiet https://files.magerun.net/n98-magerun.phar
       - chmod +x ./n98-magerun.phar
       - sudo mv ./n98-magerun.phar /usr/local/bin/n98
@@ -40,14 +42,21 @@ jobs:
       - sudo cp -a ./release/postman/n98-scripts/. /usr/local/share/n98-magerun/scripts/
       - sudo chown -R travis:travis /usr/local/share/n98-magerun
       - sudo chmod +x /usr/local/share/n98-magerun/scripts/*.magerun
-      #todo-sg: install newman
+      # newman related
+      - npm install newman --global
     env:
-      - MAGE_FOLDER1="mage1702"
+      - MAGE_FOLDER1="mage1936"
     script:
       - chmod +x ./release/postman/magento_setup.sh
       - ./release/postman/magento_setup.sh
-      - sudo less -FX /var/log/apache2/error.log #todo-sg: remove error check after done
-
+      - cd ${TRAVIS_BUILD_DIR}/release/postman/newman
+      - newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER1}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=CE" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}"
+    after_failure:
+      - less -FX ./verbose-report.json
+      - sudo less -FX /var/log/apache2/error.log
+addons:
+  hosts:
+    - travis.dev
 #  - stage: deploy
 #    php: 5.6
 #    before_script:
