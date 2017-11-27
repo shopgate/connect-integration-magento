@@ -23,6 +23,11 @@
 class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
 {
     /**
+     * Shopgate store code
+     */
+    const SHOPGATE_STORE_CODE = 'shopgate';
+
+    /**
      * Checks if the order is received from Shopgate API call.
      *
      * @todo-sg: send the order to the pipeline for tracking
@@ -35,12 +40,27 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
 
         if ($session->getData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT)) {
             if (!Mage::registry('prevent_observer')) {
+                /** @var Mage_Sales_Model_Order $order */
                 $order = $observer->getEvent()->getOrder();
+                if ($shopgateStoreId = $this->getShopgateStoreId()) {
+                    $order->setStoreId($shopgateStoreId);
+                }
                 /** @var Shopgate_Cloudapi_Model_Order_Source $orderSourceModel */
                 $orderSourceModel = Mage::getModel('shopgate_cloudapi/order_source');
                 $orderSourceModel->addForWebCheckout($order->getId());
                 Mage::register('prevent_observer', true);
             }
         }
+    }
+
+    /**
+     * @return int|null
+     */
+    protected function getShopgateStoreId()
+    {
+        /** @var Mage_Core_Model_Store $store */
+        $store = Mage::getModel('core/store')->loadConfig(self::SHOPGATE_STORE_CODE);
+
+        return $store->getStoreId();
     }
 }
