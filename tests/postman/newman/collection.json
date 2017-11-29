@@ -1101,7 +1101,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"900\",\n\t    \"qty\": 1,\n\t    \"giftcard_amount\": \"15\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"physical-gc-with-select-price\",\n\t    \"qty\": 1,\n\t    \"giftcard_amount\": \"15\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -1154,7 +1154,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"454\",\n\t    \"qty\": 1,\n\t    \"custom_giftcard_amount\": \"75\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"gif001\",\n\t    \"qty\": 1,\n\t    \"custom_giftcard_amount\": \"75\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -1207,7 +1207,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"544\",\n\t    \"qty\": 1,\n\t    \"custom_giftcard_amount\": \"50\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"gif003\",\n\t    \"qty\": 1,\n\t    \"custom_giftcard_amount\": \"50\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -1216,63 +1216,6 @@
                       ]
                     },
                     "description": "Virtual card with custom price set"
-                  },
-                  "response": []
-                },
-                {
-                  "name": "/carts: customer",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "type": "text/javascript",
-                        "exec": [
-                          "if (responseCode.code === 200) {",
-                          "    var jsonData = pm.response.json();",
-                          "    pm.environment.set(\"cartId\", jsonData.cartId);",
-                          "    tests[\"Cart ID is returned\"] = isNumeric(jsonData.cartId) === true;",
-                          "}",
-                          "",
-                          "pm.test('Successfull call', function(){",
-                          "    pm.response.to.be.success;",
-                          "});",
-                          "",
-                          "function isNumeric(n) {",
-                          "  return !isNaN(parseFloat(n)) && isFinite(n);",
-                          "}"
-                        ]
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{customer-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_carts}}",
-                      "host": [
-                        "{{domain}}{{endpoint_carts}}"
-                      ]
-                    },
-                    "description": "Creates a customer cart"
                   },
                   "response": []
                 },
@@ -1317,7 +1260,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"455\",\n\t    \"qty\": 1,\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"gif002\",\n\t    \"qty\": 1,\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -2167,7 +2110,7 @@
                         ],
                         "body": {
                           "mode": "raw",
-                          "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"564\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t      \"6\": {\n\t        \"month\": \"01\",\n\t        \"day\": \"17\",\n\t        \"year\": \"2017\"\n\t      }\n\t    },\n\t    \"recurring_profile_start_datetime\":\"09/15/2017 09:49 PM\"\n\t  }\n  }\n]\n\n"
+                          "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"mem000\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t      \"6\": {\n\t        \"month\": \"01\",\n\t        \"day\": \"17\",\n\t        \"year\": \"2017\"\n\t      }\n\t    },\n\t    \"recurring_profile_start_datetime\":\"09/15/2017 09:49 PM\"\n\t  }\n  }\n]\n\n"
                         },
                         "url": {
                           "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -2609,7 +2552,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"900\",\n\t    \"qty\": 1,\n\t    \"giftcard_amount\": \"15\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"physical-gc-with-select-price\",\n\t    \"qty\": 1,\n\t    \"giftcard_amount\": \"15\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -2662,7 +2605,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"454\",\n\t    \"qty\": 1,\n\t    \"custom_giftcard_amount\": \"75\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"gif001\",\n\t    \"qty\": 1,\n\t    \"custom_giftcard_amount\": \"75\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -2715,7 +2658,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"544\",\n\t    \"qty\": 1,\n\t    \"custom_giftcard_amount\": \"50\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"gif003\",\n\t    \"qty\": 1,\n\t    \"custom_giftcard_amount\": \"50\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -2768,7 +2711,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"455\",\n\t    \"qty\": 1,\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"gif002\",\n\t    \"qty\": 1,\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_sender_email\": \"test@shopgate.com\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -5864,7 +5807,7 @@
                           "response": []
                         },
                         {
-                          "name": "Add Downloadable",
+                          "name": "Add Simple: $500",
                           "event": [
                             {
                               "listen": "test",
@@ -5898,7 +5841,7 @@
                             ],
                             "body": {
                               "mode": "raw",
-                              "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"563\",\n\t    \"qty\": 1,\n\t    \"links\": [\n\t      \"18\"\n\t    ]\n\t }\n  }\n]"
+                              "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"554\",\n\t    \"qty\": 1\n\t  }\n  }\n]"
                             },
                             "url": {
                               "raw": "{{domain}}{{endpoint_carts_id_items}}",
@@ -5906,7 +5849,7 @@
                                 "{{domain}}{{endpoint_carts_id_items}}"
                               ]
                             },
-                            "description": "ID: 563\nName: Fire [Kalima remix] by Unannounced Guest\nSKU: hbm010\nCategory: Music & Books\nURL: fire-kalima-remix-by-unannounced-guest\nPrice: 2.00\nQty: 1000"
+                            "description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
                           },
                           "response": []
                         },
@@ -13238,68 +13181,6 @@
       "description": "",
       "item": [
         {
-          "name": "Customer",
-          "description": "",
-          "item": [
-            {
-              "name": "Bundled: 447",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "type": "text/javascript",
-                    "exec": [
-                      "pm.test(\"Status code is 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "",
-                      "pm.test(\"Product is indeed bundled. Has stock data. Customer grp 1\", function () {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.type_id).to.eql('bundle');",
-                      "    pm.expect(jsonData.stock_item.product_id).to.eql('447');",
-                      "    pm.expect(jsonData.customer_group_id).to.eql('1');",
-                      "});",
-                      ""
-                    ]
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{customer-access-token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {},
-                "url": {
-                  "raw": "{{domain}}{{endpoint_products}}/447",
-                  "host": [
-                    "{{domain}}{{endpoint_products}}"
-                  ],
-                  "path": [
-                    "447"
-                  ]
-                },
-                "description": "ID: 447\nType: Bundle\nName: Pillow and Throw Set\nSKU (dynamic): hdb010\nURL: pillow-and-throw-set\nCategory: Home & Decor -> Bed & Bath\nPrice: N/A\n\nBundle Items:\nTitle: Accent Pillow\nID: 24\nName: Titian Raw Silk Pillow | Shay Printed Pillow\nSKU: hdb005 | hdb006\nID: 381 | 382\nSelection ID: 91 | 92\nPrice: 125.00 | 210.00\n\nTitle: Decorative Throw\nID: 23\nName: Carnegie Alpaca Throw | Row Throw | Gramercy Throw\nSKU: hdb007 | hdb008 | hdb009\nID: 383 | 384 | 385\nPrice: 275.00 | 240.00 | 275.00\nSelection ID: 88 | 89 | 115"
-              },
-              "response": []
-            }
-          ],
-          "_postman_isSubFolder": true
-        },
-        {
           "name": "Guest",
           "description": "",
           "item": [
@@ -13706,13 +13587,14 @@
                   "script": {
                     "type": "text/javascript",
                     "exec": [
-                      "if (pm.environment.get(\"mage_type\") === 'EE') {",
+                      "//Testing for EE edition specifics",
+                      "var jsonData = pm.response.json();",
+                      "if (jsonData.sku === 'physical-gc-with-select-price') {",
                       "    pm.test(\"Status code is 200\", function () {",
                       "        pm.response.to.have.status(200);",
                       "    });",
-                      "",
                       "    pm.test(\"Product is indeed GC. Has stock data. Customer grp 0\", function () {",
-                      "        var jsonData = pm.response.json();",
+                      "        ",
                       "        pm.expect(jsonData.type_id).to.eql('giftcard');",
                       "        pm.expect(jsonData.stock_item.product_id).to.eql('900');",
                       "        pm.expect(jsonData.customer_group_id).to.eql(0);",
@@ -13723,7 +13605,470 @@
                       "        pm.expect(count).to.eql(3);",
                       "    });",
                       "} else {",
-                      "    pm.test(\"Giftcards don't exist in the Community edition\", function () {",
+                      "    pm.test(\"Product is not visible individually\", function () {",
+                      "        pm.response.to.have.status(404);",
+                      "    });",
+                      "}",
+                      "",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_products}}/900",
+                  "host": [
+                    "{{domain}}{{endpoint_products}}"
+                  ],
+                  "path": [
+                    "900"
+                  ]
+                },
+                "description": ""
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Customer",
+          "description": "",
+          "item": [
+            {
+              "name": "Bundled: 447",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Product is indeed bundled. Has stock data.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.type_id).to.eql('bundle');",
+                      "    pm.expect(jsonData.stock_item.product_id).to.eql('447');",
+                      "});",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_products}}/447",
+                  "host": [
+                    "{{domain}}{{endpoint_products}}"
+                  ],
+                  "path": [
+                    "447"
+                  ]
+                },
+                "description": "ID: 447\nType: Bundle\nName: Pillow and Throw Set\nSKU (dynamic): hdb010\nURL: pillow-and-throw-set\nCategory: Home & Decor -> Bed & Bath\nPrice: N/A\n\nBundle Items:\nTitle: Accent Pillow\nID: 24\nName: Titian Raw Silk Pillow | Shay Printed Pillow\nSKU: hdb005 | hdb006\nID: 381 | 382\nSelection ID: 91 | 92\nPrice: 125.00 | 210.00\n\nTitle: Decorative Throw\nID: 23\nName: Carnegie Alpaca Throw | Row Throw | Gramercy Throw\nSKU: hdb007 | hdb008 | hdb009\nID: 383 | 384 | 385\nPrice: 275.00 | 240.00 | 275.00\nSelection ID: 88 | 89 | 115"
+              },
+              "response": []
+            },
+            {
+              "name": "Configurable: Skirt",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Product is indeed configurable. Has stock data. Has children.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.type_id).to.eql('configurable');",
+                      "    pm.expect(jsonData.stock_item.product_id).to.eql('422');",
+                      "    pm.expect(jsonData.children.attributes['92'].id).to.eql('92');",
+                      "});",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_products}}/422",
+                  "host": [
+                    "{{domain}}{{endpoint_products}}"
+                  ],
+                  "path": [
+                    "422"
+                  ]
+                },
+                "description": "ID: 422\nType: Configurable\nName: Essex Pencil Skirt\nSKU: wsd000c\nCategory: Dresses & Skirts\nPrice: $185.00\n\nSub-Products:\nID: 297 | 298 | 299 | 300 | 301\nName: Essex Pencil Skirt\nSKU: wsd000 | wsd001 | wsd002 | wsd003 | wsd004\nColor (ID: 92): Charcoal (ID: 17)\nSize (ID: 180): 2 (ID: 76) | 4 (ID: 75) | 6 (ID: 74) | 8 (ID: 73) | 10 (ID: 72)"
+              },
+              "response": []
+            },
+            {
+              "name": "Downloadable: 563",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Product is indeed donwloadable. Has stock data.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.type_id).to.eql('downloadable');",
+                      "    pm.expect(jsonData.stock_item.product_id).to.eql('563');",
+                      "});",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_products}}/563",
+                  "host": [
+                    "{{domain}}{{endpoint_products}}"
+                  ],
+                  "path": [
+                    "563"
+                  ]
+                },
+                "description": "ID: 563\nName: Fire [Kalima remix] by Unannounced Guest\nSKU: hbm010\nCategory: Music & Books\nURL: fire-kalima-remix-by-unannounced-guest\nPrice: 2.00\nQty: 1000"
+              },
+              "response": []
+            },
+            {
+              "name": "Grouped: 439",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Product is indeed grouped. Has stock data. Customer grp 0\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.type_id).to.eql('grouped');",
+                      "    pm.expect(jsonData.stock_item.product_id).to.eql('439');",
+                      "});",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_products}}/439",
+                  "host": [
+                    "{{domain}}{{endpoint_products}}"
+                  ],
+                  "path": [
+                    "439"
+                  ]
+                },
+                "description": "ID: 439\nName: Luggage Set\nType: Grouped\nSKU: abl008\nURL: luggage-set\nCategory: Bags & Luggage\n\nSub-Product:\nID: 541 | 377 | 376\nName: Classic Hardshell Suitcase 19\" | Classic Hardshell Suitcase 29\" | Classic Hardshell Suitcase 21\"\nSKU: abl009 | abl007 | abl006\nPrice: 600.00 | 750.00 | 650.00\nQty: 7 | 13 | 15"
+              },
+              "response": []
+            },
+            {
+              "name": "Nominal: 564",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Product is indeed nominal. Has stock data.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.type_id).to.eql('virtual');",
+                      "    pm.expect(jsonData.stock_item.product_id).to.eql('564');",
+                      "    pm.expect(jsonData.recurring_profile.start_date_is_editable).to.eql('1');",
+                      "});",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_products}}/564",
+                  "host": [
+                    "{{domain}}{{endpoint_products}}"
+                  ],
+                  "path": [
+                    "564"
+                  ]
+                },
+                "description": ""
+              },
+              "response": []
+            },
+            {
+              "name": "Simple: 554",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Product is indeed simple. Has stock data. No options.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.type_id).to.eql('simple');",
+                      "    pm.expect(jsonData.stock_item.product_id).to.eql('554');",
+                      "    pm.expect(jsonData.has_options).to.eql('0');",
+                      "    pm.expect(jsonData.required_options).to.eql('0');",
+                      "});",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_products}}/554",
+                  "host": [
+                    "{{domain}}{{endpoint_products}}"
+                  ],
+                  "path": [
+                    "554"
+                  ]
+                },
+                "description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
+              },
+              "response": []
+            },
+            {
+              "name": "Simple: 370 + Options",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Product is indeed simple. Has stock data.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.type_id).to.eql('simple');",
+                      "    pm.expect(jsonData.stock_item.product_id).to.eql('370');",
+                      "});",
+                      "",
+                      "pm.test(\"Product indeed has custom options\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.has_custom_options).to.be.true;",
+                      "    pm.expect(jsonData.custom_options[0].product_id).to.eql('370');",
+                      "});",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_products}}/370",
+                  "host": [
+                    "{{domain}}{{endpoint_products}}"
+                  ],
+                  "path": [
+                    "370"
+                  ]
+                },
+                "description": ""
+              },
+              "response": []
+            },
+            {
+              "name": "GiftCard Physical/dropdown: 900",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "//Testing for EE edition specifics",
+                      "var jsonData = pm.response.json();",
+                      "if (jsonData.sku === 'physical-gc-with-select-price') {",
+                      "    pm.test(\"Status code is 200\", function () {",
+                      "        pm.response.to.have.status(200);",
+                      "    });",
+                      "",
+                      "    pm.test(\"Product is indeed GC. Has stock data. \", function () {",
+                      "        ",
+                      "        pm.expect(jsonData.type_id).to.eql('giftcard');",
+                      "        pm.expect(jsonData.stock_item.product_id).to.eql('900');",
+                      "    });",
+                      "",
+                      "    pm.test(\"Giftcard dropdown has 3 price options\", function(){",
+                      "        var count = Object.keys(pm.response.json().giftcard_amounts).length;",
+                      "        pm.expect(count).to.eql(3);",
+                      "    });",
+                      "} else {",
+                      "    pm.test(\"Product is not visible individually\", function () {",
                       "        pm.response.to.have.status(404);",
                       "    });",
                       "}",
@@ -13738,7 +14083,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "{{guest-access-token}}",
+                      "value": "{{customer-access-token}}",
                       "type": "string"
                     }
                   ]
@@ -13882,53 +14227,6 @@
                       ]
                     },
                     "description": "ID: 431\nType: Configurable\nName: Ann Ankle Boot\nSKU: aws005c\nURL: borgha-ankle-boot\nPrice: $470.00\nCategory: Shoes\n\n\nSub-Products:\nID: 345 | 346 | 347 | 348 | 349\nName: Ann Ankle Boot\nSKU: aws005 | aws006 | aws007 | aws008 | aws009\nColor (ID: 92): Black (ID: 20)\nShoe size (ID: 186): 6 (ID: 102) | 7 (ID: 101) | 8 (ID: 100) | 9 (ID: 99) | 10 (ID: 98)"
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Simple: $500",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "type": "text/javascript",
-                        "exec": [
-                          "pm.test('Successfull call', function(){",
-                          "    pm.response.to.be.success;",
-                          "});"
-                        ]
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{customer-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n      \"product_id\": \"554\",\n      \"qty\": 1\n    }\n  }\n]"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_carts_id_items}}",
-                      "host": [
-                        "{{domain}}{{endpoint_carts_id_items}}"
-                      ]
-                    },
-                    "description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
                   },
                   "response": []
                 },

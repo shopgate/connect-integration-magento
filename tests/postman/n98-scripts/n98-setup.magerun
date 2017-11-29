@@ -1,6 +1,6 @@
 #!/usr/bin/env magento installation script
 
-install --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="${folder}" --installSampleData=yes --useDefaultConfigParams=yes --magentoVersionByName="magento-mirror-1.9.3.6" --installationFolder="${folder}" --baseUrl="http://travis.dev/${folder}/" --no-interaction "${no_download}"
+install --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="${folder}" --installSampleData=yes --useDefaultConfigParams=yes --magentoVersionByName="${package}" --installationFolder="${folder}" --baseUrl="http://travis.dev/${folder}/" --no-interaction "${no_download}"
 # in magento folder right now
 
 config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/customer_number" ${customer_number}

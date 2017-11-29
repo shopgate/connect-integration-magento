@@ -13,6 +13,7 @@ fi
 
 n98 script:repo:run n98-setup \
 -d folder=${MAGE_FOLDER1} \
+-d package=${MAGE_PACKAGE} \
 -d api_key=${CFG_API_KEY} \
 -d shop_number=${CFG_API_SHOP_NUMBER} \
 -d customer_number=${CFG_API_CUSTOMER_NUMBER} \
