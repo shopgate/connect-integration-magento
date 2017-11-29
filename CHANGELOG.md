@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-## 3.0.0
+## 3.0.0 - 2017-11-23
 ### Added
 - Endpoint for creation oAuth access tokens
 - Endpoint for cart creation
@@ -16,3 +16,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for merging guest cart with customer cart
 - Endpoint for retrieving a temporary checkout URL
 - Endpoint for retrieving of product details
+
+[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.0.0...HEAD
