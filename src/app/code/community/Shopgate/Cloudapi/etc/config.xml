@@ -47,6 +47,15 @@
                     </shopgate_sales_order_save_after>
                 </observers>
             </sales_order_save_after>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <shopgate_checkout_onepage_controller_success_action>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_onepageSuccessAction</class>
+                        <method>execute</method>
+                    </shopgate_checkout_onepage_controller_success_action>
+                </observers>
+            </checkout_onepage_controller_success_action>
         </events>
         <blocks>
             <shopgate_cloudapi>
