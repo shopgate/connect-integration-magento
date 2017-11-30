@@ -6,8 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- Add shopgate_order_sources Table to mark order as Shopgate order
-- Add utm parameters for Google Analytics in Web checkout
+- shopgate_order_sources table to flag Shopgate orders
+- UTM parameters for Google Analytics in web checkout
 
 ## 3.0.0 - 2017-11-23
 ### Added
