@@ -38,7 +38,7 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
      */
     public function authAction()
     {
-        $token = $this->getRequest()->getParam('token');
+        $token = $this->getRequest()->getParam(self::REQUEST_TOKEN_KEY);
         try {
             $quote = Mage::helper('shopgate_cloudapi/frontend_quote_token')->getQuoteByToken($token);
             $email = $quote->getCustomer()->getData('email');
@@ -55,7 +55,18 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
 
         $this->getSession()->setData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT, true);
 
-        return $this->_redirectUrl(Mage::helper('checkout/url')->getCheckoutUrl());
+        /**
+         * append all parameters without token
+         */
+        $params = $this->getRequest()->getParams();
+        unset($params[self::REQUEST_TOKEN_KEY]);
+
+        return $this->_redirectUrl(
+            Mage::helper('core/url')->addRequestParam(
+                Mage::helper('checkout/url')->getCheckoutUrl(),
+                $params
+            )
+        );
     }
 
     /**
