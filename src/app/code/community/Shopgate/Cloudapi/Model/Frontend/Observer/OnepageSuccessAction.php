@@ -40,7 +40,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
                 $pipelineRequestBlock->addMethod(
                     array(
                         'serial' => '4711', //@todo evaluate the right serial
-                        'name'   => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_CHECKOUT_FINISHED,
+                        'name'   => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_CREATE_NEW_CART_FOR_CUSTOMER,
                         'input'  => [
                             'orderId' => $newOrderId
                         ]

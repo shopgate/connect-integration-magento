@@ -24,7 +24,7 @@ class Shopgate_Cloudapi_Block_PipelineRequest extends Mage_Adminhtml_Block_Templ
     /**
      * pipeline event checkout finished
      */
-    const PIPELINE_REQUEST_CHECKOUT_FINISHED = 'checkoutFinished_v1';
+    const PIPELINE_REQUEST_CREATE_NEW_CART_FOR_CUSTOMER = 'createNewCartForCustomer';
 
     /**
      * @var array
