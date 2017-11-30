@@ -23,6 +23,11 @@
 class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Action
 {
     /**
+     * Request token key
+     */
+    const REQUEST_TOKEN_KEY = 'token';
+
+    /**
      * Register psr-4 autoloader for cloud library
      */
     public function preDispatch()
