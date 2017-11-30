@@ -34,14 +34,14 @@ class Shopgate_Cloudapi_Block_PipelineRequest extends Mage_Adminhtml_Block_Templ
     /**
      * @var array
      */
-    protected $_methods = array();
+    protected $methods = array();
 
     /**
      * @return array
      */
     public function getMethods()
     {
-        return $this->_methods;
+        return $this->methods;
     }
 
     /**
@@ -57,7 +57,7 @@ class Shopgate_Cloudapi_Block_PipelineRequest extends Mage_Adminhtml_Block_Templ
      */
     public function setMethods($methods)
     {
-        $this->_methods = $methods;
+        $this->methods = $methods;
     }
 
     /**
@@ -65,7 +65,7 @@ class Shopgate_Cloudapi_Block_PipelineRequest extends Mage_Adminhtml_Block_Templ
      */
     public function addMethod($method)
     {
-        array_push($this->_methods, $method);
+        array_push($this->methods, $method);
     }
 
 }
