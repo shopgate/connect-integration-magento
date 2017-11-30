@@ -23,6 +23,9 @@
                     <auth_code>
                         <table>shopgate_resource_auth_codes</table>
                     </auth_code>
+                    <order_source>
+                        <table>shopgate_order_sources</table>
+                    </order_source>
                 </entities>
             </shopgate_cloudapi_resource>
         </models>
