@@ -22,7 +22,9 @@
 
 /**
  * @method setSource(string)
+ * @method string getSource()
  * @method setOrderId(int)
+ * @method int getOrderId()
  */
 
 class Shopgate_Cloudapi_Model_Order_Source extends Mage_Core_Model_Abstract
