@@ -20,20 +20,13 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-/** @var Shopgate_Cloudapi_Model_Resource_Setup $installer */
-$installer = $this;
-$installer->startSetup();
-
-try {
-    $installer->createAdminUserAndAssignRole();
-    $installer->appendRules();
-} catch (Exception $e) {
-    Mage::logException($e);
+class Shopgate_Cloudapi_Model_Resource_Order_Source extends Mage_Core_Model_Mysql4_Abstract
+{
+    /**
+     * Initialize configuration data
+     */
+    protected function _construct()
+    {
+        $this->_init('shopgate_cloudapi/order_source', 'entity_id');
+    }
 }
-
-/** @var Magento_Db_Adapter_Pdo_Mysql $conn */
-/** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $pdo */
-$pdo = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($conn->getConnection()));
-
-$installer->run($pdo->getBuildSql());
-$installer->endSetup();

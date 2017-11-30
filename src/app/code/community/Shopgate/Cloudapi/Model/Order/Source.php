@@ -20,20 +20,32 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-/** @var Shopgate_Cloudapi_Model_Resource_Setup $installer */
-$installer = $this;
-$installer->startSetup();
+/**
+ * @method setSource(string)
+ * @method string getSource()
+ * @method setOrderId(int)
+ * @method int getOrderId()
+ */
 
-try {
-    $installer->createAdminUserAndAssignRole();
-    $installer->appendRules();
-} catch (Exception $e) {
-    Mage::logException($e);
+class Shopgate_Cloudapi_Model_Order_Source extends Mage_Core_Model_Abstract
+{
+    const SOURCE_WEBCHECKOUT = 'webcheckout';
+
+   /**
+     * Init model
+     */
+    protected function _construct()
+    {
+        $this->_init('shopgate_cloudapi/order_source');
+    }
+
+    /**
+     * @param int $orderId
+     */
+    public function addForWebCheckout($orderId)
+    {
+        $this->setSource(self::SOURCE_WEBCHECKOUT);
+        $this->setOrderId($orderId);
+        $this->save();
+    }
 }
-
-/** @var Magento_Db_Adapter_Pdo_Mysql $conn */
-/** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $pdo */
-$pdo = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($conn->getConnection()));
-
-$installer->run($pdo->getBuildSql());
-$installer->endSetup();
