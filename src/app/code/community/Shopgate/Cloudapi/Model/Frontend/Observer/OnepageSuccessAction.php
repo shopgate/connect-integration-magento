@@ -39,11 +39,11 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
                 $pipelineRequestBlock = $layout->createBlock('shopgate_cloudapi/pipelineRequest');
                 $pipelineRequestBlock->addMethod(
                     array(
-                        'serial' => '4711', //@todo evaluate the right serial
+                        'serial' => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_SERIAL, //@todo evaluate the right serial
                         'name'   => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_CREATE_NEW_CART_FOR_CUSTOMER,
-                        'input'  => [
+                        'input'  => array(
                             'orderId' => $newOrderId
-                        ]
+                        )
                     )
                 );
                 $pipelineRequestBlock->setTemplate('shopgate/cloudapi/pipelineRequest.phtml');

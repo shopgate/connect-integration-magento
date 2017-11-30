@@ -22,14 +22,19 @@
 class Shopgate_Cloudapi_Block_PipelineRequest extends Mage_Adminhtml_Block_Template
 {
     /**
-     * pipeline event checkout finished
+     * Pipeline event checkout finished
      */
     const PIPELINE_REQUEST_CREATE_NEW_CART_FOR_CUSTOMER = 'createNewCartForCustomer';
 
     /**
+     * Pipeline request serial
+     */
+    const PIPELINE_REQUEST_SERIAL = '4711';
+
+    /**
      * @var array
      */
-    protected $_methods = [];
+    protected $_methods = array();
 
     /**
      * @return array
