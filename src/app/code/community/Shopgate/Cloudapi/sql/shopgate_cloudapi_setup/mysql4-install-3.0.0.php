@@ -23,8 +23,13 @@
 /** @var Shopgate_Cloudapi_Model_Resource_Setup $installer */
 $installer = $this;
 $installer->startSetup();
-$installer->createAdminUserAndAssignRole();
-$installer->appendRules();
+
+try {
+    $installer->createAdminUserAndAssignRole();
+    $installer->appendRules();
+} catch (Exception $e) {
+    Mage::logException($e);
+}
 
 /** @var Magento_Db_Adapter_Pdo_Mysql $conn */
 /** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $pdo */
