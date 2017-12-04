@@ -151,7 +151,12 @@ class Shopgate_Cloudapi_Helper_Product_Configurable extends Shopgate_Cloudapi_He
             $taxCalculation->setCustomer($customer);
         }
 
-        $_request = $taxCalculation->getDefaultRateRequest();
+        if (method_exists($taxCalculation, 'getDefaultRateRequest')) {
+            $_request = $taxCalculation->getDefaultRateRequest();
+        } else {
+            $_request = $taxCalculation->getRateRequest();
+        }
+
         $_request->setData('product_class_id', $this->getProduct()->getData('tax_class_id'));
         $defaultTax = $taxCalculation->getRate($_request);
 
