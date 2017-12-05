@@ -10,9 +10,9 @@ install:
   - composer install -d ${TRAVIS_BUILD_DIR}/src/lib/Shopgate/cloud-integration-magento-oauth2
 #cache:
 #  directories:
-#  - ${WEB_PATH}/${MAGE_FOLDER1}
+#  - ${WEB_PATH}/${MAGE_FOLDER}
 php:
-  #- 5.3
+  #- 5.3 - @todo-sg: this is low priority at the moment
   - 5.4
   - 5.5
   #- 5.6
@@ -39,16 +39,18 @@ before_script:
   - chmod +x ./n98-magerun.phar
   - sudo mv ./n98-magerun.phar /usr/local/bin/n98
   - sudo mkdir -p /usr/local/share/n98-magerun/scripts
-  - sudo cp -a ./tests/postman/n98-scripts/. /usr/local/share/n98-magerun/scripts/
+  - sudo cp -a ./tests/postman/n98-scripts/* /usr/local/share/n98-magerun/scripts/
   - sudo chown -R travis:travis /usr/local/share/n98-magerun
   - sudo chmod +x /usr/local/share/n98-magerun/scripts/*.magerun
+  - sudo cp -a ./tests/postman/.n98-magerun.yaml ~/
+  - sudo chmod +x ~/.n98-magerun.yaml
   # newman related
   - npm install newman --global
 script:
   - chmod +x ./tests/postman/magento_setup.sh
   - ./tests/postman/magento_setup.sh
   - cd ${TRAVIS_BUILD_DIR}/tests/postman/newman
-  - newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER1}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=CE" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}"
+  - newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=CE" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}"
 after_failure:
   #- less -FX ./verbose-report.json
   - sudo less -FX /var/log/apache2/error.log
@@ -88,6 +90,9 @@ env:
     USER1_EMAIL="konstantin.kiritsenko+1@shopgate.com"
     USER_PASS="test123"
   matrix:
-    - MAGE_FOLDER1="mage1936" MAGE_PACKAGE="magento-mirror-1.9.3.6"
-    - MAGE_FOLDER1="mage1900" MAGE_PACKAGE="magento-mirror-1.9.0.0"
-       #- MAGE_LOCALE="de_DE" //todo-sg: matrix later as it is important
+    - MAGE_FOLDER="mage1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2"
+    - MAGE_FOLDER="mage1800" MAGE_PACKAGE="sg-magento-mirror-1.8.0.0"
+    - MAGE_FOLDER="mage1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0"
+    - MAGE_FOLDER="mage1900" MAGE_PACKAGE="magento-mirror-1.9.0.0"
+    - MAGE_FOLDER="mage1936" MAGE_PACKAGE="magento-mirror-1.9.3.6"
+   #- MAGE_LOCALE="de_DE" //todo-sg: matrix later as it is important
