@@ -49,6 +49,14 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
                 $pipelineRequestBlock->setTemplate('shopgate/cloudapi/pipelineRequest.phtml');
                 $layout->getBlock('head')->addJs('shopgate/pipelineRequest.js');
                 $layout->getBlock('head')->append($pipelineRequestBlock);
+
+                /** @var Shopgate_Cloudapi_Block_AnalyticsLogPurchase  $analyticsLogPurchaseBlock */
+                $analyticsLogPurchaseBlock = $layout->createBlock('shopgate_cloudapi/analyticsLogPurchase');
+                $analyticsLogPurchaseBlock->setOrderId($newOrderId);
+                $analyticsLogPurchaseBlock->setTemplate('shopgate/cloudapi/analyticsLogPurchase.phtml');
+                $layout->getBlock('head')->addJs('shopgate/analyticsLogPurchase.js');
+                $layout->getBlock('head')->append($analyticsLogPurchaseBlock);
+
             }
             $session->unsetData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT);
         }
