@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.0.0</version>
+            <version>3.0.1</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
@@ -23,6 +23,9 @@
                     <auth_code>
                         <table>shopgate_resource_auth_codes</table>
                     </auth_code>
+                    <order_source>
+                        <table>shopgate_order_sources</table>
+                    </order_source>
                 </entities>
             </shopgate_cloudapi_resource>
         </models>
@@ -44,6 +47,15 @@
                     </shopgate_sales_order_save_after>
                 </observers>
             </sales_order_save_after>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <shopgate_checkout_onepage_controller_success_action>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_onepageSuccessAction</class>
+                        <method>execute</method>
+                    </shopgate_checkout_onepage_controller_success_action>
+                </observers>
+            </checkout_onepage_controller_success_action>
         </events>
         <blocks>
             <shopgate_cloudapi>
