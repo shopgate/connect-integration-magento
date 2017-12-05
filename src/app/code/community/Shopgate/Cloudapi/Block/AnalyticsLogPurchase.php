@@ -27,7 +27,7 @@ class Shopgate_Cloudapi_Block_AnalyticsLogPurchase extends Mage_Adminhtml_Block_
     protected $orderId;
 
     /**
-     * @param $orderId
+     * @param int $orderId
      */
     public function setOrderId($orderId)
     {
@@ -64,7 +64,6 @@ class Shopgate_Cloudapi_Block_AnalyticsLogPurchase extends Mage_Adminhtml_Block_
             $resultOrderItem->setPriceGross($this->formatPrice($item->getPrice()));
             $resultOrderItem->setQuantity($item->getQtyOrdered());
             array_push($resultOrderItems, $resultOrderItem->getData());
-
         }
 
         $result->setItems($resultOrderItems);
