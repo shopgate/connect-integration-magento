@@ -129,6 +129,7 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
     protected function replaceRestPath(Mage_Api2_Model_Request $request)
     {
         $path = $request->getPathInfo();
+        $path = strstr($path, '/shopgate');
         $rest = 'api' . DS . Mage_Api2_Model_Server::API_TYPE_REST . DS;
         $path = str_replace('shopgate/', $rest, $path);
         $request->setPathInfo($path);
