@@ -41,36 +41,37 @@ class Shopgate_Cloudapi_Block_AnalyticsLogPurchase extends Mage_Adminhtml_Block_
     {
         /** @var Mage_Sales_Model_Order $order */
         $order  = Mage::getModel('sales/order')->load($this->orderId);
-        $result = new Varien_Object();
-        $result->setType(Shopgate_Cloudapi_Model_Order_Source::SOURCE_WEBCHECKOUT);
-        $result->setId($order->getId());
-        $result->setAffiliation($order->getStoreName());
-        $result->setRevenueGross($this->formatPrice($order->getGrandTotal()));
-        $result->setRevenueNet($this->formatPrice($order->getGrandTotal() - $order->getTaxAmount()));
-        $result->setTax($this->formatPrice($order->getTaxAmount()));
-        $result->setShippingGross($this->formatPrice($order->getShippingAmount()));
-        $result->setShippingNet($this->formatPrice($order->getShippingAmount() - $order->getShippingTaxAmount()));
-        $result->setCurrency($order->getStoreCurrencyCode());
-        $result->setSuccess(true);
+        /** @var Shopgate_Cloudapi_Model_Pipeline_AnalyticsLogPurchase $analyticsLogPurchase */
+        $analyticsLogPurchase = Mage::getModel('shopgate_cloudapi/pipeline_AnalyticsLogPurchase');
+        $analyticsLogPurchase->setType(Shopgate_Cloudapi_Model_Order_Source::SOURCE_WEBCHECKOUT);
+        $analyticsLogPurchase->setId($order->getId());
+        $analyticsLogPurchase->setAffiliation($order->getStoreName());
+        $analyticsLogPurchase->setRevenueGross($this->formatPrice($order->getGrandTotal()));
+        $analyticsLogPurchase->setRevenueNet($this->formatPrice($order->getGrandTotal() - $order->getTaxAmount()));
+        $analyticsLogPurchase->setTax($this->formatPrice($order->getTaxAmount()));
+        $analyticsLogPurchase->setShippingGross($this->formatPrice($order->getShippingAmount()));
+        $analyticsLogPurchase->setShippingNet(
+            $this->formatPrice($order->getShippingAmount() - $order->getShippingTaxAmount())
+        );
+        $analyticsLogPurchase->setCurrency($order->getStoreCurrencyCode());
+        $analyticsLogPurchase->setSuccess(true);
+        $analyticsLogPurchase->setBlacklist(false);
+        $analyticsLogPurchase->setTrackers(array());
 
-        $resultOrderItems = array();
         foreach ($order->getAllItems() as $item) {
             /** @var Mage_Sales_Model_Order_Item $item */
-            $resultOrderItem = new Varien_Object();
-            $resultOrderItem->setType('product');
-            $resultOrderItem->setName($item->getName());
-            $resultOrderItem->setId($item->getId());
-            $resultOrderItem->setPriceNet($this->formatPrice($item->getPriceInclTax()));
-            $resultOrderItem->setPriceGross($this->formatPrice($item->getPrice()));
-            $resultOrderItem->setQuantity($item->getQtyOrdered());
-            array_push($resultOrderItems, $resultOrderItem->getData());
+            /** @var Shopgate_Cloudapi_Model_Pipeline_AnalyticsLogPurchase_Item $analyticsLogPurchaseItem */
+            $analyticsLogPurchaseItem = Mage::getModel('shopgate_cloudapi/pipeline_AnalyticsLogPurchase_Item');
+            $analyticsLogPurchaseItem->setId($item->getId());
+            $analyticsLogPurchaseItem->setType('product');
+            $analyticsLogPurchaseItem->setName($item->getName());
+            $analyticsLogPurchaseItem->setPriceNet($this->formatPrice($item->getPriceInclTax()));
+            $analyticsLogPurchaseItem->setPriceGross($this->formatPrice($item->getPrice()));
+            $analyticsLogPurchaseItem->setQuantity($item->getQtyOrdered());
+            $analyticsLogPurchase->addItem($analyticsLogPurchaseItem);
         }
 
-        $result->setItems($resultOrderItems);
-        $result->setBlacklist(false);
-        $result->setTrackers(array());
-
-        return json_encode($result->getData());
+        return $analyticsLogPurchase->getJsonData();
     }
 
     /**
