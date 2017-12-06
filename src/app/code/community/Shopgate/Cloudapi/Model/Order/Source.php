@@ -21,9 +21,9 @@
  */
 
 /**
- * @method setSource(string)
+ * @method setSource(string $source)
  * @method string getSource()
- * @method setOrderId(int)
+ * @method setOrderId(int $orderId)
  * @method int getOrderId()
  */
 
