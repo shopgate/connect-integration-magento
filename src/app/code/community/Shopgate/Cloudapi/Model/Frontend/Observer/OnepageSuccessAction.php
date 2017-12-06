@@ -47,15 +47,17 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
                     )
                 );
                 $pipelineRequestBlock->setTemplate('shopgate/cloudapi/pipelineRequest.phtml');
-                $layout->getBlock('head')->addJs('shopgate/pipelineRequest.js');
-                $layout->getBlock('head')->append($pipelineRequestBlock);
+                /** @var Mage_Page_Block_Html_Head $head */
+                $head = $layout->getBlock('head');
+                $head->addJs('shopgate/pipelineRequest.js');
+                $head->append($pipelineRequestBlock);
 
                 /** @var Shopgate_Cloudapi_Block_AnalyticsLogPurchase  $analyticsLogPurchaseBlock */
                 $analyticsLogPurchaseBlock = $layout->createBlock('shopgate_cloudapi/analyticsLogPurchase');
                 $analyticsLogPurchaseBlock->setOrderId($newOrderId);
                 $analyticsLogPurchaseBlock->setTemplate('shopgate/cloudapi/analyticsLogPurchase.phtml');
-                $layout->getBlock('head')->addJs('shopgate/analyticsLogPurchase.js');
-                $layout->getBlock('head')->append($analyticsLogPurchaseBlock);
+                $head->addJs('shopgate/analyticsLogPurchase.js');
+                $head->append($analyticsLogPurchaseBlock);
             }
             $session->unsetData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT);
         }
