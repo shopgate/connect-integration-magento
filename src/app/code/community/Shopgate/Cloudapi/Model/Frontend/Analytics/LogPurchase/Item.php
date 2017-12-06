@@ -20,12 +20,18 @@
  */
 
 /**
- * @method setType(string $type)
- * @method setName(string $name)
- * @method setId(int $id)
- * @method setPriceNet(float $priceNet)
- * @method setPriceGross(float $priceGross)
- * @method setQuantity(int $quantity)
+ * @method $this setType(string $type)
+ * @method string getType()
+ * @method $this setName(string $name)
+ * @method string getName()
+ * @method $this setId(int $id)
+ * @method int getId()
+ * @method $this setPriceNet(float $priceNet)
+ * @method float getPriceNet()
+ * @method $this setPriceGross(float $priceGross)
+ * @method float getPriceGross()
+ * @method $this setQuantity(int $quantity)
+ * @method int getQuantity()
  */
 class Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item extends Varien_Object
 {
