@@ -31,7 +31,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
         $session = Mage::getSingleton('checkout/session');
 
         if ($session->getData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT)) {
-            $orderIds = $observer->getEvent()->getOrderIds();
+            $orderIds = $observer->getEvent()->getData('order_ids');
             if (isset($orderIds[0])) {
                 $newOrderId = $orderIds[0];
                 $layout     = Mage::app()->getLayout();
@@ -39,7 +39,8 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
                 $pipelineRequestBlock = $layout->createBlock('shopgate_cloudapi/pipelineRequest');
                 $pipelineRequestBlock->addMethod(
                     array(
-                        'serial' => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_SERIAL, //@todo evaluate the right serial
+                        //@todo-sg: evaluate the right serial
+                        'serial' => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_SERIAL,
                         'name'   => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_CREATE_NEW_CART_FOR_CUSTOMER,
                         'input'  => array(
                             'orderId' => $newOrderId
@@ -47,8 +48,17 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
                     )
                 );
                 $pipelineRequestBlock->setTemplate('shopgate/cloudapi/pipelineRequest.phtml');
-                $layout->getBlock('head')->addJs('shopgate/pipelineRequest.js');
-                $layout->getBlock('head')->append($pipelineRequestBlock);
+                /** @var Mage_Page_Block_Html_Head $head */
+                $head = $layout->getBlock('head');
+                $head->addJs('shopgate/pipelineRequest.js');
+                $head->append($pipelineRequestBlock);
+
+                /** @var Shopgate_Cloudapi_Block_Analytics_LogPurchase $analyticsLogPurchaseBlock */
+                $analyticsLogPurchaseBlock = $layout->createBlock('shopgate_cloudapi/analytics_logPurchase');
+                $analyticsLogPurchaseBlock->setOrderId($newOrderId);
+                $analyticsLogPurchaseBlock->setTemplate('shopgate/cloudapi/analyticsLogPurchase.phtml');
+                $head->addJs('shopgate/analyticsLogPurchase.js');
+                $head->append($analyticsLogPurchaseBlock);
             }
             $session->unsetData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT);
         }
