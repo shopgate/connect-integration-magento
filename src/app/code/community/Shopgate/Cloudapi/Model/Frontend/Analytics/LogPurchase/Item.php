@@ -27,6 +27,6 @@
  * @method setPriceGross(float $priceGross)
  * @method setQuantity(int $quantity)
  */
-class Shopgate_Cloudapi_Model_Pipeline_AnalyticsLogPurchase_Item extends Varien_Object
+class Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item extends Varien_Object
 {
 }
