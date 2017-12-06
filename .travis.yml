@@ -12,10 +12,10 @@ install:
 #  directories:
 #  - ${WEB_PATH}/${MAGE_FOLDER}
 php:
-  #- 5.3 - @todo-sg: this is low priority at the moment
+#  - 5.3 #@todo-sg: this is low priority at the moment
   - 5.4
   - 5.5
-  #- 5.6
+  - 5.6
 
 before_script:
   - sudo apt-get update
@@ -24,6 +24,7 @@ before_script:
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - sudo a2enmod rewrite actions fastcgi alias
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "always_populate_raw_post_data=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
   - sudo chown -R travis:travis /var/lib/apache2/fastcgi
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
@@ -52,7 +53,7 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/tests/postman/newman
   - newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=CE" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}"
 after_failure:
-  #- less -FX ./verbose-report.json
+  - curl --upload-file ./verbose-report.json https://transfer.sh/verbose-report.json
   - sudo less -FX /var/log/apache2/error.log
 
 jobs:
@@ -91,8 +92,6 @@ env:
     USER_PASS="test123"
   matrix:
     - MAGE_FOLDER="mage1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2"
-    - MAGE_FOLDER="mage1800" MAGE_PACKAGE="sg-magento-mirror-1.8.0.0"
     - MAGE_FOLDER="mage1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0"
-    - MAGE_FOLDER="mage1900" MAGE_PACKAGE="magento-mirror-1.9.0.0"
     - MAGE_FOLDER="mage1936" MAGE_PACKAGE="magento-mirror-1.9.3.6"
    #- MAGE_LOCALE="de_DE" //todo-sg: matrix later as it is important
