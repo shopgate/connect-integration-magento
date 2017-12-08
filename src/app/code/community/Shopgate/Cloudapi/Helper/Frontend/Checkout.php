@@ -23,34 +23,9 @@
 class Shopgate_Cloudapi_Helper_Frontend_Checkout extends Mage_Core_Helper_Abstract
 {
     /**
-     * Non-framed responsive template we can use
-     * in the app
-     */
-    const PAGE_TEMPLATE_EMPTY = 'page/empty.phtml';
-
-    /**
      * Controller and action path for redirect
      */
     const AUTH_CHECKOUT_URL = 'shopgate-checkout/quote/auth/';
-
-    /**
-     * Session variable indicating that this purchase belongs to Shopgate
-     */
-    const SESSION_IS_SHOPGATE_CHECKOUT = 'is_shopgate_checkout';
-
-    /**
-     * Returns the checkout page template based on
-     * shopgate session flag set in the observer
-     *
-     * @return string
-     */
-    public function getCheckoutPageTemplate()
-    {
-        /** @noinspection PhpUndefinedMethodInspection */
-        return $this->isShopgateCheckout()
-            ? self::PAGE_TEMPLATE_EMPTY
-            : Mage::app()->getLayout()->getBlock('root')->getTemplate();
-    }
 
     /**
      * Login customer using the email provided
@@ -111,15 +86,5 @@ class Shopgate_Cloudapi_Helper_Frontend_Checkout extends Mage_Core_Helper_Abstra
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         throw Mage::exception('Shopgate_Cloudapi_Model_Frontend_Checkout', $this->__($message), $code);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isShopgateCheckout()
-    {
-        $session = Mage::getSingleton('checkout/session');
-
-        return $session->getData(self::SESSION_IS_SHOPGATE_CHECKOUT);
     }
 }

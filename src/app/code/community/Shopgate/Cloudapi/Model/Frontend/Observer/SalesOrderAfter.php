@@ -39,7 +39,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
         $session = Mage::getSingleton('checkout/session');
 
         if ($session->getData(
-                Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT
+                Shopgate_Cloudapi_Helper_Frontend_Template::SESSION_IS_SHOPGATE_REQUEST
             ) && !Mage::registry('prevent_observer')
         ) {
             /** @var Mage_Sales_Model_Order $order */
