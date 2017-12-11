@@ -132,10 +132,12 @@
         <shopgate_cloudapi>
             <layout>
                 <styles>
-                    .page-title {display: none;}
-                    .customer-account-create .back-link {display: none;}
-                    .checkout-onepage-success a {pointer-events: none; cursor: default;}
-                    #checkout-review-submit .f-left {display: none;}
+                    <![CDATA[
+                        .page-title {display: none;}
+                        .customer-account-create .back-link {display: none;}
+                        .checkout-onepage-success a {pointer-events: none; cursor: default;}
+                        #checkout-review-submit .f-left {display: none;}
+                    ]]>
                 </styles>
             </layout>
         </shopgate_cloudapi>
