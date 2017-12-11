@@ -1,0 +1,10 @@
+<layout version="0.1.0">
+    <shopgate_cloudapi_register_customer_account_create>
+        <reference name="root">
+            <action method="setTemplate"><template>page/empty.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="shopgate_cloudapi/customer_account" name="shopgate_cloudapi.customer.account" template="shopgate/cloudapi/customer/account/create.phtml"/>
+        </reference>
+    </shopgate_cloudapi_register_customer_account_create>
+</layout>
