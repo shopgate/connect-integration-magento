@@ -58,7 +58,7 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
             Mage::logException($e);
         }
 
-        $this->getSession()->setData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT, true);
+        $this->getSession()->setData(Shopgate_Cloudapi_Helper_Frontend_Template::SESSION_IS_SHOPGATE_REQUEST, true);
 
         /**
          * append all parameters without token

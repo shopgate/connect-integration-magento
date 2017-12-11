@@ -5,7 +5,7 @@
         </reference>
         <reference name="root">
             <action method="setTemplate">
-                <template helper="shopgate_cloudapi/frontend_checkout/getCheckoutPageTemplate" />
+                <template helper="shopgate_cloudapi/frontend_template/getShopgatePageTemplate" />
             </action>
         </reference>
     </checkout_onepage_index>
@@ -15,7 +15,7 @@
         </reference>
         <reference name="root">
             <action method="setTemplate">
-                <template helper="shopgate_cloudapi/frontend_checkout/getCheckoutPageTemplate" />
+                <template helper="shopgate_cloudapi/frontend_template/getShopgatePageTemplate" />
             </action>
         </reference>
     </checkout_onepage_success>

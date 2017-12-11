@@ -30,7 +30,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     {
         $session = Mage::getSingleton('checkout/session');
 
-        if ($session->getData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT)) {
+        if ($session->getData(Shopgate_Cloudapi_Helper_Frontend_Template::SESSION_IS_SHOPGATE_REQUEST)) {
             $orderIds = $observer->getEvent()->getData('order_ids');
             if (isset($orderIds[0])) {
                 $newOrderId = $orderIds[0];
@@ -60,7 +60,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
                 $head->addJs('shopgate/analyticsLogPurchase.js');
                 $head->append($analyticsLogPurchaseBlock);
             }
-            $session->unsetData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT);
+            $session->unsetData(Shopgate_Cloudapi_Helper_Frontend_Template::SESSION_IS_SHOPGATE_REQUEST);
         }
     }
 }
