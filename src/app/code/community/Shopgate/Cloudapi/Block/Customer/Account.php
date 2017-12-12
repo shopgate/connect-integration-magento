@@ -23,6 +23,7 @@ class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Temp
 {
     /**
      * @return string
+     * @throws Exception
      */
     public function getToken()
     {
