@@ -103,13 +103,13 @@
                     <frontName>shopgate-checkout</frontName>
                 </args>
             </shopgate_cloudapi_checkout_redirect>
-            <shopgate_cloudapi_register>
+            <shopgate_cloudapi_customer>
                 <use>standard</use>
                 <args>
                     <module>Shopgate_Cloudapi</module>
                     <frontName>shopgate-customer</frontName>
                 </args>
-            </shopgate_cloudapi_register>
+            </shopgate_cloudapi_customer>
         </routers>
         <events>
             <checkout_onepage_controller_success_action>
