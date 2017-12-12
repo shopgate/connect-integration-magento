@@ -89,9 +89,9 @@
                 <shopgate_cloudapi_checkout>
                     <file>shopgate/cloudapi/checkout.xml</file>
                 </shopgate_cloudapi_checkout>
-                <shopgate_cloudapi_register>
-                    <file>shopgate/cloudapi/register.xml</file>
-                </shopgate_cloudapi_register>
+                <shopgate_cloudapi_customer>
+                    <file>shopgate/cloudapi/customer.xml</file>
+                </shopgate_cloudapi_customer>
             </updates>
         </layout>
         <routers>
@@ -107,7 +107,7 @@
                 <use>standard</use>
                 <args>
                     <module>Shopgate_Cloudapi</module>
-                    <frontName>shopgate-register</frontName>
+                    <frontName>shopgate-customer</frontName>
                 </args>
             </shopgate_cloudapi_register>
         </routers>

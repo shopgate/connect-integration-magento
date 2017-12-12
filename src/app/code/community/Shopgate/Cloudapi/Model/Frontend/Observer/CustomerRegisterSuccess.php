@@ -30,16 +30,16 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
     {
         /* @todo - Check is shopgate App register */
         /** @var Mage_Customer_Model_Customer $customer */
-        $customer = $observer->getEvent()->getCustomer();
+        $customer = $observer->getEvent()->getData('customer');
 
         /** @var Mage_Customer_AccountController $accountController */
         $accountController = $observer->getEvent()->getAccountController();
         $response          = $accountController->getResponse();
-        /* @todo - create token and add to params */
-        $params = array('token' => $customer->getId());
-        $redirectUrl = Mage::getUrl('shopgate-register/customer_account/create', $params);
+        /* @todo-sg - create token and add to params */
+        $params      = array('token' => $customer->getId());
+        $redirectUrl = Mage::getUrl('shopgate-customer/customer_account/create', $params);
         $response->setRedirect($redirectUrl);
         $response->sendResponse();
-        exit;
+        $response->sendHeadersAndExit();
     }
 }
