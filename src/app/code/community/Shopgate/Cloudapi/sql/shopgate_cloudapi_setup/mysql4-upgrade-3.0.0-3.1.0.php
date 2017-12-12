@@ -23,6 +23,7 @@
 /** @var Shopgate_Cloudapi_Model_Resource_Setup $installer */
 $installer = $this;
 $installer->startSetup();
+/** @noinspection PhpUnhandledExceptionInspection */
 $table = $installer->getConnection()
                    ->newTable('shopgate_order_sources')
                    ->addColumn(
@@ -33,7 +34,7 @@ $table = $installer->getConnection()
                            'identity' => true,
                            'unsigned' => true,
                            'nullable' => false,
-                           'primary'  => true,
+                           'primary'  => true
                        )
                    )
                    ->addColumn(
@@ -62,5 +63,10 @@ $table = $installer->getConnection()
                        Varien_Db_Ddl_Table::ACTION_CASCADE
                    )
                    ->setComment('Shopgate Order Sources');
-$installer->getConnection()->createTable($table);
+
+try {
+    $installer->getConnection()->createTable($table);
+} catch (Exception $e) {
+    Mage::logException($e);
+}
 $installer->endSetup();
