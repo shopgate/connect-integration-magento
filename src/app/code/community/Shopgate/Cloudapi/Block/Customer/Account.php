@@ -26,8 +26,6 @@ class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Temp
      */
     public function getToken()
     {
-        $token = $this->getRequest()->getParam('token');
-
-        return $token;
+        return $this->getRequest()->getParam('token');
     }
 }
