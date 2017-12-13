@@ -42,6 +42,8 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
     /**
      * Creates a Shopgate Admin role to make calls
      * to our REST API with.
+     *
+     * @throws Exception
      */
     public function createAdminUserAndAssignRole()
     {
@@ -80,6 +82,8 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
 
     /**
      * append rules to resources
+     *
+     * @throws Exception
      */
     public function appendRules()
     {
@@ -92,6 +96,8 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
 
     /**
      * @param string $resource
+     *
+     * @throws Exception
      */
     protected function _addSystemRules($resource)
     {
@@ -102,7 +108,9 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
 
     /**
      * @param string $resource
-     * @param int $systemRoleId
+     * @param int    $systemRoleId
+     *
+     * @throws Exception
      */
     protected function _createRuleByPrivilege($resource, $systemRoleId)
     {
@@ -135,9 +143,11 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
     }
 
     /**
-     * @param int $roleId
-     * @param int $resource
+     * @param int    $roleId
+     * @param int    $resource
      * @param string $privilege
+     *
+     * @throws Exception
      */
     protected function _createRule($roleId, $resource, $privilege)
     {

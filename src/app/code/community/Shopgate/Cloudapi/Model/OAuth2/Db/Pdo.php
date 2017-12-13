@@ -22,7 +22,7 @@
 
 class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
 {
-    const KEY_RESOURCE_ID   = 'resource_id';
+    const KEY_RESOURCE_ID = 'resource_id';
 
     /**
      * @var Mage_Core_Model_Store
@@ -178,10 +178,10 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
      * @inheritdoc
      * @return Shopgate_Cloudapi_Model_Auth_Code
      */
-    public function getAuthItemByTokenAndType($token, $type)
+    public function getAuthItemByTokenAndType($authorizationCode, $resourceType)
     {
         $auth = Mage::getModel('shopgate_cloudapi/auth_code');
-        $auth->setData(parent::getAuthItemByTokenAndType($token, $type));
+        $auth->setData(parent::getAuthItemByTokenAndType($authorizationCode, $resourceType));
 
         return $auth;
     }
@@ -206,13 +206,12 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
             'client_table'        => null,
             'access_token_table'  => 'shopgate_oauth_access_tokens',
             'refresh_token_table' => 'shopgate_oauth_refresh_tokens',
-            'code_table'          => null,
+            'code_table'          => 'shopgate_oauth_authorization_codes',
             'user_table'          => null,
             'jwt_table'           => null,
             'jti_table'           => null,
             'scope_table'         => null,
-            'public_key_table'    => null,
-            'resource_auth_codes' => 'shopgate_resource_auth_codes'
+            'public_key_table'    => null
         );
     }
 }

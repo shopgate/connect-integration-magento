@@ -23,6 +23,11 @@
 /** @var Shopgate_Cloudapi_Model_Resource_Setup $installer */
 $installer = $this;
 $installer->startSetup();
+
+/** @var Magento_Db_Adapter_Pdo_Mysql $conn */
+/** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $pdo */
+$pdo = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($conn->getConnection()));
+$installer->run($pdo->getBuildSql()); // installs new resource table
 /** @noinspection PhpUnhandledExceptionInspection */
 $table = $installer->getConnection()
                    ->newTable('shopgate_order_sources')
@@ -66,6 +71,10 @@ $table = $installer->getConnection()
 
 try {
     $installer->getConnection()->createTable($table);
+    $installer->getConnection()->query(
+        'INSERT INTO `shopgate_oauth_authorization_codes` (`authorization_code`, `client_id`, `user_id`, `expires`, `resource_id`, `resource_type`) SELECT `token`, 0, `user_id`, `expires`, `resource_id`, `type` FROM `shopgate_resource_auth_codes`;'
+    );
+    $installer->getConnection()->dropTable('shopgate_resource_auth_codes');
 } catch (Exception $e) {
     Mage::logException($e);
 }

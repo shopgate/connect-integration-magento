@@ -21,7 +21,7 @@
                 <deprecatedNode>shopgate_mysql4</deprecatedNode>
                 <entities>
                     <auth_code>
-                        <table>shopgate_resource_auth_codes</table>
+                        <table>shopgate_oauth_authorization_codes</table>
                     </auth_code>
                     <order_source>
                         <table>shopgate_order_sources</table>
