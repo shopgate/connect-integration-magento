@@ -22,7 +22,7 @@
 class Shopgate_Cloudapi_Customer_AccountController extends Mage_Core_Controller_Front_Action
 {
     /**
-     * create action for webapp call register customer
+     * Create action for WebApp call register customer
      */
     public function createAction()
     {

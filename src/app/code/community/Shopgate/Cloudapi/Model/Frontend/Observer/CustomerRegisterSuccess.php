@@ -33,13 +33,14 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
         $customer = $observer->getEvent()->getData('customer');
 
         /** @var Mage_Customer_AccountController $accountController */
-        $accountController = $observer->getEvent()->getAccountController();
+        $accountController = $observer->getEvent()->getData('account_controller');
         $response          = $accountController->getResponse();
+        $params            = $this->getRequest()->getParams();
         /* @todo-sg - create token and add to params */
-        $params      = array('token' => $customer->getId());
+        $params['token']   = $customer->getId();
         $redirectUrl = Mage::getUrl('shopgate-customer/customer_account/create', $params);
         $response->setRedirect($redirectUrl);
         $response->sendResponse();
-        $response->sendHeadersAndExit();
+        exit();
     }
 }
