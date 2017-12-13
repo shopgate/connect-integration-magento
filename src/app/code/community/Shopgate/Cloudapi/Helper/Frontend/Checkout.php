@@ -76,21 +76,20 @@ class Shopgate_Cloudapi_Helper_Frontend_Checkout extends Mage_Core_Helper_Abstra
     }
 
     /**
-     * @param int          $resourceId
-     * @param int | string $storeId
-     * @param int | null   $customerId
+     * @param int                   $resourceId
+     * @param Mage_Core_Model_Store $store
+     * @param int | null            $customerId
      *
      * @return Shopgate_Cloudapi_Model_Auth_Code
      * @throws Mage_Core_Exception
-     * @throws Mage_Core_Model_Store_Exception
      */
-    public function generateAuthToken($resourceId, $storeId, $customerId)
+    public function generateAuthToken($resourceId, $store, $customerId)
     {
         /** @var Magento_Db_Adapter_Pdo_Mysql $writeConnection */
         $writeConnection = Mage::getSingleton('core/resource')->getConnection('core_write');
         /** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $storage */
         $storage = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($writeConnection->getConnection()));
-        $storage->setStore(Mage::app()->getStore($storeId));
+        $storage->setStore($store);
 
         $token = $storage->createAuthItemByType(
             \Shopgate\OAuth2\Storage\Pdo::AUTH_TYPE_CHECKOUT,
