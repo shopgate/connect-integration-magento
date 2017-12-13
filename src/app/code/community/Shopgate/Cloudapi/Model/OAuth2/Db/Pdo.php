@@ -187,6 +187,42 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
     }
 
     /**
+     * Rewrites redirectUri parameter passed into resourceType
+     *
+     * @inheritdoc
+     * @throws Mage_Core_Exception
+     */
+    public function setAuthorizationCode(
+        $code, $clientId, $userId, $resourceType, $expires, $scope = null, $id_token = null
+    ) {
+        if (func_num_args() > 6) {
+            Mage::throwException('OpenID not yet supported');
+        }
+
+        // convert expires to date string
+        $expires = date('Y-m-d H:i:s', $expires);
+
+        // if it exists, update it.
+        if ($this->getAuthorizationCode($code)) {
+            $stmt = $this->db->prepare(
+                $sql = sprintf(
+                    'UPDATE %s SET client_id=:clientId, user_id=:userId, expires=:expires, scope=:scope, resource_type=:resourceType where authorization_code=:code',
+                    $this->config['code_table']
+                )
+            );
+        } else {
+            $stmt = $this->db->prepare(
+                sprintf(
+                    'INSERT INTO %s (authorization_code, client_id, user_id, expires, scope, resource_type) VALUES (:code, :clientId, :userId, :expires, :scope, :resourceType)',
+                    $this->config['code_table']
+                )
+            );
+        }
+
+        return $stmt->execute(compact('code', 'clientId', 'userId', 'resourceType', 'expires', 'scope'));
+    }
+
+    /**
      * Removes expired Access / Refresh token entries from the database
      */
     public function cleanOldEntries()
