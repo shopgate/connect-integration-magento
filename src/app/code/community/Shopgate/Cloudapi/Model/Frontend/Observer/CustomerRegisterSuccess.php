@@ -22,9 +22,18 @@
 class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
 {
     /**
+     * Register libraries
+     */
+    public function __construct()
+    {
+        Mage::getSingleton('shopgate_cloudapi/autoloader')->createAndRegister();
+    }
+
+    /**
      * Checks if the order is received from Shopgate API call.
      *
      * @param Varien_Event_Observer $observer
+     *
      * @return $this
      */
     public function execute(Varien_Event_Observer $observer)
@@ -34,15 +43,48 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
         /** @var Mage_Customer_Model_Customer $customer */
         $customer = $observer->getEvent()->getData('customer');
 
+        try {
+            $code = $this->createAuthorizationCode($customer);
+        } catch (Exception $exception) {
+            Mage::logException($exception);
+            $code = '0';
+        }
+
         /** @var Mage_Customer_AccountController $accountController */
         $accountController = $observer->getEvent()->getData('account_controller');
         $response          = $accountController->getResponse();
         $params            = $this->getRequest()->getParams();
         /* @todo-sg - create token and add to params */
-        $params['token']   = $customer->getId();
-        $redirectUrl = Mage::getUrl('shopgate-customer/customer_account/create', $params);
+        $params['token'] = $customer->getId();
+        $redirectUrl     = Mage::getUrl('shopgate-customer/customer_account/create', $params);
         $response->setRedirect($redirectUrl);
         $response->sendResponse();
         exit();
+    }
+
+    /**
+     * Create authorization code to pass to the pipeline
+     *
+     * @param Mage_Customer_Model_Customer $customer
+     *
+     * @return string
+     * @throws Mage_Core_Exception
+     */
+    private function createAuthorizationCode(Mage_Customer_Model_Customer $customer)
+    {
+        $server = Mage::getModel('shopgate_cloudapi/oAuth2_server')->initialize($customer->getStore());
+        /** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $storage */
+        $storage = $server->getStorage('authorization_code');
+        /** @var \OAuth2\ResponseType\AuthorizationCode $responseType */
+        $responseType = $server->getResponseType('code');
+
+        if (!$responseType instanceof \OAuth2\ResponseType\AuthorizationCode) {
+            return '0';
+        }
+
+        /** @noinspection PhpParamsInspection */
+        return $responseType->createAuthorizationCode(
+            $storage->getClientId(), $customer->getId(), 'customer/register'
+        );
     }
 }
