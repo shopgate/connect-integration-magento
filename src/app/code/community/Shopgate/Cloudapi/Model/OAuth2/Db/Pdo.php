@@ -22,7 +22,7 @@
 
 class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
 {
-    const KEY_RESOURCE_ID   = 'resource_id';
+    const KEY_RESOURCE_ID = 'resource_id';
 
     /**
      * @var Mage_Core_Model_Store
@@ -178,12 +178,48 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
      * @inheritdoc
      * @return Shopgate_Cloudapi_Model_Auth_Code
      */
-    public function getAuthItemByTokenAndType($token, $type)
+    public function getAuthItemByTokenAndType($authorizationCode, $resourceType)
     {
         $auth = Mage::getModel('shopgate_cloudapi/auth_code');
-        $auth->setData(parent::getAuthItemByTokenAndType($token, $type));
+        $auth->setData(parent::getAuthItemByTokenAndType($authorizationCode, $resourceType));
 
         return $auth;
+    }
+
+    /**
+     * Rewrites redirectUri parameter passed into resourceType
+     *
+     * @inheritdoc
+     * @throws Mage_Core_Exception
+     */
+    public function setAuthorizationCode(
+        $code, $clientId, $userId, $resourceType, $expires, $scope = null, $id_token = null
+    ) {
+        if (func_num_args() > 6) {
+            Mage::throwException('OpenID not yet supported');
+        }
+
+        // convert expires to date string
+        $expires = date('Y-m-d H:i:s', $expires);
+
+        // if it exists, update it.
+        if ($this->getAuthorizationCode($code)) {
+            $stmt = $this->db->prepare(
+                $sql = sprintf(
+                    'UPDATE %s SET client_id=:clientId, user_id=:userId, expires=:expires, scope=:scope, resource_type=:resourceType where authorization_code=:code',
+                    $this->config['code_table']
+                )
+            );
+        } else {
+            $stmt = $this->db->prepare(
+                sprintf(
+                    'INSERT INTO %s (authorization_code, client_id, user_id, expires, scope, resource_type) VALUES (:code, :clientId, :userId, :expires, :scope, :resourceType)',
+                    $this->config['code_table']
+                )
+            );
+        }
+
+        return $stmt->execute(compact('code', 'clientId', 'userId', 'resourceType', 'expires', 'scope'));
     }
 
     /**
@@ -206,13 +242,12 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
             'client_table'        => null,
             'access_token_table'  => 'shopgate_oauth_access_tokens',
             'refresh_token_table' => 'shopgate_oauth_refresh_tokens',
-            'code_table'          => null,
+            'code_table'          => 'shopgate_oauth_authorization_codes',
             'user_table'          => null,
             'jwt_table'           => null,
             'jti_table'           => null,
             'scope_table'         => null,
-            'public_key_table'    => null,
-            'resource_auth_codes' => 'shopgate_resource_auth_codes'
+            'public_key_table'    => null
         );
     }
 }

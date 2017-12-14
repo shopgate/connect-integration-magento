@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.0.1</version>
+            <version>3.1.0</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
@@ -21,7 +21,7 @@
                 <deprecatedNode>shopgate_mysql4</deprecatedNode>
                 <entities>
                     <auth_code>
-                        <table>shopgate_resource_auth_codes</table>
+                        <table>shopgate_oauth_authorization_codes</table>
                     </auth_code>
                     <order_source>
                         <table>shopgate_order_sources</table>
@@ -132,16 +132,4 @@
             </modules>
         </translate>
     </frontend>
-    <crontab>
-        <jobs>
-            <shopgate_cloudapi_delete_expired_tokens>
-                <schedule>
-                    <cron_expr>0 1 * * 0</cron_expr><!-- Every Sunday at 1 am-->
-                </schedule>
-                <run>
-                    <model>shopgate_cloudapi/observer::deleteExpiredTokens</model>
-                </run>
-            </shopgate_cloudapi_delete_expired_tokens>
-        </jobs>
-    </crontab>
 </config>

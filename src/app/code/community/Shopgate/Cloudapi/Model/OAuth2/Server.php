@@ -23,7 +23,8 @@
 class Shopgate_Cloudapi_Model_OAuth2_Server
 {
     /** Refresh token live time one year */
-    const TOKEN_LIFETIME_ONE_YEAR = '31536000';
+    const TOKEN_LIFETIME_ONE_YEAR   = '31536000';
+    const TOKEN_LIFETIME_ONE_MINUTE = '60';
 
     /**
      * Initializes the OAuth2 server to be used for
@@ -43,7 +44,12 @@ class Shopgate_Cloudapi_Model_OAuth2_Server
         $storage = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($writeConnection->getConnection()));
         $storage->setStore($store);
 
-        return new OAuth2\Server($storage, $this->getConfig(), $this->getGrantTypes($storage));
+        return new OAuth2\Server(
+            $storage,
+            $this->getConfig(),
+            $this->getGrantTypes($storage),
+            $this->getResponseTypes($storage)
+        );
     }
 
     /**
@@ -58,7 +64,25 @@ class Shopgate_Cloudapi_Model_OAuth2_Server
         return array(
             new \OAuth2\GrantType\ClientCredentials($storage),
             new \OAuth2\GrantType\UserCredentials($storage),
-            new \OAuth2\GrantType\RefreshToken($storage, array('always_issue_new_refresh_token' => true))
+            new \OAuth2\GrantType\RefreshToken($storage, array('always_issue_new_refresh_token' => true)),
+            new \OAuth2\GrantType\AuthorizationCode($storage)
+        );
+    }
+
+    /**
+     * Used to create auth code from observer
+     *
+     * @param \Shopgate\OAuth2\Storage\Pdo $storage
+     *
+     * @return array
+     */
+    protected function getResponseTypes(\Shopgate\OAuth2\Storage\Pdo $storage)
+    {
+        return array(
+            'code' => new OAuth2\ResponseType\AuthorizationCode(
+                $storage,
+                array('auth_code_lifetime' => self::TOKEN_LIFETIME_ONE_MINUTE)
+            )
         );
     }
 
