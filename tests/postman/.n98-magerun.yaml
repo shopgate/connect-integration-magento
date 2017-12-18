@@ -27,3 +27,8 @@ commands:
           shasum: e7f761d1ca60d16db867e24b5219de8815d0ea25
         extra:
           sample-data: sample-data-1.9.1.0
+
+    installation:
+        defaults:
+          currency: EUR
+          locale: de_DE
