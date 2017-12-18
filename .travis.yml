@@ -1,58 +1,36 @@
 dist: precise
-sudo: false
+sudo: required
 language: php
 services:
   - mysql
 install:
   - phpenv config-rm xdebug.ini || return 0
-  # handles node update
-  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
   - composer install --no-dev -d ${TRAVIS_BUILD_DIR}/src/lib/Shopgate/cloud-integration-magento-oauth2
+  # handles node update, do not move to script
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
 #cache:
 #  directories:
 #  - ${WEB_PATH}/${MAGE_FOLDER}
 php:
-  - 5.3 #@todo-sg: issue with oAuth2 plugin having 5.4 syntax
-  - 5.4
-  - 5.5
+  - 5.3 #todo-sg: upgrade oAuth extension to v1.11 when it is available
+#  - 5.4
+#  - 5.5
   - 5.6
 
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install apache2 libapache2-mod-fastcgi
-  # enable php-fpm
-  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-  - sudo a2enmod rewrite actions fastcgi alias
-  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - echo "always_populate_raw_post_data=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
-  - sudo chown -R travis:travis /var/lib/apache2/fastcgi
-  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-  # configure apache virtual hosts
-  - sudo cp -f ./tests/postman/travis-ci-apache /etc/apache2/sites-available/default
-  #- sudo sed -e "s?%TRAVIS_BUILD_DIR%?${WEB_PATH}?g" --in-place /etc/apache2/sites-available/default
-  - sudo chown -R travis:travis ${WEB_PATH}
-  - sudo chmod 750 ${WEB_PATH}
-  - sudo chown -R travis:travis /var/lock/apache2/
-  - sudo service apache2 restart
-  # n98 related
-  - wget --quiet https://files.magerun.net/n98-magerun.phar
-  - chmod +x ./n98-magerun.phar
-  - sudo mv ./n98-magerun.phar /usr/local/bin/n98
-  - sudo mkdir -p /usr/local/share/n98-magerun/scripts
-  - sudo cp -a ./tests/postman/n98-scripts/* /usr/local/share/n98-magerun/scripts/
-  - sudo chown -R travis:travis /usr/local/share/n98-magerun
-  - sudo chmod +x /usr/local/share/n98-magerun/scripts/*.magerun
-  - sudo cp -a ./tests/postman/.n98-magerun.yaml ~/
-  - sudo chmod +x ~/.n98-magerun.yaml
-  # newman related
-  - npm install newman --global
+  - sudo chmod +x ./tests/postman/test_env_setup.sh
+  - ./tests/postman/test_env_setup.sh
+  # aws related
+  #- pip install --user awscli # or test 'travis setup s3'
+  #- mkdir -p ./s3
+  #- ~/.local/bin/aws s3 cp s3://MY_BUCKET_NAME/ ./s3 --cache-control="max-age=31536000" --recursive
 script:
   - chmod +x ./tests/postman/magento_setup.sh
   - ./tests/postman/magento_setup.sh
   - cd ${TRAVIS_BUILD_DIR}/tests/postman/newman
-  - newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=CE" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}"
+  - newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}"
 after_failure:
+  # one can check for a link in the terminal as this report file is uploaded to that link
   - curl --upload-file ./verbose-report.json https://transfer.sh/verbose-report.json
   - sudo less -FX /var/log/apache2/error.log
 
@@ -91,7 +69,10 @@ env:
     USER1_EMAIL="konstantin.kiritsenko+1@shopgate.com"
     USER_PASS="test123"
   matrix:
-    - MAGE_FOLDER="mage1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2"
-    - MAGE_FOLDER="mage1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0"
-    - MAGE_FOLDER="mage1936" MAGE_PACKAGE="magento-mirror-1.9.3.6"
+    - MAGE_FOLDER="mage_ce_1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2" MAGE_TYPE="CE"
+#    - MAGE_FOLDER="mage_ce_1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0" MAGE_TYPE="CE"
+#    - MAGE_FOLDER="mage_ce_1936" MAGE_PACKAGE="magento-mirror-1.9.3.6" MAGE_TYPE="CE"
+#    - MAGE_FOLDER="mage_ee_11202" MAGE_PACKAGE="magento-1.12.0.2" MAGE_TYPE="EE"
+#    - MAGE_FOLDER="mage_ee_11302" MAGE_PACKAGE="magento-1.13.0.2" MAGE_TYPE="EE"
+#    - MAGE_FOLDER="mage_ee_11437" MAGE_PACKAGE="magento-1.14.3.7" MAGE_TYPE="EE"
    #- MAGE_LOCALE="de_DE" //todo-sg: matrix later as it is important
