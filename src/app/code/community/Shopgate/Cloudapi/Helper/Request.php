@@ -20,25 +20,18 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Helper_Frontend_Utility extends Mage_Core_Helper_Abstract
+class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
 {
     /**
-     * Config path for styles update
+     * Parameter indicating a shopgate cloud request
      */
-    const CONFIG_PATH_CSS_PATTERN = 'shopgate_cloudapi/layout/styles';
+    const SGCLOUD_INAPP = 'sgcloud_inapp';
 
     /**
-     * @return false|string
+     * @return bool
      */
-    public function getStyles()
+    public function isShopgateRequest()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
-        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
-            $styleContent = trim(Mage::getStoreConfig(self::CONFIG_PATH_CSS_PATTERN));
-
-            return $styleContent !== '' ? $styleContent : false;
-        }
-
-        return false;
+        return Mage::app()->getRequest()->getParam(self::SGCLOUD_INAPP) == 1;
     }
 }

@@ -23,11 +23,6 @@
 class Shopgate_Cloudapi_Helper_Frontend_Template extends Mage_Core_Helper_Abstract
 {
     /**
-     * Session variable indicating that this purchase belongs to Shopgate
-     */
-    const SESSION_IS_SHOPGATE_REQUEST = 'is_shopgate_checkout';
-
-    /**
      * Non-framed responsive template we can use
      * in the app
      */
@@ -42,16 +37,8 @@ class Shopgate_Cloudapi_Helper_Frontend_Template extends Mage_Core_Helper_Abstra
     public function getShopgatePageTemplate()
     {
         /** @noinspection PhpUndefinedMethodInspection */
-        return $this->isShopgateRequest()
+        return Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
             ? self::PAGE_TEMPLATE_EMPTY
             : Mage::app()->getLayout()->getBlock('root')->getTemplate();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isShopgateRequest()
-    {
-        return Mage::getSingleton('checkout/session')->getData(self::SESSION_IS_SHOPGATE_REQUEST);
     }
 }

@@ -36,11 +36,9 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        $session = Mage::getSingleton('checkout/session');
-
-        if ($session->getData(
-                Shopgate_Cloudapi_Helper_Frontend_Template::SESSION_IS_SHOPGATE_REQUEST
-            ) && !Mage::registry('prevent_observer')
+        /** @noinspection PhpUndefinedMethodInspection */
+        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
+            && !Mage::registry('prevent_observer')
         ) {
             /** @var Mage_Sales_Model_Order $order */
             $order = $observer->getEvent()->getOrder();
