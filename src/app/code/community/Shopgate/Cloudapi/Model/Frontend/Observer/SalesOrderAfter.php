@@ -33,14 +33,13 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
      * @todo-sg: send the order to the pipeline for tracking
      *
      * @param Varien_Event_Observer $observer
+     *
+     * @throws Mage_Core_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        $session = Mage::getSingleton('checkout/session');
-
-        if ($session->getData(
-                Shopgate_Cloudapi_Helper_Frontend_Template::SESSION_IS_SHOPGATE_REQUEST
-            ) && !Mage::registry('prevent_observer')
+        if (!Mage::registry('prevent_observer')
+            && Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
         ) {
             /** @var Mage_Sales_Model_Order $order */
             $order = $observer->getEvent()->getOrder();
