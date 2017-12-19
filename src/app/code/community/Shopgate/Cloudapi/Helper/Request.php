@@ -32,6 +32,6 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      */
     public function isShopgateRequest()
     {
-        return Mage::app()->getRequest()->getParam(self::KEY_SGCLOUD_INAPP) === 1;
+        return Mage::app()->getRequest()->getParam(self::KEY_SGCLOUD_INAPP) === '1';
     }
 }

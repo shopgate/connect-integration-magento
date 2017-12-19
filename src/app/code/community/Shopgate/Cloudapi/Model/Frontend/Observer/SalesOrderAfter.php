@@ -33,6 +33,8 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
      * @todo-sg: send the order to the pipeline for tracking
      *
      * @param Varien_Event_Observer $observer
+     *
+     * @throws Mage_Core_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {

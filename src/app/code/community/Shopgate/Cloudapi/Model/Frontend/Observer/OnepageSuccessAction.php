@@ -26,14 +26,12 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
      *
      * @param Varien_Event_Observer $observer
      * @return $this
-     *
-     * @throws Mage_Core_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
         $orderIds = $observer->getEvent()->getData('order_ids');
 
-        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateRequest() || !isset($orderIds[0])) {
+        if (!isset($orderIds[0]) || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
             return $this;
         }
 
