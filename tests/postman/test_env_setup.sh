@@ -38,5 +38,9 @@ then
 	echo 'subbed default config values'
 fi
 
+if [[ ${MAGE_TYPE} == "EE" ]]; then
+	pip install --user awscli
+fi
+
 # newman related
 npm install newman --global

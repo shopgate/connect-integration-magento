@@ -43,6 +43,12 @@
       "value": "shopgate/v2/products",
       "enabled": true,
       "type": "text"
+    },
+    {
+      "key": "mage_type",
+      "value": "EE",
+      "enabled": true,
+      "type": "text"
     }
   ],
   "_postman_variable_scope": "globals",

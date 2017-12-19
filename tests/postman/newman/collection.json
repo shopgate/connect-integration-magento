@@ -129,6 +129,78 @@
           "response": []
         },
         {
+          "name": "Token: authorization_code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "e455c6e7-0555-4b6e-a1e9-e4df1e547257",
+                "type": "text/javascript",
+                "exec": [
+                  "if (false) { //skip for now as there is no good way to test",
+                  "    if (responseCode.code === 200) {",
+                  "        var jsonData = pm.response.json();",
+                  "        pm.environment.set(\"guest-access-token\", jsonData.access_token);",
+                  "    }",
+                  "    ",
+                  "    pm.test('Successfull call', function(){",
+                  "        pm.response.to.be.success;",
+                  "    });",
+                  "    ",
+                  "    pm.test(\"Response follows the correct json oAuth2 specifications\", function () {",
+                  "        var jsonData = pm.response.json();",
+                  "        pm.response.to.have.jsonBody('token_type','Bearer');",
+                  "        pm.response.to.have.jsonBody('expires_in', 3600);",
+                  "        pm.response.to.have.jsonBody('access_token');",
+                  "        pm.response.to.have.jsonBody('scope', null);",
+                  "    });",
+                  "}",
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "3092705d-cd39-4811-b8df-1c6636d785a4",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "PHP_AUTH_USER",
+                "value": "{{client_id}}"
+              },
+              {
+                "key": "PHP_AUTH_PW",
+                "value": "{{client_secret}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"authorization_code\",\n  \"code\": \"a946748ca6f9d99d09abb3b6350ee98e5e45121e\"\n}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_auth_token}}",
+              "host": [
+                "{{domain}}{{endpoint_auth_token}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
           "name": "Token: refresh_token",
           "event": [
             {
@@ -1067,67 +1139,15 @@
                   "response": []
                 },
                 {
-                  "name": "GiftCard Physical",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "type": "text/javascript",
-                        "exec": [
-                          "if (pm.environment.get(\"mage_type\") === 'EE') {",
-                          "    pm.test('Successfull call', function(){",
-                          "        pm.response.to.be.success;",
-                          "    });",
-                          "} else {",
-                          "    pm.test(\"Giftcards don't exist in the Community edition\", function () {",
-                          "        pm.response.to.have.status(404);",
-                          "    });",
-                          "}"
-                        ]
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{customer-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"physical-gc-with-select-price\",\n\t    \"qty\": 1,\n\t    \"giftcard_amount\": \"15\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_carts_id_items}}",
-                      "host": [
-                        "{{domain}}{{endpoint_carts_id_items}}"
-                      ]
-                    },
-                    "description": "Physical Gift Card with Select (dropdown) price set"
-                  },
-                  "response": []
-                },
-                {
                   "name": "GiftCard Combined",
                   "event": [
                     {
                       "listen": "test",
                       "script": {
+                        "id": "80c8e513-1bca-429b-a1fb-9b129d4f7efe",
                         "type": "text/javascript",
                         "exec": [
-                          "if (pm.environment.get(\"mage_type\") === 'EE') {",
+                          "if (pm.variables.get(\"mage_type\") === 'EE') {",
                           "    pm.test('Successfull call', function(){",
                           "        pm.response.to.be.success;",
                           "    });",
@@ -1178,9 +1198,10 @@
                     {
                       "listen": "test",
                       "script": {
+                        "id": "fa327b11-c19c-48fb-b431-b26cdbe5f546",
                         "type": "text/javascript",
                         "exec": [
-                          "if (pm.environment.get(\"mage_type\") === 'EE') {",
+                          "if (pm.variables.get(\"mage_type\") === 'EE') {",
                           "    pm.test('Successfull call', function(){",
                           "        pm.response.to.be.success;",
                           "    });",
@@ -1231,9 +1252,10 @@
                     {
                       "listen": "test",
                       "script": {
+                        "id": "e40fb867-1ea6-49a3-8742-cbd3f98c0247",
                         "type": "text/javascript",
                         "exec": [
-                          "if (pm.environment.get(\"mage_type\") === 'EE') {",
+                          "if (pm.variables.get(\"mage_type\") === 'EE') {",
                           "    pm.test('Successfull call', function(){",
                           "        pm.response.to.be.success;",
                           "    });",
@@ -2526,67 +2548,15 @@
                   "response": []
                 },
                 {
-                  "name": "GiftCard Physical",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "type": "text/javascript",
-                        "exec": [
-                          "if (pm.environment.get(\"mage_type\") === 'EE') {",
-                          "    pm.test('Successfull call', function(){",
-                          "        pm.response.to.be.success;",
-                          "    });",
-                          "} else {",
-                          "    pm.test(\"Giftcards don't exist in the Community edition\", function () {",
-                          "        pm.response.to.have.status(404);",
-                          "    });",
-                          "}"
-                        ]
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{guest-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "[\n  {\n    \"product\": {\n\t    \"sku\": \"physical-gc-with-select-price\",\n\t    \"qty\": 1,\n\t    \"giftcard_amount\": \"15\",\n\t    \"giftcard_sender_name\": \"Some sender name\",\n\t    \"giftcard_recipient_name\": \"Some recipient name\",\n\t    \"giftcard_message\": \"Message to recipient\"\n\t  }\n  }\n]"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_carts_id_items}}",
-                      "host": [
-                        "{{domain}}{{endpoint_carts_id_items}}"
-                      ]
-                    },
-                    "description": "Physical Gift Card with Select (dropdown) price set"
-                  },
-                  "response": []
-                },
-                {
                   "name": "GiftCard Combined",
                   "event": [
                     {
                       "listen": "test",
                       "script": {
+                        "id": "2721dfff-e833-4863-b072-cf5ddd78ce2d",
                         "type": "text/javascript",
                         "exec": [
-                          "if (pm.environment.get(\"mage_type\") === 'EE') {",
+                          "if (pm.variables.get(\"mage_type\") === 'EE') {",
                           "    pm.test('Successfull call', function(){",
                           "        pm.response.to.be.success;",
                           "    });",
@@ -2637,9 +2607,10 @@
                     {
                       "listen": "test",
                       "script": {
+                        "id": "6949ae5b-fa51-4534-a9f1-9cddb7881023",
                         "type": "text/javascript",
                         "exec": [
-                          "if (pm.environment.get(\"mage_type\") === 'EE') {",
+                          "if (pm.variables.get(\"mage_type\") === 'EE') {",
                           "    pm.test('Successfull call', function(){",
                           "        pm.response.to.be.success;",
                           "    });",
@@ -2690,9 +2661,10 @@
                     {
                       "listen": "test",
                       "script": {
+                        "id": "0edd61ba-1533-4c9e-8bf7-a0ca2691d49a",
                         "type": "text/javascript",
                         "exec": [
-                          "if (pm.environment.get(\"mage_type\") === 'EE') {",
+                          "if (pm.variables.get(\"mage_type\") === 'EE') {",
                           "    pm.test('Successfull call', function(){",
                           "        pm.response.to.be.success;",
                           "    });",
@@ -13631,37 +13603,31 @@
               "response": []
             },
             {
-              "name": "GiftCard Physical/dropdown: 900",
+              "name": "GiftCard Physical/dropdown: 454",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "id": "8f139093-c317-437e-b371-544698256bd2",
                     "type": "text/javascript",
                     "exec": [
                       "//Testing for EE edition specifics",
                       "var jsonData = pm.response.json();",
-                      "if (jsonData.sku === 'physical-gc-with-select-price') {",
+                      "if (pm.variables.get(\"mage_type\") === 'EE') {",
                       "    pm.test(\"Status code is 200\", function () {",
                       "        pm.response.to.have.status(200);",
                       "    });",
-                      "    pm.test(\"Product is indeed GC. Has stock data. Customer grp 0\", function () {",
+                      "",
+                      "    pm.test(\"Product is indeed GC. Has stock data. \", function () {",
                       "        ",
                       "        pm.expect(jsonData.type_id).to.eql('giftcard');",
-                      "        pm.expect(jsonData.stock_item.product_id).to.eql('900');",
-                      "        pm.expect(jsonData.customer_group_id).to.eql(0);",
-                      "    });",
-                      "",
-                      "    pm.test(\"Giftcard dropdown has 3 price options\", function(){",
-                      "        var count = Object.keys(pm.response.json().giftcard_amounts).length;",
-                      "        pm.expect(count).to.eql(3);",
+                      "        pm.expect(jsonData.stock_item.product_id).to.eql('454');",
                       "    });",
                       "} else {",
                       "    pm.test(\"Product is not visible individually\", function () {",
                       "        pm.response.to.have.status(404);",
                       "    });",
-                      "}",
-                      "",
-                      ""
+                      "}"
                     ]
                   }
                 }
@@ -13686,12 +13652,12 @@
                 ],
                 "body": {},
                 "url": {
-                  "raw": "{{domain}}{{endpoint_products}}/900",
+                  "raw": "{{domain}}{{endpoint_products}}/454",
                   "host": [
                     "{{domain}}{{endpoint_products}}"
                   ],
                   "path": [
-                    "900"
+                    "454"
                   ]
                 },
                 "description": ""
@@ -14094,16 +14060,17 @@
               "response": []
             },
             {
-              "name": "GiftCard Physical/dropdown: 900",
+              "name": "GiftCard Physical/dropdown: 454",
               "event": [
                 {
                   "listen": "test",
                   "script": {
+                    "id": "fff5006d-d64d-4a12-bd06-e20c18783d7c",
                     "type": "text/javascript",
                     "exec": [
                       "//Testing for EE edition specifics",
                       "var jsonData = pm.response.json();",
-                      "if (jsonData.sku === 'physical-gc-with-select-price') {",
+                      "if (pm.variables.get(\"mage_type\") === 'EE') {",
                       "    pm.test(\"Status code is 200\", function () {",
                       "        pm.response.to.have.status(200);",
                       "    });",
@@ -14111,19 +14078,13 @@
                       "    pm.test(\"Product is indeed GC. Has stock data. \", function () {",
                       "        ",
                       "        pm.expect(jsonData.type_id).to.eql('giftcard');",
-                      "        pm.expect(jsonData.stock_item.product_id).to.eql('900');",
-                      "    });",
-                      "",
-                      "    pm.test(\"Giftcard dropdown has 3 price options\", function(){",
-                      "        var count = Object.keys(pm.response.json().giftcard_amounts).length;",
-                      "        pm.expect(count).to.eql(3);",
+                      "        pm.expect(jsonData.stock_item.product_id).to.eql('454');",
                       "    });",
                       "} else {",
                       "    pm.test(\"Product is not visible individually\", function () {",
                       "        pm.response.to.have.status(404);",
                       "    });",
-                      "}",
-                      ""
+                      "}"
                     ]
                   }
                 }
@@ -14148,12 +14109,12 @@
                 ],
                 "body": {},
                 "url": {
-                  "raw": "{{domain}}{{endpoint_products}}/900",
+                  "raw": "{{domain}}{{endpoint_products}}/454",
                   "host": [
                     "{{domain}}{{endpoint_products}}"
                   ],
                   "path": [
-                    "900"
+                    "454"
                   ]
                 },
                 "description": ""
