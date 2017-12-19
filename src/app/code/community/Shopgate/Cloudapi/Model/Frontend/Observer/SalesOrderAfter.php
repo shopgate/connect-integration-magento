@@ -36,9 +36,8 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
-        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
-            && !Mage::registry('prevent_observer')
+        if (!Mage::registry('prevent_observer')
+            && Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
         ) {
             /** @var Mage_Sales_Model_Order $order */
             $order = $observer->getEvent()->getOrder();

@@ -36,7 +36,6 @@ class Shopgate_Cloudapi_Helper_Frontend_Template extends Mage_Core_Helper_Abstra
      */
     public function getShopgatePageTemplate()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         return Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
             ? self::PAGE_TEMPLATE_EMPTY
             : Mage::app()->getLayout()->getBlock('root')->getTemplate();
