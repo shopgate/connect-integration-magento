@@ -13,7 +13,6 @@ if [[ ${MAGE_TYPE} == "EE" ]]; then
 	# sample data related
 	mkdir ./sample
 	tar -xzf ./package/ee/data/magento-sample-data-1.14.2.4.tar.gz -C ./sample
-	#cp -rln ./sample/magento-sample-data-1.14.2.4/ ./${MAGE_FOLDER} #todo-sg: test speed
 	rsync -a ./sample/magento-sample-data-1.14.2.4/ ./${MAGE_FOLDER}
 	mysql -e "CREATE database ${MAGE_FOLDER};"
 	mysql ${MAGE_FOLDER} < ./${MAGE_FOLDER}/magento_sample_data_for_1.14.2.4.sql
