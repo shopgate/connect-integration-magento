@@ -16,13 +16,17 @@ php:
   - 5.6
 
 before_script:
-  - chmod +x ./tests/postman/test_env_setup.sh
-  - ./tests/postman/test_env_setup.sh
+  - if [[ "$TRAVIS_TAG" ]] || [ "$TRAVIS_EVENT_TYPE" != "push" ]; then
+      chmod +x ./tests/postman/test_env_setup.sh;
+      ./tests/postman/test_env_setup.sh;
+    fi
 script:
-  - chmod +x ./tests/postman/magento_setup.sh
-  - ./tests/postman/magento_setup.sh
-  - cd ${TRAVIS_BUILD_DIR}/tests/postman/newman
-  - newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}"
+  - if [[ "$TRAVIS_TAG" ]] || [ "$TRAVIS_EVENT_TYPE" != "push" ]; then
+      chmod +x ./tests/postman/magento_setup.sh;
+      ./tests/postman/magento_setup.sh;
+      cd ${TRAVIS_BUILD_DIR}/tests/postman/newman;
+      newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}";
+    fi
 after_failure:
   # one can check for a link in the terminal as this report file is uploaded to that link
   - curl --upload-file ./verbose-report.json https://transfer.sh/verbose-report.json
@@ -35,7 +39,9 @@ jobs:
       before_script:
         - sudo apt-get install xmlstarlet
       script:
-        - if [[ "$TRAVIS_TAG" ]]; then ./release/build_release_package.sh ; fi
+        - if [[ "$TRAVIS_TAG" ]]; then
+            ./release/build_release_package.sh;
+          fi
       provider: releases
       api_key: ${GITHUB_TOKEN}
       file: cloud-integration-magento-${TRAVIS_TAG}.tgz
@@ -45,8 +51,7 @@ jobs:
 
 notifications:
   slack:
-    rooms:
-      secure: y40pECJxcziSDPLqL/xjAUYR2wcgEYK8lLAh+qGrwwnQd19PVqZzcht0LfPiFC0HHO+lULvzwBZe1iMLLt91h2IDKvtkXHrwPIOr5RJiciPifKnhA/QK28Xc2XEfrooL4IPsf+eTSyB3Y6EmSqnSOPiIhOXW8YogzgNvfUbFnsUKReX3z1F+vfvy2vZ4einL1E5Qkyclk89apvans+0bFvnJHrlfw+6rXsrGLhkjr2f2GopmAA6sHOZqBTvwCEKbtxYfWB3gZl9LMfdWjUJv1VhX3CsieQKPGdzIagZY3GLX3pFX8vk08/8k4ystmmHWetvceKQBfrdZ/NcT25lqtKPtL6Wus4gVcKqhmVXyqElGNirrLK0CeuZ2lGbgkt1h2YDUYhbs0lPu4hv2LfP6wj5Ct3fvfiYCBiGPO5Ql9hGNFUNJJjkmtiaolqbHZ1XbD5ODftMMGUsIZWKnXe97gizbofHEvjIxfcbG+npQZ3yunaMwOzQhfV/Gay4enR08Rq67k2g1A0kCdY/G6hb5kKP5gfvXlp75cqaVeW2p1zbx8nhTYlU84YAHtxm2bMWPXrn/Gesc3jZZzWjGV01YO7qnhn54s5DeSePQIWLNzymxghJ+vCbju0GAmznUJrjwjylRaRpm+yQbkS5RaFaA94hdTLT5PzqjC2H8uVuYAOU=
+    secure: p2iPDFozZji1TiOopmiXiZHiNmPFTRFKzrjiG+wxyPnAJ3BWzCGT1LDYLYnDL2CJY/uk3ZhUuX0QBZLAVaJTdZVMI9IrzD2QOii4VywMFJcA80zh5r7L3ReRYy9yBY1RBh2qR/Lbu9n+Iu4kKcKAfjjNkvBc/WSQo9c7hYGsRgeLYANPuaCW8FpNCWfDODtWaFwXQ7WWOfCYEdABDjthGhtaekN3El2CjQulWrUgMLCs1EQrjO4dm8n9/C840CaLlzsKmb7lNmqSj9oHQBUhmkqfm5VTJqP9Vb12X1AjY/Mu+9BfyUT4jBWAiqxPKJNwzuwNqeqXwc0OlRZaleyWKtIVurUQiXJVjiskOHpkjZ/vyjU/oLFigbiUDgmiCQVNsoJT1l6JjKjOSGuW28PXmDJWZf6MLM1jfh7zUqvQAZJkCr22dc8pEX6SzirxHFs7zdwAgRWxMkIaC7JUnbM+OCh1D+BqwCgmvqYrkBmpaX9/F8AySz5ZJa0Cz/BMUvx7QQOxW21D+BSkggR2ohkDQe2FCrg0iVSKCjD24P28TwncpO17kF+dIt9qF2zS/PTWt8mvwTEg0SsonU3cDM+a3jGak8AK9s6+YZaBdPdlZhyn9TI3Cx3tomha3juJU4wAH8jljzn6RxdTdEvdsqaEkWbzJRB+gKgKBlBFewj0HsQ=
     on_success: change
     on_failure: always
 
@@ -66,6 +71,6 @@ env:
     - MAGE_FOLDER="mage_ce_1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2" MAGE_TYPE="CE"
     - MAGE_FOLDER="mage_ce_1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0" MAGE_TYPE="CE" MAGE_LOCALE="en_US"
     - MAGE_FOLDER="mage_ce_1936" MAGE_PACKAGE="magento-mirror-1.9.3.6" MAGE_TYPE="CE"
-    - MAGE_FOLDER="mage_ee_11202" MAGE_PACKAGE="magento-1.12.0.2" MAGE_TYPE="EE"
+    - MAGE_FOLDER="mage_ee_11202" MAGE_PACKAGE="magento-1.12.0.2" MAGE_TYPE="EE" MAGE_LOCALE="en_US"
     - MAGE_FOLDER="mage_ee_11302" MAGE_PACKAGE="magento-1.13.0.2" MAGE_TYPE="EE"
     - MAGE_FOLDER="mage_ee_11437" MAGE_PACKAGE="magento-1.14.3.7" MAGE_TYPE="EE"
