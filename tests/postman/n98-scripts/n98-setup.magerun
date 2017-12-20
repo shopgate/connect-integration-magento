@@ -1,0 +1,22 @@
+#!/usr/bin/env magento installation script
+
+install --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="${folder}" --installSampleData=yes --useDefaultConfigParams=yes --magentoVersionByName="${package}" --installationFolder="${folder}" --baseUrl="http://travis.dev/${folder}/" --no-interaction ${misc_param1} ${misc_param2}
+# in magento folder right now
+
+config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/customer_number" ${customer_number}
+config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/shop_number" ${shop_number}
+config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/api_key" ${api_key}
+
+# creates in General group by default, no good way to set up without using php scripts
+customer:create ${user1_email} ${user_pass} "Test1" "Mock1" "1"
+
+# add cloud api plugin to magento structure
+! rsync -a ${TRAVIS_BUILD_DIR}/src/ ${WEB_PATH}/${folder} > /dev/null
+! echo "SetEnv MAGE_IS_DEVELOPER_MODE true" >> .htaccess
+
+# flush cache and get out of folder to preserve state
+cache:clean
+# install all resources
+sys:setup:run
+cache:clean
+! cd ..

@@ -1,0 +1,34 @@
+commands:
+  N98\Magento\Command\Installer\InstallCommand:
+    magento-packages:
+      - name: sg-magento-mirror-1.8.1.0
+        version: 1.8.1.0
+        dist:
+          url: https://github.com/OpenMage/magento-mirror/archive/1.8.1.0.zip
+          type: zip
+          shasum: 3fbff399799177e8048cc4048f66213fedd132c1
+        extra:
+          sample-data: sample-data-1.9.1.0
+
+      - name: sg-magento-mirror-1.8.0.0
+        version: 1.7.0.2
+        dist:
+          url: https://github.com/OpenMage/magento-mirror/archive/1.8.0.0.zip
+          type: zip
+          shasum: 9b1dee54d0b047b66d7ad6b8ea1ff414b7773093
+        extra:
+          sample-data: sample-data-1.9.1.0
+
+      - name: sg-magento-mirror-1.7.0.2
+        version: 1.7.0.2
+        dist:
+          url: https://github.com/OpenMage/magento-mirror/archive/1.7.0.2.zip
+          type: zip
+          shasum: e7f761d1ca60d16db867e24b5219de8815d0ea25
+        extra:
+          sample-data: sample-data-1.9.1.0
+
+    installation:
+        defaults:
+          currency: EUR
+          locale: de_DE
