@@ -16,7 +16,7 @@ php:
   - 5.6
 
 before_script:
-  - sudo chmod +x ./tests/postman/test_env_setup.sh
+  - chmod +x ./tests/postman/test_env_setup.sh
   - ./tests/postman/test_env_setup.sh
 script:
   - chmod +x ./tests/postman/magento_setup.sh
