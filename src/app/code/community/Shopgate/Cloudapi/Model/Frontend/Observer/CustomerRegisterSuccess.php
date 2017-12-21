@@ -39,7 +39,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
     public function execute(Varien_Event_Observer $observer)
     {
         /* @todo-sg - Check is shopgate App register */
-        //return $this;
+        return $this;
         /** @var Mage_Customer_Model_Customer $customer */
         $customer = $observer->getEvent()->getData('customer');
 
