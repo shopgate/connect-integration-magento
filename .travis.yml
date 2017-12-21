@@ -10,18 +10,19 @@ install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
 
 php:
-  - 5.3 #todo-sg: upgrade oAuth extension to v1.11 when it is available
+  - 5.3
   - 5.4
   - 5.5
   - 5.6
 
 before_script:
-  - if [[ "$TRAVIS_TAG" ]] || [ "$TRAVIS_EVENT_TYPE" != "push" ]; then
+  # If it's a fork PR (no secret keys will exist), then run only CE edition tests. And run only on non commit calls.
+  - if [[ ( "$AWS_ACCESS_KEY_ID" || "$MAGE_TYPE" == "CE" ) && ( "$TRAVIS_TAG" || "$TRAVIS_EVENT_TYPE" != "push" ) ]]; then
       chmod +x ./tests/postman/test_env_setup.sh;
       ./tests/postman/test_env_setup.sh;
     fi
 script:
-  - if [[ "$TRAVIS_TAG" ]] || [ "$TRAVIS_EVENT_TYPE" != "push" ]; then
+  - if [[ ( "$AWS_ACCESS_KEY_ID" || "$MAGE_TYPE" == "CE" ) && ( "$TRAVIS_TAG" || "$TRAVIS_EVENT_TYPE" != "push" ) ]]; then
       chmod +x ./tests/postman/magento_setup.sh;
       ./tests/postman/magento_setup.sh;
       cd ${TRAVIS_BUILD_DIR}/tests/postman/newman;
