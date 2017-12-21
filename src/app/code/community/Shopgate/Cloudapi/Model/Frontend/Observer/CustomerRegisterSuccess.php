@@ -53,10 +53,9 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
         /** @var Mage_Customer_AccountController $accountController */
         $accountController = $observer->getEvent()->getData('account_controller');
         $response          = $accountController->getResponse();
-        $params            = $this->getRequest()->getParams();
-        /* @todo-sg - create token and add to params */
-        $params['token'] = $customer->getId();
-        $redirectUrl     = Mage::getUrl('shopgate-customer/customer_account/create', $params);
+        $params            = Mage::app()->getRequest()->getParams();
+        $params['token']   = $code;
+        $redirectUrl       = Mage::getUrl('shopgate-customer/customer_account/create', $params);
         $response->setRedirect($redirectUrl);
         $response->sendResponse();
         exit();
