@@ -4,3 +4,4 @@ vendor
 /release/magento
 /release/magento1702.zip
 cloud-integration-magento-*.tgz
+verbose-report.json
