@@ -189,32 +189,31 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
      * Load product by its SKU or ID provided in request
      *
      * @return Mage_Catalog_Model_Product
+     * @throws Mage_Api2_Exception
+     * @throws Exception
      */
     protected function getProduct()
     {
-        if (is_null($this->product)) {
+        if (null === $this->product) {
             $productId = $this->getRequest()->getParam('id');
             /** @var $productHelper Mage_Catalog_Helper_Product */
             $productHelper = Mage::helper('catalog/product');
             $product       = $productHelper->getProduct($productId, $this->_getStore()->getId());
-            if (!($product->getId())) {
+            if (!$product->getId()) {
                 $this->_critical(self::RESOURCE_NOT_FOUND);
             }
             // check if product belongs to website current
             if ($this->_getStore()->getId()) {
-                $isValidWebsite = in_array($this->_getStore()->getWebsiteId(), $product->getWebsiteIds());
+                $isValidWebsite = in_array($this->_getStore()->getWebsiteId(), $product->getWebsiteIds(), false);
                 if (!$isValidWebsite) {
                     $this->_critical(self::RESOURCE_NOT_FOUND);
                 }
             }
-            // Check display settings for customers & guests
-            if ($this->getApiUser()->getType() != Mage_Api2_Model_Auth_User_Admin::USER_TYPE) {
-                // check if product assigned to any website and can be shown
-                if ((!Mage::app()->isSingleStoreMode() && !count($product->getWebsiteIds()))
-                    || !$productHelper->canShow($product)
-                ) {
-                    $this->_critical(self::RESOURCE_NOT_FOUND);
-                }
+            // check if product assigned to any website and can be shown
+            if (!$productHelper->canShow($product)
+                || (!Mage::app()->isSingleStoreMode() && !count($product->getWebsiteIds()))
+            ) {
+                $this->_critical(self::RESOURCE_NOT_FOUND);
             }
             $this->product = $product;
         }
