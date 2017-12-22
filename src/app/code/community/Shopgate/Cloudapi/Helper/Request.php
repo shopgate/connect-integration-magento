@@ -28,10 +28,46 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     const KEY_SGCLOUD_INAPP = 'sgcloud_inapp';
 
     /**
+     * Name and value of cookie created for sg cloud requests
+     */
+    const COOKIE_NAME = 'shopgate';
+    const COOKIE_VALUE = '1';
+
+    /**
      * @return bool
      */
     public function isShopgateRequest()
     {
-        return Mage::app()->getRequest()->getParam(self::KEY_SGCLOUD_INAPP) === '1';
+        if ($this->parameterDetected()) {
+            $this->setCookie();
+
+            return true;
+        }
+
+        return $this->cookieIsSet();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function parameterDetected()
+    {
+        return Mage::app()->getRequest()->getParam(self::KEY_SGCLOUD_INAPP) === self::COOKIE_VALUE;
+    }
+
+    /**
+     * Will set the shopgate cookie
+     */
+    protected function setCookie()
+    {
+        Mage::getSingleton('core/cookie')->set(self::COOKIE_NAME, self::COOKIE_VALUE, 0);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function cookieIsSet()
+    {
+        return Mage::getSingleton('core/cookie')->get(self::COOKIE_NAME) === self::COOKIE_VALUE;
     }
 }
