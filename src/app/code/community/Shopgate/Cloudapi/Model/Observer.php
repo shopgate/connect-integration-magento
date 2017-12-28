@@ -29,16 +29,4 @@ class Shopgate_Cloudapi_Model_Observer
     {
         Mage::getSingleton('shopgate_cloudapi/autoloader')->createAndRegister();
     }
-
-    /**
-     * Delete expired tokens
-     */
-    public function deleteExpiredTokens()
-    {
-        /** @var Magento_Db_Adapter_Pdo_Mysql $writeConnection */
-        $writeConnection = Mage::getSingleton('core/resource')->getConnection('core_write');
-        /** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $oAuth2DbPdoModel */
-        $oAuth2DbPdoModel = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($writeConnection->getConnection()));
-        $oAuth2DbPdoModel->cleanOldEntries();
-    }
 }

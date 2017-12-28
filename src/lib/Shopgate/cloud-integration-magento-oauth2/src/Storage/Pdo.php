@@ -237,48 +237,4 @@ class Pdo extends \OAuth2\Storage\Pdo
 
         return $stmt->rowCount() > 0;
     }
-
-    /**
-     * Removes all expired resources from the 'resource_auth_codes' table
-     *
-     * @return bool
-     */
-    public function removeExpiredResourceAuthCodes()
-    {
-        return $this->removeExpiredTokens($this->config['resource_auth_codes']);
-    }
-
-    /**
-     * Removes all expired resources from the 'access_token_table'
-     *
-     * @return bool
-     */
-    public function removeExpiredAccessTokens()
-    {
-        return $this->removeExpiredTokens($this->config['access_token_table']);
-    }
-
-    /**
-     * Removes all expired resources from the 'refresh_token_table'
-     *
-     * @return bool
-     */
-    public function removeExpiredRefreshTokens()
-    {
-        return $this->removeExpiredTokens($this->config['refresh_token_table']);
-    }
-
-    /**
-     * Helps remove data rows that are expired
-     *
-     * @param string $table
-     *
-     * @return bool - whether the action was successful
-     */
-    protected function removeExpiredTokens($table)
-    {
-        $now = date('Y-m-d H:i:s', time());
-
-        return $this->db->exec(sprintf('DELETE FROM %s WHERE expires < "%s"', $table, $now)) > 0;
-    }
 }

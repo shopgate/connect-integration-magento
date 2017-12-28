@@ -187,16 +187,6 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
     }
 
     /**
-     * Removes expired Access / Refresh token entries from the database
-     */
-    public function cleanOldEntries()
-    {
-        $this->removeExpiredAccessTokens();
-        $this->removeExpiredRefreshTokens();
-        $this->removeExpiredResourceAuthCodes();
-    }
-
-    /**
      * Retrieves table configurations to use in OAuth2 database creation.
      * Empty values means that it will not create those tables.
      */
