@@ -1,0 +1,61 @@
+<meta id="libshopgate">
+<script type="text/javascript">
+  SGEvent = {
+    __call: function (eventName, eventArguments) {
+
+      console.log('Received event ' + eventName + ' with args ' + JSON.stringify(eventArguments));
+
+      if (!eventArguments || !Array.isArray(eventArguments)) {
+        eventArguments = [];
+      }
+
+      if (SGEvent[eventName]) {
+        SGEvent[eventName].apply(SGEvent, eventArguments);
+      }
+    },
+
+    /**
+     * This is event is called by the app to recognize if the lib is ready
+     *
+     * @returns {boolean}
+     */
+    isDocumentReady: function () {
+      return true;
+    }
+  };
+  document.observe("dom:loaded", function () {
+    var commands = [{
+      'c': "pipelineRequest",
+      'p': {
+        'serial': '1000',
+        'name': 'login_v1',
+        'strategy': 'auth_code',
+        'parameters': {'code': '<?php echo $this->getToken(); ?>'}
+      }
+    }];
+
+    if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
+      SGJavascriptBridge.dispatchCommandsForVersion(commands, '9.0');
+    } else {
+      SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '9.0');
+    }
+  });
+  SGEvent.pipelineResponse = function (err, serial, output) {
+    if (serial === '1000') {
+      var commands = [
+        {
+          'c': 'broadcastEvent',
+          'p': {
+            'event': 'closeInAppBrowser',
+            'data' : '<?php echo $this->getSgCloudCallbackData() ?>'
+          }
+        }
+      ];
+      if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
+        SGJavascriptBridge.dispatchCommandsForVersion(commands, '9.0');
+      } else {
+        SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '9.0');
+      }
+    }
+  };
+</script>

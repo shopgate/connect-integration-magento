@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright Shopgate Inc.
  *
@@ -18,7 +19,6 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
 class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Template
 {
     /**
@@ -28,5 +28,14 @@ class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Temp
     public function getToken()
     {
         return $this->getRequest()->getParam('token');
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function getSgCloudCallbackData()
+    {
+        return $this->getRequest()->getParam('sgcloud_callback_data');
     }
 }
