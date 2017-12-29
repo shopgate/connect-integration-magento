@@ -46,6 +46,12 @@
         {
           'c': 'broadcastEvent',
           'p': {
+            'event' : 'userLoggedIn'
+          }
+        },
+        {
+          'c': 'broadcastEvent',
+          'p': {
             'event': 'closeInAppBrowser',
             'data' : '<?php echo $this->getSgCloudCallbackData() ?>'
           }
