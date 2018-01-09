@@ -29,9 +29,11 @@ class Shopgate_Cloudapi_Model_Auth
      * @param Mage_Api2_Model_Request $request
      *
      * @return Mage_Api2_Model_Auth_User_Abstract
-     * @throws Mage_Core_Model_Store_Exception
+     * @throws Exception
      * @throws Mage_Api2_Exception
      * @throws Mage_Core_Exception
+     * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Controller_Response_Exception
      */
     public function authenticate(Mage_Api2_Model_Request $request)
     {
@@ -89,7 +91,9 @@ class Shopgate_Cloudapi_Model_Auth
      * @param Mage_Core_Model_Store $store
      *
      * @return null | string - customer email address or null if token belongs to a guest
+     * @throws Exception
      * @throws Mage_Api2_Exception
+     * @throws Zend_Controller_Response_Exception
      */
     protected function validateRequest(Mage_Core_Model_Store $store)
     {
