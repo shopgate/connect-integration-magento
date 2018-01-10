@@ -25,19 +25,22 @@
   };
   document.observe("dom:loaded", function () {
     var commands = [{
-      'c': "pipelineRequest",
+      'c': "sendPipelineRequest",
       'p': {
         'serial': '1000',
         'name': 'login_v1',
-        'strategy': 'auth_code',
-        'parameters': {'code': '<?php echo $this->getToken(); ?>'}
+        "type": "trusted",
+        'input': {
+          'strategy': 'auth_code',
+          'parameters': {'code': '<?php echo $this->getToken(); ?>'}
+        }
       }
     }];
 
     if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
-      SGJavascriptBridge.dispatchCommandsForVersion(commands, '9.0');
+      SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
     } else {
-      SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '9.0');
+      SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
     }
   });
   SGEvent.pipelineResponse = function (err, serial, output) {
@@ -58,10 +61,12 @@
         }
       ];
       if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
-        SGJavascriptBridge.dispatchCommandsForVersion(commands, '9.0');
+        SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
       } else {
-        SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '9.0');
+        SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
       }
     }
   };
 </script>
+
+
