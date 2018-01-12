@@ -89,6 +89,11 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
                      ->loadByCustomer($this->getApiUser()->getUserId());
 
         $quote = $quote->getId() ? $quote : $this->loadInactiveCustomerQuote();
+
+        if (!$quote->getId()) {
+            $quote = $this->createNewCustomerQuote($this->getApiUser()->getUserId());
+        }
+
         if ($validate) {
             $this->validateCustomerQuote($quote);
         }
@@ -145,6 +150,28 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
                      ->setOrder('entity_id', Varien_Data_Collection::SORT_ORDER_DESC)
                      ->setPageSize(1)
                      ->getFirstItem();
+
+        return $quote;
+    }
+
+    /**
+     * Creates a new quote for customerId and sets it to active
+     *
+     * @param $customerId
+     * @return Mage_Sales_Model_Quote
+     */
+    private function createNewCustomerQuote($customerId)
+    {
+        $quoteId = Mage::getModel('checkout/cart_api')->create($this->_getStore());
+        /** @var Mage_Sales_Model_Quote $quote */
+        $quote = Mage::getModel('sales/quote')
+                     ->setStore($this->_getStore())
+                     ->load($quoteId);
+
+        $quote->getShippingAddress()->setCollectShippingRates(true);
+        $quote->setCustomerId($customerId)
+              ->setIsActive(1)
+              ->save();
 
         return $quote;
     }
