@@ -80,6 +80,9 @@
                 <shopgate_cloudapi_checkout>
                     <file>shopgate/cloudapi/checkout.xml</file>
                 </shopgate_cloudapi_checkout>
+                <shopgate_cloudapi_customer>
+                    <file>shopgate/cloudapi/customer.xml</file>
+                </shopgate_cloudapi_customer>
             </updates>
         </layout>
         <routers>
@@ -132,4 +135,18 @@
             </shopgate_cloudapi_delete_expired_tokens>
         </jobs>
     </crontab>
+    <default>
+        <shopgate_cloudapi>
+            <layout>
+                <styles>
+                    <![CDATA[
+                        .page-title {display: none;}
+                        .customer-account-create .back-link {display: none;}
+                        .checkout-onepage-success a {pointer-events: none; cursor: default;}
+                        #checkout-review-submit .f-left {display: none;}
+                    ]]>
+                </styles>
+            </layout>
+        </shopgate_cloudapi>
+    </default>
 </config>
