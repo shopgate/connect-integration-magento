@@ -157,7 +157,7 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
     /**
      * Creates a new quote for customerId and sets it to active
      *
-     * @param $customerId
+     * @param int $customerId
      * @return Mage_Sales_Model_Quote
      */
     private function createNewCustomerQuote($customerId)
