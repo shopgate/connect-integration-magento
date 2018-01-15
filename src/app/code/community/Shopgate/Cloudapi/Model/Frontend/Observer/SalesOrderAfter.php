@@ -38,12 +38,13 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        if (!Mage::registry('prevent_observer')
-            && Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
+        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
+            && !Mage::registry('prevent_observer')
         ) {
             /** @var Mage_Sales_Model_Order $order */
-            $order = $observer->getEvent()->getOrder();
-            if ($shopgateStoreId = $this->getShopgateStoreId()) {
+            $order           = $observer->getEvent()->getData('order');
+            $shopgateStoreId = $this->getShopgateStoreId();
+            if ($shopgateStoreId) {
                 $order->setStoreId($shopgateStoreId);
             }
             /** @var Shopgate_Cloudapi_Model_Order_Source $orderSourceModel */
@@ -55,12 +56,10 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
 
     /**
      * @return int|null
+     * @throws Mage_Core_Model_Store_Exception
      */
     protected function getShopgateStoreId()
     {
-        /** @var Mage_Core_Model_Store $store */
-        $store = Mage::getModel('core/store')->loadConfig(self::SHOPGATE_STORE_CODE);
-
-        return $store->getStoreId();
+        return Mage::app()->getStore(self::SHOPGATE_STORE_CODE)->getId();
     }
 }

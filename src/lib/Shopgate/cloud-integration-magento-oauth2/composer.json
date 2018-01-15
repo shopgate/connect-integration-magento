@@ -12,7 +12,7 @@
   ],
   "require": {
     "php": ">=5.3.9",
-    "bshaffer/oauth2-server-php": "~1.8",
+    "bshaffer/oauth2-server-php": "1.9.* || ~1.11",
     "roave/security-advisories": "dev-master"
   },
   "require-dev": {

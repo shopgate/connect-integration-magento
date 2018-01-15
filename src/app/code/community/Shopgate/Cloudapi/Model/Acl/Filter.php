@@ -19,33 +19,22 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
-/**
- * @method setSource(string $source)
- * @method string getSource()
- * @method setOrderId(int $orderId)
- * @method int getOrderId()
- */
-
-class Shopgate_Cloudapi_Model_Order_Source extends Mage_Core_Model_Abstract
+class Shopgate_Cloudapi_Model_Acl_Filter extends Mage_Api2_Model_Acl_Filter
 {
-    const SOURCE_WEBCHECKOUT = 'webcheckout';
-
-   /**
-     * Init model
-     */
-    protected function _construct()
-    {
-        $this->_init('shopgate_cloudapi/order_source');
-    }
-
     /**
-     * @param int $orderId
+     * @inheritdoc
      */
-    public function addForWebCheckout($orderId)
+    public function in(array $requestData)
     {
-        $this->setSource(self::SOURCE_WEBCHECKOUT);
-        $this->setOrderId($orderId);
-        $this->save();
+        /**
+         * @todo-sg: this will also need to be done for custom options of products
+         */
+        if (isset($requestData['product']['recurring_profile_start_datetime'])) {
+            $date = Mage::app()->getLocale()->date($requestData['product']['recurring_profile_start_datetime']);
+            /** Converting date to locale defined */
+            $requestData['product']['recurring_profile_start_datetime'] = $date->toString();
+        }
+
+        return parent::in($requestData);
     }
 }

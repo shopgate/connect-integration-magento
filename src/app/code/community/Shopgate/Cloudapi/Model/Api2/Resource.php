@@ -40,6 +40,9 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
      */
     const FAULT_RESOURCE = '';
 
+    /** @var Shopgate_Cloudapi_Model_Acl_Filter */
+    protected $filter;
+
     /**
      * Hack rewrite of the main dispatch so that we
      * can pass empty POST requests
@@ -153,5 +156,18 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
         $faults   = Mage::getModel('api/config', $path)->getFaults($resource);
 
         return (string)isset($faults[$code]) ? $faults[$code]['message'] : $fallback;
+    }
+
+    /**
+     * @inheritdoc
+     * @return Shopgate_Cloudapi_Model_Acl_Filter
+     */
+    public function getFilter()
+    {
+        if (!$this->filter) {
+            $this->filter = Mage::getModel('shopgate_cloudapi/acl_filter', $this);
+        }
+
+        return $this->filter;
     }
 }
