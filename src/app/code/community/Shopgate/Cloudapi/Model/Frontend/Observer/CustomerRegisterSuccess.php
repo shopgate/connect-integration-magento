@@ -33,13 +33,14 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
      * Checks if the order is received from Shopgate API call.
      *
      * @param Varien_Event_Observer $observer
-     *
      * @return $this
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        /* @todo-sg - Check is shopgate App register */
-        return $this;
+        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
+            return $this;
+        }
+
         /** @var Mage_Customer_Model_Customer $customer */
         $customer = $observer->getEvent()->getData('customer');
 
@@ -53,12 +54,13 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
         /** @var Mage_Customer_AccountController $accountController */
         $accountController = $observer->getEvent()->getData('account_controller');
         $response          = $accountController->getResponse();
-        $params            = Mage::app()->getRequest()->getParams();
+        $params            = $this->getUtmParams();
         $params['token']   = $code;
         $redirectUrl       = Mage::getUrl('shopgate-customer/customer_account/create', $params);
         $response->setRedirect($redirectUrl);
         $response->sendResponse();
         exit();
+
     }
 
     /**
@@ -83,7 +85,23 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
 
         /** @noinspection PhpParamsInspection */
         return $responseType->createAuthorizationCode(
-            $storage->getClientId(), $customer->getId(), 'customer/register'
+            $storage->getClientId(), $customer->getData('email'), 'customer/register'
         );
+    }
+
+    /**
+     * Retrieves Google tracking parameters if there are any
+     *
+     * @return array
+     */
+    private function getUtmParams()
+    {
+        $params  = array();
+        $utmKeys = array('utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content');
+        foreach ($utmKeys as $key) {
+            $params[$key] = Mage::app()->getRequest()->getParam($key);
+        }
+
+        return array_filter($params);
     }
 }

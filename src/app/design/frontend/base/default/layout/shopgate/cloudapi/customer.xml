@@ -6,9 +6,9 @@
                 <template>page/empty.phtml</template>
             </action>
         </reference>
-        <reference name="content">
+        <reference name="head">
             <block type="shopgate_cloudapi/customer_account" name="shopgate_cloudapi.customer.account"
-                   template="shopgate/cloudapi/customer/account/create.phtml"/>
+                   template="shopgate/cloudapi/header/customer/account/create.phtml"/>
         </reference>
     </shopgate_cloudapi_customer_customer_account_create>
 </layout>
