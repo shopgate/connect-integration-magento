@@ -89,6 +89,7 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
                      ->loadByCustomer($this->getApiUser()->getUserId());
 
         $quote = $quote->getId() ? $quote : $this->loadInactiveCustomerQuote();
+
         if ($validate) {
             $this->validateCustomerQuote($quote);
         }
