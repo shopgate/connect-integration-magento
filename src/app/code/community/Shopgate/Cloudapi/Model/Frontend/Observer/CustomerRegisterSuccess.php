@@ -33,30 +33,34 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
      * Checks if the order is received from Shopgate API call.
      *
      * @param Varien_Event_Observer $observer
+     * @return $this
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
-            /** @var Mage_Customer_Model_Customer $customer */
-            $customer = $observer->getEvent()->getData('customer');
-
-            try {
-                $code = $this->createAuthorizationCode($customer);
-            } catch (Exception $exception) {
-                Mage::logException($exception);
-                $code = '0';
-            }
-
-            /** @var Mage_Customer_AccountController $accountController */
-            $accountController = $observer->getEvent()->getData('account_controller');
-            $response          = $accountController->getResponse();
-            $params            = $this->getUtmParams();
-            $params['token']   = $code;
-            $redirectUrl       = Mage::getUrl('shopgate-customer/customer_account/create', $params);
-            $response->setRedirect($redirectUrl);
-            $response->sendResponse();
-            exit();
+        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
+            return $this;
         }
+
+        /** @var Mage_Customer_Model_Customer $customer */
+        $customer = $observer->getEvent()->getData('customer');
+
+        try {
+            $code = $this->createAuthorizationCode($customer);
+        } catch (Exception $exception) {
+            Mage::logException($exception);
+            $code = '0';
+        }
+
+        /** @var Mage_Customer_AccountController $accountController */
+        $accountController = $observer->getEvent()->getData('account_controller');
+        $response          = $accountController->getResponse();
+        $params            = $this->getUtmParams();
+        $params['token']   = $code;
+        $redirectUrl       = Mage::getUrl('shopgate-customer/customer_account/create', $params);
+        $response->setRedirect($redirectUrl);
+        $response->sendResponse();
+        exit();
+
     }
 
     /**

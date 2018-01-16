@@ -27,7 +27,7 @@ class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Temp
      */
     public function getToken()
     {
-        return $this->getRequest()->getParam('token');
+        return $this->getRequest()->getParam('token', '');
     }
 
     /**
@@ -36,6 +36,6 @@ class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Temp
      */
     public function getSgCloudCallbackData()
     {
-        return $this->getRequest()->getParam('sgcloud_callback_data');
+        return $this->getRequest()->getParam('sgcloud_callback_data', '');
     }
 }
