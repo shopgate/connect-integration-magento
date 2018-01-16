@@ -45,7 +45,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
 
         try {
             $code = $this->createAuthorizationCode($customer);
-            $this->createNewCustomerQuote($customer->getId());
+            Mage::helper('shopgate_cloudapi/frontend_quote')->createNewCustomerQuote($customer);
         } catch (Exception $exception) {
             Mage::logException($exception);
             $code = '0';
@@ -86,24 +86,5 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
         return $responseType->createAuthorizationCode(
             $storage->getClientId(), $customer->getId(), 'customer/register'
         );
-    }
-
-    /**
-     * Creates a new quote for customerId and sets it to active
-     *
-     * @param int $customerId
-     */
-    private function createNewCustomerQuote($customerId)
-    {
-        $quoteId = Mage::getModel('checkout/cart_api')->create(Mage::app()->getDefaultStoreView());
-        /** @var Mage_Sales_Model_Quote $quote */
-        $quote = Mage::getModel('sales/quote')
-                     ->setStore(Mage::app()->getDefaultStoreView())
-                     ->load($quoteId);
-
-        $quote->getShippingAddress()->setCollectShippingRates(true);
-        $quote->setCustomerId($customerId)
-              ->setIsActive(1)
-              ->save();
     }
 }
