@@ -42,6 +42,7 @@
     } else {
       SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
     }
+
   });
   SGEvent.pipelineResponse = function (err, serial, output) {
     if (serial === '1000') {
@@ -49,22 +50,30 @@
         {
           'c': 'broadcastEvent',
           'p': {
-            'event' : 'userLoggedIn'
-          }
-        },
-        {
-          'c': 'broadcastEvent',
-          'p': {
-            'event': 'closeInAppBrowser',
-            'data' : '<?php echo $this->getSgCloudCallbackData() ?>'
+            'event': 'userLoggedIn'
           }
         }
       ];
+
+      if (<?php echo $this->getSgCloudIsCheckout() ? 'false' : 'true'; ?>) {
+        commands.push(
+          {
+            'c': 'broadcastEvent',
+            'p': {
+              'event': 'closeInAppBrowser',
+              'data': '<?php echo $this->getSgCloudCallbackData() ?>'
+            }
+          }
+        )
+      }
+
       if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
         SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
       } else {
         SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
       }
+
+      window.location.href = '<?php echo $this->getCheckoutUrl(); ?>';
     }
   };
 </script>

@@ -36,6 +36,36 @@ class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Temp
      */
     public function getSgCloudCallbackData()
     {
-        return $this->getRequest()->getParam('sgcloud_callback_data', '');
+        if ($this->getRequestHelper()->cookieIsSet(Shopgate_Cloudapi_Helper_Request::KEY_SGCLOUD_CALLBACK_DATA)) {
+            return $this->getRequestHelper()->cookieGetValue(
+                Shopgate_Cloudapi_Helper_Request::KEY_SGCLOUD_CALLBACK_DATA
+            );
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getSgCloudIsCheckout()
+    {
+        return $this->getRequestHelper()->cookieIsSet(Shopgate_Cloudapi_Helper_Request::KEY_SGCLOUD_IS_CHECKOUT);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCheckoutUrl()
+    {
+        return $this->getUrl('checkout/onepage', array('_secure'=>true));
+    }
+
+    /**
+     * @return Shopgate_Cloudapi_Helper_Request
+     */
+    protected function getRequestHelper()
+    {
+        return Mage::helper('shopgate_cloudapi/request');
     }
 }

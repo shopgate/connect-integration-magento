@@ -28,6 +28,16 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     const KEY_SGCLOUD_INAPP = 'sgcloud_inapp';
 
     /**
+     * Parameter indicating a shopgate cloud is checkout
+     */
+    const KEY_SGCLOUD_IS_CHECKOUT = 'sgcloud_is_checkout';
+
+    /**
+     * Parameter indicating a shopgate cloud sgcloud_callback_data
+     */
+    const KEY_SGCLOUD_CALLBACK_DATA = 'sgcloud_callback_data';
+
+    /**
      * Name and value of cookie created for sg cloud requests
      */
     const COOKIE_NAME = 'shopgate';
@@ -38,19 +48,19 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      */
     public function isShopgateRequest()
     {
-        if ($this->parameterDetected()) {
+        if ($this->parameterInAppDetected()) {
             $this->setCookie();
 
             return true;
         }
 
-        return $this->cookieIsSet();
+        return $this->cookieIsSet(self::KEY_SGCLOUD_INAPP,  self::COOKIE_VALUE);
     }
 
     /**
      * @return bool
      */
-    protected function parameterDetected()
+    protected function parameterInAppDetected()
     {
         return Mage::app()->getRequest()->getParam(self::KEY_SGCLOUD_INAPP) === self::COOKIE_VALUE;
     }
@@ -60,14 +70,59 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      */
     protected function setCookie()
     {
-        Mage::getSingleton('core/cookie')->set(self::COOKIE_NAME, self::COOKIE_VALUE, 0);
+        $data = new Varien_Object();
+        $data->setData(self::KEY_SGCLOUD_INAPP, self::COOKIE_VALUE);
+        $data->setData(self::KEY_SGCLOUD_IS_CHECKOUT, $this->getParam(self::KEY_SGCLOUD_IS_CHECKOUT));
+        $data->setData(self::KEY_SGCLOUD_CALLBACK_DATA, $this->getParam(self::KEY_SGCLOUD_CALLBACK_DATA));
+
+        Mage::getSingleton('core/cookie')->set(self::COOKIE_NAME, json_encode($data->getData()), 0);
     }
 
     /**
+     * @param string $key
+     * @param mixed  $value
      * @return bool
      */
-    protected function cookieIsSet()
+    public function cookieIsSet($key, $value = false)
     {
-        return Mage::getSingleton('core/cookie')->get(self::COOKIE_NAME) === self::COOKIE_VALUE;
+        $data = $this->getCookie();
+
+        if (!isset($data[$key])) {
+            return false;
+        }
+
+        if (!$value) {
+            return true;
+        } else {
+            return $data[$key] === $value;
+        }
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function cookieGetValue($key)
+    {
+        $data = $this->getCookie();
+
+        return $data[$key];
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    protected function getParam($key)
+    {
+       return Mage::app()->getRequest()->getParam($key);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCookie()
+    {
+        return json_decode(Mage::getSingleton('core/cookie')->get(self::COOKIE_NAME), true);
     }
 }
