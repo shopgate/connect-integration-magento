@@ -20,24 +20,24 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Helper_Frontend_Utility extends Mage_Core_Helper_Abstract
+class Shopgate_Cloudapi_Helper_Frontend_Template extends Mage_Core_Helper_Abstract
 {
     /**
-     * Config path for styles update
+     * Non-framed responsive template we can use
+     * in the app
      */
-    const CONFIG_PATH_CSS_PATTERN = 'shopgate_cloudapi/layout/styles';
+    const PAGE_TEMPLATE_EMPTY = 'page/empty.phtml';
 
     /**
-     * @return false|string
+     * Returns the checkout page template based on
+     * shopgate session flag set in the observer
+     *
+     * @return string
      */
-    public function getStyles()
+    public function getShopgatePageTemplate()
     {
-        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
-            $styleContent = trim(Mage::getStoreConfig(self::CONFIG_PATH_CSS_PATTERN));
-
-            return $styleContent !== '' ? $styleContent : false;
-        }
-
-        return false;
+        return Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
+            ? self::PAGE_TEMPLATE_EMPTY
+            : Mage::app()->getLayout()->getBlock('root')->getTemplate();
     }
 }

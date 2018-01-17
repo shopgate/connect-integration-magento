@@ -19,25 +19,22 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
-class Shopgate_Cloudapi_Helper_Frontend_Utility extends Mage_Core_Helper_Abstract
+class Shopgate_Cloudapi_Model_Acl_Filter extends Mage_Api2_Model_Acl_Filter
 {
     /**
-     * Config path for styles update
+     * @inheritdoc
      */
-    const CONFIG_PATH_CSS_PATTERN = 'shopgate_cloudapi/layout/styles';
-
-    /**
-     * @return false|string
-     */
-    public function getStyles()
+    public function in(array $requestData)
     {
-        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
-            $styleContent = trim(Mage::getStoreConfig(self::CONFIG_PATH_CSS_PATTERN));
-
-            return $styleContent !== '' ? $styleContent : false;
+        /**
+         * @todo-sg: this will also need to be done for custom options of products
+         */
+        if (isset($requestData['product']['recurring_profile_start_datetime'])) {
+            $date = Mage::app()->getLocale()->date($requestData['product']['recurring_profile_start_datetime']);
+            /** Converting date to locale defined */
+            $requestData['product']['recurring_profile_start_datetime'] = $date->toString();
         }
 
-        return false;
+        return parent::in($requestData);
     }
 }

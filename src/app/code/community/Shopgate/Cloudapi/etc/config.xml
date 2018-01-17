@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.1.0</version>
+            <version>3.0.1</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
@@ -21,7 +21,7 @@
                 <deprecatedNode>shopgate_mysql4</deprecatedNode>
                 <entities>
                     <auth_code>
-                        <table>shopgate_oauth_authorization_codes</table>
+                        <table>shopgate_resource_auth_codes</table>
                     </auth_code>
                     <order_source>
                         <table>shopgate_order_sources</table>
@@ -56,15 +56,6 @@
                     </shopgate_checkout_onepage_controller_success_action>
                 </observers>
             </checkout_onepage_controller_success_action>
-            <customer_register_success>
-                <observers>
-                    <shopgate_customer_register_success>
-                        <type>model</type>
-                        <class>shopgate_cloudapi/frontend_observer_customerRegisterSuccess</class>
-                        <method>execute</method>
-                    </shopgate_customer_register_success>
-                </observers>
-            </customer_register_success>
         </events>
         <blocks>
             <shopgate_cloudapi>
@@ -103,13 +94,13 @@
                     <frontName>shopgate-checkout</frontName>
                 </args>
             </shopgate_cloudapi_checkout_redirect>
-            <shopgate_cloudapi_customer>
+            <shopgate>
                 <use>standard</use>
                 <args>
                     <module>Shopgate_Cloudapi</module>
-                    <frontName>shopgate-customer</frontName>
+                    <frontName>shopgate</frontName>
                 </args>
-            </shopgate_cloudapi_customer>
+            </shopgate>
         </routers>
         <events>
             <checkout_onepage_controller_success_action>
@@ -132,4 +123,30 @@
             </modules>
         </translate>
     </frontend>
+    <crontab>
+        <jobs>
+            <shopgate_cloudapi_delete_expired_tokens>
+                <schedule>
+                    <cron_expr>0 1 * * 0</cron_expr><!-- Every Sunday at 1 am-->
+                </schedule>
+                <run>
+                    <model>shopgate_cloudapi/observer::deleteExpiredTokens</model>
+                </run>
+            </shopgate_cloudapi_delete_expired_tokens>
+        </jobs>
+    </crontab>
+    <default>
+        <shopgate_cloudapi>
+            <layout>
+                <styles>
+                    <![CDATA[
+                        .page-title {display: none;}
+                        .customer-account-create .back-link {display: none;}
+                        .checkout-onepage-success a {pointer-events: none; cursor: default;}
+                        #checkout-review-submit .f-left {display: none;}
+                    ]]>
+                </styles>
+            </layout>
+        </shopgate_cloudapi>
+    </default>
 </config>

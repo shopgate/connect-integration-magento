@@ -34,14 +34,11 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
      *
      * @param Varien_Event_Observer $observer
      *
-     * @throws Mage_Core_Model_Store_Exception
      * @throws Mage_Core_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        $session = Mage::getSingleton('checkout/session');
-
-        if ($session->getData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT)
+        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
             && !Mage::registry('prevent_observer')
         ) {
             /** @var Mage_Sales_Model_Order $order */

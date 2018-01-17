@@ -1,5 +1,16 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
+    <customer_account_create translate="label">
+        <reference name="head">
+            <block type="shopgate_cloudapi/layout" name="styles.update"
+                   template="shopgate/cloudapi/header/styles.phtml"/>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate">
+                <template helper="shopgate_cloudapi/frontend_template/getShopgatePageTemplate"/>
+            </action>
+        </reference>
+    </customer_account_create>
     <shopgate_cloudapi_customer_customer_account_create>
         <reference name="root">
             <action method="setTemplate">
