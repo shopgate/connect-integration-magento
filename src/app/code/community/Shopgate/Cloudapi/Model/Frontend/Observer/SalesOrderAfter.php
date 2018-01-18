@@ -63,7 +63,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
         $store = Mage::app()->getStore(self::SHOPGATE_STORE_CODE);
 
         if ($store->getId()) {
-            $store->getId();
+            return $store->getId();
         }
 
         return false;
