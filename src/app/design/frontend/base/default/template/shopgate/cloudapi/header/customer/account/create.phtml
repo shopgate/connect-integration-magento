@@ -55,13 +55,13 @@
         }
       ];
 
-      if (<?php echo $this->getSgCloudIsCheckout() ? 'false' : 'true'; ?>) {
+      if (<?php echo $this->isShopgateCheckout() ? 'false' : 'true'; ?>) {
         commands.push(
           {
             'c': 'broadcastEvent',
             'p': {
               'event': 'closeInAppBrowser',
-              'data': '<?php echo $this->getSgCloudCallbackData() ?>'
+              'data': '<?php echo $this->getShopgateCallbackData() ?>'
             }
           }
         )

@@ -30,7 +30,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     /**
      * Parameter indicating a shopgate cloud is checkout
      */
-    const KEY_SGCLOUD_IS_CHECKOUT = 'sgcloud_is_checkout';
+    const KEY_SGCLOUD_CHECKOUT = 'sgcloud_checkout';
 
     /**
      * Parameter indicating a shopgate cloud sgcloud_callback_data
@@ -72,7 +72,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     {
         $data = new Varien_Object();
         $data->setData(self::KEY_SGCLOUD_INAPP, self::COOKIE_VALUE);
-        $data->setData(self::KEY_SGCLOUD_IS_CHECKOUT, $this->getParam(self::KEY_SGCLOUD_IS_CHECKOUT));
+        $data->setData(self::KEY_SGCLOUD_CHECKOUT, $this->getParam(self::KEY_SGCLOUD_CHECKOUT));
         $data->setData(self::KEY_SGCLOUD_CALLBACK_DATA, $this->getParam(self::KEY_SGCLOUD_CALLBACK_DATA));
 
         Mage::getSingleton('core/cookie')->set(self::COOKIE_NAME, json_encode($data->getData()), 0);
@@ -106,7 +106,23 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     {
         $data = $this->getCookie();
 
-        return $data[$key];
+        return isset($data[$key]) ? $data[$key] : false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShopgateCheckout()
+    {
+        return $this->cookieIsSet(self::KEY_SGCLOUD_CHECKOUT);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShopgateCallbackData()
+    {
+        return $this->cookieIsSet(self::KEY_SGCLOUD_CALLBACK_DATA);
     }
 
     /**
@@ -123,6 +139,15 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      */
     protected function getCookie()
     {
-        return json_decode(Mage::getSingleton('core/cookie')->get(self::COOKIE_NAME), true);
+        $data = Mage::getSingleton('core/cookie')->get(self::COOKIE_NAME);
+
+        if ($data !== false) {
+            $result = json_decode($data, true);
+            if (is_array($result)) {
+                return $result;
+            }
+        }
+
+        return array();
     }
 }

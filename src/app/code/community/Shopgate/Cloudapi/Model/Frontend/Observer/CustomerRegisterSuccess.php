@@ -22,6 +22,11 @@
 class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
 {
     /**
+     * Shopgate customer account create route
+     */
+    const SHOPGATE_CUSTOMER_ACCOUNT_CREATE_ROUTE = 'shopgate-customer/customer_account/create';
+
+    /**
      * Register libraries
      */
     public function __construct()
@@ -58,13 +63,13 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
         $params            = $this->getUtmParams();
         $params['token']   = $code;
 
-        if ($this->getRequestHelper()->cookieIsSet(Shopgate_Cloudapi_Helper_Request::KEY_SGCLOUD_IS_CHECKOUT)) {
+        if ($this->getRequestHelper()->cookieIsSet(Shopgate_Cloudapi_Helper_Request::KEY_SGCLOUD_CHECKOUT)) {
             /** @var Mage_Customer_Model_Session $session */
             $session = Mage::getSingleton('customer/session')->setCustomerAsLoggedIn($customer);
             $session->renewSession();
         }
 
-        $redirectUrl = Mage::getUrl('shopgate-customer/customer_account/create', $params);
+        $redirectUrl = Mage::getUrl(self::SHOPGATE_CUSTOMER_ACCOUNT_CREATE_ROUTE, $params);
         $response->setRedirect($redirectUrl);
         $response->sendResponse();
         exit();
