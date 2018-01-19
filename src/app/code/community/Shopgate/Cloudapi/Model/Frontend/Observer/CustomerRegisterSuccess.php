@@ -63,7 +63,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
         $params            = $this->getUtmParams();
         $params['token']   = $code;
 
-        if ($this->getRequestHelper()->cookieIsSet(Shopgate_Cloudapi_Helper_Request::KEY_SGCLOUD_CHECKOUT)) {
+        if ($this->getRequestHelper()->isShopgateCheckout()) {
             /** @var Mage_Customer_Model_Session $session */
             $session = Mage::getSingleton('customer/session')->setCustomerAsLoggedIn($customer);
             $session->renewSession();
