@@ -81,6 +81,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     /**
      * @param string $key
      * @param mixed  $value
+     *
      * @return bool
      */
     public function cookieIsSet($key, $value = false)
@@ -100,6 +101,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
 
     /**
      * @param string $key
+     *
      * @return mixed
      */
     public function cookieGetValue($key)
@@ -127,6 +129,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
 
     /**
      * @param string $key
+     *
      * @return mixed
      */
     protected function getParam($key)
