@@ -67,5 +67,13 @@ class Shopgate_Cloudapi_Block_PipelineRequest extends Mage_Adminhtml_Block_Templ
     {
         array_push($this->methods, $method);
     }
+    
+    /**
+     * @return string
+     */
+    public function getShopBaseUrl()
+    {
+        return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+    }
 
 }
