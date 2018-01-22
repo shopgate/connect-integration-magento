@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', exchangeContinueShoppingButton);
 
 function exchangeContinueShoppingButton() {
   if (isInApp) {
-    console.log('DEBUG: DOMContentLoaded');
     /*
      * The codeline below is a fallback, if the customer have an customized layout with some additional button(s),
      * you have to switch the line, where the targetButton is declared, with the line below and add an id-attribute
@@ -89,14 +88,9 @@ function exchangeContinueShoppingButton() {
     if (document.getElementsByClassName('button')){
       let targetButton = null;
       Array.from(document.getElementsByClassName("button")).forEach(function(button) {
-
-        console.log('DEBUG: button');
-        console.log(button.getAttribute('onclick'));
-
         //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
         if (button.getAttribute('onclick') === "window.location='" + shopBaseUrl + "index.php/'") {
           targetButton = button;
-          console.log('found');
         }
       });
 
