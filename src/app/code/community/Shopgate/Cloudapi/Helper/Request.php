@@ -54,7 +54,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
             return true;
         }
 
-        return $this->cookieIsSet(self::KEY_SGCLOUD_INAPP,  self::COOKIE_VALUE);
+        return $this->cookieIsSet(self::KEY_SGCLOUD_INAPP, self::COOKIE_VALUE);
     }
 
     /**
