@@ -46,7 +46,7 @@ SGEvent = {
 AppCommands = {
   closeInAppBrowser: function(redirectUrl) {
 
-    let redirectTo = '';
+    let redirectTo = '/';
     if (redirectUrl) {
       redirectTo = redirectUrl
     }
