@@ -76,6 +76,7 @@ AppCommands = {
 document.addEventListener('DOMContentLoaded', exchangeContinueShoppingButton);
 
 function exchangeContinueShoppingButton() {
+  // isInApp is set in template/shopgate/cloudapi/pipelineRequest.phtml
   if (isInApp) {
     /*
      * The codeline below is a fallback, if the customer have an customized layout with some additional button(s),
@@ -96,13 +97,44 @@ function exchangeContinueShoppingButton() {
 
       if (!targetButton) {
         console.log('ERROR: Button was not found');
+        return;
       }
 
       if (targetButton.nodeName === 'BUTTON') {
+        // Overwrite default behavior of the "Continue Shopping"-Button
         targetButton.onclick = (function () {
           AppCommands.closeInAppBrowser(); //This object is defined in the pipelineRequest.js
         })
       }
     }
+  }
+}
+
+/**
+ * Is fired to tell the app, that the checkout-process was successful
+ * @param err
+ * @param serial
+ * @param output
+ */
+SGEvent.pipelineResponse = function (err, serial, output) {
+  switch (serial) {
+    case '4711' :
+      const commands = [
+        {
+          "c": "broadcastEvent",
+          "p": {
+            "event": "checkoutSuccess",
+            "data": {}
+          }
+        }
+      ]
+
+      if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
+        SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
+      } else {
+        SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
+      }
+
+      break
   }
 }
