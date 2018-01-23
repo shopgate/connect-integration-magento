@@ -63,7 +63,7 @@ class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Temp
      */
     public function getCheckoutUrl()
     {
-        return $this->getUrl(self::CHECKOUT_ONEPAGE_ROUTE, array('_secure'=>true));
+        return $this->getUrl(self::CHECKOUT_ONEPAGE_ROUTE, array('_secure' => true));
     }
 
     /**
