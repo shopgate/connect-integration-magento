@@ -38,7 +38,7 @@
             'c': 'broadcastEvent',
             'p': {
               'event': 'closeInAppBrowser',
-              'data': '<?php echo $this->getShopgateCallbackData() ?>'
+              'parameters': [<?php echo $this->getShopgateCallbackData() ?>]
             }
           }
         )
