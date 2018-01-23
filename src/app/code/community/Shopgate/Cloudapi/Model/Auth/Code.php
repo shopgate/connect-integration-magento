@@ -21,16 +21,24 @@
  */
 
 /**
- * @method string getToken() - retrieve unique token
- * @method Shopgate_Cloudapi_Model_Auth_Code setToken() - set unique token
+ * @method string getAuthorizationCode() - retrieve unique code
+ * @method Shopgate_Cloudapi_Model_Auth_Code setAuthorizationCode(string $token) - set unique code
+ * @method string getClientId() - retrieve client ID
+ * @method Shopgate_Cloudapi_Model_Auth_Code setClientId(string $clientId) - set client ID
  * @method string getUserId() - user that is associated to the resource
  * @method Shopgate_Cloudapi_Model_Auth_Code setUserId(string $userId) - user that is associated to the resource
- * @method string getResourceId()
- * @method Shopgate_Cloudapi_Model_Auth_Code setResourceId(string $quoteId)
+ * @method string getRedirectUri() - returns redirect URI
+ * @method Shopgate_Cloudapi_Model_Auth_Code setRedirectUri(string $uri) - set redirect URI
  * @method string getExpires() - resource expiration timestamp
- * @method Shopgate_Cloudapi_Model_Auth_Code setExpires(string $date) resource expiration timestamp
- * @method string getType() - type of resource, e.g. checkout
- * @method Shopgate_Cloudapi_Model_Auth_Code setType(string $type) - type of resource, e.g. checkout
+ * @method Shopgate_Cloudapi_Model_Auth_Code setExpires(string $date) - resource expiration timestamp
+ * @method string getScope() - scope of authorization
+ * @method Shopgate_Cloudapi_Model_Auth_Code setScope(string $scope) - scope of authorization
+ * @method string getIdToken()
+ * @method Shopgate_Cloudapi_Model_Auth_Code setIdToken(string $idToken)
+ * @method string getResourceId() - resource identification, e.g. quote ID
+ * @method Shopgate_Cloudapi_Model_Auth_Code setResourceId(string $quoteId) - resource identification, e.g. quote ID
+ * @method string getResourceType() - type of resource, e.g. checkout
+ * @method Shopgate_Cloudapi_Model_Auth_Code setResourceType(string $type) - type of resource, e.g. checkout
  */
 class Shopgate_Cloudapi_Model_Auth_Code extends Mage_Core_Model_Abstract
 {

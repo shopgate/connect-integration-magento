@@ -20,13 +20,28 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Resource_Auth_Code extends Mage_Core_Model_Mysql4_Abstract
+class Shopgate_Cloudapi_Helper_Frontend_Quote extends Mage_Core_Helper_Abstract
 {
     /**
-     * Initialize configuration data
+     * @param Mage_Customer_Model_Customer $customer
+     *
+     * @return Mage_Sales_Model_Quote
      */
-    protected function _construct()
+    public function createNewCustomerQuote($customer)
     {
-        $this->_init('shopgate_cloudapi/auth_code', 'authorization_code');
+        /** @var Mage_Sales_Model_Quote $quote */
+        $quote = Mage::getModel('sales/quote')->assignCustomer($customer);
+        $quote = $this->getQuoteCustomerHelper()->setCustomerData($quote);
+        $quote->save();
+
+        return $quote;
+    }
+
+    /**
+     * @return Shopgate_Cloudapi_Helper_Frontend_Quote_Customer
+     */
+    protected function getQuoteCustomerHelper()
+    {
+        return Mage::helper('shopgate_cloudapi/frontend_quote_customer');
     }
 }

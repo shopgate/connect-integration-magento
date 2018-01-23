@@ -28,6 +28,7 @@ class Shopgate_Cloudapi_Helper_OAuth2_Response extends Mage_Core_Helper_Abstract
      * @param \OAuth2\Response $response
      *
      * @return Mage_Api2_Model_Response
+     * @throws Zend_Controller_Response_Exception
      */
     public function translate(\OAuth2\Response $response)
     {

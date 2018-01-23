@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Shopgate Inc.
  *
@@ -20,25 +19,14 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Observer
+class Shopgate_Cloudapi_Customer_AccountController extends Mage_Core_Controller_Front_Action
 {
     /**
-     * Register libraries
+     * Create action for WebApp call register customer
      */
-    public function __construct()
+    public function createAction()
     {
-        Mage::getSingleton('shopgate_cloudapi/autoloader')->createAndRegister();
-    }
-
-    /**
-     * Delete expired tokens
-     */
-    public function deleteExpiredTokens()
-    {
-        /** @var Magento_Db_Adapter_Pdo_Mysql $writeConnection */
-        $writeConnection = Mage::getSingleton('core/resource')->getConnection('core_write');
-        /** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $oAuth2DbPdoModel */
-        $oAuth2DbPdoModel = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($writeConnection->getConnection()));
-        $oAuth2DbPdoModel->cleanOldEntries();
+        $this->loadLayout();
+        $this->renderLayout();
     }
 }
