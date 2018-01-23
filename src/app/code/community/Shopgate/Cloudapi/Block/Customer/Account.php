@@ -22,6 +22,11 @@
 class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Template
 {
     /**
+     * Checkout onepage route
+     */
+    const CHECKOUT_ONEPAGE_ROUTE = 'checkout/onepage';
+
+    /**
      * @return string
      * @throws Exception
      */
@@ -34,8 +39,38 @@ class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Temp
      * @return string
      * @throws Exception
      */
-    public function getSgCloudCallbackData()
+    public function getShopgateCallbackData()
     {
-        return $this->getRequest()->getParam('sgcloud_callback_data', '');
+        if ($this->getRequestHelper()->getShopgateCallbackData()) {
+            return $this->getRequestHelper()->cookieGetValue(
+                Shopgate_Cloudapi_Helper_Request::KEY_SGCLOUD_CALLBACK_DATA
+            );
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShopgateCheckout()
+    {
+        return $this->getRequestHelper()->isShopgateCheckout();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCheckoutUrl()
+    {
+        return $this->getUrl(self::CHECKOUT_ONEPAGE_ROUTE, array('_secure' => true));
+    }
+
+    /**
+     * @return Shopgate_Cloudapi_Helper_Request
+     */
+    protected function getRequestHelper()
+    {
+        return Mage::helper('shopgate_cloudapi/request');
     }
 }
