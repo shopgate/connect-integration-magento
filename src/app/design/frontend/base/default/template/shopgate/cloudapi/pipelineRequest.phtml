@@ -1,8 +1,0 @@
-<meta id="libshopgate">
-<script type="text/javascript">
-    const shopBaseUrl = '<?php echo $this->getShopBaseUrl() ?>';
-    const isInApp = '<?php echo Mage::helper('shopgate_cloudapi/request')->isShopgateRequest(); ?>';
-    document.observe("dom:loaded", function () {
-			ShopgatePipelineRequest.fire(<?php echo $this->getJsonMethods() ?>);
-    });
-</script>

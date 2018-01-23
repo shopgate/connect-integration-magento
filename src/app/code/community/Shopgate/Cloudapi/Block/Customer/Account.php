@@ -19,7 +19,7 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Adminhtml_Block_Template
+class Shopgate_Cloudapi_Block_Customer_Account extends Mage_Core_Block_Template
 {
     /**
      * Checkout onepage route
