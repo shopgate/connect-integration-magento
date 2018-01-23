@@ -47,7 +47,7 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
      */
     public function getShopBaseUrl()
     {
-        return Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+        return $this->getUrl();
     }
 
     /**

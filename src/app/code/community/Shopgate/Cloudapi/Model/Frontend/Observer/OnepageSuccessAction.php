@@ -21,7 +21,15 @@
 
 class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
 {
+    /**
+     *
+     */
     const PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY = 'prevent_observer_checkout_success';
+
+    /**
+     *
+     */
+    const SHOPGATE_EVENT_JS_PATH = 'shopgate/sgEvents.js';
 
     /**
      * Checks if the order is received from Shopgate API call.
@@ -33,10 +41,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     {
         $orderIds = $observer->getEvent()->getData('order_ids');
 
-        if (!isset($orderIds[0]) || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest() || Mage::registry(
-                self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY
-            )
-        ) {
+        if ($this->shouldNotExecute($orderIds)) {
             return $this;
         }
 
@@ -44,7 +49,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
         $layout     = Mage::app()->getLayout();
 
         $head = $layout->getBlock('head');
-        $head->addJs('shopgate/sgEvents.js');
+        $head->addJs(self::SHOPGATE_EVENT_JS_PATH);
 
         /** @var Shopgate_Cloudapi_Block_Checkout_Onepage_Success $successBlock */
         $successBlock = $layout->createBlock('shopgate_cloudapi/checkout_onepage_success');
@@ -54,5 +59,17 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
         $head->append($successBlock);
 
         Mage::register(self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY, true);
+    }
+
+    /**
+     * @param array $orderIds
+     * @return bool
+     */
+    protected function shouldNotExecute($orderIds)
+    {
+        return !isset($orderIds[0])
+               || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest() || Mage::registry(
+                self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY
+            );
     }
 }
