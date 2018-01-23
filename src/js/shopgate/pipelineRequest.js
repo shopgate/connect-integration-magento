@@ -1,14 +1,14 @@
-var ShopgatePipelineRequest = {
+let ShopgatePipelineRequest = {
     fire: function (methods) {
-        var commands = []
+        let commands = [];
 
         methods.each(function (method) {
-            var command = {
+            const command = {
                 "c": "sendPipelineRequest",
                 "p": {}
-            }
-            command.p = method
-            commands.push(command)
+            };
+            command.p = method;
+            commands.push(command);
         })
 
         if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
@@ -48,7 +48,7 @@ AppCommands = {
 
     let redirectTo = '/';
     if (redirectUrl) {
-      redirectTo = redirectUrl
+      redirectTo = redirectUrl;
     }
 
     const commands = [
@@ -60,6 +60,7 @@ AppCommands = {
         }
       }
     ];
+
     if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
       SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
     } else {
@@ -127,7 +128,7 @@ SGEvent.pipelineResponse = function (err, serial, output) {
             "data": {}
           }
         }
-      ]
+      ];
 
       if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
         SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
@@ -135,6 +136,6 @@ SGEvent.pipelineResponse = function (err, serial, output) {
         SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
       }
 
-      break
+      break;
   }
 }
