@@ -1,7 +1,7 @@
 <meta id="libshopgate">
 <script type="text/javascript">
   document.observe("dom:loaded", function () {
-    var commands = [{
+    const commands = [{
       'c': "sendPipelineRequest",
       'p': {
         'serial': '4711',
@@ -77,16 +77,8 @@
 
   function exchangeContinueShoppingButton() {
     if (<?php echo $this->isShopgateCheckout() ? 'false' : 'true'; ?>) {
-        /*
-         * The codeline below is a fallback, if the customer have an customized layout with some additional button(s),
-         * you have to switch the line, where the targetButton is declared, with the line below and add an id-attribute
-         * with this value: "sg_continue_shopping_button" to the "continue shopping" button element. This button can be
-         * found in the "checkout/success.phtml" within the used template.
-         */
-      // var targetButton = document.getElementById('sg_continue_shopping_button');
-
       if (document.getElementsByClassName('button')) {
-        var targetButton = null;
+        let targetButton = null;
         Array.from(document.getElementsByClassName("button")).forEach(function (button) {
           //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
           if (button.getAttribute('onclick') === "window.location='<?php echo $this->getShopBaseUrl() ?>'") {

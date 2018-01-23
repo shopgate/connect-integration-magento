@@ -27,6 +27,11 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     const PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY = 'prevent_observer_checkout_success';
 
     /**
+     * Shopgate checkout onepage template path
+     */
+    const CHECKOUT_ONEPAGE_SUCCESS_TEMPLATE_PATH ='shopgate/cloudapi/header/checkout/onepage/success.phtml';
+
+    /**
      * Shopgate Events js path
      */
     const SHOPGATE_EVENT_JS_PATH = 'shopgate/sgEvents.js';
@@ -53,7 +58,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
 
         /** @var Shopgate_Cloudapi_Block_Checkout_Onepage_Success $successBlock */
         $successBlock = $layout->createBlock('shopgate_cloudapi/checkout_onepage_success');
-        $successBlock->setTemplate('shopgate/cloudapi/header/checkout/onepage/success.phtml');
+        $successBlock->setTemplate(self::CHECKOUT_ONEPAGE_SUCCESS_TEMPLATE_PATH);
         $successBlock->setOrderId($newOrderId);
 
         $head->append($successBlock);
