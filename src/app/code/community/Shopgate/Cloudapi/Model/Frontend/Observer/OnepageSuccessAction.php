@@ -22,12 +22,12 @@
 class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
 {
     /**
-     *
+     * Prevent observer checkout success
      */
     const PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY = 'prevent_observer_checkout_success';
 
     /**
-     *
+     * Shopgate Events js path
      */
     const SHOPGATE_EVENT_JS_PATH = 'shopgate/sgEvents.js';
 
