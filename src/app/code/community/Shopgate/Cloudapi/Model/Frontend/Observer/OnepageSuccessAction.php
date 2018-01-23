@@ -21,6 +21,8 @@
 
 class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
 {
+    const PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY = 'prevent_observer_checkout_success';
+
     /**
      * Checks if the order is received from Shopgate API call.
      *
@@ -31,7 +33,10 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     {
         $orderIds = $observer->getEvent()->getData('order_ids');
 
-        if (!isset($orderIds[0]) || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
+        if (!isset($orderIds[0]) || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest() || Mage::registry(
+                self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY
+            )
+        ) {
             return $this;
         }
 
@@ -61,5 +66,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
         $analyticsLogPurchaseBlock->setTemplate('shopgate/cloudapi/analyticsLogPurchase.phtml');
         $head->addJs('shopgate/analyticsLogPurchase.js');
         $head->append($analyticsLogPurchaseBlock);
+
+        Mage::register(self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY, true);
     }
 }

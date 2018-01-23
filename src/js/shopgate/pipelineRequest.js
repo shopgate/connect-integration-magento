@@ -1,20 +1,20 @@
-var ShopgatePipelineRequest = {
+let ShopgatePipelineRequest = {
     fire: function (methods) {
-        var commands = []
+        let commands = [];
 
         methods.each(function (method) {
-            var command = {
+            const command = {
                 "c": "sendPipelineRequest",
                 "p": {}
-            }
-            command.p = method
-            commands.push(command)
+            };
+            command.p = method;
+            commands.push(command);
         })
 
         if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
-            SGJavascriptBridge.dispatchCommandsForVersion(commands, '9.0');
+            SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
         } else {
-            SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '9.0');
+            SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
         }
     }
 }
@@ -42,3 +42,100 @@ SGEvent = {
         return true;
     }
 };
+
+AppCommands = {
+  closeInAppBrowser: function(redirectUrl) {
+
+    let redirectTo = '/';
+    if (redirectUrl) {
+      redirectTo = redirectUrl;
+    }
+
+    const commands = [
+      {
+        'c': 'broadcastEvent',
+        'p': {
+          'event': 'closeInAppBrowser',
+          'data' : {'redirectTo':redirectTo}
+        }
+      }
+    ];
+
+    if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
+      SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
+    } else {
+      SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
+    }
+  }
+}
+
+/*
+ * Within the app context this script is included in the checkout success page. We need to overwrite the native
+ * window.location function here. We want to close the "InAppBrowser", if the customer clicks on the "Continue Shopping"
+ * button.
+ */
+document.addEventListener('DOMContentLoaded', exchangeContinueShoppingButton);
+
+function exchangeContinueShoppingButton() {
+  // isInApp is set in template/shopgate/cloudapi/pipelineRequest.phtml
+  if (isInApp) {
+    /*
+     * The codeline below is a fallback, if the customer have an customized layout with some additional button(s),
+     * you have to switch the line, where the targetButton is declared, with the line below and add an id-attribute
+     * with this value: "sg_continue_shopping_button" to the "continue shopping" button element. This button can be
+     * found in the "checkout/success.phtml" within the used template.
+     */
+    // var targetButton = document.getElementById('sg_continue_shopping_button');
+
+    if (document.getElementsByClassName('button')){
+      let targetButton = null;
+      Array.from(document.getElementsByClassName("button")).forEach(function(button) {
+        //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
+        if (button.getAttribute('onclick') === "window.location='" + shopBaseUrl + "index.php/'") {
+          targetButton = button;
+        }
+      });
+
+      if (!targetButton) {
+        console.log('ERROR: Button was not found');
+        return;
+      }
+
+      if (targetButton.nodeName === 'BUTTON') {
+        // Overwrite default behavior of the "Continue Shopping"-Button
+        targetButton.onclick = (function () {
+          AppCommands.closeInAppBrowser(); //This object is defined in the pipelineRequest.js
+        })
+      }
+    }
+  }
+}
+
+/**
+ * Is fired to tell the app, that the checkout-process was successful
+ * @param err
+ * @param serial
+ * @param output
+ */
+SGEvent.pipelineResponse = function (err, serial, output) {
+  switch (serial) {
+    case '4711' :
+      const commands = [
+        {
+          "c": "broadcastEvent",
+          "p": {
+            "event": "checkoutSuccess",
+            "data": {}
+          }
+        }
+      ];
+
+      if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
+        SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
+      } else {
+        SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
+      }
+
+      break;
+  }
+}
