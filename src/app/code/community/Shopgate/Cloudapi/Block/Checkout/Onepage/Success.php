@@ -73,37 +73,42 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
     {
         /** @var Mage_Sales_Model_Order $order */
         $order = Mage::getModel('sales/order')->load($this->getOrderId());
-        /** @var Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase $logPurchase */
-        $logPurchase = Mage::getModel('shopgate_cloudapi/frontend_analytics_logPurchase');
-        $logPurchase->setType(Shopgate_Cloudapi_Model_Order_Source::SOURCE_WEBCHECKOUT)
-                    ->setId($order->getId())
-                    ->setAffiliation($order->getStoreName())
-                    ->setRevenueGross($this->formatPrice($order->getGrandTotal()))
-                    ->setRevenueNet($this->formatPrice($order->getGrandTotal() - $order->getTaxAmount()))
-                    ->setTax($this->formatPrice($order->getTaxAmount()))
-                    ->setShippingGross($this->formatPrice($order->getShippingAmount()))
-                    ->setShippingNet(
-                        $this->formatPrice($order->getShippingAmount() - $order->getShippingTaxAmount())
-                    )
-                    ->setCurrency($order->getStoreCurrencyCode())
-                    ->setSuccess(true)
-                    ->setBlacklist(false)
-                    ->setTrackers(array());
+        /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase $purchase */
+        $purchase = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase');
+        $purchase->setNumber($order->getId());
+        $purchase->setCurrency($order->getOrderCurrencyCode());
 
         foreach ($order->getAllItems() as $item) {
             /** @var Mage_Sales_Model_Order_Item $item */
-            /** @var Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item $logPurchaseItem */
-            $logPurchaseItem = Mage::getModel('shopgate_cloudapi/frontend_analytics_logPurchase_item')
-                                   ->setId($item->getId())
-                                   ->setType('product')
-                                   ->setName($item->getName())
-                                   ->setPriceNet($this->formatPrice($item->getPriceInclTax()))
-                                   ->setPriceGross($this->formatPrice($item->getPrice()))
-                                   ->setQuantity($item->getQtyOrdered());
-            $logPurchase->addItem($logPurchaseItem);
+            /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product $product */
+            $product = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase_product');
+            $product->setId($item->getId());
+            $product->setQuantity($item->getQtyOrdered());
+            $product->setName($item->getName());
+
+            $price = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase_product_price');
+            $price->setData('withTax', $this->formatPrice($item->getPriceInclTax()));
+            $price->setData('net', $this->formatPrice($item->getPrice()));
+            $product->addPrice($price);
+            $purchase->addProduct($product);
         }
 
-        return $logPurchase->getJsonData();
+        /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total $total */
+        $total = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase_total');
+
+        $total->setData('type', 'shipping');
+        $total->setData('amount', $this->formatPrice($order->getShippingInclTax()));
+        $purchase->addTotal($total);
+
+        $total->setData('type', 'tax');
+        $total->setData('amount', $this->formatPrice($order->getTaxAmount()));
+        $purchase->addTotal($total);
+
+        $total->setData('type', 'grandTotal');
+        $total->setData('amount', $this->formatPrice($order->getGrandTotal()));
+        $purchase->addTotal($total);
+
+        return $purchase->getJsonData();
     }
 
     /**

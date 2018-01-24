@@ -58,7 +58,7 @@
             "c": "broadcastEvent",
             "p": {
               "event": "checkoutSuccess",
-              "data": <?php echo $this->getJsonOrderData() ?>
+              "parameters": [<?php echo $this->getJsonOrderData() ?>]
             }
           }
         ];

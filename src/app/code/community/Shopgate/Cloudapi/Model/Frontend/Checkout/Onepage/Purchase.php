@@ -20,8 +20,6 @@
  */
 
 /**
- * @method $this setType(string $type)
- * @method string getType()
  * @method $this setId(int $id)
  * @method int getId()
  * @method $this setAffiliation(string $affiliation)
@@ -47,15 +45,22 @@
  * @method $this setItems(Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item[] $items)
  * @method array getItems()
  */
-class Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase extends Varien_Object
+class Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase extends Varien_Object
 {
+    /**
+     * @param Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product $product
+     */
+    public function addProduct(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product $product)
+    {
+        $this->_data['products'][] = $product->getData();
+    }
 
     /**
-     * @param Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item $item
+     * @param Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total $total
      */
-    public function addItem(Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item $item)
+    public function addTotal(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total $total)
     {
-        $this->_data['items'][] = $item->getData();
+        $this->_data['totals'][] = $total->getData();
     }
 
     /**
@@ -63,6 +68,6 @@ class Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase extends Varien_Obje
      */
     public function getJsonData()
     {
-        return json_encode($this->getData());
+        return json_encode(array('order' => $this->getData()));
     }
 }
