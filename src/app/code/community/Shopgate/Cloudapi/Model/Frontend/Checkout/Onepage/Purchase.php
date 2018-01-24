@@ -21,7 +21,7 @@
 
 /**
  * @method $this setNumber(string $number)
- * @method string getNUmber()
+ * @method string getNumber()
  * @method $this setCurrency(string $currency)
  * @method string getCurrency()
  */
