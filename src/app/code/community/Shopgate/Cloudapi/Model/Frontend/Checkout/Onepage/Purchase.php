@@ -20,30 +20,10 @@
  */
 
 /**
- * @method $this setId(int $id)
- * @method int getId()
- * @method $this setAffiliation(string $affiliation)
- * @method string getAffiliation()
- * @method $this setRevenueGross(float $revenueGross)
- * @method float getRevenueGross()
- * @method $this setRevenueNet(float $revenueNet)
- * @method float getRevenueNet()
- * @method $this setTax(float $tax)
- * @method float getTax()
- * @method $this setShippingGross(float $shippingGross)
- * @method float getShippingGross()
- * @method $this setShippingNet(float $shippingNet)
- * @method float getShippingNet()
+ * @method $this setNumber(string $number)
+ * @method string getNUmber()
  * @method $this setCurrency(string $currency)
  * @method string getCurrency()
- * @method $this setSuccess(bool $success)
- * @method bool getSuccess()
- * @method $this setBlacklist(bool $blacklist)
- * @method bool getBlacklist()
- * @method $this setTrackers(array $trackers)
- * @method array getTrackers()
- * @method $this setItems(Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item[] $items)
- * @method array getItems()
  */
 class Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase extends Varien_Object
 {

@@ -22,8 +22,8 @@
 /**
  * @method $this setName(string $name)
  * @method string getName()
- * @method $this setId(int $id)
- * @method int getId()
+ * @method $this setId(string $id)
+ * @method string getId()
  * @method $this setQuantity(int $quantity)
  * @method int getQuantity()
  */

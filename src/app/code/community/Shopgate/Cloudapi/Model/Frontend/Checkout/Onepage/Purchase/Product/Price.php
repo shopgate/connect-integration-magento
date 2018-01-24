@@ -19,6 +19,30 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
+/**
+ * @method $this setNet(float $price)
+ * @method float getNet()
+ */
 class Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product_Price extends Varien_Object
 {
+    /**
+     * define with tax key
+     */
+    const WITH_TAX_KEY = 'withTax';
+
+    /**
+     * @param float $price
+     */
+    public function setWithTax($price)
+    {
+        parent::setData(self::WITH_TAX_KEY, $price);
+    }
+
+    /**
+     * @return float
+     */
+    public function getWithTax()
+    {
+        return parent::getData(self::WITH_TAX_KEY);
+    }
 }

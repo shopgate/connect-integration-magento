@@ -75,37 +75,37 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
         $order = Mage::getModel('sales/order')->load($this->getOrderId());
         /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase $purchase */
         $purchase = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase');
-        $purchase->setNumber($order->getId());
+        $purchase->setNumber($order->getIncrementId());
         $purchase->setCurrency($order->getOrderCurrencyCode());
 
         foreach ($order->getAllItems() as $item) {
             /** @var Mage_Sales_Model_Order_Item $item */
             /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product $product */
             $product = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase_product');
-            $product->setId($item->getId());
-            $product->setQuantity($item->getQtyOrdered());
+            $product->setId($item->getSku());
+            $product->setQuantity(intval($item->getQtyOrdered()));
             $product->setName($item->getName());
 
+            /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product_Price $price */
             $price = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase_product_price');
-            $price->setData('withTax', $this->formatPrice($item->getPriceInclTax()));
-            $price->setData('net', $this->formatPrice($item->getPrice()));
+            $price->setWithTax($this->formatPrice($item->getPriceInclTax()));
+            $price->setNet($this->formatPrice($item->getPrice()));
             $product->addPrice($price);
             $purchase->addProduct($product);
         }
 
         /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total $total */
         $total = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase_total');
-
-        $total->setData('type', 'shipping');
-        $total->setData('amount', $this->formatPrice($order->getShippingInclTax()));
+        $total->setType(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total::TYPE_SHIPPING);
+        $total->setAmount($this->formatPrice($order->getShippingInclTax()));
         $purchase->addTotal($total);
 
-        $total->setData('type', 'tax');
-        $total->setData('amount', $this->formatPrice($order->getTaxAmount()));
+        $total->setType(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total::TYPE_TAX);
+        $total->setAmount($this->formatPrice($order->getTaxAmount()));
         $purchase->addTotal($total);
 
-        $total->setData('type', 'grandTotal');
-        $total->setData('amount', $this->formatPrice($order->getGrandTotal()));
+        $total->setType(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total::TYPE_GRANT_TOTAL);
+        $total->setAmount($this->formatPrice($order->getGrandTotal()));
         $purchase->addTotal($total);
 
         return $purchase->getJsonData();
@@ -114,10 +114,10 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
     /**
      * @param int $price
      *
-     * @return string
+     * @return float
      */
     protected function formatPrice($price)
     {
-        return sprintf('%.2f', $price);
+        return floatval(sprintf('%.2f', $price));
     }
 }

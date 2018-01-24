@@ -19,6 +19,26 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
+/**
+ * @method $this setType(string $type)
+ * @method string getType()
+ * @method $this setAmount(float $amount)
+ * @method float getAmount()
+ */
 class Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total extends Varien_Object
 {
+    /**
+     * Type shipping
+     */
+    const TYPE_SHIPPING = 'shipping';
+
+    /**
+     * Type tax
+     */
+    const TYPE_TAX = 'tax';
+
+    /**
+     * Type grant total
+     */
+    const TYPE_GRANT_TOTAL = 'grantTotal';
 }
