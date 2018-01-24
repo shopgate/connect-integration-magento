@@ -22,17 +22,23 @@
 /**
  * @method $this setType(string $type)
  * @method string getType()
- * @method $this setName(string $name)
- * @method string getName()
- * @method $this setId(int $id)
- * @method int getId()
- * @method $this setPriceNet(float $priceNet)
- * @method float getPriceNet()
- * @method $this setPriceGross(float $priceGross)
- * @method float getPriceGross()
- * @method $this setQuantity(int $quantity)
- * @method int getQuantity()
+ * @method $this setAmount(float $amount)
+ * @method float getAmount()
  */
-class Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item extends Varien_Object
+class Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total extends Varien_Object
 {
+    /**
+     * Type shipping
+     */
+    const TYPE_SHIPPING = 'shipping';
+
+    /**
+     * Type tax
+     */
+    const TYPE_TAX = 'tax';
+
+    /**
+     * Type grant total
+     */
+    const TYPE_GRANT_TOTAL = 'grantTotal';
 }
