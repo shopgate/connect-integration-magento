@@ -21,7 +21,20 @@
 
 class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
 {
+    /**
+     * Prevent observer checkout success
+     */
     const PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY = 'prevent_observer_checkout_success';
+
+    /**
+     * Shopgate checkout onepage template path
+     */
+    const CHECKOUT_ONEPAGE_SUCCESS_TEMPLATE_PATH ='shopgate/cloudapi/header/checkout/onepage/success.phtml';
+
+    /**
+     * Shopgate Events js path
+     */
+    const SHOPGATE_EVENT_JS_PATH = 'shopgate/sgEvents.js';
 
     /**
      * Checks if the order is received from Shopgate API call.
@@ -33,40 +46,35 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     {
         $orderIds = $observer->getEvent()->getData('order_ids');
 
-        if (!isset($orderIds[0]) || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest() || Mage::registry(
-                self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY
-            )
-        ) {
+        if ($this->shouldNotExecute($orderIds)) {
             return $this;
         }
 
         $newOrderId = $orderIds[0];
         $layout     = Mage::app()->getLayout();
-        /** @var Shopgate_Cloudapi_Block_PipelineRequest $pipelineRequestBlock */
-        $pipelineRequestBlock = $layout->createBlock('shopgate_cloudapi/pipelineRequest');
-        $pipelineRequestBlock->addMethod(
-            array(
-                //@todo-sg: evaluate the right serial
-                'serial' => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_SERIAL,
-                'name'   => Shopgate_Cloudapi_Block_PipelineRequest::PIPELINE_REQUEST_CREATE_NEW_CART_FOR_CUSTOMER,
-                'input'  => array(
-                    'orderId' => $newOrderId
-                )
-            )
-        );
-        $pipelineRequestBlock->setTemplate('shopgate/cloudapi/pipelineRequest.phtml');
-        /** @var Mage_Page_Block_Html_Head $head */
-        $head = $layout->getBlock('head');
-        $head->addJs('shopgate/pipelineRequest.js');
-        $head->append($pipelineRequestBlock);
 
-        /** @var Shopgate_Cloudapi_Block_Analytics_LogPurchase $analyticsLogPurchaseBlock */
-        $analyticsLogPurchaseBlock = $layout->createBlock('shopgate_cloudapi/analytics_logPurchase');
-        $analyticsLogPurchaseBlock->setOrderId($newOrderId);
-        $analyticsLogPurchaseBlock->setTemplate('shopgate/cloudapi/analyticsLogPurchase.phtml');
-        $head->addJs('shopgate/analyticsLogPurchase.js');
-        $head->append($analyticsLogPurchaseBlock);
+        $head = $layout->getBlock('head');
+        $head->addJs(self::SHOPGATE_EVENT_JS_PATH);
+
+        /** @var Shopgate_Cloudapi_Block_Checkout_Onepage_Success $successBlock */
+        $successBlock = $layout->createBlock('shopgate_cloudapi/checkout_onepage_success');
+        $successBlock->setTemplate(self::CHECKOUT_ONEPAGE_SUCCESS_TEMPLATE_PATH);
+        $successBlock->setOrderId($newOrderId);
+
+        $head->append($successBlock);
 
         Mage::register(self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY, true);
+    }
+
+    /**
+     * @param array $orderIds
+     * @return bool
+     */
+    protected function shouldNotExecute($orderIds)
+    {
+        return !isset($orderIds[0])
+               || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest() || Mage::registry(
+                self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY
+            );
     }
 }

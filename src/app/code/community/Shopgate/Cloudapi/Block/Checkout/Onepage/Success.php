@@ -19,12 +19,20 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Block_Analytics_LogPurchase extends Mage_Adminhtml_Block_Template
+class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_Template
 {
     /**
      * @var int
      */
     protected $orderId;
+
+    /**
+     * @return int
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
 
     /**
      * @param int $orderId
@@ -37,10 +45,34 @@ class Shopgate_Cloudapi_Block_Analytics_LogPurchase extends Mage_Adminhtml_Block
     /**
      * @return string
      */
+    public function getShopBaseUrl()
+    {
+        return $this->getUrl();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShopgateCheckout()
+    {
+        return $this->getRequestHelper()->isShopgateCheckout();
+    }
+
+    /**
+     * @return Shopgate_Cloudapi_Helper_Request
+     */
+    protected function getRequestHelper()
+    {
+        return Mage::helper('shopgate_cloudapi/request');
+    }
+
+    /**
+     * @return string
+     */
     public function getJsonOrderData()
     {
         /** @var Mage_Sales_Model_Order $order */
-        $order = Mage::getModel('sales/order')->load($this->orderId);
+        $order = Mage::getModel('sales/order')->load($this->getOrderId());
         /** @var Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase $logPurchase */
         $logPurchase = Mage::getModel('shopgate_cloudapi/frontend_analytics_logPurchase');
         $logPurchase->setType(Shopgate_Cloudapi_Model_Order_Source::SOURCE_WEBCHECKOUT)
