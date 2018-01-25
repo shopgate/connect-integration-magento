@@ -76,7 +76,7 @@
   document.addEventListener('DOMContentLoaded', exchangeContinueShoppingButton);
 
   function exchangeContinueShoppingButton() {
-    if (<?php echo $this->isShopgateCheckout() ? 'false' : 'true'; ?>) {
+    if (<?php echo $this->isShopgateRequest() ? 'true' : 'false'; ?>) {
       if (document.getElementsByClassName('button')) {
         let targetButton = null;
         Array.from(document.getElementsByClassName("button")).forEach(function (button) {
