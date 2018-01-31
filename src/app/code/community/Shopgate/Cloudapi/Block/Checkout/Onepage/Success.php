@@ -53,9 +53,9 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
     /**
      * @return bool
      */
-    public function isShopgateCheckout()
+    public function isShopgateRequest()
     {
-        return $this->getRequestHelper()->isShopgateCheckout();
+        return $this->getRequestHelper()->isShopgateRequest();
     }
 
     /**
