@@ -38,7 +38,7 @@ class Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total extends V
     const TYPE_TAX = 'tax';
 
     /**
-     * Type grant total
+     * Type grand total
      */
     const TYPE_GRAND_TOTAL = 'grandTotal';
 }
