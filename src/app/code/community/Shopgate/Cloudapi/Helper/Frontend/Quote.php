@@ -31,6 +31,7 @@ class Shopgate_Cloudapi_Helper_Frontend_Quote extends Mage_Core_Helper_Abstract
     {
         /** @var Mage_Sales_Model_Quote $quote */
         $quote = Mage::getModel('sales/quote')->assignCustomer($customer);
+        $quote->setStore(Mage::app()->getStore());
         $quote = $this->getQuoteCustomerHelper()->setCustomerData($quote);
         $quote->save();
 
