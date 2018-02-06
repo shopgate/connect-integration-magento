@@ -31,6 +31,8 @@ class Shopgate_Cloudapi_Model_Api2_Auth_Token_Rest_Guest_V2 extends Shopgate_Clo
      * @return array
      * @throws LogicException
      * @throws InvalidArgumentException
+     * @throws Zend_Controller_Response_Exception
+     * @throws Exception
      */
     public function _create(array $data)
     {
