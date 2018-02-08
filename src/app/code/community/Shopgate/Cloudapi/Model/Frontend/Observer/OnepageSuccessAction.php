@@ -34,7 +34,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     /**
      * Shopgate Events js path
      */
-    const SHOPGATE_EVENT_JS_PATH = 'shopgate/sgEvents.js';
+    const SHOPGATE_CONNECT_JS_PATH = 'shopgate/sgConnect.js';
 
     /**
      * Checks if the order is received from Shopgate API call.
@@ -54,7 +54,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
         $layout     = Mage::app()->getLayout();
 
         $head = $layout->getBlock('head');
-        $head->addJs(self::SHOPGATE_EVENT_JS_PATH);
+        $head->addJs(self::SHOPGATE_CONNECT_JS_PATH);
 
         /** @var Shopgate_Cloudapi_Block_Checkout_Onepage_Success $successBlock */
         $successBlock = $layout->createBlock('shopgate_cloudapi/checkout_onepage_success');

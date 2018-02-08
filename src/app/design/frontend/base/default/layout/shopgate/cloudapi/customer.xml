@@ -18,7 +18,7 @@
             </action>
         </reference>
         <reference name="head">
-            <action method="addJs"><script>shopgate/sgEvents.js</script></action>
+            <action method="addJs"><script>shopgate/sgConnect.js</script></action>
             <block type="shopgate_cloudapi/customer_account" name="shopgate_cloudapi.customer.account"
                    template="shopgate/cloudapi/header/customer/account/create.phtml"/>
         </reference>

@@ -1,58 +1,39 @@
-<meta id="libshopgate">
 <script type="text/javascript">
-  document.observe("dom:loaded", function () {
-    var commands = [{
-      'c': "sendPipelineRequest",
-      'p': {
-        'serial': '1000',
-        'name': 'login_v1',
-        "type": "trusted",
-        'input': {
-          'strategy': 'auth_code',
-          'parameters': {'code': '<?php echo $this->getToken(); ?>'}
-        }
-      }
-    }];
+    function initPipelineCall() {
+        window.SGAppConnector.sendPipelineRequest(
+            'login_v1',
+            true,
+            {'strategy': 'auth_code', 'parameters': {'code': '<?php echo $this->getToken(); ?>'}},
+            function (err, serial, output) {
+                var commands = [
+                    {
+                        'c': 'broadcastEvent',
+                        'p': {
+                            'event': 'userLoggedIn'
+                        }
+                    }
+                ];
 
-    if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
-      SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
-    } else {
-      SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
-    }
+                if (<?php echo $this->isShopgateCheckout()
+                    ? 'false'
+                    : 'true'; ?>) {
+                    commands.push(
+                        {
+                            'c': 'broadcastEvent',
+                            'p': {
+                                'event': 'closeInAppBrowser',
+                                'parameters': [<?php echo $this->getShopgateCallbackData() ?>]
+                            }
+                        }
+                    )
+                }
 
-  });
-  SGEvent.pipelineResponse = function (err, serial, output) {
-    if (serial === '1000') {
-      var commands = [
-        {
-          'c': 'broadcastEvent',
-          'p': {
-            'event': 'userLoggedIn'
-          }
-        }
-      ];
+                window.SGAppConnector.sendAppCommands(commands);
 
-      if (<?php echo $this->isShopgateCheckout() ? 'false' : 'true'; ?>) {
-        commands.push(
-          {
-            'c': 'broadcastEvent',
-            'p': {
-              'event': 'closeInAppBrowser',
-              'parameters': [<?php echo $this->getShopgateCallbackData() ?>]
+                window.location.href = '<?php echo $this->getCheckoutUrl(); ?>';
             }
-          }
         )
-      }
-
-      if ('dispatchCommandsForVersion' in SGJavascriptBridge) {
-        SGJavascriptBridge.dispatchCommandsForVersion(commands, '12.0');
-      } else {
-        SGJavascriptBridge.dispatchCommandsStringForVersion(JSON.stringify(commands), '12.0');
-      }
-
-      window.location.href = '<?php echo $this->getCheckoutUrl(); ?>';
     }
-  };
 </script>
 
 
