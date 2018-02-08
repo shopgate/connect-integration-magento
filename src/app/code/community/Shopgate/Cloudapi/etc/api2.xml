@@ -34,7 +34,11 @@
                             </shopgate_cloudapi_v2_carts_customer>
                         </children>
                     </shopgate_cloudapi_v2_carts>
-                    <shopgate_cloudapi_v2_products>
+                    <shopgate_cloudapi_v2_customers>
+                        <title>Customers</title>
+                        <sort_order>25</sort_order>
+                    </shopgate_cloudapi_v2_customers>
+                    <shopgate_cloudapi_v2_products translate="title" module="Shopgate_Cloudapi">
                         <title>Products</title>
                         <sort_order>30</sort_order>
                     </shopgate_cloudapi_v2_products>
@@ -182,6 +186,24 @@
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_carts_customer>
+            <shopgate_cloudapi_v2_customers>
+                <group>shopgate_cloudapi_v2_customers</group>
+                <model>shopgate_cloudapi/api2_customers</model>
+                <title>Information</title>
+                <sort_order>65</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                </privileges>
+                <routes>
+                    <route_v2_customers_me>
+                        <route>/v2/customers/me</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_me>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_customers>
             <shopgate_cloudapi_v2_products>
                 <group>shopgate_cloudapi_v2_products</group>
                 <model>shopgate_cloudapi/api2_products</model>

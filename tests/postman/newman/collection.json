@@ -16,6 +16,7 @@
             {
               "listen": "test",
               "script": {
+                "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
                 "type": "text/javascript",
                 "exec": [
                   "if (responseCode.code === 200) {",
@@ -33,6 +34,7 @@
                   "    pm.response.to.have.jsonBody('expires_in', 3600);",
                   "    pm.response.to.have.jsonBody('access_token');",
                   "    pm.response.to.have.jsonBody('scope', null);",
+                  "    pm.response.to.not.have.jsonBody('refresh_token');",
                   "});"
                 ]
               }
@@ -188,7 +190,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"grant_type\": \"authorization_code\",\n  \"code\": \"a946748ca6f9d99d09abb3b6350ee98e5e45121e\"\n}"
+              "raw": "{\n  \"grant_type\": \"authorization_code\",\n  \"code\": \"1b8e9872e7fb093a71482ea13902f28b2ad1c4e5\"\n}"
             },
             "url": {
               "raw": "{{domain}}{{endpoint_auth_token}}",
@@ -12731,6 +12733,107 @@
               "path": [
                 "me",
                 "customer"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "/v2/customers/me",
+      "description": "",
+      "item": [
+        {
+          "name": "Customer: me",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "511885c1-3340-488b-9c1d-c519ad0ccc9a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Customer ID is returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.customer_id).to.not.be.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_me}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_me}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Guest cannot call this endpoint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "d71bccf3-b3d3-480f-9000-d0d6294ea575",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Guest cannot access, unauthorized\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{guest-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_me}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_me}}"
               ]
             },
             "description": ""

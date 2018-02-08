@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - shopgate_order_sources table to flag Shopgate orders
 - UTM parameters for Google Analytics in web checkout
+- Endpoint for retrieving basic customer information
 
 ## 3.0.0 - 2017-11-23
 ### Added

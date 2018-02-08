@@ -20,27 +20,16 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Auth_Token_Rest_Guest_V2 extends Shopgate_Cloudapi_Model_Api2_Auth_Rest
+class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
 {
     /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * Creates access_tokens based on grant_type in body
+     * Prevent guest from calling ME endpoint, adjust accordingly
      *
-     * @param array $data - incoming request parameters from body
-     *
-     * @return array
-     * @throws LogicException
-     * @throws InvalidArgumentException
-     * @throws Zend_Controller_Response_Exception
-     * @throws Exception
+     * @throws Mage_Api2_Exception
      */
-    public function _create(array $data)
+    protected function _retrieve()
     {
-        $server = Mage::getModel('shopgate_cloudapi/oAuth2_server')->initialize($this->_getStore());
-        /** @var \OAuth2\Response $response */
-        $response = $server->handleTokenRequest(OAuth2\Request::createFromGlobals());
-        Mage::helper('shopgate_cloudapi/oAuth2_response')->translate($response);
-
-        return $response->getParameters();
+        $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
     }
 }
