@@ -1,9 +1,9 @@
 <script type="text/javascript">
     function initPipelineCall() {
         window.SGAppConnector.sendPipelineRequest(
-            'sendPipelineRequest',
+            'createNewCartForCustomer',
             false,
-            {'name': 'createNewCartForCustomer', 'input': {'orderId': <?php echo $this->getOrderId(); ?>}},
+            {'orderId': <?php echo $this->getOrderId(); ?>},
             function (err, serial, output) {
                 var commands = [
                     {
@@ -23,7 +23,9 @@
     document.addEventListener('DOMContentLoaded', exchangeContinueShoppingButton);
 
     function exchangeContinueShoppingButton() {
-        if (<?php echo $this->isShopgateRequest() ? 'true' : 'false'; ?>) {
+        if (<?php echo $this->isShopgateRequest()
+            ? 'true'
+            : 'false'; ?>) {
             if (document.getElementsByClassName('button')) {
                 var targetButton = null;
                 Array.from(document.getElementsByClassName("button")).forEach(function (button) {
@@ -46,7 +48,7 @@
                                 'c': 'broadcastEvent',
                                 'p': {
                                     'event': 'closeInAppBrowser',
-                                    'parameters' : [{'redirectTo':'/'}]
+                                    'parameters': [{'redirectTo': '/'}]
                                 }
                             }
                         ];
@@ -57,5 +59,4 @@
             }
         }
     }
-
 </script>
