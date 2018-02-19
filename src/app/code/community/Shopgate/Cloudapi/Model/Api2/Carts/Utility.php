@@ -89,6 +89,14 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
                      ->loadByCustomer($this->getApiUser()->getUserId());
 
         $quote = $quote->getId() ? $quote : $this->loadInactiveCustomerQuote();
+        if (!$quote->getId()) {
+            $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
+            $quote = Mage::helper('shopgate_cloudapi/frontend_quote')->createNewCustomerQuote(
+                $customer,
+                $this->_getStore()
+            );
+        }
+
         if ($validate) {
             $this->validateCustomerQuote($quote);
         }
@@ -142,6 +150,7 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
         $quote = Mage::getResourceModel('sales/quote_collection')
                      ->addFieldToSelect('*')
                      ->addFieldToFilter('customer_id', $this->getApiUser()->getUserId())
+                     ->addFieldToFilter('reserved_order_id', array('eq' => 'NULL'))
                      ->setOrder('entity_id', Varien_Data_Collection::SORT_ORDER_DESC)
                      ->setPageSize(1)
                      ->getFirstItem();
