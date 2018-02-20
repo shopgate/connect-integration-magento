@@ -23,8 +23,8 @@
 class Shopgate_Cloudapi_Helper_Frontend_Quote extends Mage_Core_Helper_Abstract
 {
     /**
-     * @param Mage_Customer_Model_Customer  $customer
-     * @param Mage_Core_Model_Store|null    $store
+     * @param Mage_Customer_Model_Customer $customer
+     * @param Mage_Core_Model_Store|null   $store
      *
      * @return Mage_Sales_Model_Quote
      * @throws Mage_Core_Model_Store_Exception
