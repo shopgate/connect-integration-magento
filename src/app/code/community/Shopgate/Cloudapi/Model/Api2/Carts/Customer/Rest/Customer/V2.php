@@ -23,15 +23,4 @@
 class Shopgate_Cloudapi_Model_Api2_Carts_Customer_Rest_Customer_V2
     extends Shopgate_Cloudapi_Model_Api2_Carts_Customer_Rest
 {
-    /** @noinspection PhpHierarchyChecksInspection */
-    /**
-     * @inheritdoc
-     * @throws Exception
-     */
-    public function _create(array $filteredData)
-    {
-        $customerQuote = $this->loadQuoteByCustomer(true);
-
-        return array('cartId' => $customerQuote->getId());
-    }
 }
