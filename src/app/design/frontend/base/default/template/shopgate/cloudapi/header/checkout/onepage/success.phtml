@@ -1,7 +1,7 @@
 <script type="text/javascript">
     function initPipelineCall() {
         window.SGAppConnector.sendPipelineRequest(
-            'createNewCartForCustomer',
+            'createNewCartForCustomer_v1',
             false,
             {'orderId': <?php echo $this->getOrderId(); ?>},
             function (err, serial, output) {
@@ -30,7 +30,7 @@
                 var targetButton = null;
                 Array.from(document.getElementsByClassName("button")).forEach(function (button) {
                     //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
-                    if (button.getAttribute('onclick') === "window.location='<?php echo $this->getShopBaseUrl() ?>'") {
+                    if ((new RegExp('<?php echo $this->getShopBaseUrl() ?>')).test(button.getAttribute('onclick'))) {
                         targetButton = button;
                     }
                 });
