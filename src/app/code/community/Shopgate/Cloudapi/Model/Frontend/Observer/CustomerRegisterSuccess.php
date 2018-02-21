@@ -51,7 +51,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
 
         try {
             $code = $this->createAuthorizationCode($customer);
-            Mage::helper('shopgate_cloudapi/frontend_quote')->createNewCustomerQuote($customer);
+            Mage::helper('shopgate_cloudapi/frontend_quote')->createNewCustomerQuote($customer, $customer->getStore());
         } catch (Exception $exception) {
             Mage::logException($exception);
             $code = '0';

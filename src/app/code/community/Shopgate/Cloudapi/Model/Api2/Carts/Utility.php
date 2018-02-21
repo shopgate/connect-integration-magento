@@ -88,7 +88,6 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
                      ->setStore($this->_getStore())
                      ->loadByCustomer($this->getApiUser()->getUserId());
 
-        $quote = $quote->getId() ? $quote : $this->loadInactiveCustomerQuote();
         if (!$quote->getId()) {
             $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
             $quote    = Mage::helper('shopgate_cloudapi/frontend_quote')->createNewCustomerQuote(
@@ -135,26 +134,5 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
         } elseif ($this->getApiUser()->getUserId() !== $quote->getCustomerId()) {
             $this->_critical('Cart does not belong to this customer', Mage_Api2_Model_Server::HTTP_FORBIDDEN);
         }
-    }
-
-    /**
-     * Returns the last quote of the customer if he has no
-     * quote that is currently active.
-     *
-     * @return Mage_Sales_Model_Quote
-     * @throws Exception
-     */
-    private function loadInactiveCustomerQuote()
-    {
-        /** @var Mage_Sales_Model_Quote $quote */
-        $quote = Mage::getResourceModel('sales/quote_collection')
-                     ->addFieldToSelect('*')
-                     ->addFieldToFilter('customer_id', $this->getApiUser()->getUserId())
-                     ->addFieldToFilter('reserved_order_id', array('eq' => 'NULL'))
-                     ->setOrder('entity_id', Varien_Data_Collection::SORT_ORDER_DESC)
-                     ->setPageSize(1)
-                     ->getFirstItem();
-
-        return $quote;
     }
 }
