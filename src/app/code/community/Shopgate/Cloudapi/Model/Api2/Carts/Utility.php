@@ -91,7 +91,7 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
         $quote = $quote->getId() ? $quote : $this->loadInactiveCustomerQuote();
         if (!$quote->getId()) {
             $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
-            $quote = Mage::helper('shopgate_cloudapi/frontend_quote')->createNewCustomerQuote(
+            $quote    = Mage::helper('shopgate_cloudapi/frontend_quote')->createNewCustomerQuote(
                 $customer,
                 $this->_getStore()
             );
