@@ -22,10 +22,10 @@
 
 class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
 {
-    const KEY_ITEMS       = 'items';
-    const KEY_TOTALS      = 'totals';
-    const KEY_ITEM_ERRORS = 'errors';
-    const KEY_CART_PRICE_DISPLAY_SETTINGS = 'cart_price_display_settings';
+    const KEY_ITEMS                         = 'items';
+    const KEY_TOTALS                        = 'totals';
+    const KEY_ITEM_ERRORS                   = 'errors';
+    const KEY_CART_PRICE_DISPLAY_SETTINGS   = 'cart_price_display_settings';
 
     /**
      * Adds errors to quote items
@@ -84,6 +84,9 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
      */
     public function addCartPriceDisplaySettings(Mage_Sales_Model_Quote $quote)
     {
-        $quote->setData(self::KEY_CART_PRICE_DISPLAY_SETTINGS, Mage::getStoreConfig('tax/cart_display/price'));
+        $quote->setData(
+            self::KEY_CART_PRICE_DISPLAY_SETTINGS,
+            Mage::getStoreConfig(Mage_Tax_Model_Config::XML_PATH_DISPLAY_CART_PRICE)
+        );
     }
 }
