@@ -28,18 +28,27 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
     const KEY_CART_PRICE_DISPLAY_SETTINGS   = 'cart_price_display_settings';
 
     /**
-     * Adds errors to quote items
+     * Adds errors to quote items.
+     * Store state switch is necessary as errors do not
+     * print in the Admin store state, which is the
+     * default global store endpoints run in.
      *
      * @param Mage_Sales_Model_Quote $quote
+     * @param Mage_Core_Model_Store  $store
+     *
+     * @throws Mage_Core_Model_Store_Exception
      */
-    public function addItemErrors(Mage_Sales_Model_Quote $quote)
+    public function addItemErrors(Mage_Sales_Model_Quote $quote, Mage_Core_Model_Store $store)
     {
+        $adminStore = Mage::app()->getStore();
+        Mage::app()->setCurrentStore($store->getCode());
         /** @var Mage_Sales_Model_Quote_Item $item */
         foreach ($quote->getAllItems() as $item) {
             if ($item->getData('has_error')) {
                 $item->setData(self::KEY_ITEM_ERRORS, $item->getMessage(false));
             }
         }
+        Mage::app()->setCurrentStore($adminStore);
     }
 
     /**
@@ -77,16 +86,16 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
             )
         );
     }
-    
+
     /**
      * @param Mage_Sales_Model_Quote $quote
-     * @return string
+     * @param Mage_Core_Model_Store  $store
      */
-    public function addCartPriceDisplaySettings(Mage_Sales_Model_Quote $quote)
+    public function addCartPriceDisplaySettings(Mage_Sales_Model_Quote $quote, Mage_Core_Model_Store $store)
     {
         $quote->setData(
             self::KEY_CART_PRICE_DISPLAY_SETTINGS,
-            Mage::getStoreConfig(Mage_Tax_Model_Config::XML_PATH_DISPLAY_CART_PRICE)
+            Mage::getStoreConfig(Mage_Tax_Model_Config::XML_PATH_DISPLAY_CART_PRICE, $store)
         );
     }
 }

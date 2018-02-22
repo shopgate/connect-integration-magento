@@ -48,21 +48,20 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
 
     /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * Retrieve user's cart data.
-     * Store setting to frontend allows to output item errors
+     * Retrieve user's cart data
      *
      * @return array
+     * @throws Mage_Core_Model_Store_Exception
      */
     protected function _retrieve()
     {
-        $quote = $this->getUserQuote();
-        Mage::app()->setCurrentStore($this->_getStore());
+        $quote       = $this->getUserQuote();
         $quoteHelper = Mage::helper('shopgate_cloudapi/api2_quote');
-        $quoteHelper->addItemErrors($quote);
+        $quoteHelper->addItemErrors($quote, $this->_getStore());
         $quoteHelper->addItems($quote);
         $quoteHelper->addTotals($quote);
-        $quoteHelper->addCartPriceDisplaySettings($quote);
-        
+        $quoteHelper->addCartPriceDisplaySettings($quote, $this->_getStore());
+
         return $quote->getData();
     }
 
@@ -82,7 +81,6 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
      * Creates a new quote and sets it to active
      *
      * @return Mage_Sales_Model_Quote
-     * @throws Mage_Api_Exception
      */
     protected function createNewQuote()
     {
