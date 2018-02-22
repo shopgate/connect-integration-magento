@@ -61,7 +61,8 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
         $quoteHelper->addItemErrors($quote);
         $quoteHelper->addItems($quote);
         $quoteHelper->addTotals($quote);
-
+        $quoteHelper->addCartPriceDisplaySettings($quote);
+        
         return $quote->getData();
     }
 
