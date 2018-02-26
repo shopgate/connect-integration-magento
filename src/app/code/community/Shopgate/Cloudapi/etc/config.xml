@@ -38,6 +38,14 @@
             </shopgate_cloudapi_setup>
         </resources>
         <events>
+            <controller_action_layout_load_before>
+                <observers>
+                    <shopgate_controller_action_layout_load_before>
+                        <class>shopgate_cloudapi/frontend_observer_layout</class>
+                        <method>execute</method>
+                    </shopgate_controller_action_layout_load_before>
+                </observers>
+            </controller_action_layout_load_before>
             <sales_order_save_after>
                 <observers>
                     <shopgate_sales_order_save_after>
@@ -86,9 +94,9 @@
     <frontend>
         <layout>
             <updates>
-                <shopgate_cloudapi_checkout>
-                    <file>shopgate/cloudapi/checkout.xml</file>
-                </shopgate_cloudapi_checkout>
+                <shopgate_cloudapi_default>
+                    <file>shopgate/cloudapi/default.xml</file>
+                </shopgate_cloudapi_default>
                 <shopgate_cloudapi_customer>
                     <file>shopgate/cloudapi/customer.xml</file>
                 </shopgate_cloudapi_customer>
