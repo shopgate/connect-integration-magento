@@ -164,11 +164,11 @@
             <layout>
                 <styles>
                     <![CDATA[
-                        .page-title {display: none;}
-                        .customer-account-create .rewards {display: none;}
-                        .customer-account-create .back-link {display: none;}
-                        .checkout-onepage-success a {pointer-events: none; cursor: default;}
+                        .page-title,
+                        .customer-account-create .rewards,
+                        .customer-account-create .back-link,
                         #checkout-review-submit .f-left {display: none;}
+                        .checkout-onepage-success a {pointer-events: none; cursor: default;}
                     ]]>
                 </styles>
             </layout>
