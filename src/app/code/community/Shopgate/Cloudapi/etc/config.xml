@@ -38,14 +38,6 @@
             </shopgate_cloudapi_setup>
         </resources>
         <events>
-            <controller_action_layout_load_before>
-                <observers>
-                    <shopgate_controller_action_layout_load_before>
-                        <class>shopgate_cloudapi/frontend_observer_layout</class>
-                        <method>execute</method>
-                    </shopgate_controller_action_layout_load_before>
-                </observers>
-            </controller_action_layout_load_before>
             <sales_order_save_after>
                 <observers>
                     <shopgate_sales_order_save_after>
@@ -127,6 +119,14 @@
             </shopgate>
         </routers>
         <events>
+            <controller_action_layout_load_before>
+                <observers>
+                    <shopgate_controller_action_layout_load_before>
+                        <class>shopgate_cloudapi/frontend_observer_layout</class>
+                        <method>execute</method>
+                    </shopgate_controller_action_layout_load_before>
+                </observers>
+            </controller_action_layout_load_before>
             <checkout_onepage_controller_success_action>
                 <observers>
                     <shopgate_checkout_onepage_controller_success_action>
@@ -165,6 +165,7 @@
                 <styles>
                     <![CDATA[
                         .page-title {display: none;}
+                        .customer-account-create .rewards {display: none;}
                         .customer-account-create .back-link {display: none;}
                         .checkout-onepage-success a {pointer-events: none; cursor: default;}
                         #checkout-review-submit .f-left {display: none;}
