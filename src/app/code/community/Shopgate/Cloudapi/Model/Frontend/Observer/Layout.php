@@ -19,25 +19,21 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
-class Shopgate_Cloudapi_Helper_Frontend_Template extends Mage_Core_Helper_Abstract
+class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
 {
     /**
-     * Non-framed responsive template we can use
-     * in the app
+     * @param Varien_Event_Observer $observer
+     * @return $this
      */
-    const PAGE_TEMPLATE_EMPTY = 'page/empty.phtml';
-
-    /**
-     * Returns the checkout page template based on
-     * shopgate session flag set in the observer
-     *
-     * @return string
-     */
-    public function getShopgatePageTemplate()
+    public function execute(Varien_Event_Observer $observer)
     {
-        return Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
-            ? self::PAGE_TEMPLATE_EMPTY
-            : Mage::app()->getLayout()->getBlock('root')->getTemplate();
+        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
+            return $this;
+        }
+
+        $layout = $observer->getEvent()->getLayout()->getUpdate();
+        $layout->addHandle('shopgate_cloudapi_default');
+
+        return $this;
     }
 }
