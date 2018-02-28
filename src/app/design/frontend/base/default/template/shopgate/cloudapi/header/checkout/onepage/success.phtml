@@ -1,5 +1,7 @@
 <script type="text/javascript">
     function initPipelineCall() {
+        disableCloseButton();
+        exchangeContinueShoppingButton();
         window.SGAppConnector.sendPipelineRequest(
             'createNewCartForCustomer',
             false,
@@ -32,68 +34,55 @@
         )
     }
 
-  document.addEventListener('DOMContentLoaded', exchangeButtonActions);
-
-  function exchangeButtonActions() {
-    disableCloseButton();
-    exchangeContinueShoppingButton();
-  }
-
-  function disableCloseButton() {
-      var isAndroidApp = !('dispatchCommandsForVersion' in SGJavascriptBridge);
-
-      var setNavigationBarParams = {
-          "c": "setNavigationBarParams",
-          "p": {
-              "title": "Checkout",
-              "navigationBarParams": {
-                  "rightButton": false
-              }
-          }
-      }
-
-      if (isAndroidApp) {
-          //setNavigationBarParams.p.navigationBarParams.rightButton = false;
-      }
-
-      window.SGAppConnector.sendAppCommand(setNavigationBarParams);
-  }
-
-  function exchangeContinueShoppingButton() {
-    if (<?php echo $this->isShopgateRequest()
-        ? 'true'
-        : 'false'; ?>) {
-      if (document.getElementsByClassName('button')) {
-        var targetButton = null;
-        Array.from(document.getElementsByClassName("button")).forEach(function (button) {
-          //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
-          if (button.getAttribute('onclick') === "window.location='<?php echo $this->getShopBaseUrl() ?>'") {
-            targetButton = button;
-          }
-        });
-
-        if (!targetButton) {
-          console.log('ERROR: Button was not found');
-          return;
-        }
-
-        if (targetButton.nodeName === 'BUTTON') {
-          // Overwrite default behavior of the "Continue Shopping"-Button
-          targetButton.onclick = (function () {
-            var commands = [
-              {
-                'c': 'broadcastEvent',
-                'p': {
-                  'event': 'closeInAppBrowser',
-                  'parameters': [{'redirectTo': '/'}]
+    function disableCloseButton() {
+        var setNavigationBarParams = {
+            "c": "setNavigationBarParams",
+            "p": {
+                "title": "Checkout",
+                "navigationBarParams": {
+                    "rightButton": false
                 }
-              }
-            ];
-
-            window.SGAppConnector.sendAppCommands(commands);
-          })
+            }
         }
-      }
+
+        window.SGAppConnector.sendAppCommand(setNavigationBarParams);
     }
-  }
+
+    function exchangeContinueShoppingButton() {
+        if (<?php echo $this->isShopgateRequest()
+            ? 'true'
+            : 'false'; ?>) {
+            if (document.getElementsByClassName('button')) {
+                var targetButton = null;
+                Array.from(document.getElementsByClassName("button")).forEach(function (button) {
+                    //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
+                    if (button.getAttribute('onclick') === "window.location='<?php echo $this->getShopBaseUrl() ?>'") {
+                        targetButton = button;
+                    }
+                });
+
+                if (!targetButton) {
+                    console.log('ERROR: Button was not found');
+                    return;
+                }
+
+                if (targetButton.nodeName === 'BUTTON') {
+                    // Overwrite default behavior of the "Continue Shopping"-Button
+                    targetButton.onclick = (function () {
+                        var commands = [
+                            {
+                                'c': 'broadcastEvent',
+                                'p': {
+                                    'event': 'closeInAppBrowser',
+                                    'parameters': [{'redirectTo': '/'}]
+                                }
+                            }
+                        ];
+
+                        window.SGAppConnector.sendAppCommands(commands);
+                    })
+                }
+            }
+        }
+    }
 </script>
