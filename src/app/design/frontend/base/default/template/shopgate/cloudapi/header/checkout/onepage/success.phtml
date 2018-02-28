@@ -1,24 +1,36 @@
 <script type="text/javascript">
-  function initPipelineCall() {
-    window.SGAppConnector.sendPipelineRequest(
-        'createNewCartForCustomer',
-        false,
-        {'orderId': <?php echo $this->getOrderId(); ?>},
-        function (err, serial, output) {
-          var commands = [
-            {
-              'c': 'broadcastEvent',
-              'p': {
-                'event': 'checkoutSuccess',
-                "parameters": [<?php echo $this->getJsonOrderData() ?>]
-              }
-            }
-          ];
+    function initPipelineCall() {
+        window.SGAppConnector.sendPipelineRequest(
+            'createNewCartForCustomer',
+            false,
+            {'orderId': <?php echo $this->getOrderId(); ?>},
+            function (err, serial, output) {
+                var commands = [
+                    {
+                        'c': 'broadcastEvent',
+                        'p': {
+                            'event': 'checkoutSuccess',
+                            "parameters": [<?php echo $this->getJsonOrderData() ?>]
+                        }
+                    },
+                    {
+                        "c": "setNavigationBarParams",
+                        "p": {
+                            "title": "Checkout",
+                            "navigationBarParams": {
+                                "rightButton" : true,
+                                "rightButtonType" : 'close',
+                                "rightButtonCallback" : "SGAction.broadcastEvent({event: 'closeInAppBrowser','parameters': [{'redirectTo': '/'}]});"
+                            }
+                        }
+                    }
 
-          window.SGAppConnector.sendAppCommands(commands);
-        }
-    )
-  }
+                ];
+
+                window.SGAppConnector.sendAppCommands(commands);
+            }
+        )
+    }
 
   document.addEventListener('DOMContentLoaded', exchangeButtonActions);
 
@@ -27,28 +39,24 @@
     exchangeContinueShoppingButton();
   }
 
-  function disableCloseButton () {
-    var isAndroidApp = !('dispatchCommandsForVersion' in SGJavascriptBridge);
+  function disableCloseButton() {
+      var isAndroidApp = !('dispatchCommandsForVersion' in SGJavascriptBridge);
 
-    var setNavigationBarParams = {
-      "c": "setNavigationBarParams",
-      "p": {
-        "title": "Checkout",
-        "navigationBarParams": {
-          "leftButton": false,
-          "rightButton": true,
-          "rightButtonType": "done",
-          "rightButtonCallback": "SGAction.popTabToRoot({'targetTab': 'main'}); SGAction.showTab({'targetTab': 'main'});"
-        }
+      var setNavigationBarParams = {
+          "c": "setNavigationBarParams",
+          "p": {
+              "title": "Checkout",
+              "navigationBarParams": {
+                  "rightButton": false
+              }
+          }
       }
-    }
 
-    if (isAndroidApp) {
-      setNavigationBarParams.p.navigationBarParams.rightButtonType = 'custom';
-      setNavigationBarParams.p.navigationBarParams.rightButton = 'Done';
-    }
+      if (isAndroidApp) {
+          //setNavigationBarParams.p.navigationBarParams.rightButton = false;
+      }
 
-    window.SGAppConnector.sendAppCommands(setNavigationBarParams);
+      window.SGAppConnector.sendAppCommand(setNavigationBarParams);
   }
 
   function exchangeContinueShoppingButton() {
