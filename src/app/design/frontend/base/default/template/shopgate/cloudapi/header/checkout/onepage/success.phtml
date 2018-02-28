@@ -1,62 +1,91 @@
 <script type="text/javascript">
-    function initPipelineCall() {
-        window.SGAppConnector.sendPipelineRequest(
-            'createNewCartForCustomer_v1',
-            false,
-            {'orderId': <?php echo $this->getOrderId(); ?>},
-            function (err, serial, output) {
-                var commands = [
-                    {
-                        'c': 'broadcastEvent',
-                        'p': {
-                            'event': 'checkoutSuccess',
-                            "parameters": [<?php echo $this->getJsonOrderData() ?>]
-                        }
-                    }
-                ];
-
-                window.SGAppConnector.sendAppCommands(commands);
+  function initPipelineCall() {
+    window.SGAppConnector.sendPipelineRequest(
+        'createNewCartForCustomer',
+        false,
+        {'orderId': <?php echo $this->getOrderId(); ?>},
+        function (err, serial, output) {
+          var commands = [
+            {
+              'c': 'broadcastEvent',
+              'p': {
+                'event': 'checkoutSuccess',
+                "parameters": [<?php echo $this->getJsonOrderData() ?>]
+              }
             }
-        )
-    }
+          ];
 
-    document.addEventListener('DOMContentLoaded', exchangeContinueShoppingButton);
-
-    function exchangeContinueShoppingButton() {
-        if (<?php echo $this->isShopgateRequest()
-            ? 'true'
-            : 'false'; ?>) {
-            if (document.getElementsByClassName('button')) {
-                var targetButton = null;
-                Array.from(document.getElementsByClassName("button")).forEach(function (button) {
-                    //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
-                    if ((new RegExp('<?php echo $this->getShopBaseUrl() ?>')).test(button.getAttribute('onclick'))) {
-                        targetButton = button;
-                    }
-                });
-
-                if (!targetButton) {
-                    console.log('ERROR: Button was not found');
-                    return;
-                }
-
-                if (targetButton.nodeName === 'BUTTON') {
-                    // Overwrite default behavior of the "Continue Shopping"-Button
-                    targetButton.onclick = (function () {
-                        var commands = [
-                            {
-                                'c': 'broadcastEvent',
-                                'p': {
-                                    'event': 'closeInAppBrowser',
-                                    'parameters': [{'redirectTo': '/'}]
-                                }
-                            }
-                        ];
-
-                        window.SGAppConnector.sendAppCommands(commands);
-                    })
-                }
-            }
+          window.SGAppConnector.sendAppCommands(commands);
         }
+    )
+  }
+
+  document.addEventListener('DOMContentLoaded', exchangeButtonActions);
+
+  function exchangeButtonActions() {
+    disableCloseButton();
+    exchangeContinueShoppingButton();
+  }
+
+  function disableCloseButton () {
+    var isAndroidApp = !('dispatchCommandsForVersion' in SGJavascriptBridge);
+
+    var setNavigationBarParams = {
+      "c": "setNavigationBarParams",
+      "p": {
+        "title": "Checkout",
+        "navigationBarParams": {
+          "leftButton": false,
+          "rightButton": true,
+          "rightButtonType": "done",
+          "rightButtonCallback": "SGAction.popTabToRoot({'targetTab': 'main'}); SGAction.showTab({'targetTab': 'main'});"
+        }
+      }
     }
+
+    if (isAndroidApp) {
+      setNavigationBarParams.p.navigationBarParams.rightButtonType = 'custom';
+      setNavigationBarParams.p.navigationBarParams.rightButton = 'Done';
+    }
+
+    window.SGAppConnector.sendAppCommands(setNavigationBarParams);
+  }
+
+  function exchangeContinueShoppingButton() {
+    if (<?php echo $this->isShopgateRequest()
+        ? 'true'
+        : 'false'; ?>) {
+      if (document.getElementsByClassName('button')) {
+        var targetButton = null;
+        Array.from(document.getElementsByClassName("button")).forEach(function (button) {
+          //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
+          if (button.getAttribute('onclick') === "window.location='<?php echo $this->getShopBaseUrl() ?>'") {
+            targetButton = button;
+          }
+        });
+
+        if (!targetButton) {
+          console.log('ERROR: Button was not found');
+          return;
+        }
+
+        if (targetButton.nodeName === 'BUTTON') {
+          // Overwrite default behavior of the "Continue Shopping"-Button
+          targetButton.onclick = (function () {
+            var commands = [
+              {
+                'c': 'broadcastEvent',
+                'p': {
+                  'event': 'closeInAppBrowser',
+                  'parameters': [{'redirectTo': '/'}]
+                }
+              }
+            ];
+
+            window.SGAppConnector.sendAppCommands(commands);
+          })
+        }
+      }
+    }
+  }
 </script>
