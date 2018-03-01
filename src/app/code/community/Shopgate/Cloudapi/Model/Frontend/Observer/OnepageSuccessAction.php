@@ -29,7 +29,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     /**
      * Shopgate checkout onepage template path
      */
-    const CHECKOUT_ONEPAGE_SUCCESS_TEMPLATE_PATH ='shopgate/cloudapi/header/checkout/onepage/success.phtml';
+    const CHECKOUT_ONEPAGE_SUCCESS_TEMPLATE_PATH ='shopgate/cloudapi/checkout/success/header.phtml';
 
     /**
      * Shopgate Events js path

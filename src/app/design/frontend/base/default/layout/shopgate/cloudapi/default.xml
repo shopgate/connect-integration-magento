@@ -3,7 +3,7 @@
     <shopgate_cloudapi_default>
         <reference name="head">
             <block type="shopgate_cloudapi/layout" name="styles.update"
-                   template="shopgate/cloudapi/header/styles.phtml"/>
+                   template="shopgate/cloudapi/page/html/styles.phtml"/>
             <remove name="head.viewport"></remove>
             <block type="core/text" name="head.viewport.shopgate">
                 <action method="setText">
