@@ -20,30 +20,34 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Helper_Frontend_Quote extends Mage_Core_Helper_Abstract
+class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
 {
+    /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * @param Mage_Customer_Model_Customer $customer
-     * @param Mage_Core_Model_Store        $store
+     * Retrieve customer data
      *
-     * @return Mage_Sales_Model_Quote
+     * @throws Exception
      */
-    public function createNewCustomerQuote($customer, $store)
+    protected function _retrieve()
     {
-        /** @var Mage_Sales_Model_Quote $quote */
-        $quote = Mage::getModel('sales/quote')->assignCustomer($customer);
-        $quote->setStore($store);
-        $quote = $this->getQuoteCustomerHelper()->setCustomerData($quote);
-        $quote->save();
+        $customerData = Mage::getModel('customer/customer_api')->info($this->getApiUser()->getUserId());
 
-        return $quote;
+        return $this->filterOutData($customerData);
     }
 
     /**
-     * @return Shopgate_Cloudapi_Helper_Frontend_Quote_Customer
+     * Removes sensitive data from retrieval
+     *
+     * @todo-sg: should use the native filter in Shopgate_Cloudapi_Model_Api2_Resource::dispatch
+     *
+     * @param array $data
+     *
+     * @return array
      */
-    protected function getQuoteCustomerHelper()
+    private function filterOutData(array $data)
     {
-        return Mage::helper('shopgate_cloudapi/frontend_quote_customer');
+        $excludeKeys = array('password_hash');
+
+        return array_diff_key($data, array_flip($excludeKeys));
     }
 }

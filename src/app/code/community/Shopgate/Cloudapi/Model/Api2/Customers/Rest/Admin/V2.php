@@ -20,30 +20,16 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Helper_Frontend_Quote extends Mage_Core_Helper_Abstract
+class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
 {
+    /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * @param Mage_Customer_Model_Customer $customer
-     * @param Mage_Core_Model_Store        $store
+     * Prevent guest from calling ME endpoint, adjust accordingly
      *
-     * @return Mage_Sales_Model_Quote
+     * @throws Mage_Api2_Exception
      */
-    public function createNewCustomerQuote($customer, $store)
+    protected function _retrieve()
     {
-        /** @var Mage_Sales_Model_Quote $quote */
-        $quote = Mage::getModel('sales/quote')->assignCustomer($customer);
-        $quote->setStore($store);
-        $quote = $this->getQuoteCustomerHelper()->setCustomerData($quote);
-        $quote->save();
-
-        return $quote;
-    }
-
-    /**
-     * @return Shopgate_Cloudapi_Helper_Frontend_Quote_Customer
-     */
-    protected function getQuoteCustomerHelper()
-    {
-        return Mage::helper('shopgate_cloudapi/frontend_quote_customer');
+        $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
     }
 }

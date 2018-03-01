@@ -53,19 +53,19 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
             Mage::register('prevent_observer', true);
         }
     }
-
+    
     /**
      * @return int|false
      */
     protected function getShopgateStoreId()
     {
         /** @var Mage_Core_Model_Store $store */
-        $store = Mage::app()->getStore(self::SHOPGATE_STORE_CODE);
-
+        $store = Mage::getModel('core/store')->load(self::SHOPGATE_STORE_CODE);
+        
         if ($store->getId()) {
             return $store->getId();
         }
-
+        
         return false;
     }
 }

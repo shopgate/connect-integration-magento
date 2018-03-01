@@ -53,9 +53,9 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
     /**
      * @return bool
      */
-    public function isShopgateCheckout()
+    public function isShopgateRequest()
     {
-        return $this->getRequestHelper()->isShopgateCheckout();
+        return $this->getRequestHelper()->isShopgateRequest();
     }
 
     /**
@@ -104,7 +104,7 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
         $total->setAmount($this->formatPrice($order->getTaxAmount()));
         $purchase->addTotal($total);
 
-        $total->setType(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total::TYPE_GRANT_TOTAL);
+        $total->setType(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total::TYPE_GRAND_TOTAL);
         $total->setAmount($this->formatPrice($order->getGrandTotal()));
         $purchase->addTotal($total);
 

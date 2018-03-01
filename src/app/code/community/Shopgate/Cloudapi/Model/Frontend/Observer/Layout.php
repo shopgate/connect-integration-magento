@@ -19,31 +19,21 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
-class Shopgate_Cloudapi_Helper_Frontend_Quote extends Mage_Core_Helper_Abstract
+class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
 {
     /**
-     * @param Mage_Customer_Model_Customer $customer
-     * @param Mage_Core_Model_Store        $store
-     *
-     * @return Mage_Sales_Model_Quote
+     * @param Varien_Event_Observer $observer
+     * @return $this
      */
-    public function createNewCustomerQuote($customer, $store)
+    public function execute(Varien_Event_Observer $observer)
     {
-        /** @var Mage_Sales_Model_Quote $quote */
-        $quote = Mage::getModel('sales/quote')->assignCustomer($customer);
-        $quote->setStore($store);
-        $quote = $this->getQuoteCustomerHelper()->setCustomerData($quote);
-        $quote->save();
+        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
+            return $this;
+        }
 
-        return $quote;
-    }
+        $layout = $observer->getEvent()->getLayout()->getUpdate();
+        $layout->addHandle('shopgate_cloudapi_default');
 
-    /**
-     * @return Shopgate_Cloudapi_Helper_Frontend_Quote_Customer
-     */
-    protected function getQuoteCustomerHelper()
-    {
-        return Mage::helper('shopgate_cloudapi/frontend_quote_customer');
+        return $this;
     }
 }
