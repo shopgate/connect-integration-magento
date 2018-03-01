@@ -3,7 +3,7 @@
         disableCloseButton();
         exchangeContinueShoppingButton();
         window.SGAppConnector.sendPipelineRequest(
-            'createNewCartForCustomer',
+            'createNewCartForCustomer_v1',
             false,
             {'orderId': <?php echo $this->getOrderId(); ?>},
             function (err, serial, output) {
@@ -16,13 +16,13 @@
                         }
                     },
                     {
-                        "c": "setNavigationBarParams",
-                        "p": {
-                            "title": "Checkout",
-                            "navigationBarParams": {
-                                "rightButton" : true,
-                                "rightButtonType" : 'close',
-                                "rightButtonCallback" : "SGAction.broadcastEvent({event: 'closeInAppBrowser','parameters': [{'redirectTo': '/'}]});"
+                        'c': 'setNavigationBarParams',
+                        'p': {
+                            'title': 'Checkout',
+                            'navigationBarParams': {
+                                'rightButton' : true,
+                                'rightButtonType' : 'close',
+                                'rightButtonCallback' : "SGAction.broadcastEvent({event: 'closeInAppBrowser','parameters': [{'redirectTo': '/'}]});"
                             }
                         }
                     }
@@ -36,11 +36,11 @@
 
     function disableCloseButton() {
         var setNavigationBarParams = {
-            "c": "setNavigationBarParams",
-            "p": {
-                "title": "Checkout",
-                "navigationBarParams": {
-                    "rightButton": false
+            'c': 'setNavigationBarParams',
+            'p': {
+                'title': 'Checkout',
+                'navigationBarParams': {
+                    'rightButton': false
                 }
             }
         }
@@ -54,9 +54,9 @@
             : 'false'; ?>) {
             if (document.getElementsByClassName('button')) {
                 var targetButton = null;
-                Array.from(document.getElementsByClassName("button")).forEach(function (button) {
+                Array.from(document.getElementsByClassName('button')).forEach(function (button) {
                     //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
-                    if (button.getAttribute('onclick') === "window.location='<?php echo $this->getShopBaseUrl() ?>'") {
+                    if ((new RegExp('<?php echo $this->getShopBaseUrl() ?>')).test(button.getAttribute('onclick'))) {
                         targetButton = button;
                     }
                 });
