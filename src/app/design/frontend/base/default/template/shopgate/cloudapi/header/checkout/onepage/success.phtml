@@ -1,5 +1,7 @@
 <script type="text/javascript">
     function initPipelineCall() {
+        disableCloseButton();
+        exchangeContinueShoppingButton();
         window.SGAppConnector.sendPipelineRequest(
             'createNewCartForCustomer_v1',
             false,
@@ -12,7 +14,18 @@
                             'event': 'checkoutSuccess',
                             "parameters": [<?php echo $this->getJsonOrderData() ?>]
                         }
+                    },
+                    {
+                        'c': 'setNavigationBarParams',
+                        'p': {
+                            'navigationBarParams': {
+                                'rightButton' : true,
+                                'rightButtonType' : 'close',
+                                'rightButtonCallback' : "SGAction.broadcastEvent({event: 'closeInAppBrowser','parameters': [{'redirectTo': '/'}]});"
+                            }
+                        }
                     }
+
                 ];
 
                 window.SGAppConnector.sendAppCommands(commands);
@@ -20,7 +33,18 @@
         )
     }
 
-    document.addEventListener('DOMContentLoaded', exchangeContinueShoppingButton);
+    function disableCloseButton() {
+        var setNavigationBarParams = {
+            'c': 'setNavigationBarParams',
+            'p': {
+                'navigationBarParams': {
+                    'rightButton': false
+                }
+            }
+        }
+
+        window.SGAppConnector.sendAppCommand(setNavigationBarParams);
+    }
 
     function exchangeContinueShoppingButton() {
         if (<?php echo $this->isShopgateRequest()
@@ -28,7 +52,7 @@
             : 'false'; ?>) {
             if (document.getElementsByClassName('button')) {
                 var targetButton = null;
-                Array.from(document.getElementsByClassName("button")).forEach(function (button) {
+                Array.from(document.getElementsByClassName('button')).forEach(function (button) {
                     //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
                     if ((new RegExp('<?php echo $this->getShopBaseUrl() ?>')).test(button.getAttribute('onclick'))) {
                         targetButton = button;
