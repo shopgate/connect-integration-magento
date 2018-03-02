@@ -19,6 +19,7 @@
                 "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
                 "type": "text/javascript",
                 "exec": [
+                  "tests[\"[DEBUG] Response: \" + responseBody] = true;",
                   "if (responseCode.code === 200) {",
                   "    var jsonData = pm.response.json();",
                   "    pm.environment.set(\"guest-access-token\", jsonData.access_token);",
