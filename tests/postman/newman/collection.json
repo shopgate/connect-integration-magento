@@ -266,24 +266,26 @@
             {
               "listen": "test",
               "script": {
+                "id": "3cc77983-a81b-4620-b60b-ac9aa9621825",
                 "type": "text/javascript",
                 "exec": [
-                  "if (responseCode.code === 200) {",
-                  "    var jsonData = pm.response.json();",
-                  "    pm.environment.set(\"customer-access-token\", jsonData.access_token);",
-                  "}",
+                  "var jsonData = pm.response.json();",
                   "",
-                  "pm.test('Successfull call', function(){",
-                  "    pm.response.to.be.success;",
+                  "pm.test('New access token differs from the old', function() { ",
+                  "    pm.expect(pm.environment.get(\"customer-access-token\")).to.not.equal(jsonData.access_token);",
                   "});",
                   "",
                   "pm.test(\"Response follows the correct json oAuth2 specifications\", function () {",
-                  "    var jsonData = pm.response.json();",
                   "    pm.response.to.have.jsonBody('token_type','Bearer');",
                   "    pm.response.to.have.jsonBody('expires_in', 3600);",
                   "    pm.response.to.have.jsonBody('access_token');",
                   "    pm.response.to.have.jsonBody('scope', null);",
-                  "});"
+                  "});",
+                  "",
+                  "if (jsonData.hasOwnProperty('access_token')) {",
+                  "  pm.environment.set(\"customer-access-token\", jsonData.access_token);  ",
+                  "}",
+                  ""
                 ]
               }
             }
