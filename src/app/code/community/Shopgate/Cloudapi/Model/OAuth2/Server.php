@@ -64,7 +64,7 @@ class Shopgate_Cloudapi_Model_OAuth2_Server
         return array(
             new \OAuth2\GrantType\ClientCredentials($storage),
             new \OAuth2\GrantType\UserCredentials($storage),
-            new \OAuth2\GrantType\RefreshToken($storage, array('always_issue_new_refresh_token' => true)),
+            new \OAuth2\GrantType\RefreshToken($storage, array('unset_refresh_token_after_use' => false)),
             new \OAuth2\GrantType\AuthorizationCode($storage)
         );
     }
