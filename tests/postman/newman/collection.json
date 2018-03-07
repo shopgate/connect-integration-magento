@@ -223,7 +223,6 @@
                   "    var jsonData = pm.response.json();",
                   "    pm.response.to.have.jsonBody('token_type','Bearer');",
                   "    pm.response.to.have.jsonBody('expires_in', 3600);",
-                  "    pm.response.to.have.jsonBody('refresh_token');",
                   "    pm.response.to.have.jsonBody('access_token');",
                   "    pm.response.to.have.jsonBody('scope', null);",
                   "});"
@@ -282,7 +281,6 @@
                   "    var jsonData = pm.response.json();",
                   "    pm.response.to.have.jsonBody('token_type','Bearer');",
                   "    pm.response.to.have.jsonBody('expires_in', 3600);",
-                  "    pm.response.to.have.jsonBody('refresh_token');",
                   "    pm.response.to.have.jsonBody('access_token');",
                   "    pm.response.to.have.jsonBody('scope', null);",
                   "});"
