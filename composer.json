@@ -13,8 +13,8 @@
     "php": ">=5.3.9"
   },
   "require-dev": {
-    "php-coveralls/php-coveralls": "^2.0",
-    "phpunit/phpunit": "^5"
+    "phpunit/phpunit": "^5",
+    "php-coveralls/php-coveralls": "^1.0"
   },
   "scripts": {
     "test": "./vendor/bin/phpunit"
