@@ -1,39 +1,58 @@
 <script type="text/javascript">
-    function initPipelineCall() {
-        window.SGAppConnector.sendPipelineRequest(
-            'login_v1',
-            true,
-            {'strategy': 'auth_code', 'parameters': {'code': '<?php echo $this->getToken(); ?>'}},
-            function (err, serial, output) {
-                var commands = [
-                    {
-                        'c': 'broadcastEvent',
-                        'p': {
-                            'event': 'userLoggedIn'
-                        }
-                    }
-                ];
-
-                if (<?php echo $this->isShopgateCheckout()
-                    ? 'false'
-                    : 'true'; ?>) {
-                    commands.push(
-                        {
-                            'c': 'broadcastEvent',
-                            'p': {
-                                'event': 'closeInAppBrowser',
-                                'parameters': [<?php echo $this->getShopgateCallbackData() ?>]
-                            }
-                        }
-                    )
-                }
-
-                window.SGAppConnector.sendAppCommands(commands);
-
-                window.location.href = '<?php echo $this->getCheckoutUrl(); ?>';
+  function initPipelineCall () {
+    showLoadingScreen()
+    window.SGAppConnector.sendPipelineRequest(
+      'login_v1',
+      true,
+      {'strategy': 'auth_code', 'parameters': {'code': '<?php echo $this->getToken(); ?>'}},
+      function (err, serial, output) {
+        var commands = [
+          {
+            'c': 'broadcastEvent',
+            'p': {
+              'event': 'userLoggedIn'
             }
-        )
+          }
+        ]
+
+        if (<?php echo $this->isShopgateCheckout()
+            ? 'false'
+            : 'true'; ?>) {
+          commands.push(
+            {
+              'c': 'broadcastEvent',
+              'p': {
+                'event': 'closeInAppBrowser',
+                'parameters': [<?php echo $this->getShopgateCallbackData() ?>]
+              }
+            }
+          )
+        }
+
+        window.SGAppConnector.sendAppCommands(commands)
+
+        window.location.href = '<?php echo $this->getCheckoutUrl(); ?>'
+      }
+    )
+  }
+
+  /**
+   * Showing up the loading screen to tell the customer "something" is happening in the background
+   */
+  function showLoadingScreen () {
+    var command = {
+      'c': 'presentNotification',
+      'p': {
+        presentationType: 'centeredFade',
+        src: 'sgapi:loading_notification',
+        timeout: 10,
+        notificationParams: {
+          fullSize: true
+        }
+      }
     }
+    window.SGAppConnector.sendAppCommand(command)
+  }
 </script>
 
 
