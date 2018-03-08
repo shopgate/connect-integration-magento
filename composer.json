@@ -11,5 +11,12 @@
   ],
   "require": {
     "php": ">=5.3.9"
+  },
+  "require-dev": {
+    "php-coveralls/php-coveralls": "^2.0",
+    "phpunit/phpunit": "^5"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit"
   }
 }
