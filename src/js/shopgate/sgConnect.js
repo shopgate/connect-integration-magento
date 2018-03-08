@@ -117,7 +117,10 @@
         // disable in the Shopgate app only
         disableBrowserZoom()
 
-        initPipelineCall();
+        if (typeof initPipelineCall == 'function') {
+            initPipelineCall();
+        }
+
         // call startup script
         //window.SGAppConnector.loadPipelineScript('__init')
 

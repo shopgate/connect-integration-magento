@@ -167,6 +167,8 @@
                         .page-title,
                         .customer-account-create .rewards,
                         .customer-account-create .back-link,
+                        .customer-account-forgotpassword .back-link,
+                        .customer-account-login #login-form,
                         #checkout-review-submit .f-left {display: none;}
                         .checkout-onepage-success a {pointer-events: none; cursor: default;}
                     ]]>

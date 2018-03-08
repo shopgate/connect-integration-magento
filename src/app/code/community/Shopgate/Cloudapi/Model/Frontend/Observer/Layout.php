@@ -22,8 +22,20 @@
 class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
 {
     /**
+     * Define custom handles
+     */
+    private $customHandles = array(
+        array(
+            'path'   => '/customer/account/login',
+            'handle' => 'shopgate_cloudapi_customer_account_login'
+        )
+    );
+
+    /**
      * @param Varien_Event_Observer $observer
+     *
      * @return $this
+     * @throws Varien_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
@@ -31,9 +43,32 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
             return $this;
         }
 
-        $layout = $observer->getEvent()->getLayout()->getUpdate();
-        $layout->addHandle('shopgate_cloudapi_default');
+        /** @var Mage_Core_Model_Layout $layout */
+        $layout = $observer->getEvent()->getLayout();
+        $layout->getUpdate()->addHandle('shopgate_cloudapi_default');
+        $this->addCustomHandles($layout);
 
         return $this;
+    }
+
+    /**
+     * @param Mage_Core_Model_Layout $layout
+     */
+    private function addCustomHandles(Mage_Core_Model_Layout $layout)
+    {
+        /** @var Mage_Core_Controller_Request_Http $request */
+        $request = Mage::app()->getRequest();
+        $path    = sprintf(
+            '/%s/%s/%s',
+            $request->getModuleName(),
+            $request->getControllerName(),
+            $request->getActionName()
+        );
+
+        foreach ($this->customHandles as $handle) {
+            if ($handle['path'] === $path) {
+                $layout->getUpdate()->addHandle($handle['handle']);
+            }
+        }
     }
 }
