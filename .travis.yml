@@ -6,6 +6,7 @@ services:
 install:
   - phpenv config-rm xdebug.ini || return 0
   - composer install --no-dev -d ${TRAVIS_BUILD_DIR}/src/lib/Shopgate/cloud-integration-magento-oauth2
+  - composer install --dev
   # handles node update, do not move to script
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
 
@@ -28,10 +29,14 @@ script:
       cd ${TRAVIS_BUILD_DIR}/tests/postman/newman;
       newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}";
     fi
+  - php vendor/bin/phpunit
 after_failure:
   # one can check for a link in the terminal as this report file is uploaded to that link
   - curl --upload-file ./verbose-report.json https://transfer.sh/verbose-report.json
   - sudo less -FX /var/log/apache2/error.log
+  
+after_success:
+  - travis_retry php vendor/bin/php-coveralls
 
 jobs:
   include:
