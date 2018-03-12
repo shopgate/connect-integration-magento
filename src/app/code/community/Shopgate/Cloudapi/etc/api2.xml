@@ -42,6 +42,10 @@
                         <title>Products</title>
                         <sort_order>30</sort_order>
                     </shopgate_cloudapi_v2_products>
+                    <shopgate_cloudapi_v2_categories translate="title" module="Shopgate_Cloudapi">
+                        <title>Categories</title>
+                        <sort_order>40</sort_order>
+                    </shopgate_cloudapi_v2_categories>
                 </children>
             </shopgate_cloudapi>
         </resource_groups>
@@ -229,6 +233,31 @@
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_products>
+            <shopgate_cloudapi_v2_categories>
+                <group>shopgate_cloudapi_v2_categories</group>
+                <model>shopgate_cloudapi/api2_categories</model>
+                <title>Category retrieval</title>
+                <sort_order>80</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                </privileges>
+                <routes>
+                    <route_v2_categories>
+                        <route>/v2/categories</route>
+                        <action_type>collection</action_type>
+                    </route_v2_categories>
+                    <route_v2_categories_id>
+                        <route>/v2/categories/:id</route>
+                        <action_type>entity</action_type>
+                    </route_v2_categories_id>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_categories>
         </resources>
     </api2>
 </config>

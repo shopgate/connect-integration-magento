@@ -1,14 +1,14 @@
 {
   "info": {
     "name": "Mage Cloud",
-    "_postman_id": "0adc460a-cb9e-6b00-ca9a-f4da3f8c2003",
+    "_postman_id": "0e04f1bb-d98d-47e3-bbed-f31659fae559",
     "description": "",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
       "name": "oAuth2",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Token: client_credentials",
@@ -66,7 +66,7 @@
                 "{{domain}}{{endpoint_auth_token}}"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         },
@@ -126,7 +126,7 @@
                 "{{domain}}{{endpoint_auth_token}}"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         },
@@ -198,7 +198,7 @@
                 "{{domain}}{{endpoint_auth_token}}"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         },
@@ -256,7 +256,7 @@
                 "{{domain}}{{endpoint_auth_token}}"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         },
@@ -316,7 +316,7 @@
                 "{{domain}}{{endpoint_auth_token}}"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         }
@@ -324,11 +324,11 @@
     },
     {
       "name": "/v2/carts | /v2/carts/:id",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Customer",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Create customer cart",
@@ -485,7 +485,7 @@
                     "{{cartId}}"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -535,7 +535,7 @@
                     "000"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             }
@@ -544,7 +544,7 @@
         },
         {
           "name": "Guest",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "ME endpoint as guest",
@@ -747,7 +747,7 @@
                     "{{cartId}}"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             }
@@ -758,15 +758,15 @@
     },
     {
       "name": "/v2/carts/:id/items",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Product",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Customer - Add",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "/carts: customer",
@@ -870,7 +870,7 @@
                         "{{domain}}{{endpoint_carts_id_items}}"
                       ]
                     },
-                    "description": ""
+                    "description": null
                   },
                   "response": []
                 },
@@ -1323,7 +1323,7 @@
             },
             {
               "name": "Customer - Update",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "/carts: customer",
@@ -1599,7 +1599,7 @@
             },
             {
               "name": "Customer - Delete",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "All item removal",
@@ -1644,7 +1644,7 @@
                         "{{domain}}{{endpoint_carts_id_items}}"
                       ]
                     },
-                    "description": ""
+                    "description": null
                   },
                   "response": []
                 },
@@ -1708,11 +1708,11 @@
             },
             {
               "name": "Customer - Errors",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Bad product ID",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: customer",
@@ -1816,7 +1816,7 @@
                             "{{domain}}{{endpoint_carts_id_items}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -1881,7 +1881,7 @@
                 },
                 {
                   "name": "Out of stock",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: customer",
@@ -2062,11 +2062,11 @@
             },
             {
               "name": "Guest - Add",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Nominal product",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: Guest Cart",
@@ -2326,7 +2326,7 @@
                         "{{domain}}{{endpoint_carts_id_items}}"
                       ]
                     },
-                    "description": ""
+                    "description": null
                   },
                   "response": []
                 },
@@ -2732,11 +2732,11 @@
             },
             {
               "name": "Guest - Update",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Advanced",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: Guest Cart",
@@ -2948,7 +2948,7 @@
                             "{{domain}}{{endpoint_carts_id_items}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -3004,7 +3004,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     }
@@ -3276,7 +3276,7 @@
                         "{{cartId}}"
                       ]
                     },
-                    "description": ""
+                    "description": null
                   },
                   "response": []
                 },
@@ -3332,11 +3332,11 @@
             },
             {
               "name": "Guest - Delete all",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Delete All",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: Guest Cart",
@@ -3487,7 +3487,7 @@
                             "{{domain}}{{endpoint_carts_id_items}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -3715,7 +3715,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -3824,7 +3824,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     }
@@ -3839,19 +3839,19 @@
         },
         {
           "name": "Coupon",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Customer",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Add",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "Auto-Gen",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -4057,7 +4057,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -4228,7 +4228,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -4330,7 +4330,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     }
@@ -4498,7 +4498,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -4600,7 +4600,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -4749,7 +4749,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -4851,7 +4851,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -4954,11 +4954,11 @@
                 },
                 {
                   "name": "Delete",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "Via Empty Add",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -5117,7 +5117,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -5219,7 +5219,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -5321,7 +5321,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -5330,7 +5330,7 @@
                     },
                     {
                       "name": "Via query",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -5489,7 +5489,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -5591,7 +5591,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -5645,7 +5645,7 @@
                                 }
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -5706,7 +5706,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -5721,15 +5721,15 @@
             },
             {
               "name": "Guest",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Add",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "Auto-Gen",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: Guest Cart",
@@ -5935,7 +5935,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -6146,7 +6146,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     }
@@ -6155,7 +6155,7 @@
                 },
                 {
                   "name": "Update",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: Guest Cart",
@@ -6361,7 +6361,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -6463,7 +6463,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     }
@@ -6472,11 +6472,11 @@
                 },
                 {
                   "name": "Delete",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "Via Empty All",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: guest",
@@ -6682,7 +6682,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -6784,7 +6784,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -6852,7 +6852,7 @@
                     },
                     {
                       "name": "Via query",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: guest",
@@ -7058,7 +7058,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -7112,7 +7112,7 @@
                                 }
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -7173,7 +7173,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -7195,7 +7195,7 @@
           "item": [
             {
               "name": "Customer",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Update",
@@ -7203,7 +7203,7 @@
                   "item": [
                     {
                       "name": "Product first",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -7366,7 +7366,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -7375,7 +7375,7 @@
                     },
                     {
                       "name": "Product last",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -7491,11 +7491,11 @@
                 },
                 {
                   "name": "Delete",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "Via remove all",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -7654,7 +7654,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -7756,7 +7756,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -7803,7 +7803,7 @@
                                 "{{domain}}{{endpoint_carts_id_items}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -7864,7 +7864,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -7873,7 +7873,7 @@
                     },
                     {
                       "name": "Via query",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -8032,7 +8032,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -8134,7 +8134,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -8200,7 +8200,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -8377,15 +8377,15 @@
             },
             {
               "name": "Guest",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Update",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "Product first",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: guest",
@@ -8548,7 +8548,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -8557,7 +8557,7 @@
                     },
                     {
                       "name": "Product last",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: guest",
@@ -8673,11 +8673,11 @@
                 },
                 {
                   "name": "Delete",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "Via Empty All",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: guest",
@@ -8837,7 +8837,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -8939,7 +8939,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -8986,7 +8986,7 @@
                                 "{{domain}}{{endpoint_carts_id_items}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -9045,7 +9045,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -9054,7 +9054,7 @@
                     },
                     {
                       "name": "Via query",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: guest",
@@ -9214,7 +9214,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -9326,7 +9326,7 @@
                                 "{{cartId}}"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -9508,23 +9508,23 @@
     },
     {
       "name": "/v2/carts/:id/items/:itemId",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Product",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Customer",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Update",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "Simple",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -9689,7 +9689,7 @@
                                 "me"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -9794,7 +9794,7 @@
                                 "me"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -9899,7 +9899,7 @@
                                 "me"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -9908,7 +9908,7 @@
                     },
                     {
                       "name": "Configurable",
-                      "description": "",
+                      "description": null,
                       "item": [
                         {
                           "name": "/carts: customer",
@@ -10074,7 +10074,7 @@
                                 "me"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -10180,7 +10180,7 @@
                                 "me"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         },
@@ -10286,7 +10286,7 @@
                                 "me"
                               ]
                             },
-                            "description": ""
+                            "description": null
                           },
                           "response": []
                         }
@@ -10298,7 +10298,7 @@
                 },
                 {
                   "name": "Delete",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: customer",
@@ -10463,7 +10463,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -10513,7 +10513,7 @@
                             "{{cart_item_id}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -10568,7 +10568,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     }
@@ -10580,11 +10580,11 @@
             },
             {
               "name": "Guest",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Update",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: Guest Cart",
@@ -10968,7 +10968,7 @@
                 },
                 {
                   "name": "Delete",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: Guest Cart",
@@ -11133,7 +11133,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -11183,7 +11183,7 @@
                             "{{cart_item_id}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -11238,7 +11238,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     }
@@ -11253,15 +11253,15 @@
         },
         {
           "name": "Coupon",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Customer",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Delete",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: customer",
@@ -11467,7 +11467,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -11590,11 +11590,11 @@
             },
             {
               "name": "Guest",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "Delete",
-                  "description": "",
+                  "description": null,
                   "item": [
                     {
                       "name": "/carts: guest",
@@ -11800,7 +11800,7 @@
                             "{{cartId}}"
                           ]
                         },
-                        "description": ""
+                        "description": null
                       },
                       "response": []
                     },
@@ -11928,11 +11928,11 @@
     },
     {
       "name": "/v2/carts/:id/checkoutUrl",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Customer",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Create customer cart",
@@ -12089,7 +12089,7 @@
                     "{{domain}}{{endpoint_carts_id_checkoutUrl}}"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             }
@@ -12098,7 +12098,7 @@
         },
         {
           "name": "Guest",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Create guest cart",
@@ -12255,7 +12255,7 @@
                     "{{domain}}{{endpoint_carts_id_checkoutUrl}}"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             }
@@ -12266,7 +12266,7 @@
     },
     {
       "name": "/v2/carts/:id/customer",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Create customer cart",
@@ -12644,7 +12644,7 @@
                 "{{domain}}{{endpoint_carts_id_customer}}"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         },
@@ -12751,7 +12751,7 @@
                 "customer"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         }
@@ -12759,7 +12759,7 @@
     },
     {
       "name": "/v2/customers/me",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Customer: me",
@@ -12800,14 +12800,17 @@
                 "value": "application/json"
               }
             ],
-            "body": {},
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
             "url": {
               "raw": "{{domain}}{{endpoint_customers_me}}",
               "host": [
                 "{{domain}}{{endpoint_customers_me}}"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         },
@@ -12845,14 +12848,17 @@
                 "value": "application/json"
               }
             ],
-            "body": {},
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
             "url": {
               "raw": "{{domain}}{{endpoint_customers_me}}",
               "host": [
                 "{{domain}}{{endpoint_customers_me}}"
               ]
             },
-            "description": ""
+            "description": null
           },
           "response": []
         }
@@ -12860,11 +12866,11 @@
     },
     {
       "name": "/v2/products",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Customer",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "No limit",
@@ -12905,14 +12911,17 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}",
                   "host": [
                     "{{domain}}{{endpoint_products}}"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -12955,7 +12964,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}?category_id=10",
                   "host": [
@@ -12969,7 +12981,7 @@
                     }
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -13006,7 +13018,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}?category_id=99999",
                   "host": [
@@ -13020,7 +13035,7 @@
                     }
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -13063,7 +13078,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}?page=1&limit=4",
                   "host": [
@@ -13082,7 +13100,7 @@
                     }
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             }
@@ -13091,7 +13109,7 @@
         },
         {
           "name": "Guest",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "No limit",
@@ -13132,14 +13150,17 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}",
                   "host": [
                     "{{domain}}{{endpoint_products}}"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -13182,7 +13203,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}?category_id=10",
                   "host": [
@@ -13196,7 +13220,7 @@
                     }
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -13233,7 +13257,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}?category_id=99999",
                   "host": [
@@ -13247,7 +13274,7 @@
                     }
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -13290,7 +13317,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}?page=1&limit=4",
                   "host": [
@@ -13309,7 +13339,7 @@
                     }
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             }
@@ -13320,11 +13350,11 @@
     },
     {
       "name": "/v2/products/:id",
-      "description": "",
+      "description": null,
       "item": [
         {
           "name": "Guest",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Bundled: 447",
@@ -13367,7 +13397,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/447",
                   "host": [
@@ -13423,7 +13456,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/422",
                   "host": [
@@ -13478,7 +13514,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/563",
                   "host": [
@@ -13533,7 +13572,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/439",
                   "host": [
@@ -13589,7 +13631,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/564",
                   "host": [
@@ -13599,7 +13644,7 @@
                     "564"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -13646,7 +13691,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/554",
                   "host": [
@@ -13707,7 +13755,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/370",
                   "host": [
@@ -13717,7 +13768,7 @@
                     "370"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -13769,7 +13820,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/454",
                   "host": [
@@ -13779,7 +13833,7 @@
                     "454"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             }
@@ -13788,7 +13842,7 @@
         },
         {
           "name": "Customer",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Bundled: 447",
@@ -13830,7 +13884,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/447",
                   "host": [
@@ -13885,7 +13942,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/422",
                   "host": [
@@ -13939,7 +13999,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/563",
                   "host": [
@@ -13993,7 +14056,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/439",
                   "host": [
@@ -14048,7 +14114,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/564",
                   "host": [
@@ -14058,7 +14127,7 @@
                     "564"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -14104,7 +14173,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/554",
                   "host": [
@@ -14164,7 +14236,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/370",
                   "host": [
@@ -14174,7 +14249,7 @@
                     "370"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             },
@@ -14226,7 +14301,10 @@
                     "value": "application/json"
                   }
                 ],
-                "body": {},
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
                 "url": {
                   "raw": "{{domain}}{{endpoint_products}}/454",
                   "host": [
@@ -14236,7 +14314,7 @@
                     "454"
                   ]
                 },
-                "description": ""
+                "description": null
               },
               "response": []
             }
@@ -14251,7 +14329,7 @@
       "item": [
         {
           "name": "Customer",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Buy X get Y free",
@@ -14415,7 +14493,7 @@
                         "me"
                       ]
                     },
-                    "description": ""
+                    "description": null
                   },
                   "response": []
                 }
@@ -14427,11 +14505,11 @@
         },
         {
           "name": "Guest",
-          "description": "",
+          "description": null,
           "item": [
             {
               "name": "Qty > 5",
-              "description": "",
+              "description": null,
               "item": [
                 {
                   "name": "/carts: Guest Cart",
@@ -14596,7 +14674,7 @@
                         "{{cartId}}"
                       ]
                     },
-                    "description": ""
+                    "description": null
                   },
                   "response": []
                 }
@@ -14604,6 +14682,276 @@
               "_postman_isSubFolder": true
             }
           ],
+          "_postman_isSubFolder": true
+        }
+      ]
+    },
+    {
+      "name": "/v2/categories",
+      "description": "",
+      "item": [
+        {
+          "name": "Customer",
+          "description": "",
+          "item": [
+            {
+              "name": "Simple call",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "0b53f6b5-075c-4361-a55f-45d79c65c871",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_categories}}",
+                  "host": [
+                    "{{domain}}{{endpoint_categories}}"
+                  ]
+                },
+                "description": ""
+              },
+              "response": []
+            }
+          ],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{customer-access-token}}",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "d0079da7-ef5b-476f-a922-53fadcc3b9ba",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "c3bb5423-bf5c-461f-821c-10556c7d9556",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Guest",
+          "description": "",
+          "item": [
+            {
+              "name": "Simple call",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "0b53f6b5-075c-4361-a55f-45d79c65c871",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_categories}}",
+                  "host": [
+                    "{{domain}}{{endpoint_categories}}"
+                  ]
+                },
+                "description": ""
+              },
+              "response": []
+            }
+          ],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{guest-access-token}}",
+                "type": "string"
+              }
+            ]
+          },
+          "_postman_isSubFolder": true
+        }
+      ]
+    },
+    {
+      "name": "/v2/categories/:id",
+      "description": "",
+      "item": [
+        {
+          "name": "Customer",
+          "description": "",
+          "item": [
+            {
+              "name": "Simple call",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "0b53f6b5-075c-4361-a55f-45d79c65c871",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_categories}}/1",
+                  "host": [
+                    "{{domain}}{{endpoint_categories}}"
+                  ],
+                  "path": [
+                    "1"
+                  ]
+                },
+                "description": ""
+              },
+              "response": []
+            }
+          ],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{customer-access-token}}",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "d0079da7-ef5b-476f-a922-53fadcc3b9ba",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "c3bb5423-bf5c-461f-821c-10556c7d9556",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Guest",
+          "description": "",
+          "item": [
+            {
+              "name": "Simple call",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "0b53f6b5-075c-4361-a55f-45d79c65c871",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status code is 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {},
+                "url": {
+                  "raw": "{{domain}}{{endpoint_categories}}/1",
+                  "host": [
+                    "{{domain}}{{endpoint_categories}}"
+                  ],
+                  "path": [
+                    "1"
+                  ]
+                },
+                "description": ""
+              },
+              "response": []
+            }
+          ],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{guest-access-token}}",
+                "type": "string"
+              }
+            ]
+          },
           "_postman_isSubFolder": true
         }
       ]
@@ -14649,7 +14997,7 @@
             "{{domain}}{{endpoint_auth_token}}"
           ]
         },
-        "description": ""
+        "description": null
       },
       "response": []
     }
