@@ -2,12 +2,14 @@
     <layout version="0.1.0">
     <shopgate_cloudapi_customer_customer_account_create>
         <reference name="head">
+            <action method="addJs"><script>shopgate/sgConnect.js</script></action>
             <block type="shopgate_cloudapi/customer_account" name="shopgate_cloudapi.account.customer.create.header"
                    template="shopgate/cloudapi/customer/account/create/header.phtml"/>
         </reference>
     </shopgate_cloudapi_customer_customer_account_create>
     <shopgate_cloudapi_customer_account_login>
         <reference name="head">
+            <action method="addJs"><script>shopgate/sgConnect.js</script></action>
             <block type="shopgate_cloudapi/customer_account" name="shopgate_cloudapi.account.customer.login.header"
                    template="shopgate/cloudapi/customer/account/login/header.phtml"/>
         </reference>

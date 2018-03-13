@@ -28,6 +28,10 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
         array(
             'path'   => '/customer/account/login',
             'handle' => 'shopgate_cloudapi_customer_account_login'
+        ),
+        array(
+            'path' => 'checkout/onepage/success',
+            'handle' => 'checkout_onepage_success'
         )
     );
 
