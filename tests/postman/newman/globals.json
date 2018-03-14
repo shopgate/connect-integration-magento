@@ -61,6 +61,12 @@
       "value": "{{v2}}/products",
       "enabled": true,
       "type": "text"
+    },
+    {
+      "key": "endpoint_categories",
+      "value": "{{v2}}/categories",
+      "enabled": true,
+      "type": "text"
     }
   ],
   "_postman_variable_scope": "globals",

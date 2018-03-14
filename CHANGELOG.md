@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - UTM parameters for Google Analytics in web checkout
 - Endpoint for retrieving basic customer information
 - Added logic for custom layout handles and removed unnecessary elements from app webview
+- Endpoint stub (blank) for category retrieval; logic to be added later
 
 ## 3.0.0 - 2017-11-23
 ### Added

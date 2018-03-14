@@ -66,6 +66,14 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
     }
 
     /**
+     * All calls related to category information retrieval
+     */
+    public function categoriesAction()
+    {
+        $this->_getServer()->run();
+    }
+
+    /**
      * Forward token calls
      */
     public function authAction()
