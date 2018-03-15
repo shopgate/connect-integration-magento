@@ -34,20 +34,17 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
      *
      * @param Varien_Event_Observer $observer
      *
-     * @throws Mage_Core_Model_Store_Exception
      * @throws Mage_Core_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        $session = Mage::getSingleton('checkout/session');
-
-        if ($session->getData(Shopgate_Cloudapi_Helper_Frontend_Checkout::SESSION_IS_SHOPGATE_CHECKOUT)
+        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
             && !Mage::registry('prevent_observer')
         ) {
             /** @var Mage_Sales_Model_Order $order */
             $order           = $observer->getEvent()->getData('order');
             $shopgateStoreId = $this->getShopgateStoreId();
-            if ($shopgateStoreId) {
+            if ($shopgateStoreId !== false) {
                 $order->setStoreId($shopgateStoreId);
             }
             /** @var Shopgate_Cloudapi_Model_Order_Source $orderSourceModel */
@@ -56,13 +53,19 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_SalesOrderAfter
             Mage::register('prevent_observer', true);
         }
     }
-
+    
     /**
-     * @return int|null
-     * @throws Mage_Core_Model_Store_Exception
+     * @return int|false
      */
     protected function getShopgateStoreId()
     {
-        return Mage::app()->getStore(self::SHOPGATE_STORE_CODE)->getId();
+        /** @var Mage_Core_Model_Store $store */
+        $store = Mage::getModel('core/store')->load(self::SHOPGATE_STORE_CODE);
+        
+        if ($store->getId()) {
+            return $store->getId();
+        }
+        
+        return false;
     }
 }

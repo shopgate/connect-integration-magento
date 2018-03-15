@@ -19,53 +19,35 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Block_PipelineRequest extends Mage_Adminhtml_Block_Template
+/**
+ * @method $this setNumber(string $number)
+ * @method string getNumber()
+ * @method $this setCurrency(string $currency)
+ * @method string getCurrency()
+ */
+class Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase extends Varien_Object
 {
     /**
-     * Pipeline event checkout finished
+     * @param Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product $product
      */
-    const PIPELINE_REQUEST_CREATE_NEW_CART_FOR_CUSTOMER = 'createNewCartForCustomer';
-
-    /**
-     * Pipeline request serial
-     */
-    const PIPELINE_REQUEST_SERIAL = '4711';
-
-    /**
-     * @var array
-     */
-    protected $methods = array();
-
-    /**
-     * @return array
-     */
-    public function getMethods()
+    public function addProduct(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product $product)
     {
-        return $this->methods;
+        $this->_data['products'][] = $product->getData();
+    }
+
+    /**
+     * @param Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total $total
+     */
+    public function addTotal(Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Total $total)
+    {
+        $this->_data['totals'][] = $total->getData();
     }
 
     /**
      * @return string
      */
-    public function getJsonMethods()
+    public function getJsonData()
     {
-        return json_encode($this->getMethods());
+        return json_encode(array('order' => $this->getData()));
     }
-
-    /**
-     * @param array $methods
-     */
-    public function setMethods($methods)
-    {
-        $this->methods = $methods;
-    }
-
-    /**
-     * @param array $method
-     */
-    public function addMethod($method)
-    {
-        array_push($this->methods, $method);
-    }
-
 }

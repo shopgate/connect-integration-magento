@@ -1,0 +1,36 @@
+<script type="text/javascript">
+
+  function initPipelineCall() {}
+
+  document.addEventListener('DOMContentLoaded', exchangeLoginBackButton);
+
+  function exchangeLoginBackButton() {
+    if (document.getElementsByClassName('button')) {
+      var targetButton = null;
+      Array.from(document.getElementsByClassName("button")).forEach(function (button) {
+        targetButton = button;
+      });
+
+      if (!targetButton) {
+        console.log('ERROR: Button was not found');
+        return;
+      }
+
+      if (targetButton.nodeName === 'BUTTON') {
+        targetButton.onclick = (function () {
+          var commands = [
+            {
+              'c': 'broadcastEvent',
+              'p': {
+                'event': 'closeInAppBrowser',
+                'parameters': [{'redirectTo': '/login'}]
+              }
+            }
+          ];
+
+          window.SGAppConnector.sendAppCommands(commands);
+        })
+      }
+    }
+  }
+</script>

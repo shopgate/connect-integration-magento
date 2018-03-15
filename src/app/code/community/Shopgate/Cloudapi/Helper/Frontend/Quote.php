@@ -20,25 +20,30 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Observer
+class Shopgate_Cloudapi_Helper_Frontend_Quote extends Mage_Core_Helper_Abstract
 {
     /**
-     * Register libraries
+     * @param Mage_Customer_Model_Customer $customer
+     * @param Mage_Core_Model_Store        $store
+     *
+     * @return Mage_Sales_Model_Quote
      */
-    public function __construct()
+    public function createNewCustomerQuote($customer, $store)
     {
-        Mage::getSingleton('shopgate_cloudapi/autoloader')->createAndRegister();
+        /** @var Mage_Sales_Model_Quote $quote */
+        $quote = Mage::getModel('sales/quote')->assignCustomer($customer);
+        $quote->setStore($store);
+        $quote = $this->getQuoteCustomerHelper()->setCustomerData($quote);
+        $quote->save();
+
+        return $quote;
     }
 
     /**
-     * Delete expired tokens
+     * @return Shopgate_Cloudapi_Helper_Frontend_Quote_Customer
      */
-    public function deleteExpiredTokens()
+    protected function getQuoteCustomerHelper()
     {
-        /** @var Magento_Db_Adapter_Pdo_Mysql $writeConnection */
-        $writeConnection = Mage::getSingleton('core/resource')->getConnection('core_write');
-        /** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $oAuth2DbPdoModel */
-        $oAuth2DbPdoModel = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($writeConnection->getConnection()));
-        $oAuth2DbPdoModel->cleanOldEntries();
+        return Mage::helper('shopgate_cloudapi/frontend_quote_customer');
     }
 }

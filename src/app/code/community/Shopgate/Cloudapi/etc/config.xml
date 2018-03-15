@@ -56,6 +56,15 @@
                     </shopgate_checkout_onepage_controller_success_action>
                 </observers>
             </checkout_onepage_controller_success_action>
+            <customer_register_success>
+                <observers>
+                    <shopgate_customer_register_success>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_customerRegisterSuccess</class>
+                        <method>execute</method>
+                    </shopgate_customer_register_success>
+                </observers>
+            </customer_register_success>
         </events>
         <blocks>
             <shopgate_cloudapi>
@@ -77,9 +86,12 @@
     <frontend>
         <layout>
             <updates>
-                <shopgate_cloudapi_checkout>
-                    <file>shopgate/cloudapi/checkout.xml</file>
-                </shopgate_cloudapi_checkout>
+                <shopgate_cloudapi_default>
+                    <file>shopgate/cloudapi/default.xml</file>
+                </shopgate_cloudapi_default>
+                <shopgate_cloudapi_customer>
+                    <file>shopgate/cloudapi/customer.xml</file>
+                </shopgate_cloudapi_customer>
             </updates>
         </layout>
         <routers>
@@ -91,8 +103,30 @@
                     <frontName>shopgate-checkout</frontName>
                 </args>
             </shopgate_cloudapi_checkout_redirect>
+            <shopgate_cloudapi_customer>
+                <use>standard</use>
+                <args>
+                    <module>Shopgate_Cloudapi</module>
+                    <frontName>shopgate-customer</frontName>
+                </args>
+            </shopgate_cloudapi_customer>
+            <shopgate>
+                <use>standard</use>
+                <args>
+                    <module>Shopgate_Cloudapi</module>
+                    <frontName>shopgate</frontName>
+                </args>
+            </shopgate>
         </routers>
         <events>
+            <controller_action_layout_load_before>
+                <observers>
+                    <shopgate_controller_action_layout_load_before>
+                        <class>shopgate_cloudapi/frontend_observer_layout</class>
+                        <method>execute</method>
+                    </shopgate_controller_action_layout_load_before>
+                </observers>
+            </controller_action_layout_load_before>
             <checkout_onepage_controller_success_action>
                 <observers>
                     <shopgate_checkout_onepage_controller_success_action>
@@ -125,4 +159,21 @@
             </shopgate_cloudapi_delete_expired_tokens>
         </jobs>
     </crontab>
+    <default>
+        <shopgate_cloudapi>
+            <layout>
+                <styles>
+                    <![CDATA[
+                        .page-title,
+                        .customer-account-create .rewards,
+                        .customer-account-create .back-link,
+                        .customer-account-forgotpassword .back-link,
+                        .customer-account-login #login-form,
+                        #checkout-review-submit .f-left {display: none;}
+                        .checkout-onepage-success a {pointer-events: none; cursor: default;}
+                    ]]>
+                </styles>
+            </layout>
+        </shopgate_cloudapi>
+    </default>
 </config>

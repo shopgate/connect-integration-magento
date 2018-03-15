@@ -38,7 +38,7 @@ class Shopgate_Cloudapi_Helper_Frontend_Quote_Token extends Mage_Core_Helper_Abs
         $storage  = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($writeConnection->getConnection()));
         $authCode = $storage->getAuthItemByTokenAndType($token, \Shopgate\OAuth2\Storage\Pdo::AUTH_TYPE_CHECKOUT);
 
-        $storage->unsetAuthItemByToken($authCode->getToken());
+        $storage->unsetAuthItemByToken($authCode->getAuthorizationCode());
 
         if ($authCode->getIsExpired()) {
             $this->getCheckoutHelper()->throwException('Cart link has expired');

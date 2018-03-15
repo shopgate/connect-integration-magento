@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright Shopgate Inc.
  *
@@ -19,20 +20,6 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-/**
- * @method $this setType(string $type)
- * @method string getType()
- * @method $this setName(string $name)
- * @method string getName()
- * @method $this setId(int $id)
- * @method int getId()
- * @method $this setPriceNet(float $priceNet)
- * @method float getPriceNet()
- * @method $this setPriceGross(float $priceGross)
- * @method float getPriceGross()
- * @method $this setQuantity(int $quantity)
- * @method int getQuantity()
- */
-class Shopgate_Cloudapi_Model_Frontend_Analytics_LogPurchase_Item extends Varien_Object
+class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
 {
 }
