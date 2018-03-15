@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-## 3.1.0 - 2018-03-15
+## [3.1.0] - 2018-03-15
 ### Added
 - shopgate_order_sources table to flag Shopgate orders
 - UTM parameters for Google Analytics in web checkout
@@ -27,4 +27,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for retrieving a temporary checkout URL
 - Endpoint for retrieving of product details
 
-[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.0.0...HEAD
+[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.1.0...HEAD
+[3.1.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.0.0...3.1.0
