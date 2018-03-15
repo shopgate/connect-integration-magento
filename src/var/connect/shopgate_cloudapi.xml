@@ -70,6 +70,7 @@
          <target>magedesign</target>
          <target>magedesign</target>
          <target>magelib</target>
+         <target>mage</target>
       </target>
       <path>
          <path/>
@@ -79,6 +80,7 @@
          <path>frontend/base/default/layout/shopgate/cloudapi</path>
          <path>frontend/base/default/template/shopgate/cloudapi</path>
          <path>Shopgate</path>
+         <path>js/shopgate/sgConnect.js</path>
       </path>
       <type>
          <type>file</type>
@@ -88,6 +90,7 @@
          <type>dir</type>
          <type>dir</type>
          <type>dir</type>
+         <type>file</type>
       </type>
       <include>
          <include/>
@@ -97,8 +100,10 @@
          <include/>
          <include/>
          <include/>
+         <include/>
       </include>
       <ignore>
+         <ignore/>
          <ignore/>
          <ignore/>
          <ignore/>
