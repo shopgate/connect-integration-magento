@@ -3,7 +3,7 @@
     disableCloseButton();
     exchangeContinueShoppingButton();
     window.SGAppConnector.sendPipelineRequest(
-        'createNewCartForCustomer_v1',
+        'shopgate.cart.createNewCartForCustomer.v1',
         false,
         {'orderId': <?php echo $this->getOrderId(); ?>},
         function (err, serial, output) {

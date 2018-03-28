@@ -2,7 +2,7 @@
   function initPipelineCall () {
     showLoadingScreen()
     window.SGAppConnector.sendPipelineRequest(
-      'login_v1',
+      'shopgate.user.loginUser.v1',
       true,
       {'strategy': 'auth_code', 'parameters': {'code': '<?php echo $this->getToken(); ?>'}},
       function (err, serial, output) {
