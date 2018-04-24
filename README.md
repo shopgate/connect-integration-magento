@@ -25,3 +25,18 @@ Shopgate is the leading mobile commerce platform. Online retailers use our softw
 The Shopgate Shopgate Cloud Integration Magento integration is available under the Apache License, Version 2.0.
 
 See the [LICENSE.md](LICENSE.md) file for more information.
+
+## Magento Composer Installer
+
+Our repository does support [Magento composer installer](https://github.com/Cotya/magento-composer-installer), however, there is a small caveat with installing sub-directory dependencies. We have placed an oAuth2 inside the `lib` folder that also needs its dependencies updated by composer. You do not need to worry about this if you are downloading the release zip package or using Magento marketplace. The process of handling it will be running these command lines at the root (where the main composer file is):
+
+```
+composer require shopgate/cloud-integration-magento="~3.1.2"
+cd vendor/shopgate/cloud-integration-magento/src/lib/Shopgate/cloud-integration-magento-oauth2/
+composer update
+```
+
+If you have 'copy' as deployment strategy, then you will need to redeploy (re-copy) the files by running this command at the root:
+```
+composer run-script post-install-cmd -vvv -- --redeploy
+```
