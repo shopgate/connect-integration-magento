@@ -24,7 +24,8 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
 {
     const KEY_ITEMS                         = 'items';
     const KEY_TOTALS                        = 'totals';
-    const KEY_ITEM_ERRORS                   = 'errors';
+    const KEY_ERROR_MESSAGES                = 'errors';
+    const KEY_ERRORS                        = 'has_error';
     const KEY_CART_PRICE_DISPLAY_SETTINGS   = 'cart_price_display_settings';
 
     /**
@@ -44,9 +45,41 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
         Mage::app()->setCurrentStore($store->getCode());
         /** @var Mage_Sales_Model_Quote_Item $item */
         foreach ($quote->getAllItems() as $item) {
-            if ($item->getData('has_error')) {
-                $item->setData(self::KEY_ITEM_ERRORS, $item->getMessage(false));
+            if ($item->getData(self::KEY_ERRORS)) {
+                $item->setData(self::KEY_ERROR_MESSAGES, $item->getMessage(false));
             }
+        }
+        Mage::app()->setCurrentStore($adminStore);
+    }
+
+    /**
+     * Adds errors to the quote.
+     * Store state switch is necessary as errors do not
+     * print in the Admin store state, which is the
+     * default global store endpoints run in.
+     *
+     * Currently only the minimum order amount will be validated.
+     *
+     * @param Mage_Sales_Model_Quote $quote
+     * @param Mage_Core_Model_Store  $store
+     *
+     * @throws Mage_Core_Model_Store_Exception
+     */
+    public function addQuoteErrors(Mage_Sales_Model_Quote $quote, Mage_Core_Model_Store $store)
+    {
+        $adminStore = Mage::app()->getStore();
+        Mage::app()->setCurrentStore($store->getCode());
+        /** @var Mage_Sales_Model_Quote_Item $item */
+        if (!$quote->validateMinimumAmount()) {
+            $minimumAmount = Mage::app()->getLocale()->currency($store->getCurrentCurrencyCode())
+                ->toCurrency(Mage::getStoreConfig('sales/minimum_order/amount'));
+
+            $messages[] = Mage::getStoreConfig('sales/minimum_order/description')
+                ? Mage::getStoreConfig('sales/minimum_order/description')
+                : Mage::helper('checkout')->__('Minimum order amount is %s', $minimumAmount);
+
+            $quote->setData(self::KEY_ERRORS, true);
+            $quote->setData(self::KEY_ERROR_MESSAGES, $messages);
         }
         Mage::app()->setCurrentStore($adminStore);
     }
