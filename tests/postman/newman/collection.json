@@ -2187,8 +2187,13 @@
                               "});",
                               "",
                               "pm.test(\"Cart has errors\", function () {",
+															"    if (pm.variables.get(\"minimum_order_active\") === '1') {",
                               "    pm.expect(jsonData.has_error).to.eql(true);",
                               "    pm.expect(jsonData.errors).to.not.be.empty;",
+															"    } else {",
+															"        pm.expect(jsonData.has_error).to.not.exist;",
+															"        pm.expect(jsonData.errors).to.not.exist;",
+															"    }",
                               "});"
                             ]
                           }
