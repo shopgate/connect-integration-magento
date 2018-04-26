@@ -64,6 +64,7 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
      * @param Mage_Core_Model_Store  $store
      *
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Currency_Exception
      */
     public function addQuoteErrors(Mage_Sales_Model_Quote $quote, Mage_Core_Model_Store $store)
     {
@@ -75,8 +76,7 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
                 ->toCurrency(Mage::getStoreConfig('sales/minimum_order/amount'));
 
             $messages[] = Mage::getStoreConfig('sales/minimum_order/description')
-                ? Mage::getStoreConfig('sales/minimum_order/description')
-                : Mage::helper('checkout')->__('Minimum order amount is %s', $minimumAmount);
+                ? : Mage::helper( 'checkout')->__( 'Minimum order amount is %s', $minimumAmount);
 
             $quote->setData(self::KEY_ERRORS, true);
             $quote->setData(self::KEY_ERROR_MESSAGES, $messages);

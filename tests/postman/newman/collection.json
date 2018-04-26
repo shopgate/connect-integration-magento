@@ -2189,7 +2189,7 @@
                               "pm.test(\"Cart has errors\", function () {",
                               "    pm.expect(jsonData.has_error).to.eql(true);",
                               "    pm.expect(jsonData.errors).to.not.be.empty;",
-                              "});0"
+                              "});"
                             ]
                           }
                         }
