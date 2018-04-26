@@ -57,6 +57,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
     {
         $quote       = $this->getUserQuote();
         $quoteHelper = Mage::helper('shopgate_cloudapi/api2_quote');
+        $quoteHelper->addQuoteErrors($quote, $this->_getStore());
         $quoteHelper->addItemErrors($quote, $this->_getStore());
         $quoteHelper->addItems($quote);
         $quoteHelper->addTotals($quote);

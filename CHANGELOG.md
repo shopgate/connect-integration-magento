@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 ### Added
 - Support for Magento composer installer
+- Validation for Minimum order amount
 
 ## [3.1.1] - 2018-03-28
 ### Added
