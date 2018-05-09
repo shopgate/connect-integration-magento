@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Support for Magento composer installer
 - Validation for Minimum order amount
+### Fixed
+- Checkout url when using store code in magento url
 
 ## [3.1.1] - 2018-03-28
 ### Added
