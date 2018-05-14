@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Validation for Minimum order amount
 ### Fixed
 - Checkout url when using store code in magento url
+- Issues with products endpoint showing tax prices for Magento below CE 1.9 & EE 1.14
 
 ## [3.1.1] - 2018-03-28
 ### Added

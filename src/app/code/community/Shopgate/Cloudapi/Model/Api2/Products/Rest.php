@@ -21,7 +21,8 @@
  */
 
 /**
- * Shamelessly copied from magento code as we cannot call it directly
+ * Shamelessly copied from magento code as we cannot call it directly.
+ * Also added some CE 1.9< compatibility checks in the getPrice method.
  */
 abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
 {
@@ -37,6 +38,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
      * Retrieve product data
      *
      * @return array
+     * @throws Mage_Api2_Exception
      */
     protected function _retrieve()
     {
@@ -51,6 +53,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
      * Retrieve list of products
      *
      * @return array
+     * @throws Exception
      */
     protected function _retrieveCollection()
     {
@@ -70,14 +73,13 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
         // available attributes not contain image attribute, but it needed for get image_url
         $availableAttributes[] = 'image';
         $collection->addStoreFilter($store->getId())
-                   ->addPriceData($this->getCustomerGroupId(), $store->getWebsiteId())
-                   ->addAttributeToSelect(array_diff($availableAttributes, $entityOnlyAttributes))
-                   ->addAttributeToFilter(
-                       'visibility', array(
-                                       'neq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE
-                                   )
-                   )
-                   ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
+            ->addPriceData($this->getCustomerGroupId(), $store->getWebsiteId())
+            ->addAttributeToSelect(array_diff($availableAttributes, $entityOnlyAttributes))
+            ->addAttributeToFilter(
+                'visibility',
+                array('neq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE)
+            )
+            ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
         $this->applyCategoryFilter($collection);
         $this->_applyCollectionModifiers($collection);
         $products = $collection->load();
@@ -95,6 +97,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
      * Apply filter by category id
      *
      * @param Mage_Catalog_Model_Resource_Product_Collection $collection
+     * @throws Exception
      */
     protected function applyCategoryFilter(Mage_Catalog_Model_Resource_Product_Collection $collection)
     {
@@ -112,6 +115,8 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
      * Add special fields to product get response
      *
      * @param Mage_Catalog_Model_Product $product
+     * @throws Mage_Api2_Exception
+     * @throws Exception
      */
     protected function prepareProductForResponse(Mage_Catalog_Model_Product $product)
     {
@@ -133,7 +138,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
 
         $data['image_url'] = (string)Mage::helper('catalog/image')->init($product, 'image');
 
-        if ($this->getActionType() == self::ACTION_TYPE_ENTITY) {
+        if ($this->getActionType() === self::ACTION_TYPE_ENTITY) {
             $data['url'] = $productHelper->getProductUrl($product->getId());
             /** @var $cartHelper Mage_Checkout_Helper_Cart */
             $cartHelper          = Mage::helper('checkout/cart');
@@ -149,7 +154,8 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
             /** @var $reviewModel Mage_Review_Model_Review */
             $reviewModel                 = Mage::getModel('review/review');
             $data['total_reviews_count'] = $reviewModel->getTotalReviews(
-                $product->getId(), true,
+                $product->getId(),
+                true,
                 $this->_getStore()->getId()
             );
 
@@ -256,15 +262,21 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
      *
      * @return float
      * @see Mage_Tax_Helper_Data::getPrice()
+     * @throws Mage_Api2_Exception
+     * @throws Varien_Exception
      */
     protected function getPrice(
-        $price, $includingTax = null, $shippingAddress = null,
-        $billingAddress = null, $ctc = null, $priceIncludesTax = null
+        $price,
+        $includingTax = null,
+        $shippingAddress = null,
+        $billingAddress = null,
+        $ctc = null,
+        $priceIncludesTax = null
     ) {
         $product = $this->getProduct();
         $store   = $this->_getStore();
 
-        if (is_null($priceIncludesTax)) {
+        if (null === $priceIncludesTax) {
             /** @var $config Mage_Tax_Model_Config */
             $config           = Mage::getSingleton('tax/config');
             $priceIncludesTax = $config->priceIncludesTax($store) || $config->getNeedUseShippingExcludeTax();
@@ -273,35 +285,35 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
         $percent          = $product->getData('tax_percent');
         $includingPercent = null;
 
-        $taxClassId = $product->getData('tax_class_id');
-        if (is_null($percent)) {
-            if ($taxClassId) {
-                $request = Mage::getSingleton('tax/calculation')
-                               ->getRateRequest($shippingAddress, $billingAddress, $ctc, $store);
-                $percent = Mage::getSingleton('tax/calculation')->getRate(
-                    $request->setData('product_class_id', $taxClassId)
-                );
-            }
+        $taxClassId    = $product->getData('tax_class_id');
+        $taxCalculator = Mage::getSingleton('tax/calculation');
+
+        if (null === $percent && $taxClassId) {
+            $request = $taxCalculator->getRateRequest($shippingAddress, $billingAddress, $ctc, $store);
+            $percent = $taxCalculator->getRate($request->setData('product_class_id', $taxClassId));
         }
+
         if ($taxClassId && $priceIncludesTax) {
             $taxHelper = Mage::helper('tax');
-            if ($taxHelper->isCrossBorderTradeEnabled($store)) {
+            if (method_exists($taxHelper, 'isCrossBorderTradeEnabled')
+                && $taxHelper->isCrossBorderTradeEnabled($store)) {
                 $includingPercent = $percent;
             } else {
-                $request          = Mage::getSingleton('tax/calculation')->getDefaultRateRequest($store);
-                $includingPercent = Mage::getSingleton('tax/calculation')
-                                        ->getRate($request->setData('product_class_id', $taxClassId));
+                $request = method_exists($taxCalculator, 'getDefaultRateRequest')
+                    ? $taxCalculator->getDefaultRateRequest($store)
+                    : $taxCalculator->getRateRequest(false, false, false, $store);;
+                $includingPercent = $taxCalculator->getRate($request->setData('product_class_id', $taxClassId));
             }
         }
 
-        if ($percent === false || is_null($percent)) {
+        if ($percent === false || null === $percent) {
             if ($priceIncludesTax && !$includingPercent) {
                 return $price;
             }
         }
         $product->setData('tax_percent', $percent);
 
-        if (!is_null($includingTax)) {
+        if (null !== $includingTax) {
             if ($priceIncludesTax) {
                 if ($includingTax) {
                     /**
@@ -323,7 +335,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
                          * this calculation is used for showing prices on catalog pages
                          */
                         if ($percent != 0) {
-                            $price = Mage::getSingleton('tax/calculation')->round($price);
+                            $price = $taxCalculator->round($price);
                             $price = $this->calculatePrice($price, $percent, true);
                         }
                     }
@@ -375,6 +387,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
      * Retrieve tier prices in special format
      *
      * @return array
+     * @throws Mage_Api2_Exception
      */
     protected function getTierPrices()
     {
@@ -407,7 +420,8 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
      * @return float
      */
     protected function applyTaxToPrice(
-        $price, /** @noinspection PhpUnusedParameterInspection */
+        $price,
+        /** @noinspection PhpUnusedParameterInspection */
         $withTax = true
     ) {
         return $price;

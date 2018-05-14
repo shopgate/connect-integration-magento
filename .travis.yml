@@ -68,6 +68,7 @@ env:
     CFG_API_SHOP_NUMBER="12345"
     CFG_API_KEY="11111111111111111111"
     CFG_MINIMUM_ORDER_ACTIVE="1"
+    CFG_PRICE_INC_TAX="1"
     USER1_EMAIL="konstantin.kiritsenko+1@shopgate.com"
     USER_PASS="test123"
   matrix:
