@@ -2056,6 +2056,186 @@
                     }
                   ],
                   "_postman_isSubFolder": true
+                },
+                {
+                  "name": "Minimum order amount",
+                  "description": "",
+                  "item": [
+                    {
+                      "name": "/carts: customer",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "type": "text/javascript",
+                            "exec": [
+                              "var jsonData = pm.response.json();",
+                              "if (responseCode.code === 200 && jsonData.cartId) {",
+                              "    pm.environment.set(\"cartId\", jsonData.cartId);",
+                              "    tests[\"Cart ID is returned\"] = isNumeric(jsonData.cartId) === true;",
+                              "} else {",
+                              "    tests[\"Cart ID is not returned\"] = false;",
+                              "}",
+                              "",
+                              "pm.test('Successfull call', function(){",
+                              "    pm.response.to.be.success;",
+                              "});",
+                              "",
+                              "function isNumeric(n) {",
+                              "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                              "}"
+                            ]
+                          }
+                        }
+                      ],
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{customer-access-token}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{}"
+                        },
+                        "url": {
+                          "raw": "{{domain}}{{endpoint_carts}}",
+                          "host": [
+                            "{{domain}}{{endpoint_carts}}"
+                          ]
+                        },
+                        "description": "Creates a customer cart"
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Add simple, qty 1",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "type": "text/javascript",
+                            "exec": [
+                              "pm.test('Successfull call', function(){",
+                              "    pm.response.to.be.success;",
+                              "});"
+                            ]
+                          }
+                        }
+                      ],
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{customer-access-token}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"395\",\n\t    \"qty\": 1\n\t  }\n  }\n]"
+                        },
+                        "url": {
+                          "raw": "{{domain}}{{endpoint_carts_id_items}}",
+                          "host": [
+                            "{{domain}}{{endpoint_carts_id_items}}"
+                          ]
+                        },
+                        "description": "ID: 559\nType: Downloadeable\nName: If You Were by Keshco\nSKU: hbm006\nURL: if-you-were-by-keshco\nCategory: Books & Music\nPrice: $2.00\nQty: 1"
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "Check cart errors",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "24615cae-6758-4354-a9d2-cde88d2ac5a1",
+                            "type": "text/javascript",
+                            "exec": [
+                              "var jsonData = pm.response.json();",
+                              "",
+                              "pm.test(\"Status code is 200\", function () {",
+                              "    pm.response.to.have.status(200);",
+                              "});",
+                              "",
+                              "pm.test(\"Qty is indeed 1\", function () {",
+                              "    pm.expect(jsonData.items[0].qty).to.eql(1);",
+                              "});",
+                              "",
+                              "pm.test(\"Cart has errors\", function () {",
+															"    if (pm.variables.get(\"minimum_order_active\") === '1') {",
+                              "    pm.expect(jsonData.has_error).to.eql(true);",
+                              "    pm.expect(jsonData.errors).to.not.be.empty;",
+															"    } else {",
+															"        pm.expect(jsonData.has_error).to.not.exist;",
+															"        pm.expect(jsonData.errors).to.not.exist;",
+															"    }",
+                              "});"
+                            ]
+                          }
+                        }
+                      ],
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{customer-access-token}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{}"
+                        },
+                        "url": {
+                          "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                          "host": [
+                            "{{domain}}{{endpoint_carts}}"
+                          ],
+                          "path": [
+                            "{{cartId}}"
+                          ]
+                        },
+                        "description": "Creates a customer cart"
+                      },
+                      "response": []
+                    }
+                  ],
+                  "_postman_isSubFolder": true
                 }
               ],
               "_postman_isSubFolder": true

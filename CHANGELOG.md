@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Support for Magento composer installer
+- Validation for Minimum order amount
+### Fixed
+- Checkout url when using store code in magento url
 
 ## [3.1.1] - 2018-03-28
 ### Added
@@ -18,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Added logic for custom layout handles and removed unnecessary elements from app webview
 - Endpoint stub (blank) for category retrieval; logic to be added later
 ### Fixed
-- oAuth refresh token handling 
+- oAuth refresh token handling
 
 ## 3.0.0 - 2017-11-23
 ### Added

@@ -2,6 +2,7 @@
   "name": "shopgate/cloud-integration-magento",
   "description": "Magento 1.X plugin for Shopgate Cloud",
   "homepage": "https://github.com/shopgate/cloud-integration-magento",
+  "type": "magento-module",
   "license": "Apache-2.0",
   "authors": [
     {
