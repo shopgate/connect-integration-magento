@@ -296,7 +296,8 @@ abstract class Shopgate_Cloudapi_Model_Api2_Products_Rest extends Shopgate_Cloud
         if ($taxClassId && $priceIncludesTax) {
             $taxHelper = Mage::helper('tax');
             if (method_exists($taxHelper, 'isCrossBorderTradeEnabled')
-                && $taxHelper->isCrossBorderTradeEnabled($store)) {
+                && $taxHelper->isCrossBorderTradeEnabled($store)
+            ) {
                 $includingPercent = $percent;
             } else {
                 $request = method_exists($taxCalculator, 'getDefaultRateRequest')
