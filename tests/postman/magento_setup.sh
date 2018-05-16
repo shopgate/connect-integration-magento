@@ -28,6 +28,7 @@ n98 script:repo:run n98-setup \
 -d shop_number=${CFG_API_SHOP_NUMBER} \
 -d customer_number=${CFG_API_CUSTOMER_NUMBER} \
 -d minimum_order_active=${CFG_MINIMUM_ORDER_ACTIVE} \
+-d price_includes_tax=${CFG_PRICE_INC_TAX} \
 -d user1_email=${USER1_EMAIL} \
 -d user_pass=${USER_PASS} \
 -d misc_param1=${DOWNLOAD} \
