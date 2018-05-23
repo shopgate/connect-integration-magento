@@ -62,6 +62,10 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Product extends Shopgate_Clo
         }
 
         $item->setQty($data['qty']);
+        if ($quote->getShippingAddress()) {
+            $quote->getShippingAddress()->setCollectShippingRates(true);
+        }
+
         $quote->collectTotals()->save();
     }
 
