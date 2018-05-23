@@ -47,7 +47,10 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Url_Rest extends Shopgate_Clou
         $token  = $helper->generateAuthToken($quote->getId(), $this->_getStore(), $quote->getCustomerId());
         $url    = Mage::getUrl(
             Shopgate_Cloudapi_Helper_Frontend_Checkout::AUTH_CHECKOUT_URL,
-            array('token' => $token->getAuthorizationCode())
+            array(
+                'token' => $token->getAuthorizationCode(),
+                '_store' => $this->_getStore()
+            )
         );
 
         return array(

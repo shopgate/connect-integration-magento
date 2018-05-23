@@ -26,7 +26,7 @@ script:
       chmod +x ./tests/postman/magento_setup.sh;
       ./tests/postman/magento_setup.sh;
       cd ${TRAVIS_BUILD_DIR}/tests/postman/newman;
-      newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}";
+      newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}" --global-var "minimum_order_active=${CFG_MINIMUM_ORDER_ACTIVE}";
     fi
 after_failure:
   # one can check for a link in the terminal as this report file is uploaded to that link
@@ -67,6 +67,8 @@ env:
     CFG_API_CUSTOMER_NUMBER="11223344"
     CFG_API_SHOP_NUMBER="12345"
     CFG_API_KEY="11111111111111111111"
+    CFG_MINIMUM_ORDER_ACTIVE="1"
+    CFG_PRICE_INC_TAX="1"
     USER1_EMAIL="konstantin.kiritsenko+1@shopgate.com"
     USER_PASS="test123"
   matrix:

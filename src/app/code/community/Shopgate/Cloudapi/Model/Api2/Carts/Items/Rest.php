@@ -99,6 +99,10 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
 
         $quote = $this->loadUserQuote();
         $this->removeItemsFromQuote($quote, $cartItemIds);
+        if ($quote->getShippingAddress()) {
+            $quote->getShippingAddress()->setCollectShippingRates(true);
+        }
+
         $quote->collectTotals()->save();
     }
 

@@ -6,6 +6,9 @@ install --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="${folder}" --
 config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/customer_number" ${customer_number}
 config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/shop_number" ${shop_number}
 config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/api_key" ${api_key}
+config:set --scope="default" --scope-id="0" "sales/minimum_order/amount" "21"
+config:set --scope="default" --scope-id="0" "sales/minimum_order/active" ${minimum_order_active}
+config:set --scope="default" --scope-id="0" "tax/calculation/price_includes_tax" ${price_includes_tax}
 
 # creates in General group by default, no good way to set up without using php scripts
 customer:create ${user1_email} ${user_pass} "Test1" "Mock1" "1"

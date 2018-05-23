@@ -62,6 +62,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
         $response          = $accountController->getResponse();
         $params            = $this->getUtmParams();
         $params['token']   = $code;
+        $params['_store']  = $customer->getStore();
 
         if ($this->getRequestHelper()->isShopgateCheckout()) {
             /** @var Mage_Customer_Model_Session $session */
