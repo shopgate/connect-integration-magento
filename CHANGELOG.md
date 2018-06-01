@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Addresses to the response of the customers/me endpoint
+
 ## [3.1.3] - 2018-05-30
 ### Fixed
 - Empty cart issue after redirect to checkout 
