@@ -7,10 +7,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 ### Added
 - Addresses to the response of the customers/me endpoint
+- Endpoint for customer address retrieval
 
 ## [3.1.3] - 2018-05-30
 ### Fixed
-- Empty cart issue after redirect to checkout 
+- Empty cart issue after redirect to checkout
 
 ## [3.1.2] - 2018-05-23
 ### Added
