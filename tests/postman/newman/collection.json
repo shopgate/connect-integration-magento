@@ -12867,7 +12867,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "511885c1-3340-488b-9c1d-c519ad0ccc9a",
+                "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
@@ -12877,7 +12877,18 @@
                   "pm.test(\"Customer ID is returned\", function () {",
                   "    var jsonData = pm.response.json();",
                   "    pm.expect(jsonData.customer_id).to.not.be.empty;",
-                  "});"
+                  "});",
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.unset(\"customer_id\");"
                 ]
               }
             }
@@ -12955,6 +12966,143 @@
               "raw": "{{domain}}{{endpoint_customers_me}}",
               "host": [
                 "{{domain}}{{endpoint_customers_me}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "/v2/customers/:id/addresses",
+      "description": "",
+      "item": [
+        {
+          "name": "Get customer ID via ME",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ec94633f-9ecc-4d41-a62b-0f34b89b7a49",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.environment.set(\"customer_id\", jsonData.customer_id);",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.unset(\"customer_id\");"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_me}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_me}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get customer addresses",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "630140ee-8c4e-4aac-9e4e-83311bfe4e7f",
+                "type": "text/javascript",
+                "exec": [
+                  "/**",
+                  " * To be enabled when we can create address and add to customer via endpoint",
+                  " */",
+                  " ",
+                  "/*pm.test(\"Successfully loaded address data\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Customer address data is returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData[0].customer_id).to.not.be.empty;",
+                  "    pm.expect(jsonData[0].created_at).to.not.be.empty;",
+                  "    pm.expect(jsonData[0].firstname).to.not.be.empty;",
+                  "    pm.expect(jsonData[0].lastname).to.not.be.empty;",
+                  "    pm.expect(jsonData[0].city).to.not.be.empty;",
+                  "    pm.expect(jsonData[0].country_id).to.not.be.empty;",
+                  "    pm.expect(jsonData[0].street.length).to.be.gt(0);",
+                  "});*/"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_id_addresses}}"
               ]
             }
           },
