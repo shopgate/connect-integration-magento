@@ -93,8 +93,9 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         $data = array();
         /* @var $address Mage_Customer_Model_Address */
         foreach ($this->_getCollectionForRetrieve() as $address) {
-            $addressData           = $address->getData();
-            $addressData['street'] = $address->getStreet();
+            $addressData                     = $address->getData();
+            $addressData['street']           = $address->getStreet();
+            $addressData['customAttributes'] = array();
             foreach ($addressData as $code => $value) {
                 if (!in_array($code, $this->getDefaultAttributeList(), true)) {
                     $addressData['customAttributes'][$code] = $value;
@@ -157,7 +158,8 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
 
         $data = $validator->filter($data);
         if (!$validator->isValidData($data, true)
-            || !$validator->isValidDataForChangeAssociationWithCountry($address, $data)) {
+            || !$validator->isValidDataForChangeAssociationWithCountry($address, $data)
+        ) {
             foreach ($validator->getErrors() as $error) {
                 $this->_error($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
             }
@@ -351,6 +353,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
             'region_id',
             'street',
             'customer_id',
+            'customAttributes',
             'is_default_billing',
             'is_default_shipping'
         );
