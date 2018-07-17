@@ -20,7 +20,8 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest_Customer_V2 extends Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest
+class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest_Customer_V2
+    extends Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest
 {
     /**
      * Load customer address by id
@@ -39,6 +40,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest_Customer_V2 extends 
         if ($this->getApiUser()->getUserId() !== $customerAddress->getCustomerId()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
+
         return $customerAddress;
     }
 
@@ -59,6 +61,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest_Customer_V2 extends 
         if ($this->getApiUser()->getUserId() !== $customer->getId()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
+
         return $customer;
     }
 }
