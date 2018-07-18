@@ -95,14 +95,9 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         foreach ($this->_getCollectionForRetrieve() as $address) {
             $addressData                     = $address->getData();
             $addressData['street']           = $address->getStreet();
-            $addressData['customAttributes'] = array();
-            foreach ($addressData as $code => $value) {
-                if (!in_array($code, $this->getDefaultAttributeList(), true)) {
-                    $addressData['customAttributes'][$code] = $value;
-                    unset($addressData[$code]);
-                }
-            }
-            $data[] = array_merge($addressData, $this->_getDefaultAddressesInfo($address));
+            $addressData['customAttributes'] = $this->getCustomAttributes($address);
+            $addressData                     = array_diff_key($addressData, $addressData['customAttributes']);
+            $data[]                          = array_merge($addressData, $this->_getDefaultAddressesInfo($address));
         }
 
         return $data;
@@ -322,40 +317,24 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     }
 
     /**
-     * Retrieves the list of default attribute codes
+     * Retrieve custom attribute key=>value pairs
+     *
+     * @param Mage_Customer_Model_Address $address
      *
      * @return array
      */
-    private function getDefaultAttributeList()
+    private function getCustomAttributes(Mage_Customer_Model_Address $address)
     {
-        return array(
-            'entity_id',
-            'entity_type_id',
-            'attribute_set_id',
-            'increment_id',
-            'parent_id',
-            'created_at',
-            'updated_at',
-            'is_active',
-            'prefix',
-            'firstname',
-            'middlename',
-            'lastname',
-            'suffix',
-            'company',
-            'city',
-            'country_id',
-            'region',
-            'postcode',
-            'telephone',
-            'fax',
-            'vat_id',
-            'region_id',
-            'street',
-            'customer_id',
-            'customAttributes',
-            'is_default_billing',
-            'is_default_shipping'
-        );
+        $attributes = Mage::getResourceModel('eav/entity_attribute_collection')
+                          ->setEntityTypeFilter($address->getEntityTypeId())
+                          ->addFilter('is_user_defined', 1);
+        $list       = array();
+        /** @var Mage_Eav_Model_Attribute $attribute */
+        foreach ($attributes as $attribute) {
+            $code        = $attribute->getAttributeCode();
+            $list[$code] = $address->getData($code);
+        }
+
+        return $list;
     }
 }
