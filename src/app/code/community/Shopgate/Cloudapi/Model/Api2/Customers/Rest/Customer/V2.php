@@ -31,15 +31,16 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
     protected function _retrieve()
     {
         $customerData = Mage::getModel('customer/customer_api')->info($this->getApiUser()->getUserId());
-        $customerData['addresses'] = array();
+        $addresses    = array();
 
         if ($customerData['default_billing']) {
-            $customerData['addresses'][] = Mage::getModel('customer/address_api')->info($customerData['default_billing']);
+            $addresses[] = Mage::getModel('customer/address_api')->info($customerData['default_billing']);
         }
 
         if ($customerData['default_shipping']) {
-            $customerData['addresses'][] = Mage::getModel('customer/address_api')->info($customerData['default_shipping']);
+            $addresses[] = Mage::getModel('customer/address_api')->info($customerData['default_shipping']);
         }
+        $customerData['addresses'] = $addresses;
 
         return $this->filterOutData($customerData);
     }
