@@ -222,6 +222,7 @@
                 <privileges>
                     <customer>
                         <retrieve>1</retrieve>
+                        <create>1</create>
                     </customer>
                 </privileges>
                 <routes>

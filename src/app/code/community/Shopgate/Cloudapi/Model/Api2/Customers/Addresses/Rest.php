@@ -29,20 +29,28 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
      *
      * @throws Mage_Api2_Exception
      * @throws Exception
-     * @return string
+     * @return array
      */
     protected function _create(array $data)
     {
         /* @var $customer Mage_Customer_Model_Customer */
         $customer  = $this->_loadCustomerById($this->getRequest()->getParam('customer_id'));
         $validator = $this->_getValidator();
+        $helper    = $this->getHelper();
 
-        $data = $validator->filter($data);
-        if (!$validator->isValidData($data) || !$validator->isValidDataForCreateAssociationWithCountry($data)) {
+        $data        = $validator->filter($data);
+        $checkData   = $validator->isValidData($data);
+        $checkRegion = $helper->validateCountry($data) && $validator->isValidDataForCreateAssociationWithCountry($data);
+        if (!$checkData || !$checkRegion) {
             foreach ($validator->getErrors() as $error) {
-                $this->_error($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                $this->_errorMessage(
+                    $error,
+                    Mage_Api2_Model_Server::HTTP_BAD_REQUEST,
+                    array('path' => $helper->errorFieldParser($error))
+                );
             }
-            $this->_critical(self::RESOURCE_DATA_PRE_VALIDATION_ERROR);
+
+            return $this->sendInvalidationResponse();
         }
 
         if (isset($data['region'], $data['country_id'])) {
@@ -62,7 +70,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
             $this->_critical(self::RESOURCE_INTERNAL_ERROR);
         }
 
-        return $this->_getLocation($address);
+        return array('addressId' => $address->getId());
     }
 
     /**
@@ -139,11 +147,12 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     }
 
     /**
-     * Update specified stock item
+     * Update specified address
      *
      * @param array $data
      *
      * @throws Mage_Api2_Exception
+     * @throws Exception
      */
     protected function _update(array $data)
     {
@@ -182,6 +191,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
      * Delete customer address
      *
      * @throws Mage_Api2_Exception
+     * @throws Exception
      */
     protected function _delete()
     {
@@ -336,5 +346,38 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         }
 
         return $list;
+    }
+
+    /**
+     * This will take away the power away from our api2.xml
+     * and use the customer address api2.xml for filtering,
+     * validation and possible other side effects.
+     *
+     * @return string
+     */
+    public function getResourceType()
+    {
+        return 'customer_address';
+    }
+
+    /**
+     * Bypasses the exception state and passes down invalidation errors
+     *
+     * @throws Zend_Controller_Response_Exception
+     * @throws Exception
+     */
+    private function sendInvalidationResponse()
+    {
+        $this->getResponse()->setHttpResponseCode(400);
+
+        return $this->getResponse()->getMessages();
+    }
+
+    /**
+     * @return Shopgate_Cloudapi_Helper_Api2_Customers_Validation
+     */
+    private function getHelper()
+    {
+        return Mage::helper('shopgate_cloudapi/api2_customers_validation');
     }
 }
