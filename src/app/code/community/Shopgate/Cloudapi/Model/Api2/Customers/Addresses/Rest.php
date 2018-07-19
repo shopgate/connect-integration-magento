@@ -349,7 +349,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     }
 
     /**
-     * This will take away the power away from our api2.xml
+     * This will take away the power from our api2.xml
      * and use the customer address api2.xml for filtering,
      * validation and possible other side effects.
      *
