@@ -12978,6 +12978,363 @@
       "description": "",
       "item": [
         {
+          "name": "Errors - Create",
+          "description": "",
+          "item": [
+            {
+              "name": "Required errors",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ceb60d33-e872-40d3-9831-8d80b86f6c77",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"All default required fields fail\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "/**",
+                      " * Traverses all default errors and checks that they exist as json objects",
+                      " */",
+                      "pm.test(\"All default errors appear correctly\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    const list = ['firstname', 'lastname', 'street', 'city', 'country_id', 'postcode', 'telephone']",
+                      "    pm.expect(jsonData.error.length).to.be.gte(7);",
+                      "    list.forEach((path) => {",
+                      "        let result = jsonData.error.filter((item) => item.path === path)",
+                      "        pm.expect(result.length).to.eq(1)",
+                      "    })",
+                      "});",
+                      "",
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}{{xdebug}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}{{xdebug}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Region doesn't exist",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "e418d1d8-ca58-44c2-bd1c-504549b9714a",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Validation error thrown\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Correct errors are returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.error[0].message).to.eq('State/Province does not exist.');",
+                      "    pm.expect(jsonData.error[0].path).to.eq('region');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"bla\",\n        \"postcode\": \"test1.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Region is not a string",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "e00d2a30-905e-434d-99ec-fa6b7e419e2f",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Validation error thrown\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Correct errors are returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.error[0].message).to.eq('Invalid \"State/Province\" type.');",
+                      "    pm.expect(jsonData.error[0].path).to.eq('region');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"US\",\n        \"region\": 1,\n        \"postcode\": \"test1.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No region provided",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "0f435a67-280d-433f-9088-f837312253a2",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Validation error thrown\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Correct errors are returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.error[0].message).to.eq('\"State/Province\" is required.');",
+                      "    pm.expect(jsonData.error[0].path).to.eq('region');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"\",\n        \"postcode\": \"test1.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No region needed for IT",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "01c6c82a-f6b0-4acf-a937-bb3b2629f448",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Validation error thrown\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Correct errors are returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.error[0].message).to.eq('\"Zip/Postal Code\" is a required value.');",
+                      "    pm.expect(jsonData.error[0].path).to.eq('postcode');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"IT\",\n        \"region\": \"\",\n        \"postcode\": \"\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "b570ddae-af2d-49be-8573-6490d642017f",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "f3b6d2d4-b0b3-4b7c-ab0c-aa16d0f7ce2f",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
           "name": "Get customer ID via ME",
           "event": [
             {
@@ -13037,7 +13394,7 @@
           "response": []
         },
         {
-          "name": "Get customer addresses",
+          "name": "Get addresses",
           "event": [
             {
               "listen": "test",
@@ -13103,6 +13460,73 @@
               "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
               "host": [
                 "{{domain}}{{endpoint_customers_id_addresses}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create address",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "49048781-04cb-44ee-8271-225312bec2a1",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Successfully created address data\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "var jsonData = pm.response.json();",
+                  "pm.test(\"Customer address ID is returned\", function () {",
+                  "    pm.expect(jsonData.addressId).to.not.be.empty;",
+                  "});",
+                  "",
+                  "// preparation for delete address endpoint",
+                  "if (jsonData.addressId) {",
+                  "    pm.environment.set(\"address-id\", jsonData.addressId);",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\t\"prefix\": \"Test1.prefix\",\n        \"firstname\": \"Test1.first\",\n        \"middlename\": \"Test1.mid\",\n        \"lastname\": \"Test1.last\",\n        \"suffix\": \"Test1.suffix\",\n        \"company\": \"Test1.comapny\",\n        \"city\": \"Test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"Arizona\",\n        \"postcode\": \"85000\",\n        \"telephone\": \"618-322-0000\",\n        \"vat_id\": \"Test1.vat_id\",\n        \"street\": [\n            \"Test1.street1\",\n            \"Test1.street2\"\n        ]\n\t}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_id_addresses}}{{xdebug}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_id_addresses}}{{xdebug}}"
               ]
             }
           },
