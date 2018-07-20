@@ -349,18 +349,6 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     }
 
     /**
-     * This will take away the power from our api2.xml
-     * and use the customer address api2.xml for filtering,
-     * validation and possible other side effects.
-     *
-     * @return string
-     */
-    public function getResourceType()
-    {
-        return 'customer_address';
-    }
-
-    /**
      * Bypasses the exception state and passes down invalidation errors
      *
      * @throws Zend_Controller_Response_Exception

@@ -217,6 +217,7 @@
             <shopgate_cloudapi_v2_customers_addresses>
                 <group>shopgate_cloudapi_v2_customers_addresses</group>
                 <model>shopgate_cloudapi/api2_customers_addresses</model>
+                <working_model>customer/address</working_model>
                 <title>Addresses</title>
                 <sort_order>66</sort_order>
                 <privileges>
@@ -225,6 +226,33 @@
                         <create>1</create>
                     </customer>
                 </privileges>
+                <attributes translate="entity_id is_default_billing is_default_shipping" module="api2">
+                    <entity_id>Customer Address ID</entity_id>
+                    <is_default_billing>Is Default Billing Address</is_default_billing>
+                    <is_default_shipping>Is Default Shipping Address</is_default_shipping>
+                </attributes>
+                <exclude_attributes>
+                    <customer>
+                        <read>
+                            <region_id>1</region_id>
+                        </read>
+                        <write>
+                            <entity_id>1</entity_id>
+                            <region_id>1</region_id>
+                        </write>
+                    </customer>
+                </exclude_attributes>
+                <validators>
+                    <eav>
+                        <customer>
+                            <entity_model>customer/address</entity_model>
+                            <form_model>customer/form</form_model>
+                            <form_code>
+                                <update>customer_address_edit</update>
+                            </form_code>
+                        </customer>
+                    </eav>
+                </validators>
                 <routes>
                     <route_v2_customers_id_addresses>
                         <route>/v2/customers/:customer_id/addresses</route>
