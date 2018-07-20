@@ -13248,7 +13248,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "ceb60d33-e872-40d3-9831-8d80b86f6c77",
+                    "id": "231d275e-18e7-4fea-b59c-3b341c00d41a",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"All default required fields fail\", function () {",
@@ -13260,11 +13260,14 @@
                       " */",
                       "pm.test(\"All default errors appear correctly\", function () {",
                       "    var jsonData = pm.response.json();",
-                      "    const list = ['firstname', 'lastname', 'street', 'city', 'country_id', 'postcode', 'telephone']",
+                      "    const list = ['firstname', 'lastname', 'street', 'city', 'postcode', 'telephone']",
                       "    pm.expect(jsonData.error.length).to.be.gte(7);",
                       "    list.forEach((path) => {",
-                      "        let result = jsonData.error.filter((item) => item.path === path)",
-                      "        pm.expect(result.length).to.eq(1)",
+                      "        let result = jsonData.error.filter((item) => item.path === path);",
+                      "        pm.expect(result.length).to.eq(1);",
+                      "        if (result.length === 0) {",
+                      "            console.log('This path is not available in this mage version: ' + path)",
+                      "        }",
                       "    })",
                       "});",
                       "",
@@ -13384,7 +13387,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "e00d2a30-905e-434d-99ec-fa6b7e419e2f",
+                    "id": "ebea9616-110a-4511-b0c3-c2f13ab1ca3f",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Validation error thrown\", function () {",
@@ -13394,7 +13397,6 @@
                       "pm.test(\"Correct errors are returned\", function () {",
                       "    var jsonData = pm.response.json();",
                       "    pm.expect(jsonData.error.length).to.eq(1);",
-                      "    pm.expect(jsonData.error[0].message).to.eq('Invalid \"State/Province\" type.');",
                       "    pm.expect(jsonData.error[0].path).to.eq('region');",
                       "});"
                     ]
@@ -13512,7 +13514,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "01c6c82a-f6b0-4acf-a937-bb3b2629f448",
+                    "id": "f4eef0b0-44f9-4748-b864-1400c169d34e",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Validation error thrown\", function () {",
@@ -13522,7 +13524,6 @@
                       "pm.test(\"Correct errors are returned\", function () {",
                       "    var jsonData = pm.response.json();",
                       "    pm.expect(jsonData.error.length).to.eq(1);",
-                      "    pm.expect(jsonData.error[0].message).to.eq('\"Zip/Postal Code\" is a required value.');",
                       "    pm.expect(jsonData.error[0].path).to.eq('postcode');",
                       "});"
                     ]
