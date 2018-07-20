@@ -155,7 +155,7 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
         $path     = Mage::getModuleDir('etc', $this::FAULT_MODULE) . DS . 'api.xml';
         $faults   = Mage::getModel('api/config', $path)->getFaults($resource);
 
-        return (string)isset($faults[$code]) ? $faults[$code]['message'] : $fallback;
+        return (string) isset($faults[$code]) ? $faults[$code]['message'] : $fallback;
     }
 
     /**

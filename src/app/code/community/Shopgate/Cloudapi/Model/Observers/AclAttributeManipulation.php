@@ -42,7 +42,8 @@ class Shopgate_Cloudapi_Model_Observers_AclAttributeManipulation
         $attribute = $observer->getEvent()->getData('attribute');
         $isDeleted = $observer->getEvent()->getName() === 'enterprise_customer_address_attribute_delete';
         if ($isDeleted
-            || ($attribute->getData('is_user_defined') && $attribute->dataHasChangedFor('is_visible'))) {
+            || ($attribute->getData('is_user_defined') && $attribute->dataHasChangedFor('is_visible'))
+        ) {
             /** @var $collection Mage_Api2_Model_Resource_Acl_Filter_Attribute_Collection */
             $collection = Mage::getResourceModel('api2/acl_filter_attribute_collection');
             /** @var $aclFilter Mage_Api2_Model_Acl_Filter_Attribute */
@@ -51,7 +52,8 @@ class Shopgate_Cloudapi_Model_Observers_AclAttributeManipulation
                  * Make sure the resource ALL is not enabled as we don't have to do anything
                  */
                 if ($aclFilter->getResourceId() !== Mage_Api2_Model_Acl_Global_Rule::RESOURCE_ALL
-                    && strpos($aclFilter->getResourceId(), 'shopgate_cloudapi_') !== false) {
+                    && strpos($aclFilter->getResourceId(), 'shopgate_cloudapi_') !== false
+                ) {
                     $allowedAttributes = explode(',', $aclFilter->getAllowedAttributes());
                     /**
                      * If not visible or deleted, remove the attribute from the allowable list, else add it.
