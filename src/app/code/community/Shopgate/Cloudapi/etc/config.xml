@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.1.3</version>
+            <version>3.2.0</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
@@ -65,6 +65,24 @@
                     </shopgate_customer_register_success>
                 </observers>
             </customer_register_success>
+            <enterprise_customer_address_attribute_save>
+                <observers>
+                    <shopgate_enterprise_customer_address_attribute_save>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AclAttributeManipulation</class>
+                        <method>execute</method>
+                    </shopgate_enterprise_customer_address_attribute_save>
+                </observers>
+            </enterprise_customer_address_attribute_save>
+            <enterprise_customer_address_attribute_delete>
+                <observers>
+                    <shopgate_enterprise_customer_address_attribute_delete>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AclAttributeManipulation</class>
+                        <method>execute</method>
+                    </shopgate_enterprise_customer_address_attribute_delete>
+                </observers>
+            </enterprise_customer_address_attribute_delete>
         </events>
         <blocks>
             <shopgate_cloudapi>
