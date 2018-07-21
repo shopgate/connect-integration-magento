@@ -36,17 +36,14 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         /* @var $customer Mage_Customer_Model_Customer */
         $customer  = $this->_loadCustomerById($this->getRequest()->getParam('customer_id'));
         $validator = $this->_getValidator();
-        $helper    = $this->getHelper();
 
-        $data        = $validator->filter($data);
-        $checkData   = $validator->isValidData($data);
-        $checkRegion = $helper->validateCountry($data) && $validator->isValidDataForCreateAssociationWithCountry($data);
-        if (!$checkData || !$checkRegion) {
-            foreach ($validator->getErrors() as $error) {
+        $data = $validator->filter($data);
+        if (!$validator->isValidData($data) || !$validator->isValidDataForCreateAssociationWithCountry($data)) {
+            foreach ($validator->getDetailedErrors() as $code => $errors) {
                 $this->_errorMessage(
-                    $error,
+                    '',
                     Mage_Api2_Model_Server::HTTP_BAD_REQUEST,
-                    array('path' => $helper->errorFieldParser($error))
+                    array('path' => $code, 'messages' => $errors)
                 );
             }
 
@@ -226,12 +223,12 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     /**
      * Get customer address resource validator instance
      *
-     * @return Mage_Customer_Model_Api2_Customer_Address_Validator
+     * @return Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator
      */
     protected function _getValidator()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return Mage::getModel('customer/api2_customer_address_validator', array('resource' => $this));
+        return Mage::getModel('shopgate_cloudapi/api2_customers_addresses_validator', array('resource' => $this));
     }
 
     /**
@@ -359,13 +356,5 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         $this->getResponse()->setHttpResponseCode(400);
 
         return $this->getResponse()->getMessages();
-    }
-
-    /**
-     * @return Shopgate_Cloudapi_Helper_Api2_Customers_Validation
-     */
-    private function getHelper()
-    {
-        return Mage::helper('shopgate_cloudapi/api2_customers_validation');
     }
 }
