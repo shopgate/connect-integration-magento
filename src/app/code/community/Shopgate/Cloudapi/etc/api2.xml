@@ -224,6 +224,7 @@
                     <customer>
                         <retrieve>1</retrieve>
                         <create>1</create>
+                        <delete>1</delete>
                     </customer>
                 </privileges>
                 <attributes translate="entity_id is_default_billing is_default_shipping" module="api2">
@@ -258,7 +259,14 @@
                         <route>/v2/customers/:customer_id/addresses</route>
                         <action_type>collection</action_type>
                     </route_v2_customers_id_addresses>
+                    <route_v2_customers_id_addresses_id>
+                        <route>/v2/customers/:customer_id/addresses/:id</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_id_addresses_id>
                 </routes>
+                <attributes translate="ids" module="api2">
+                    <ids>Filter Address IDs</ids>
+                </attributes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_customers_addresses>
             <shopgate_cloudapi_v2_products>

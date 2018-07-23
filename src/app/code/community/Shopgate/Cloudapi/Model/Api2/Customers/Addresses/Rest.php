@@ -192,22 +192,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
      */
     protected function _delete()
     {
-        /* @var $address Mage_Customer_Model_Address */
-        $address = $this->_loadCustomerAddressById($this->getRequest()->getParam('id'));
-
-        if ($this->_isDefaultBillingAddress($address) || $this->_isDefaultShippingAddress($address)) {
-            $this->_critical(
-                'Address is default for customer so is not allowed to be deleted',
-                Mage_Api2_Model_Server::HTTP_BAD_REQUEST
-            );
-        }
-        try {
-            $address->delete();
-        } catch (Mage_Core_Exception $e) {
-            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
-        } catch (Exception $e) {
-            $this->_critical(self::RESOURCE_INTERNAL_ERROR);
-        }
+        $this->_deleteAddressById($this->getRequest()->getParam('id'));
     }
 
     /**
@@ -325,6 +310,33 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
 
     /**
      * Retrieve custom attribute key=>value pairs
+     *
+     * @param int $addressId
+     *
+     * @throws Mage_Api2_Exception
+     */
+    protected function _deleteAddressById($addressId)
+    {
+        /* @var $address Mage_Customer_Model_Address */
+        $address = $this->_loadCustomerAddressById($addressId);
+
+        if ($this->_isDefaultBillingAddress($address) || $this->_isDefaultShippingAddress($address)) {
+            $this->_critical(
+                'Address is default for customer so is not allowed to be deleted',
+                Mage_Api2_Model_Server::HTTP_BAD_REQUEST
+            );
+        }
+        try {
+            $address->delete();
+        } catch (Mage_Core_Exception $e) {
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        } catch (Exception $e) {
+            $this->_critical(self::RESOURCE_INTERNAL_ERROR);
+        }
+    }
+
+    /**
+     * Retrieves the list of default attribute codes
      *
      * @param Mage_Customer_Model_Address $address
      *
