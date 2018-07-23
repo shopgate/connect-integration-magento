@@ -74,6 +74,7 @@
             {
               "listen": "test",
               "script": {
+                "id": "655aca92-7b3a-43c5-98cf-f8b614d02964",
                 "type": "text/javascript",
                 "exec": [
                   "if (responseCode.code === 200) {",
@@ -12978,98 +12979,740 @@
       "description": "",
       "item": [
         {
-          "name": "Get customer ID via ME",
-          "event": [
+          "name": "Create",
+          "description": "",
+          "item": [
             {
-              "listen": "test",
-              "script": {
-                "id": "ec94633f-9ecc-4d41-a62b-0f34b89b7a49",
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
-                  "    var jsonData = pm.response.json();",
-                  "    pm.response.to.have.status(200);",
-                  "    pm.environment.set(\"customer_id\", jsonData.customer_id);",
-                  "});"
-                ]
-              }
+              "name": "Get customer ID via ME",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ec94633f-9ecc-4d41-a62b-0f34b89b7a49",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.response.to.have.status(200);",
+                      "    pm.environment.set(\"customer_id\", jsonData.customer_id);",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.unset(\"customer_id\");"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_me}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_me}}"
+                  ]
+                }
+              },
+              "response": []
             },
             {
-              "listen": "prerequest",
-              "script": {
-                "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                "type": "text/javascript",
-                "exec": [
-                  "pm.environment.unset(\"customer_id\");"
-                ]
-              }
+              "name": "Create address",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "49048781-04cb-44ee-8271-225312bec2a1",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Successfully created address data\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "var jsonData = pm.response.json();",
+                      "pm.test(\"Customer address ID is returned\", function () {",
+                      "    pm.expect(jsonData.addressId).to.not.be.empty;",
+                      "});",
+                      "",
+                      "// preparation for delete address endpoint",
+                      "if (jsonData.addressId) {",
+                      "    pm.environment.set(\"address-id\", jsonData.addressId);",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\t\"prefix\": \"Test1.prefix\",\n        \"firstname\": \"Test1.first\",\n        \"middlename\": \"Test1.mid\",\n        \"lastname\": \"Test1.last\",\n        \"suffix\": \"Test1.suffix\",\n        \"company\": \"Test1.comapny\",\n        \"city\": \"Test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"Arizona\",\n        \"postcode\": \"85000\",\n        \"telephone\": \"618-322-0000\",\n        \"vat_id\": \"Test1.vat_id\",\n        \"street\": [\n            \"Test1.street1\",\n            \"Test1.street2\"\n        ]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get addresses",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "5e236993-f1a3-44a1-a917-778add3acf50",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Successfully loaded address data\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Customer address data is returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData[0].customer_id).to.not.be.empty;",
+                      "    pm.expect(jsonData[0].created_at).to.not.be.empty;",
+                      "    pm.expect(jsonData[0].firstname).to.not.be.empty;",
+                      "    pm.expect(jsonData[0].lastname).to.not.be.empty;",
+                      "    pm.expect(jsonData[0].city).to.not.be.empty;",
+                      "    pm.expect(jsonData[0].country_id).to.not.be.empty;",
+                      "    pm.expect(jsonData[0].street.length).to.be.gt(0);",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
             }
           ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{customer-access-token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "{{domain}}{{endpoint_customers_me}}",
-              "host": [
-                "{{domain}}{{endpoint_customers_me}}"
-              ]
-            }
-          },
-          "response": []
+          "_postman_isSubFolder": true
         },
         {
-          "name": "Get customer addresses",
+          "name": "Errors - Create",
+          "description": "",
+          "item": [
+            {
+              "name": "Get customer ID via ME",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ec94633f-9ecc-4d41-a62b-0f34b89b7a49",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.response.to.have.status(200);",
+                      "    pm.environment.set(\"customer_id\", jsonData.customer_id);",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.unset(\"customer_id\");"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_me}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_me}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Required errors",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "66930191-8830-4aae-9aa8-5900658a79bf",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "/**",
+                      " * Traverses all default errors and checks that they exist as json objects",
+                      " */",
+                      "pm.test(\"All default errors appear correctly\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    const list = ['firstname', 'lastname', 'street', 'country_id', 'city', 'postcode', 'telephone']",
+                      "    pm.expect(jsonData.messages.error.length).to.be.gte(7);",
+                      "    list.forEach((path) => {",
+                      "        let result = jsonData.messages.error.filter((item) => item.path === path);",
+                      "        pm.expect(result.length).to.eq(1);",
+                      "        if (result.length === 0) {",
+                      "            console.log('This path is not available in this mage instance: ' + path)",
+                      "        }",
+                      "    })",
+                      "});",
+                      "",
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Region doesn't exist",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "0a78e10c-f4e1-4db8-9cd8-45413846399d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Correct errors are returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('region');",
+                      "    pm.expect(jsonData.messages.error[0].messages[0]).to.eq('State/Province does not exist.');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstname\": \"test1.firstname\",\n    \"lastname\": \"test1.lastname\",\n    \"city\": \"test1.city\",\n    \"country_id\": \"US\",\n    \"region\": \"bla\",\n    \"postcode\": \"test1.postcode\",\n    \"telephone\": \"test1.telephone\",\n    \"street\": [\"test1.street\"]\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Region is not a string",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "71d16f78-8d2b-42b3-953a-735f1b5f1c50",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Correct errors are returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('region');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"US\",\n        \"region\": 1,\n        \"postcode\": \"test1.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No region provided",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "86a42c19-c1c8-4d24-a87e-befae29dec4b",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"State/Province error is thrown\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('region');",
+                      "    pm.expect(jsonData.messages.error[0].messages[0]).to.eq('\"State/Province\" is required.');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"\",\n        \"postcode\": \"test1.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n  }"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No region needed for Italy",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "27c387ae-33eb-46d6-a04d-18252e260a26",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"Only postcode error is thrown and no region error\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('postcode');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"IT\",\n        \"region\": \"\",\n        \"postcode\": \"\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n  }"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country code too long",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "11a0e30c-2a27-49f6-8be5-26d47dbea85d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"One error with country_id path returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('country_id');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"United States\",\n        \"region\": \"test.region\",\n        \"postcode\": \"test.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country code too short",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "c2456a7c-69e5-438c-9873-320242742b9f",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"One error with country_id path returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('country_id');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"U\",\n        \"region\": \"test.region\",\n        \"postcode\": \"test.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
           "event": [
             {
-              "listen": "test",
+              "listen": "prerequest",
               "script": {
-                "id": "630140ee-8c4e-4aac-9e4e-83311bfe4e7f",
+                "id": "b570ddae-af2d-49be-8573-6490d642017f",
                 "type": "text/javascript",
                 "exec": [
-                  "/**",
-                  " * To be enabled when we can create address and add to customer via endpoint",
-                  " */",
-                  " ",
-                  "/*pm.test(\"Successfully loaded address data\", function () {",
-                  "    pm.response.to.have.status(200);",
-                  "});",
-                  "",
-                  "pm.test(\"Customer address data is returned\", function () {",
-                  "    var jsonData = pm.response.json();",
-                  "    pm.expect(jsonData[0].customer_id).to.not.be.empty;",
-                  "    pm.expect(jsonData[0].created_at).to.not.be.empty;",
-                  "    pm.expect(jsonData[0].firstname).to.not.be.empty;",
-                  "    pm.expect(jsonData[0].lastname).to.not.be.empty;",
-                  "    pm.expect(jsonData[0].city).to.not.be.empty;",
-                  "    pm.expect(jsonData[0].country_id).to.not.be.empty;",
-                  "    pm.expect(jsonData[0].street.length).to.be.gt(0);",
-                  "});*/"
+                  ""
                 ]
               }
             },
             {
-              "listen": "prerequest",
+              "listen": "test",
               "script": {
-                "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                "id": "f3b6d2d4-b0b3-4b7c-ab0c-aa16d0f7ce2f",
                 "type": "text/javascript",
                 "exec": [
                   ""
@@ -13077,36 +13720,7 @@
               }
             }
           ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{customer-access-token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
-              "host": [
-                "{{domain}}{{endpoint_customers_id_addresses}}"
-              ]
-            }
-          },
-          "response": []
+          "_postman_isSubFolder": true
         }
       ]
     },

@@ -22,11 +22,11 @@
 
 class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
 {
-    const SG_RESOURCE_NAMESPACE     = 'shopgate_cloudapi';
-    const SG_ADMIN_USERNAME         = 'shopgate-rest';
-    const SG_ADMIN_FIRST_NAME       = 'Shopgate';
-    const SG_ADMIN_LAST_NAME        = 'REST Consumer';
-    const SG_ADMIN_EMAIL            = 'interfaces@shopgate.com';
+    const SG_RESOURCE_NAMESPACE = 'shopgate_cloudapi';
+    const SG_ADMIN_USERNAME     = 'shopgate-rest';
+    const SG_ADMIN_FIRST_NAME   = 'Shopgate';
+    const SG_ADMIN_LAST_NAME    = 'REST Consumer';
+    const SG_ADMIN_EMAIL        = 'interfaces@shopgate.com';
 
     /**
      * Loads our library & OAuth2
@@ -51,22 +51,22 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
         /** @noinspection PhpUndefinedMethodInspection */
         /** @var Mage_Api2_Model_Acl_Global_Role $role */
         $role = Mage::getModel('api2/acl_global_role')
-            ->setRoleName('Shopgate REST')
-            ->setResources(array('all'))
-            ->save();
+                    ->setRoleName('Shopgate REST')
+                    ->setResources(array('all'))
+                    ->save();
 
         $pass = Mage::helper('core')->getRandomString(8);
         $user = Mage::getModel('admin/user')
-            ->setData(
-                array(
-                    'username'  => self::SG_ADMIN_USERNAME,
-                    'firstname' => self::SG_ADMIN_FIRST_NAME,
-                    'lastname'  => self::SG_ADMIN_LAST_NAME,
-                    'email'     => self::SG_ADMIN_EMAIL,
-                    'password'  => $pass,
-                    'is_active' => 1
-                )
-            );
+                    ->setData(
+                        array(
+                            'username'  => self::SG_ADMIN_USERNAME,
+                            'firstname' => self::SG_ADMIN_FIRST_NAME,
+                            'lastname'  => self::SG_ADMIN_LAST_NAME,
+                            'email'     => self::SG_ADMIN_EMAIL,
+                            'password'  => $pass,
+                            'is_active' => 1
+                        )
+                    );
 
         /** @noinspection PhpUndefinedMethodInspection */
         $user->save();
@@ -74,9 +74,9 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
 
         $rule = Mage::getModel('api2/acl_global_rule');
         $rule->setRoleId($role->getId())
-            ->setResourceId('all')
-            ->setPrivilege('create')
-            ->save();
+             ->setResourceId('all')
+             ->setPrivilege('create')
+             ->save();
 
     }
 
@@ -91,7 +91,7 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
             if ($this->_validateNameSpace($resource)) {
                 $this->_addSystemRules($resource);
             }
-        };
+        }
     }
 
     /**
@@ -117,7 +117,8 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
         /** @var Mage_Api2_Model_Acl_Global_Role $api2AclRoleModel */
         $api2AclRoleModel = Mage::getModel('api2/acl_global_role');
         $api2AclRoleModel->setId($systemRoleId);
-        $resourceUserPrivileges = $this->_getApi2Config()->getResourceUserPrivileges($resource, $api2AclRoleModel->getConfigNodeName());
+        $resourceUserPrivileges =
+            $this->_getApi2Config()->getResourceUserPrivileges($resource, $api2AclRoleModel->getConfigNodeName());
         foreach ($resourceUserPrivileges as $privilegeKey => $privilegeValue) {
             if ($privilegeValue) {
                 $this->_createRule($systemRoleId, $resource, $privilegeKey);
@@ -127,6 +128,7 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
 
     /**
      * @param string $nameSpace
+     *
      * @return bool
      */
     protected function _validateNameSpace($nameSpace)
@@ -154,8 +156,16 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
         /** @var Mage_Api2_Model_Acl_Global_Rule $rule */
         $rule = Mage::getModel('api2/acl_global_rule');
         $rule->setRoleId($roleId)
-            ->setResourceId($resource)
-            ->setPrivilege($privilege)
-            ->save();
+             ->setResourceId($resource)
+             ->setPrivilege($privilege)
+             ->save();
+    }
+
+    /**
+     * @return Shopgate_Cloudapi_Helper_Api2_Acl
+     */
+    public function getAclHelper()
+    {
+        return Mage::helper('shopgate_cloudapi/api2_acl');
     }
 }

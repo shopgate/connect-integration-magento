@@ -29,7 +29,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
      *
      * @throws Mage_Api2_Exception
      * @throws Exception
-     * @return string
+     * @return array
      */
     protected function _create(array $data)
     {
@@ -39,10 +39,15 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
 
         $data = $validator->filter($data);
         if (!$validator->isValidData($data) || !$validator->isValidDataForCreateAssociationWithCountry($data)) {
-            foreach ($validator->getErrors() as $error) {
-                $this->_error($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            foreach ($validator->getDetailedErrors() as $code => $errors) {
+                $this->_errorMessage(
+                    '',
+                    Mage_Api2_Model_Server::HTTP_BAD_REQUEST,
+                    array('path' => $code, 'messages' => $errors)
+                );
             }
-            $this->_critical(self::RESOURCE_DATA_PRE_VALIDATION_ERROR);
+
+            return $this->sendInvalidationResponse();
         }
 
         if (isset($data['region'], $data['country_id'])) {
@@ -62,7 +67,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
             $this->_critical(self::RESOURCE_INTERNAL_ERROR);
         }
 
-        return $this->_getLocation($address);
+        return array('addressId' => $address->getId());
     }
 
     /**
@@ -95,14 +100,9 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         foreach ($this->_getCollectionForRetrieve() as $address) {
             $addressData                     = $address->getData();
             $addressData['street']           = $address->getStreet();
-            $addressData['customAttributes'] = array();
-            foreach ($addressData as $code => $value) {
-                if (!in_array($code, $this->getDefaultAttributeList(), true)) {
-                    $addressData['customAttributes'][$code] = $value;
-                    unset($addressData[$code]);
-                }
-            }
-            $data[] = array_merge($addressData, $this->_getDefaultAddressesInfo($address));
+            $addressData['customAttributes'] = $this->getCustomAttributes($address);
+            $addressData                     = array_diff_key($addressData, $addressData['customAttributes']);
+            $data[]                          = array_merge($addressData, $this->_getDefaultAddressesInfo($address));
         }
 
         return $data;
@@ -144,11 +144,12 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     }
 
     /**
-     * Update specified stock item
+     * Update specified address
      *
      * @param array $data
      *
      * @throws Mage_Api2_Exception
+     * @throws Exception
      */
     protected function _update(array $data)
     {
@@ -187,6 +188,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
      * Delete customer address
      *
      * @throws Mage_Api2_Exception
+     * @throws Exception
      */
     protected function _delete()
     {
@@ -221,12 +223,12 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     /**
      * Get customer address resource validator instance
      *
-     * @return Mage_Customer_Model_Api2_Customer_Address_Validator
+     * @return Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator
      */
     protected function _getValidator()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return Mage::getModel('customer/api2_customer_address_validator', array('resource' => $this));
+        return Mage::getModel('shopgate_cloudapi/api2_customers_addresses_validator', array('resource' => $this));
     }
 
     /**
@@ -322,40 +324,37 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     }
 
     /**
-     * Retrieves the list of default attribute codes
+     * Retrieve custom attribute key=>value pairs
+     *
+     * @param Mage_Customer_Model_Address $address
      *
      * @return array
      */
-    private function getDefaultAttributeList()
+    private function getCustomAttributes(Mage_Customer_Model_Address $address)
     {
-        return array(
-            'entity_id',
-            'entity_type_id',
-            'attribute_set_id',
-            'increment_id',
-            'parent_id',
-            'created_at',
-            'updated_at',
-            'is_active',
-            'prefix',
-            'firstname',
-            'middlename',
-            'lastname',
-            'suffix',
-            'company',
-            'city',
-            'country_id',
-            'region',
-            'postcode',
-            'telephone',
-            'fax',
-            'vat_id',
-            'region_id',
-            'street',
-            'customer_id',
-            'customAttributes',
-            'is_default_billing',
-            'is_default_shipping'
-        );
+        $attributes = Mage::getResourceModel('eav/entity_attribute_collection')
+                          ->setEntityTypeFilter($address->getEntityTypeId())
+                          ->addFilter('is_user_defined', 1);
+        $list       = array();
+        /** @var Mage_Eav_Model_Attribute $attribute */
+        foreach ($attributes as $attribute) {
+            $code        = $attribute->getAttributeCode();
+            $list[$code] = $address->getData($code);
+        }
+
+        return $list;
+    }
+
+    /**
+     * Bypasses the exception state and passes down invalidation errors
+     *
+     * @throws Zend_Controller_Response_Exception
+     * @throws Exception
+     */
+    private function sendInvalidationResponse()
+    {
+        $this->getResponse()->setHttpResponseCode(400);
+
+        return array('messages' => $this->getResponse()->getMessages());
     }
 }

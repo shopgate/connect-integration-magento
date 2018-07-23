@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Addresses to the response of the customers/me endpoint
 - Endpoint for customer address retrieval
+- Endpoint for customer address creation
 
 ## [3.1.3] - 2018-05-30
 ### Fixed
