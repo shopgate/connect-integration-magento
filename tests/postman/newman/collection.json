@@ -13248,10 +13248,10 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "231d275e-18e7-4fea-b59c-3b341c00d41a",
+                    "id": "66930191-8830-4aae-9aa8-5900658a79bf",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"All default required fields fail\", function () {",
+                      "pm.test(\"Status 400 returned\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});",
                       "",
@@ -13260,13 +13260,13 @@
                       " */",
                       "pm.test(\"All default errors appear correctly\", function () {",
                       "    var jsonData = pm.response.json();",
-                      "    const list = ['firstname', 'lastname', 'street', 'city', 'postcode', 'telephone']",
-                      "    pm.expect(jsonData.error.length).to.be.gte(7);",
+                      "    const list = ['firstname', 'lastname', 'street', 'country_id', 'city', 'postcode', 'telephone']",
+                      "    pm.expect(jsonData.messages.error.length).to.be.gte(7);",
                       "    list.forEach((path) => {",
-                      "        let result = jsonData.error.filter((item) => item.path === path);",
+                      "        let result = jsonData.messages.error.filter((item) => item.path === path);",
                       "        pm.expect(result.length).to.eq(1);",
                       "        if (result.length === 0) {",
-                      "            console.log('This path is not available in this mage version: ' + path)",
+                      "            console.log('This path is not available in this mage instance: ' + path)",
                       "        }",
                       "    })",
                       "});",
@@ -13323,18 +13323,18 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "e418d1d8-ca58-44c2-bd1c-504549b9714a",
+                    "id": "0a78e10c-f4e1-4db8-9cd8-45413846399d",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Validation error thrown\", function () {",
+                      "pm.test(\"Status 400 returned\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});",
                       "",
                       "pm.test(\"Correct errors are returned\", function () {",
                       "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.error.length).to.eq(1);",
-                      "    pm.expect(jsonData.error[0].message).to.eq('State/Province does not exist.');",
-                      "    pm.expect(jsonData.error[0].path).to.eq('region');",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('region');",
+                      "    pm.expect(jsonData.messages.error[0].messages[0]).to.eq('State/Province does not exist.');",
                       "});"
                     ]
                   }
@@ -13370,7 +13370,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"bla\",\n        \"postcode\": \"test1.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                  "raw": "{\n    \"firstname\": \"test1.firstname\",\n    \"lastname\": \"test1.lastname\",\n    \"city\": \"test1.city\",\n    \"country_id\": \"US\",\n    \"region\": \"bla\",\n    \"postcode\": \"test1.postcode\",\n    \"telephone\": \"test1.telephone\",\n    \"street\": [\"test1.street\"]\n}"
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
@@ -13387,17 +13387,17 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "ebea9616-110a-4511-b0c3-c2f13ab1ca3f",
+                    "id": "71d16f78-8d2b-42b3-953a-735f1b5f1c50",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Validation error thrown\", function () {",
+                      "pm.test(\"Status 400 returned\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});",
                       "",
                       "pm.test(\"Correct errors are returned\", function () {",
                       "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.error.length).to.eq(1);",
-                      "    pm.expect(jsonData.error[0].path).to.eq('region');",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('region');",
                       "});"
                     ]
                   }
@@ -13450,18 +13450,18 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "0f435a67-280d-433f-9088-f837312253a2",
+                    "id": "86a42c19-c1c8-4d24-a87e-befae29dec4b",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Validation error thrown\", function () {",
+                      "pm.test(\"Status 400 returned\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});",
                       "",
-                      "pm.test(\"Correct errors are returned\", function () {",
+                      "pm.test(\"State/Province error is thrown\", function () {",
                       "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.error.length).to.eq(1);",
-                      "    pm.expect(jsonData.error[0].message).to.eq('\"State/Province\" is required.');",
-                      "    pm.expect(jsonData.error[0].path).to.eq('region');",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('region');",
+                      "    pm.expect(jsonData.messages.error[0].messages[0]).to.eq('\"State/Province\" is required.');",
                       "});"
                     ]
                   }
@@ -13497,7 +13497,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"\",\n        \"postcode\": \"test1.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"\",\n        \"postcode\": \"test1.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n  }"
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
@@ -13509,22 +13509,22 @@
               "response": []
             },
             {
-              "name": "No region needed for IT",
+              "name": "No region needed for Italy",
               "event": [
                 {
                   "listen": "test",
                   "script": {
-                    "id": "f4eef0b0-44f9-4748-b864-1400c169d34e",
+                    "id": "27c387ae-33eb-46d6-a04d-18252e260a26",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test(\"Validation error thrown\", function () {",
+                      "pm.test(\"Status 400 returned\", function () {",
                       "    pm.response.to.have.status(400);",
                       "});",
                       "",
-                      "pm.test(\"Correct errors are returned\", function () {",
+                      "pm.test(\"Only postcode error is thrown and no region error\", function () {",
                       "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.error.length).to.eq(1);",
-                      "    pm.expect(jsonData.error[0].path).to.eq('postcode');",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('postcode');",
                       "});"
                     ]
                   }
@@ -13560,7 +13560,133 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"IT\",\n        \"region\": \"\",\n        \"postcode\": \"\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"IT\",\n        \"region\": \"\",\n        \"postcode\": \"\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n  }"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country code too long",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "11a0e30c-2a27-49f6-8be5-26d47dbea85d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"One error with country_id path returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('country_id');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"United States\",\n        \"region\": \"test.region\",\n        \"postcode\": \"test.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Country code too short",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "c2456a7c-69e5-438c-9873-320242742b9f",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Status 400 returned\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test(\"One error with country_id path returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eq('country_id');",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"firstname\": \"test1.firstname\",\n        \"lastname\": \"test1.lastname\",\n        \"city\": \"test1.city\",\n        \"country_id\": \"U\",\n        \"region\": \"test.region\",\n        \"postcode\": \"test.postcode\",\n        \"telephone\": \"test1.telephone\",\n        \"street\": [\"test1.street\"]\n\t}"
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_customers_id_addresses}}",

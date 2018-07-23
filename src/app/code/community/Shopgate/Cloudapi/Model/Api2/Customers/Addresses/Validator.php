@@ -50,7 +50,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
         $result = $this->countryValidation($data)
             && $this->getValidator()->isValidDataForCreateAssociationWithCountry($data);
         if (!$result) {
-            $this->addValidationErrors();
+            $this->addRegionValidationErrors();
         }
 
         return $result;
@@ -84,14 +84,14 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
         $result = $this->countryValidation($data)
             && $this->getValidator()->isValidDataForChangeAssociationWithCountry($address, $data);
         if (!$result) {
-            $this->addValidationErrors();
+            $this->addRegionValidationErrors();
         }
     }
 
     /**
      * Handles detailed errors for this class
      */
-    private function addValidationErrors()
+    private function addRegionValidationErrors()
     {
         foreach ($this->getValidator()->getErrors() as $error) {
             $this->addDetailedError($error, 'region');

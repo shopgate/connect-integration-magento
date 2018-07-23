@@ -355,6 +355,6 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     {
         $this->getResponse()->setHttpResponseCode(400);
 
-        return $this->getResponse()->getMessages();
+        return array('messages' => $this->getResponse()->getMessages());
     }
 }
