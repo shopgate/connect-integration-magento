@@ -23,6 +23,11 @@
 class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
 {
     /**
+     * Parameter accepted by the endpoint to filter address collection by id
+     */
+    const PARAMETER_ADDRESS_FILTER = 'ids';
+
+    /**
      * Create customer address
      *
      * @param array $data
@@ -193,6 +198,20 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     protected function _delete()
     {
         $this->_deleteAddressById($this->getRequest()->getParam('id'));
+    }
+
+    /**
+     * @param array $data
+     *
+     * @throws Mage_Api2_Exception
+     */
+    protected function _multiDelete(array $data)
+    {
+        if (isset($data[self::PARAMETER_ADDRESS_FILTER])) {
+            foreach (explode(',', $data[self::PARAMETER_ADDRESS_FILTER]) as $addressId) {
+                $this->_deleteAddressById($addressId);
+            }
+        }
     }
 
     /**
