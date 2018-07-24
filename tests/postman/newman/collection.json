@@ -13902,7 +13902,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n\t\t\"prefix\": \"Test1.prefix\",\n        \"firstname\": \"Test1.first\",\n        \"middlename\": \"Test1.mid\",\n        \"lastname\": \"Test1.last\",\n        \"suffix\": \"Test1.suffix\",\n        \"company\": \"Test1.comapny\",\n        \"city\": \"Test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"Arizona\",\n        \"postcode\": \"85000\",\n        \"telephone\": \"618-322-0000\",\n        \"vat_id\": \"Test1.vat_id\",\n        \"street\": [\n            \"Test1.street1\",\n            \"Test1.street2\"\n        ]\n\t}"
+                      "raw": ""
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_customers_id_addresses}}/{{address-id}}",
@@ -13990,7 +13990,7 @@
               "description": "",
               "item": [
                 {
-                  "name": "Get customer ID via ME Copy",
+                  "name": "Get customer ID via ME",
                   "event": [
                     {
                       "listen": "test",
@@ -14228,7 +14228,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n\t\t\"prefix\": \"Test1.prefix\",\n        \"firstname\": \"Test1.first\",\n        \"middlename\": \"Test1.mid\",\n        \"lastname\": \"Test1.last\",\n        \"suffix\": \"Test1.suffix\",\n        \"company\": \"Test1.comapny\",\n        \"city\": \"Test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"Arizona\",\n        \"postcode\": \"85000\",\n        \"telephone\": \"618-322-0000\",\n        \"vat_id\": \"Test1.vat_id\",\n        \"street\": [\n            \"Test1.street1\",\n            \"Test1.street2\"\n        ]\n\t}"
+                      "raw": ""
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_customers_id_addresses}}?ids={{address-id}},{{address-id-2}}",
