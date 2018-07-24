@@ -13721,6 +13721,667 @@
             }
           ],
           "_postman_isSubFolder": true
+        },
+        {
+          "name": "Delete",
+          "description": "",
+          "item": [
+            {
+              "name": "Single",
+              "description": "",
+              "item": [
+                {
+                  "name": "Get customer ID via ME",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "ec94633f-9ecc-4d41-a62b-0f34b89b7a49",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.response.to.have.status(200);",
+                          "    pm.environment.set(\"customer_id\", jsonData.customer_id);",
+                          "});"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.environment.unset(\"customer_id\");"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_me}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_me}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create address",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "49048781-04cb-44ee-8271-225312bec2a1",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Successfully created address data\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});",
+                          "",
+                          "var jsonData = pm.response.json();",
+                          "pm.test(\"Customer address ID is returned\", function () {",
+                          "    pm.expect(jsonData.addressId).to.not.be.empty;",
+                          "});",
+                          "",
+                          "// preparation for delete address endpoint",
+                          "if (jsonData.addressId) {",
+                          "    pm.environment.set(\"address-id\", jsonData.addressId);",
+                          "}"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                        "type": "text/javascript",
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\t\"prefix\": \"Test1.prefix\",\n        \"firstname\": \"Test1.first\",\n        \"middlename\": \"Test1.mid\",\n        \"lastname\": \"Test1.last\",\n        \"suffix\": \"Test1.suffix\",\n        \"company\": \"Test1.comapny\",\n        \"city\": \"Test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"Arizona\",\n        \"postcode\": \"85000\",\n        \"telephone\": \"618-322-0000\",\n        \"vat_id\": \"Test1.vat_id\",\n        \"street\": [\n            \"Test1.street1\",\n            \"Test1.street2\"\n        ]\n\t}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_id_addresses}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete address by ID",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "e2d949cc-8606-477b-98b0-422bb879951e",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Successfully deleted address\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                        "type": "text/javascript",
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_id_addresses}}/{{address-id}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_id_addresses}}"
+                      ],
+                      "path": [
+                        "{{address-id}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Address does not exist anymore",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "96c09ff4-b90b-4d87-84b9-2c697f9780c1",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Resource should not exist\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});",
+                          "",
+                          "pm.test(\"Address not found error\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                          "    pm.expect(jsonData.messages.error[0].message).to.eq('Resource not found.');",
+                          "});"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                        "type": "text/javascript",
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_id_addresses}}/{{address-id}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_id_addresses}}"
+                      ],
+                      "path": [
+                        "{{address-id}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "_postman_isSubFolder": true
+            },
+            {
+              "name": "Multiple",
+              "description": "",
+              "item": [
+                {
+                  "name": "Get customer ID via ME",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "ec94633f-9ecc-4d41-a62b-0f34b89b7a49",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.response.to.have.status(200);",
+                          "    pm.environment.set(\"customer_id\", jsonData.customer_id);",
+                          "});"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.environment.unset(\"customer_id\");"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_me}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_me}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create first address",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "49048781-04cb-44ee-8271-225312bec2a1",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Successfully created address data\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});",
+                          "",
+                          "var jsonData = pm.response.json();",
+                          "pm.test(\"Customer address ID is returned\", function () {",
+                          "    pm.expect(jsonData.addressId).to.not.be.empty;",
+                          "});",
+                          "",
+                          "// preparation for delete address endpoint",
+                          "if (jsonData.addressId) {",
+                          "    pm.environment.set(\"address-id\", jsonData.addressId);",
+                          "}"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                        "type": "text/javascript",
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\t\"prefix\": \"Test1.prefix\",\n        \"firstname\": \"Test1.first\",\n        \"middlename\": \"Test1.mid\",\n        \"lastname\": \"Test1.last\",\n        \"suffix\": \"Test1.suffix\",\n        \"company\": \"Test1.comapny\",\n        \"city\": \"Test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"Arizona\",\n        \"postcode\": \"85000\",\n        \"telephone\": \"618-322-0000\",\n        \"vat_id\": \"Test1.vat_id\",\n        \"street\": [\n            \"Test1.street1\",\n            \"Test1.street2\"\n        ]\n\t}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_id_addresses}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create second address",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "b19109f4-8e59-4ed0-8cdc-4df1ea3306f1",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Successfully created address data\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});",
+                          "",
+                          "var jsonData = pm.response.json();",
+                          "pm.test(\"Customer address ID is returned\", function () {",
+                          "    pm.expect(jsonData.addressId).to.not.be.empty;",
+                          "});",
+                          "",
+                          "// preparation for delete address endpoint",
+                          "if (jsonData.addressId) {",
+                          "    pm.environment.set(\"address-id-2\", jsonData.addressId);",
+                          "}"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                        "type": "text/javascript",
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\t\"prefix\": \"Test1.prefix\",\n        \"firstname\": \"Test1.first\",\n        \"middlename\": \"Test1.mid\",\n        \"lastname\": \"Test1.last\",\n        \"suffix\": \"Test1.suffix\",\n        \"company\": \"Test1.comapny\",\n        \"city\": \"Test1.city\",\n        \"country_id\": \"US\",\n        \"region\": \"Arizona\",\n        \"postcode\": \"85000\",\n        \"telephone\": \"618-322-0000\",\n        \"vat_id\": \"Test1.vat_id\",\n        \"street\": [\n            \"Test1.street1\",\n            \"Test1.street2\"\n        ]\n\t}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_id_addresses}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_id_addresses}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete addresses by ID",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "54cb59ee-a543-419a-a837-c4ef22ace3f2",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Successfully deleted addresses\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                        "type": "text/javascript",
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_id_addresses}}?ids={{address-id}},{{address-id-2}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_id_addresses}}"
+                      ],
+                      "query": [
+                        {
+                          "key": "ids",
+                          "value": "{{address-id}},{{address-id-2}}"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "First address does not exist anymore",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "02f7abb8-1ddb-44e6-bf3a-cf02b7bcc90f",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Resource should not exist\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});",
+                          "",
+                          "pm.test(\"Address not found error\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                          "    pm.expect(jsonData.messages.error[0].message).to.eq('Resource not found.');",
+                          "});"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                        "type": "text/javascript",
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_id_addresses}}/{{address-id}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_id_addresses}}"
+                      ],
+                      "path": [
+                        "{{address-id}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Second address does not exist anymore",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "9bddefa5-bb5a-4459-a259-07b114765496",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Resource should not exist\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});",
+                          "",
+                          "pm.test(\"Address not found error\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                          "    pm.expect(jsonData.messages.error[0].message).to.eq('Resource not found.');",
+                          "});"
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                        "type": "text/javascript",
+                        "exec": [
+                          ""
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers_id_addresses}}/{{address-id-2}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers_id_addresses}}"
+                      ],
+                      "path": [
+                        "{{address-id-2}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "_postman_isSubFolder": true
+            }
+          ],
+          "_postman_isSubFolder": true
         }
       ]
     },
