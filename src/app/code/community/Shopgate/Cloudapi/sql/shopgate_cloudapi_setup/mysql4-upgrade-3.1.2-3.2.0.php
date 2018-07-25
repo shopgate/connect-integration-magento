@@ -28,6 +28,6 @@ try {
     $installer->getAclAttributeHelper()->addOurAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
     $installer->getAclAttributeHelper()->addOurAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
 } catch (Exception $e) {
-    ShopgateLogger::getInstance()->log($e->getMessage());
+    Mage::logException($e);
 }
 $installer->endSetup();

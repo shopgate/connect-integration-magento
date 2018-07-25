@@ -25,14 +25,14 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
     /**
      * Allow all Shopgate endpoints for Customer & Guest users
      *
-     * @param int|null $roleId - only necessary for admin role type
+     * @param int|null $roleId - ID handles Admin role type, null handles customer|guest type
      *
      * @throws Exception
      */
     public function addOurAclRules($roleId = null)
     {
         $rules = $this->getOurAclRules($roleId);
-        if ($rules) {
+        if ($rules->getSize() > 0) {
             $this->deleteOurAclRules($roleId);
         }
 
@@ -44,7 +44,7 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
     /**
      * Removes Shopgate ACL rules
      *
-     * @param int|null $roleId - only necessary for admin role type
+     * @param int|null $roleId
      *
      * @throws Exception
      */
@@ -56,7 +56,7 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
     /**
      * Retrieves existing rule collection
      *
-     * @param null|int $roleId
+     * @param int|null $roleId
      *
      * @return Mage_Api2_Model_Resource_Acl_Global_Rule_Collection
      */
@@ -68,6 +68,11 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
                           ->addFieldToFilter('resource_id', array('like' => self::SG_RESOURCE_NAMESPACE . '%'));
         if ($roleId) {
             $collection->addFilterByRoleId((integer) $roleId);
+        } else {
+            $collection->addFieldToFilter(
+                'role_id',
+                array('in' => Mage_Api2_Model_Acl_Global_Role::getSystemRoles())
+            );
         }
 
         return $collection;
@@ -103,7 +108,7 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
     /**
      * Deletes all SG Rules for the Role id provided
      *
-     * @param int $roleId
+     * @param int|null $roleId
      *
      * @throws Exception
      */
