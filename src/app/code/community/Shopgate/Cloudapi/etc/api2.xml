@@ -225,6 +225,7 @@
                         <retrieve>1</retrieve>
                         <create>1</create>
                         <delete>1</delete>
+                        <update>1</update>
                     </customer>
                 </privileges>
                 <attributes translate="entity_id is_default_billing is_default_shipping ids" module="api2">

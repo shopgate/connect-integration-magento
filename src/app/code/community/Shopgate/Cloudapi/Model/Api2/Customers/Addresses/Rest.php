@@ -44,15 +44,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
 
         $data = $validator->filter($data);
         if (!$validator->isValidData($data) || !$validator->isValidDataForCreateAssociationWithCountry($data)) {
-            foreach ($validator->getDetailedErrors() as $code => $errors) {
-                $this->_errorMessage(
-                    '',
-                    Mage_Api2_Model_Server::HTTP_BAD_REQUEST,
-                    array('path' => $code, 'messages' => $errors)
-                );
-            }
-
-            return $this->sendInvalidationResponse();
+            return $this->setDetailedErrors($validator)->sendInvalidationResponse();
         }
 
         if (isset($data['region'], $data['country_id'])) {
@@ -166,15 +158,14 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         if (!$validator->isValidData($data, true)
             || !$validator->isValidDataForChangeAssociationWithCountry($address, $data)
         ) {
-            foreach ($validator->getErrors() as $error) {
-                $this->_error($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
-            }
-            $this->_critical(self::RESOURCE_DATA_PRE_VALIDATION_ERROR);
+            $this->_render($this->setDetailedErrors($validator)->sendInvalidationResponse());
+
+            return;
         }
         if (isset($data['region'])) {
             $data['region']    = $this->_getRegionIdByNameOrCode(
                 $data['region'],
-                isset($data['country_id']) ? $data['country_id'] : $address->getCountryId()
+                isset($data['country_id']) ? $data['country_id'] : $address->getData('country_id')
             );
             $data['region_id'] = null; // to avoid overwrite region during update in address model _beforeSave()
         }
@@ -387,5 +378,25 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         $this->getResponse()->setHttpResponseCode(400);
 
         return array('messages' => $this->getResponse()->getMessages());
+    }
+
+    /**
+     * Sets detailed validation errors to be returned by the address endpoints
+     *
+     * @param Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator $validator
+     *
+     * @return Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest
+     */
+    private function setDetailedErrors(Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator $validator)
+    {
+        foreach ($validator->getDetailedErrors() as $code => $errors) {
+            $this->_errorMessage(
+                '',
+                Mage_Api2_Model_Server::HTTP_BAD_REQUEST,
+                array('path' => $code, 'messages' => $errors)
+            );
+        }
+
+        return $this;
     }
 }
