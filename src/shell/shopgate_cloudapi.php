@@ -1,0 +1,1 @@
+../../../../../mage/1.14.3.9/shell/shopgate_cloudapi.php

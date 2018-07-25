@@ -22,11 +22,10 @@
 
 class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Setup
 {
-    const SG_RESOURCE_NAMESPACE = 'shopgate_cloudapi';
-    const SG_ADMIN_USERNAME     = 'shopgate-rest';
-    const SG_ADMIN_FIRST_NAME   = 'Shopgate';
-    const SG_ADMIN_LAST_NAME    = 'REST Consumer';
-    const SG_ADMIN_EMAIL        = 'interfaces@shopgate.com';
+    const SG_ADMIN_USERNAME   = 'shopgate-rest';
+    const SG_ADMIN_FIRST_NAME = 'Shopgate';
+    const SG_ADMIN_LAST_NAME  = 'REST Consumer';
+    const SG_ADMIN_EMAIL      = 'interfaces@shopgate.com';
 
     /**
      * Loads our library & OAuth2
@@ -41,20 +40,14 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
 
     /**
      * Creates a Shopgate Admin role to make calls
-     * to our REST API with.
+     * to our REST API with. Also allows calls to
+     * all endpoints for this user.
      *
      * @throws Exception
      */
     public function createAdminUserAndAssignRole()
     {
-        //todo-sg: adjust to allow shopgate specific resources instead, to keep it extra secure
-        /** @noinspection PhpUndefinedMethodInspection */
-        /** @var Mage_Api2_Model_Acl_Global_Role $role */
-        $role = Mage::getModel('api2/acl_global_role')
-                    ->setRoleName('Shopgate REST')
-                    ->setResources(array('all'))
-                    ->save();
-
+        $role = $this->getAclRoleHelper()->createAdminRole();
         $pass = Mage::helper('core')->getRandomString(8);
         $user = Mage::getModel('admin/user')
                     ->setData(
@@ -67,105 +60,33 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
                             'is_active' => 1
                         )
                     );
-
         /** @noinspection PhpUndefinedMethodInspection */
         $user->save();
         $role->getResource()->saveAdminToRoleRelation($user->getId(), $role->getId());
-
-        $rule = Mage::getModel('api2/acl_global_rule');
-        $rule->setRoleId($role->getId())
-             ->setResourceId('all')
-             ->setPrivilege('create')
-             ->save();
-
+        $this->getAclRuleHelper()->addOurAclRules($role->getId());
     }
 
     /**
-     * append rules to resources
-     *
-     * @throws Exception
+     * @return Shopgate_Cloudapi_Helper_Api2_Acl_Rules
      */
-    public function appendRules()
+    public function getAclRuleHelper()
     {
-        foreach ($this->_getApi2Config()->getResourcesTypes() as $resource) {
-            if ($this->_validateNameSpace($resource)) {
-                $this->_addSystemRules($resource);
-            }
-        }
+        return Mage::helper('shopgate_cloudapi/api2_acl_rules');
     }
 
     /**
-     * @param string $resource
-     *
-     * @throws Exception
+     * @return Shopgate_Cloudapi_Helper_Api2_Acl_Roles
      */
-    protected function _addSystemRules($resource)
+    public function getAclRoleHelper()
     {
-        foreach (Mage_Api2_Model_Acl_Global_Role::getSystemRoles() as $systemRoleId) {
-            $this->_createRuleByPrivilege($resource, $systemRoleId);
-        }
+        return Mage::helper('shopgate_cloudapi/api2_acl_roles');
     }
 
     /**
-     * @param string $resource
-     * @param int    $systemRoleId
-     *
-     * @throws Exception
+     * @return Shopgate_Cloudapi_Helper_Api2_Acl_Attributes
      */
-    protected function _createRuleByPrivilege($resource, $systemRoleId)
+    public function getAclAttributeHelper()
     {
-        /** @var Mage_Api2_Model_Acl_Global_Role $api2AclRoleModel */
-        $api2AclRoleModel = Mage::getModel('api2/acl_global_role');
-        $api2AclRoleModel->setId($systemRoleId);
-        $resourceUserPrivileges =
-            $this->_getApi2Config()->getResourceUserPrivileges($resource, $api2AclRoleModel->getConfigNodeName());
-        foreach ($resourceUserPrivileges as $privilegeKey => $privilegeValue) {
-            if ($privilegeValue) {
-                $this->_createRule($systemRoleId, $resource, $privilegeKey);
-            }
-        }
-    }
-
-    /**
-     * @param string $nameSpace
-     *
-     * @return bool
-     */
-    protected function _validateNameSpace($nameSpace)
-    {
-        return 0 === strpos($nameSpace, self::SG_RESOURCE_NAMESPACE);
-    }
-
-    /**
-     * @return Mage_Api2_Model_Config
-     */
-    protected function _getApi2Config()
-    {
-        return Mage::getModel('api2/config');
-    }
-
-    /**
-     * @param int    $roleId
-     * @param int    $resource
-     * @param string $privilege
-     *
-     * @throws Exception
-     */
-    protected function _createRule($roleId, $resource, $privilege)
-    {
-        /** @var Mage_Api2_Model_Acl_Global_Rule $rule */
-        $rule = Mage::getModel('api2/acl_global_rule');
-        $rule->setRoleId($roleId)
-             ->setResourceId($resource)
-             ->setPrivilege($privilege)
-             ->save();
-    }
-
-    /**
-     * @return Shopgate_Cloudapi_Helper_Api2_Acl
-     */
-    public function getAclHelper()
-    {
-        return Mage::helper('shopgate_cloudapi/api2_acl');
+        return Mage::helper('shopgate_cloudapi/api2_acl_attributes');
     }
 }
