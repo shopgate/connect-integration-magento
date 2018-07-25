@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for customer address retrieval
 - Endpoint for customer address creation
 - Endpoint for customer address deletion
+- Endpoint for customer address update
 
 ## [3.1.3] - 2018-05-30
 ### Fixed
