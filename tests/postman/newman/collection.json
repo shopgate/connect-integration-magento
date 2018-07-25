@@ -13649,7 +13649,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "4e34e392-5ad5-4021-ad7d-c80e2cb57220",
+                    "id": "4622fc9e-c8d4-48fe-8fe7-ecd217f712fb",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Successfully loaded address data\", function () {",
@@ -13663,7 +13663,6 @@
                       "    pm.expect(lastAddress.created_at).to.not.be.empty;",
                       "    pm.expect(lastAddress.created_at).to.eq(lastAddress.updated_at);",
                       "    pm.expect(lastAddress.firstname).to.eq(pm.environment.get(\"seed\") + \".first\");",
-                      "    pm.expect(lastAddress.middlename).to.eq(pm.environment.get(\"seed\") + \".mid\");",
                       "    pm.expect(lastAddress.lastname).to.eq(pm.environment.get(\"seed\") + \".last\");",
                       "    pm.expect(lastAddress.is_active).to.eq('1');",
                       "    pm.expect(lastAddress.company).to.eq(pm.environment.get(\"seed\") + \".company\");",
@@ -13727,7 +13726,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "f77ee558-bcc0-4727-9d96-ece636e0fa5b",
+                    "id": "a4db5316-86f5-4c77-ae9d-2a8f07740f5f",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Successfully loaded address data\", function () {",
@@ -13739,7 +13738,6 @@
                       "    pm.expect(lastAddress.created_at).to.not.be.empty;",
                       "    pm.expect(lastAddress.updated_at).to.not.be.empty;",
                       "    pm.expect(lastAddress.firstname).to.eq(pm.environment.get(\"seed\") + \".first\");",
-                      "    pm.expect(lastAddress.middlename).to.eq(pm.environment.get(\"seed\") + \".mid\");",
                       "    pm.expect(lastAddress.lastname).to.eq(pm.environment.get(\"seed\") + \".last\");",
                       "    pm.expect(lastAddress.is_active).to.eq('1');",
                       "    pm.expect(lastAddress.company).to.eq(pm.environment.get(\"seed\") + \".company\");",
@@ -14683,7 +14681,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "4e34e392-5ad5-4021-ad7d-c80e2cb57220",
+                    "id": "beb8a741-ce66-45ae-8809-2615f82c98d2",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Successfully loaded address data\", function () {",
@@ -14697,7 +14695,6 @@
                       "    pm.expect(lastAddress.created_at).to.not.be.empty;",
                       "    pm.expect(lastAddress.created_at).to.eq(lastAddress.updated_at);",
                       "    pm.expect(lastAddress.firstname).to.eq(pm.environment.get(\"seed\") + \".first\");",
-                      "    pm.expect(lastAddress.middlename).to.eq(pm.environment.get(\"seed\") + \".mid\");",
                       "    pm.expect(lastAddress.lastname).to.eq(pm.environment.get(\"seed\") + \".last\");",
                       "    pm.expect(lastAddress.is_active).to.eq('1');",
                       "    pm.expect(lastAddress.company).to.eq(pm.environment.get(\"seed\") + \".company\");",
@@ -14804,9 +14801,12 @@
                   "raw": "{\n    \"firstname\": \"{{seed}}.first\",\n    \"middlename\": \"{{seed}}.mid\",\n    \"lastname\": \"{{seed}}.last\",\n    \"company\": \"{{seed}}.company\",\n    \"city\": \"{{seed}}.city\",\n    \"country_id\": \"EE\",\n    \"region\": \"Harjumaa\",\n    \"postcode\": \"13916\",\n    \"telephone\": \"{{seed}}.phone\",\n    \"vat_id\": \"{{seed}}.vat_id\",\n    \"street\": [\n        \"{{seed}}.street1\",\n        \"{{seed}}.street2\"\n    ]\n}"
                 },
                 "url": {
-                  "raw": "{{domain}}{{endpoint_customers_id_addresses_id}}",
+                  "raw": "{{domain}}{{endpoint_customers_id_addresses}}/{{address-id}}",
                   "host": [
-                    "{{domain}}{{endpoint_customers_id_addresses_id}}"
+                    "{{domain}}{{endpoint_customers_id_addresses}}"
+                  ],
+                  "path": [
+                    "{{address-id}}"
                   ]
                 }
               },
@@ -14818,7 +14818,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "b4a6e154-b2f4-4f8d-8f13-16def8a58bb4",
+                    "id": "adb31dc9-55fc-4f78-a135-22304e07ee85",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Successfully loaded address data\", function () {",
@@ -14832,7 +14832,6 @@
                       "    pm.expect(lastAddress.created_at).to.not.be.empty;",
                       "    pm.expect(lastAddress.created_at).to.not.eq(lastAddress.updated_at);",
                       "    pm.expect(lastAddress.firstname).to.eq(pm.environment.get(\"seed\") + \".first\");",
-                      "    pm.expect(lastAddress.middlename).to.eq(pm.environment.get(\"seed\") + \".mid\");",
                       "    pm.expect(lastAddress.lastname).to.eq(pm.environment.get(\"seed\") + \".last\");",
                       "    pm.expect(lastAddress.is_active).to.eq('1');",
                       "    pm.expect(lastAddress.company).to.eq(pm.environment.get(\"seed\") + \".company\");",
