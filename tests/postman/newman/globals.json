@@ -57,7 +57,7 @@
     },
     {
       "key": "endpoint_customers_id_addresses",
-      "value": "{{endpoint_customers}}/{{customer_id}}/addresses",
+      "value": "{{endpoint_customers}}/{{customer-id}}/addresses",
       "enabled": true,
       "type": "text"
     },
