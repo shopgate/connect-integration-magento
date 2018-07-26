@@ -56,8 +56,12 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
         switch ($this->getActionType() . $this->getOperation()) {
             /* Create */
             case self::ACTION_TYPE_ENTITY . self::OPERATION_CREATE:
-                // Creation of objects is possible only when working with collection
-                $this->_critical(self::RESOURCE_METHOD_NOT_IMPLEMENTED);
+                /**
+                 * Passthrough to update a single entity as PUT does
+                 * not load body content in PHP5.6<
+                 */
+                $this->setOperation(self::OPERATION_UPDATE);
+                $this->dispatch();
                 break;
             case self::ACTION_TYPE_COLLECTION . self::OPERATION_CREATE:
                 // If no of the methods(multi or single) is implemented, request body is not checked
