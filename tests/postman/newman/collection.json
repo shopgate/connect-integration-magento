@@ -14770,10 +14770,11 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "id": "666aa4c8-cc6b-47e8-bbb2-f54f7cd6dd6c",
+                    "id": "034019cd-7070-499f-b523-c16e67b7bf67",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(100)));"
+                      "pm.environment.set(\"seed\", \"address-\" + Math.floor(Math.random() * Math.floor(100)));",
+                      "setTimeout(function(){}, 2000); //delay 2 seconds so that created_at and updated_at are different"
                     ]
                   }
                 }
@@ -14850,7 +14851,7 @@
                 {
                   "listen": "prerequest",
                   "script": {
-                    "id": "16d54f96-0512-4548-814a-9beef69d72ad",
+                    "id": "e0fd3a4d-b403-41a2-a325-03cc04ccffb6",
                     "type": "text/javascript",
                     "exec": [
                       ""
@@ -17726,6 +17727,7 @@
         {
           "listen": "test",
           "script": {
+            "id": "a1b98b3b-08b0-4097-8485-7897b41843c2",
             "type": "text/javascript",
             "exec": [
               "pm.test(\"Successful CORS call per definition\", function () {",
@@ -17733,7 +17735,7 @@
               "});",
               "tests[\"Body is empty\"] = responseBody === \"\";",
               "tests[\"Allow-Headers is proper\"] = postman.getResponseHeader(\"Access-Control-Allow-Headers\") === 'Content-Type,Version,Authorization,PHP_AUTH_USER,PHP_AUTH_PW';",
-              "tests[\"Allow-Methods are proper\"] = postman.getResponseHeader(\"Access-Control-Allow-Methods\") === 'GET, POST, UPDATE, DELETE, OPTIONS';",
+              "tests[\"Allow-Methods are proper\"] = postman.getResponseHeader(\"Access-Control-Allow-Methods\") === 'GET, POST, PUT, UPDATE, DELETE, OPTIONS';",
               "tests[\"Allow-Origin is *\"] = postman.getResponseHeader(\"Access-Control-Allow-Origin\") === '*';"
             ]
           }
