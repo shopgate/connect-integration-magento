@@ -26,7 +26,7 @@ $installer->startSetup();
 
 try {
     $installer->createAdminUserAndAssignRole();
-    $installer->appendRules();
+    $installer->getAclRuleHelper()->addAclRules();
 } catch (Exception $e) {
     Mage::logException($e);
 }

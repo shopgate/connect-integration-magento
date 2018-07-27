@@ -78,6 +78,8 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
     /**
      * @param Mage_Customer_Model_Address $address
      * @param array                       $data
+     *
+     * @return bool
      */
     public function isValidDataForChangeAssociationWithCountry(Mage_Customer_Model_Address $address, array $data)
     {
@@ -86,6 +88,8 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
         if (!$result) {
             $this->addRegionValidationErrors();
         }
+
+        return $result;
     }
 
     /**

@@ -25,9 +25,9 @@ $installer = $this;
 $installer->startSetup();
 
 try {
-    $installer->getAclHelper()->addOurAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
-    $installer->getAclHelper()->addOurAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
+    $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
+    $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
 } catch (Exception $e) {
-    ShopgateLogger::getInstance()->log($e->getMessage());
+    Mage::logException($e);
 }
 $installer->endSetup();
