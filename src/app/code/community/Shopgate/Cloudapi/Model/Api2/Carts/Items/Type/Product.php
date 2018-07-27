@@ -65,10 +65,6 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Product extends Shopgate_Clo
         if ($quote->getShippingAddress()) {
             $quote->getShippingAddress()->setCollectShippingRates(true);
         }
-        $quote->setData(
-            Shopgate_Framework_Model_SalesRule_Condition::CART_TYPE,
-            Shopgate_Framework_Helper_Client::VALUE_APP
-        );
 
         $quote->collectTotals()->save();
     }

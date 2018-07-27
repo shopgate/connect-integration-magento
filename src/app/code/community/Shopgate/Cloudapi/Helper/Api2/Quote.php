@@ -109,15 +109,19 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
      */
     public function addTotals(Mage_Sales_Model_Quote $quote)
     {
+        $totals = $quote->getTotals();
         $quote->setData(
             self::KEY_TOTALS,
             array_map(
                 function (Mage_Sales_Model_Quote_Address_Total $total) {
                     return $total->getData();
                 },
-                $quote->getTotals()
+                $totals
             )
         );
+        if ($quote->getCouponCode() === null && isset($totals['discount'])) {
+            $quote->setCouponCode('1');
+        }
     }
 
     /**
