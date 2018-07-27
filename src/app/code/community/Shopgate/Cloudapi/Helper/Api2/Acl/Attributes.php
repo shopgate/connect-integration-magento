@@ -32,11 +32,11 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Attributes extends Shopgate_Cloudapi_Hel
      *
      * @throws Exception
      */
-    public function addOurAclAttributes($userType)
+    public function addAclAttributes($userType)
     {
         $resourceList = $this->getResourceAttributes($userType);
         if ($resourceList) {
-            $this->deleteOurAclAttributes($userType);
+            $this->deleteAclAttributes($userType);
         }
 
         foreach ($resourceList as $resource => $operations) {
@@ -59,11 +59,11 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Attributes extends Shopgate_Cloudapi_Hel
      *
      * @throws Exception
      */
-    public function deleteOurAclAttributes($userType)
+    public function deleteAclAttributes($userType)
     {
         $collection = Mage::getResourceModel('api2/acl_filter_attribute_collection')
                           ->addFilterByUserType($userType)
-                          ->addFieldToFilter('resource_id', array('like' => self::SG_RESOURCE_NAMESPACE . '_%'));
+                          ->addFieldToFilter('resource_id', array('like' => self::RESOURCE . '_%'));
         foreach ($collection as $filter) {
             $filter->delete();
         }
@@ -89,7 +89,7 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Attributes extends Shopgate_Cloudapi_Hel
         }
         $resourceList = array();
         foreach ($permissions as $resource => $permission) {
-            if (strpos($resource, self::SG_RESOURCE_NAMESPACE . '_') !== false) {
+            if (strpos($resource, self::RESOURCE . '_') !== false) {
                 $resourceList[$resource] = $this->extractOperations($permission['operations']);
             }
         }

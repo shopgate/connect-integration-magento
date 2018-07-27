@@ -63,7 +63,7 @@ class Shopgate_Cloudapi_Model_Resource_Setup extends Mage_Core_Model_Resource_Se
         /** @noinspection PhpUndefinedMethodInspection */
         $user->save();
         $role->getResource()->saveAdminToRoleRelation($user->getId(), $role->getId());
-        $this->getAclRuleHelper()->addOurAclRules($role->getId());
+        $this->getAclRuleHelper()->addAclRules($role->getId());
     }
 
     /**

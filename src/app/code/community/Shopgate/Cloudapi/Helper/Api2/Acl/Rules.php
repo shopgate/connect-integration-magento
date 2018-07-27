@@ -29,11 +29,11 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
      *
      * @throws Exception
      */
-    public function addOurAclRules($roleId = null)
+    public function addAclRules($roleId = null)
     {
-        $rules = $this->getOurAclRules($roleId);
+        $rules = $this->getAclRules($roleId);
         if ($rules->getSize() > 0) {
-            $this->deleteOurAclRules($roleId);
+            $this->deleteAclRules($roleId);
         }
 
         foreach ($this->getResources() as $resource) {
@@ -48,7 +48,7 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
      *
      * @throws Exception
      */
-    public function deleteOurAclRules($roleId = null)
+    public function deleteAclRules($roleId = null)
     {
         $roleId ? $this->deleteRulesByRoleId($roleId) : $this->deleteSystemRules();
     }
@@ -60,12 +60,12 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
      *
      * @return Mage_Api2_Model_Resource_Acl_Global_Rule_Collection
      */
-    public function getOurAclRules($roleId = null)
+    public function getAclRules($roleId = null)
     {
         /** @var Mage_Api2_Model_Resource_Acl_Global_Rule_Collection $collection */
         $collection = Mage::getModel('api2/acl_global_rule')
                           ->getCollection()
-                          ->addFieldToFilter('resource_id', array('like' => self::SG_RESOURCE_NAMESPACE . '%'));
+                          ->addFieldToFilter('resource_id', array('like' => self::RESOURCE . '%'));
         if ($roleId) {
             $collection->addFilterByRoleId((integer) $roleId);
         } else {
@@ -114,7 +114,7 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
      */
     private function deleteRulesByRoleId($roleId)
     {
-        $collection = $this->getOurAclRules($roleId);
+        $collection = $this->getAclRules($roleId);
         foreach ($collection as $item) {
             $item->delete();
         }
@@ -147,7 +147,7 @@ class Shopgate_Cloudapi_Helper_Api2_Acl_Rules extends Shopgate_Cloudapi_Helper_A
      */
     private function isCorrectNamespace($namespace)
     {
-        return 0 === strpos($namespace, self::SG_RESOURCE_NAMESPACE);
+        return 0 === strpos($namespace, self::RESOURCE);
     }
 
     /**

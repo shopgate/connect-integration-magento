@@ -59,8 +59,8 @@ class Shopgate_Cloudapi_Shell extends Mage_Shell_Abstract
     private function updateAclAttributes()
     {
         $helper = $this->getAttrHelper();
-        $helper->addOurAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
-        $helper->addOurAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
+        $helper->addAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
+        $helper->addAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
     }
 
     /**
@@ -70,13 +70,13 @@ class Shopgate_Cloudapi_Shell extends Mage_Shell_Abstract
      */
     private function updateAclRules()
     {
-        $this->getRuleHelper()->addOurAclRules();
+        $this->getRuleHelper()->addAclRules();
 
         $role = $this->getRoleHelper()->getAdminRole();
         if (!$role->getId()) {
             $role = $this->getRoleHelper()->createAdminRole();
         }
-        $this->getRuleHelper()->addOurAclRules($role->getId());
+        $this->getRuleHelper()->addAclRules($role->getId());
     }
 
     /**
@@ -110,10 +110,10 @@ class Shopgate_Cloudapi_Shell extends Mage_Shell_Abstract
     {
         return <<<USAGE
 Usage:  php -f shopgate_cloudapi.php -- [options]
-  attributes    Enable all Shopgate REST attributes (endpoint incoming data)
-  rules         Enable all Shopgate REST Rules (endpoint access)
-  -h            Short alias for help
-  help          This help
+  acl attributes    Enable all Shopgate REST attributes (endpoint incoming data)
+  acl rules         Enable all Shopgate REST Rules (endpoint access)
+  -h                Short alias for help
+  help              This help
 USAGE;
     }
 }

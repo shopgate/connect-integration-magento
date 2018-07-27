@@ -22,5 +22,5 @@
 
 class Shopgate_Cloudapi_Helper_Api2_Acl extends Mage_Core_Helper_Abstract
 {
-    const SG_RESOURCE_NAMESPACE = 'shopgate_cloudapi';
+    const RESOURCE = 'shopgate_cloudapi';
 }
