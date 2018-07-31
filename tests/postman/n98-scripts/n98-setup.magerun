@@ -12,6 +12,7 @@ config:set --scope="default" --scope-id="0" "tax/calculation/price_includes_tax"
 
 # creates in General group by default, no good way to set up without using php scripts
 customer:create ${user1_email} ${user_pass} "Test1" "Mock1" "1"
+customer:create ${user2_email} ${user_pass} "Test2" "Mock1" "1"
 
 # add cloud api plugin to magento structure
 ! rsync -a ${TRAVIS_BUILD_DIR}/src/ ${WEB_PATH}/${folder} > /dev/null
