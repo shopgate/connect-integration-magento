@@ -26,7 +26,7 @@ script:
       chmod +x ./tests/postman/magento_setup.sh;
       ./tests/postman/magento_setup.sh;
       cd ${TRAVIS_BUILD_DIR}/tests/postman/newman;
-    newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-success-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username=${USER1_EMAIL}" --global-var "username2=${USER2_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}" --global-var "minimum_order_active=${CFG_MINIMUM_ORDER_ACTIVE}";
+    newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-success-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username1=${USER1_EMAIL}" --global-var "username2=${USER2_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}" --global-var "minimum_order_active=${CFG_MINIMUM_ORDER_ACTIVE}";
     fi
 after_failure:
   # one can check for a link in the terminal as this report file is uploaded to that link
