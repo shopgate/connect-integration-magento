@@ -30,11 +30,12 @@ n98 script:repo:run n98-setup \
 -d minimum_order_active=${CFG_MINIMUM_ORDER_ACTIVE} \
 -d price_includes_tax=${CFG_PRICE_INC_TAX} \
 -d user1_email=${USER1_EMAIL} \
+-d user2_email=${USER2_EMAIL} \
 -d user_pass=${USER_PASS} \
 -d misc_param1=${DOWNLOAD} \
 -d misc_param2=${PARAM2} > /dev/null 2>&1
 
-# Adds support to versions < CE1.9.* && < EE1.14.*
+# Adds support to versions < CE1.9.* && < EE1.14.* when using newer sample data
 mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='catalog/product_attribute_backend_startdate_specialprice';"
 mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='enterprise_catalog/product_attribute_backend_urlkey';"
 
