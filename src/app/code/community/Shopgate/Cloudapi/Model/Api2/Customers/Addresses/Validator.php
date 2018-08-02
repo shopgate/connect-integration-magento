@@ -39,6 +39,26 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
     }
 
     /**
+     * Rewrite to allow default address insert/update.
+     * Note that updating to 0 doesn't work, another
+     * address has to be set to 1 instead.
+     *
+     * @inheritdoc
+     */
+    public function filter(array $data)
+    {
+        $return = parent::filter($data);
+        if (isset($data['is_default_billing'])) {
+            $return['is_default_billing'] = $data['is_default_billing'];
+        }
+        if (isset($data['is_default_shipping'])) {
+            $return['is_default_shipping'] = $data['is_default_shipping'];
+        }
+
+        return $return;
+    }
+
+    /**
      * A rewrite of the mage on as we need to get attributes as well
      *
      * @param array $data
