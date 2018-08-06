@@ -52,17 +52,14 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
      *
      * @return array
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Currency_Exception
      */
     protected function _retrieve()
     {
         $quote       = $this->getUserQuote();
         /* @var Shopgate_Cloudapi_Helper_Api2_Quote $quoteHelper */
         $quoteHelper = Mage::helper('shopgate_cloudapi/api2_quote');
-        $quote->setData(
-            Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE,
-            Shopgate_Cloudapi_Helper_Frontend_Quote_Customer::VALUE_APP
-        );
-        $quote->collectTotals()->save();
+        $quoteHelper->setSaleRuleType($quote, $this->_getStore());
         $quoteHelper->addQuoteErrors($quote, $this->_getStore());
         $quoteHelper->addItemErrors($quote, $this->_getStore());
         $quoteHelper->addItems($quote);
