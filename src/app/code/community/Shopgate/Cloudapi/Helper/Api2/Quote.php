@@ -54,11 +54,7 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
 
     /**
      * Backup script that sets the app code in case
-     * there are old carts that need to be loaded.
-     * It's a bit heavy due to collection, so we need to
-     * remove it later.
-     *
-     * @todo-sg: is safe to remove after 01/01/2019
+     * that this cart was created in the desktop shop
      *
      * @param Mage_Sales_Model_Quote $quote
      * @param Mage_Core_Model_Store  $store
