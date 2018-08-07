@@ -83,6 +83,15 @@
                     </shopgate_enterprise_customer_address_attribute_delete>
                 </observers>
             </enterprise_customer_address_attribute_delete>
+            <salesrule_rule_condition_combine>
+                <observers>
+                    <add_conditions_to_sales_rule>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AddShopgateCartRule</class>
+                        <method>execute</method>
+                    </add_conditions_to_sales_rule>
+                </observers>
+            </salesrule_rule_condition_combine>
         </events>
         <blocks>
             <shopgate_cloudapi>
