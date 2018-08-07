@@ -42,5 +42,15 @@ if [[ ${MAGE_TYPE} == "EE" ]]; then
 	pip install --user awscli
 fi
 
-# newman related
-npm install newman --global
+# Setup newman global variables & install it
+sudo sed -i -e "s/<<domain>>/http:\/\/${HOST1}\/${MAGE_FOLDER}\//g" ./tests/postman/newman/environment.json
+sudo sed -i -e "s/<<minimum_order_active>>/${CFG_MINIMUM_ORDER_ACTIVE}/g" ./tests/postman/newman/environment.json
+sudo sed -i -e "s/<<mage_type>>/${MAGE_TYPE}/g" ./tests/postman/newman/environment.json
+sudo sed -i -e "s/<<client_id>>/${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}/g" ./tests/postman/newman/globals.json
+sudo sed -i -e "s/<<client_secret>>/${CFG_API_KEY}/g" ./tests/postman/newman/globals.json
+sudo sed -i -e "s/<<username1>>/${USER1_EMAIL}/g" ./tests/postman/newman/globals.json
+sudo sed -i -e "s/<<username2>>/${USER2_EMAIL}/g" ./tests/postman/newman/globals.json
+sudo sed -i -e "s/<<password>>/${USER_PASS}/g" ./tests/postman/newman/globals.json
+
+npm install -g newman@^4.0.0
+npm install -g newman-reporter-html@^1.0.0

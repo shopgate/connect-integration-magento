@@ -3,29 +3,33 @@
   "values": [
     {
       "key": "client_id",
-      "value": "***",
+      "value": "<<client_id>>",
+      "description": "A combination of [customer_number]-[shop_number]",
       "enabled": true
     },
     {
       "key": "client_secret",
-      "value": "***",
+      "value": "<<client_secret>>",
+      "description": "API key",
       "enabled": true
     },
     {
       "key": "username1",
-      "value": "***",
+      "value": "<<username1>>",
+      "description": "Defines the primary customer to test against",
       "enabled": true
     },
     {
       "key": "username2",
-      "value": "***",
-      "description": "",
+      "value": "<<username2>>",
+      "description": "Defines the second customer to test with",
       "type": "text",
       "enabled": true
     },
     {
       "key": "password",
-      "value": "***",
+      "value": "<<password>>",
+      "description": "Password that is the same for username1 and username2",
       "enabled": true
     },
     {
