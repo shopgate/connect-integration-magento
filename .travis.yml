@@ -30,7 +30,7 @@ script:
     fi
 after_failure:
   # one can check for a link in the terminal as this report file is uploaded to that link
-  - curl --upload-file ./verbose-report.json https://transfer.sh/verbose-report.json
+  - curl --upload-file ./verbose-report.html https://transfer.sh/verbose-report.html
   - sudo less -FX /var/log/apache2/error.log
 
 jobs:
