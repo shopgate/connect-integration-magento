@@ -22,6 +22,8 @@
 
 class Shopgate_Cloudapi_Model_System_Config_Source_Cart_Types
 {
+    const APP = 'app';
+
     /**
      * @return array
      */
@@ -29,7 +31,7 @@ class Shopgate_Cloudapi_Model_System_Config_Source_Cart_Types
     {
         return array(
             array(
-                'value' => Shopgate_Cloudapi_Helper_Frontend_Quote_Customer::VALUE_APP,
+                'value' => self::APP,
                 'label' => Mage::helper('shopgate_cloudapi')->__('Shopgate Mobile App'),
             )
         );

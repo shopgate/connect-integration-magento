@@ -71,7 +71,7 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
         /** @var Mage_Sales_Model_Quote_Item $item */
         $quote->setData(
             Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE,
-            Shopgate_Cloudapi_Helper_Frontend_Quote_Customer::VALUE_APP
+            Shopgate_Cloudapi_Model_System_Config_Source_Cart_Types::APP
         );
         $quote->collectTotals();
         Mage::app()->setCurrentStore($adminStore);

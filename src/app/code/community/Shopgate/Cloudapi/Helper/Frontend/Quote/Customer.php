@@ -22,8 +22,6 @@
 
 class Shopgate_Cloudapi_Helper_Frontend_Quote_Customer extends Mage_Core_Helper_Abstract
 {
-    const VALUE_APP = 'app';
-
     /**
      * Helps set data from customer to Quote to facilitate coupon validation
      *
@@ -44,7 +42,7 @@ class Shopgate_Cloudapi_Helper_Frontend_Quote_Customer extends Mage_Core_Helper_
         $quote->getCustomerTaxClassId();
         $quote->setData(
             Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE,
-            self::VALUE_APP
+            Shopgate_Cloudapi_Model_System_Config_Source_Cart_Types::APP
         );
 
         return $quote;
