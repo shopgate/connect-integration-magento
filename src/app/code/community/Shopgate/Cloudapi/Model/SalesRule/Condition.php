@@ -37,7 +37,7 @@ class Shopgate_Cloudapi_Model_SalesRule_Condition extends Mage_Rule_Model_Condit
      */
     public function loadAttributeOptions()
     {
-        $this->setAttributeOption(
+        $this->setData('attribute_option',
             array(
                 self::CART_TYPE => Mage::helper('shopgate_cloudapi')->__('Shopgate Cart Type')
             )
@@ -54,8 +54,9 @@ class Shopgate_Cloudapi_Model_SalesRule_Condition extends Mage_Rule_Model_Condit
      */
     public function getAttributeElement()
     {
+        /** @var Varien_Data_Form_Element_Select $element */
         $element = parent::getAttributeElement();
-        $element->setShowAsText(true);
+        $element->setData('show_as_text', true);
 
         return $element;
     }
@@ -65,8 +66,7 @@ class Shopgate_Cloudapi_Model_SalesRule_Condition extends Mage_Rule_Model_Condit
      */
     public function getInputType()
     {
-        if ($this->getAttribute() == self::CART_TYPE) {
-
+        if ($this->getData('attribute') === self::CART_TYPE) {
             return self::DEFAULT_IDENTIFIER_SELECT;
         }
 
@@ -78,8 +78,7 @@ class Shopgate_Cloudapi_Model_SalesRule_Condition extends Mage_Rule_Model_Condit
      */
     public function getValueElementType()
     {
-        if ($this->getAttribute() == self::CART_TYPE) {
-
+        if ($this->getData('attribute') === self::CART_TYPE) {
             return self::DEFAULT_IDENTIFIER_SELECT;
         }
 
@@ -92,13 +91,9 @@ class Shopgate_Cloudapi_Model_SalesRule_Condition extends Mage_Rule_Model_Condit
     public function getValueSelectOptions()
     {
         if (!$this->hasData('value_select_options')) {
-            switch ($this->getAttribute()) {
-                case self::CART_TYPE:
-                    $options = Mage::getModel('shopgate_cloudapi/system_config_source_cart_types')->toOptionArray();
-                    break;
-                default:
-                    $options = array();
-            }
+            $options = $this->getData('attribute') === self::CART_TYPE
+                ? Mage::getModel('shopgate_cloudapi/system_config_source_cart_types')->toOptionArray()
+                : array();
             $this->setData('value_select_options', $options);
         }
 

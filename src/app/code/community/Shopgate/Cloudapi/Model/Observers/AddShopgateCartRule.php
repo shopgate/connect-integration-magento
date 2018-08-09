@@ -32,7 +32,7 @@ class Shopgate_Cloudapi_Model_Observers_AddShopgateCartRule
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        $additional = $observer->getAdditional();
+        $additional = $observer->getData('additional');
         $conditions = (array)$additional->getConditions();
 
         $conditions = array_merge_recursive(
@@ -51,7 +51,7 @@ class Shopgate_Cloudapi_Model_Observers_AddShopgateCartRule
         );
 
         $additional->setConditions($conditions);
-        $observer->setAdditional($additional);
+        $observer->setData('additional', $additional);
 
         return $observer;
     }
