@@ -39,8 +39,8 @@ n98 script:repo:run n98-setup \
 mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='catalog/product_attribute_backend_startdate_specialprice';"
 mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='enterprise_catalog/product_attribute_backend_urlkey';"
 
-# Adds app-only coupon, that is needed for the newman tests
-mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/newman/addTestCartRule.sql
+# Adds app-only coupon
+mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/sql/addMobileAppCartRule.sql
 
 sudo chmod 777 -R ${MAGE_FOLDER}/var
 
