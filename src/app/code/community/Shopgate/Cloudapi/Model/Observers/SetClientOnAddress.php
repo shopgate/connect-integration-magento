@@ -35,7 +35,7 @@ class Shopgate_Cloudapi_Model_Observers_SetClientOnAddress
         if (!$quote->hasData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE)) {
             return;
         }
-        $quoteCartType = $quote->getData(Shopgate_Framework_Model_SalesRule_Condition::CART_TYPE);
-        $address->setData(Shopgate_Framework_Model_SalesRule_Condition::CART_TYPE, $quoteCartType);
+        $quoteCartType = $quote->getData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE);
+        $address->setData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE, $quoteCartType);
     }
 }
