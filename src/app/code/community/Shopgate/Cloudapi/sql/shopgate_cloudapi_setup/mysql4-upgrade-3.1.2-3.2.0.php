@@ -27,6 +27,48 @@ $installer->startSetup();
 try {
     $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
     $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
+    $table = $installer->getConnection()
+                       ->newTable('shopgate_cart_sources')
+                       ->addColumn(
+                           'entity_id',
+                           Varien_Db_Ddl_Table::TYPE_INTEGER,
+                           null,
+                           array(
+                               'identity' => true,
+                               'unsigned' => true,
+                               'nullable' => false,
+                               'primary'  => true
+                           )
+                       )
+                       ->addColumn(
+                           'quote_id',
+                           Varien_Db_Ddl_Table::TYPE_INTEGER,
+                           null,
+                           array(
+                               'unsigned' => true,
+                               'nullable' => false
+                           ),
+                           'As defined in sales_flat_quote:entity_id'
+                       )
+                       ->addColumn(
+                           'source',
+                           Varien_Db_Ddl_Table::TYPE_VARCHAR,
+                           100,
+                           array(
+                               'unsigned' => true,
+                               'nullable' => false
+                           ),
+                           'Helps ID certain quote entities'
+                       )
+                       ->addForeignKey(
+                           $installer->getFkName('shopgate_cart_sources', 'quote_id', 'sales/quote', 'entity_id'),
+                           'quote_id',
+                           $installer->getTable('sales/quote'),
+                           'entity_id',
+                           Varien_Db_Ddl_Table::ACTION_CASCADE
+                       )
+                       ->setComment('Shopgate Quote/Cart References');
+    $installer->getConnection()->createTable($table);
 } catch (Exception $e) {
     Mage::logException($e);
 }
