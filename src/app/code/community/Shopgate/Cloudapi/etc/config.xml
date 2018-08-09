@@ -92,6 +92,15 @@
                     </add_conditions_to_sales_rule>
                 </observers>
             </salesrule_rule_condition_combine>
+            <sales_quote_address_collect_totals_before>
+                <observers>
+                    <copy_shopgate_client_to_shipping_address>
+                        <type>singleton</type>
+                        <class>shopgate_cloudapi/observers_SetClientOnAddress</class>
+                        <method>execute</method>
+                    </copy_shopgate_client_to_shipping_address>
+                </observers>
+            </sales_quote_address_collect_totals_before>
         </events>
         <blocks>
             <shopgate_cloudapi>
