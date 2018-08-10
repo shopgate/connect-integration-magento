@@ -41,6 +41,7 @@ mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='enterpri
 
 # Adds app-only coupon
 mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/sql/addMobileAppCartRule.sql
+mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/sql/addSoapUser.sql
 
 sudo chmod 777 -R ${MAGE_FOLDER}/var
 
