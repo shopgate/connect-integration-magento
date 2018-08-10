@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for customer address deletion
 - Endpoint for customer address update
 - Shell script to update our REST attributes / roles
-- Support of app-only coupons
+- Support of app-only coupons (except when EE Customer Segments is installed)
 ### Changed
 - Initial installed admin role, it no longer uses all resources
 

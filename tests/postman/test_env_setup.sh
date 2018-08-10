@@ -51,6 +51,8 @@ sudo sed -i -e "s/<<client_secret>>/${CFG_API_KEY}/g" ./tests/postman/newman/glo
 sudo sed -i -e "s/<<username1>>/${USER1_EMAIL}/g" ./tests/postman/newman/globals.json
 sudo sed -i -e "s/<<username2>>/${USER2_EMAIL}/g" ./tests/postman/newman/globals.json
 sudo sed -i -e "s/<<password>>/${USER_PASS}/g" ./tests/postman/newman/globals.json
+sudo sed -i -e "s/<<soap_user>>/${SOAP_USER}/g" ./tests/postman/newman/globals.json
+sudo sed -i -e "s/<<soap_apikey>>/${SOAP_APIKEY}/g" ./tests/postman/newman/globals.json
 
 npm install -g newman@^4.0.0
 npm install -g newman-reporter-html@^1.0.0

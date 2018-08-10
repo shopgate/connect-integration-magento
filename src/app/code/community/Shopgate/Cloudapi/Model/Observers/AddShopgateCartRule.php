@@ -49,9 +49,7 @@ class Shopgate_Cloudapi_Model_Observers_AddShopgateCartRule
                 ),
             )
         );
-
         $additional->setConditions($conditions);
-        $observer->setData('additional', $additional);
 
         return $observer;
     }

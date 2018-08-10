@@ -67,6 +67,8 @@ env:
     - USER1_EMAIL="mage.test+1@shopgate.com"
     - USER2_EMAIL="mage.test+2@shopgate.com"
     - USER_PASS="test123"
+    - SOAP_USER="shopgate-tests"
+    - SOAP_APIKEY="shopgate-api-key"
   matrix:
     - MAGE_FOLDER="mage_ce_1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2" MAGE_TYPE="CE"
     - MAGE_FOLDER="mage_ce_1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0" MAGE_TYPE="CE" MAGE_LOCALE="en_US"
