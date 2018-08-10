@@ -3,7 +3,7 @@
  * Username: shopgate-tests
  * Api Key: shopgate-api-key
  */
-INSERT INTO `api_user` (`firstname`, `lastname`, `email`, `username`, `api_key`, `created`, `modified`, `lognum`, `reload_acl_flag`, `is_active`) VALUES ('Shopgate', 'Tests', 'tests@shopgate.com', 'shopgate-tests', '07546ea29c23fd8237d64c9d9a63bd87487121971b40ae13fc4f74cf9ec7fe03:6X3lnoR3b1nKKvQgWmVU9E3oXSalfvvl', '2018-08-10 06:19:28', '2018-08-10 06:19:28', 0, 0, 1);
+INSERT INTO `api_user` (`firstname`, `lastname`, `email`, `username`, `api_key`, `created`, `modified`, `lognum`, `reload_acl_flag`, `is_active`) VALUES ('Shopgate', 'Tests', 'tests@shopgate.com', 'shopgate-tests', '58f75877805e185117912cd1eb9aae58', '2018-08-10 06:19:28', '2018-08-10 06:19:28', 0, 0, 1);
 SET @USER_ID=LAST_INSERT_ID();
 
 INSERT INTO `api_role` (`parent_id`, `tree_level`, `sort_order`, `role_type`, `user_id`, `role_name`) VALUES (0, 1, 0, 'G', 0, 'Shopgate TESTS');
