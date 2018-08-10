@@ -40,10 +40,6 @@ class Shopgate_Cloudapi_Helper_Frontend_Quote_Customer extends Mage_Core_Helper_
         $quote->setCustomerPrefix($quote->getCustomer()->getData('prefix'));
         $quote->setCustomerSuffix($quote->getCustomer()->getData('suffix'));
         $quote->getCustomerTaxClassId();
-        $quote->setData(
-            Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE,
-            Shopgate_Cloudapi_Model_System_Config_Source_Cart_Types::APP
-        );
 
         return $quote;
     }

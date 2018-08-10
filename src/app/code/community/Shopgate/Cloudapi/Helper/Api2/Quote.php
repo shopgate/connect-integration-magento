@@ -54,7 +54,8 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
 
     /**
      * Backup script that sets the app code in case
-     * that this cart was created in the desktop shop
+     * this cart was created without having items
+     * added to it via our API.
      *
      * @param Mage_Sales_Model_Quote $quote
      * @param Mage_Core_Model_Store  $store
@@ -63,16 +64,14 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
      */
     public function setSaleRuleType(Mage_Sales_Model_Quote $quote, Mage_Core_Model_Store $store)
     {
-        if ($quote->hasData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE)) {
+        $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')->setQuoteFilter($quote->getId());
+        if (!$collection->isEmpty()) {
             return;
         }
         $adminStore = Mage::app()->getStore();
         Mage::app()->setCurrentStore($store->getCode());
         /** @var Mage_Sales_Model_Quote_Item $item */
-        $quote->setData(
-            Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE,
-            Shopgate_Cloudapi_Model_System_Config_Source_Cart_Types::APP
-        );
+        $this->addAppSaleRuleCondition($quote);
         $quote->collectTotals();
         Mage::app()->setCurrentStore($adminStore);
     }
@@ -159,6 +158,19 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
         $quote->setData(
             self::KEY_CART_PRICE_DISPLAY_SETTINGS,
             Mage::getStoreConfig(Mage_Tax_Model_Config::XML_PATH_DISPLAY_CART_PRICE, $store)
+        );
+    }
+
+    /**
+     * Sets the cart type sale rule condition
+     *
+     * @param Mage_Sales_Model_Quote $quote
+     */
+    public function addAppSaleRuleCondition(Mage_Sales_Model_Quote $quote)
+    {
+        $quote->getShippingAddress()->setData(
+            Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE,
+            Shopgate_Cloudapi_Model_System_Config_Source_Cart_Types::APP
         );
     }
 }

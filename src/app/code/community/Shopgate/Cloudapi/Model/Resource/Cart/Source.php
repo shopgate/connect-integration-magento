@@ -20,22 +20,13 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Observers_SetClientOnAddress
+class Shopgate_Cloudapi_Model_Resource_Cart_Source extends Mage_Core_Model_Mysql4_Abstract
 {
     /**
-     * Copy client type from the persistent quote to the quote address before sales rules are validated
-     *
-     * @param Varien_Event_Observer $observer
+     * Initialize configuration data
      */
-    public function execute(Varien_Event_Observer $observer)
+    protected function _construct()
     {
-        /** @var Mage_Sales_Model_Quote_Address $address */
-        $address = $observer->getData('quote_address');
-        $quote   = $address->getQuote();
-        if (!$quote->hasData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE)) {
-            return;
-        }
-        $quoteCartType = $quote->getData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE);
-        $address->setData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE, $quoteCartType);
+        $this->_init('shopgate_cloudapi/cart_source', 'entity_id');
     }
 }
