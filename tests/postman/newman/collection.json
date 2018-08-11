@@ -6,11 +6,9 @@
   },
   "item": [
     {
-      "_postman_id": "74423239-1983-45e0-b1d6-11ffe9352d95",
       "name": "oAuth2",
       "item": [
         {
-          "_postman_id": "d09f646b-04d7-4b75-b7b8-75042fb92c5b",
           "name": "Token: client_credentials",
           "event": [
             {
@@ -70,7 +68,6 @@
           "response": []
         },
         {
-          "_postman_id": "569d55c3-19ce-4091-81de-47436d139c1d",
           "name": "Token: password",
           "event": [
             {
@@ -131,7 +128,6 @@
           "response": []
         },
         {
-          "_postman_id": "8b64be54-1bbb-42ac-b5c4-0cb09092d708",
           "name": "Token: password (user2)",
           "event": [
             {
@@ -178,7 +174,6 @@
           "response": []
         },
         {
-          "_postman_id": "c81c58c6-c496-4a92-84b8-9cbbea5a6de8",
           "name": "Token: authorization_code",
           "event": [
             {
@@ -250,7 +245,6 @@
           "response": []
         },
         {
-          "_postman_id": "db763a11-e9a1-4048-bca3-66269c775c9d",
           "name": "Token: refresh_token",
           "event": [
             {
@@ -309,7 +303,6 @@
           "response": []
         },
         {
-          "_postman_id": "efceee30-8146-4b5c-a0c4-057f0297f647",
           "name": "Token: refresh_token re-use",
           "event": [
             {
@@ -372,15 +365,12 @@
       ]
     },
     {
-      "_postman_id": "69379525-5c4e-45a1-b18c-e42c5671dc65",
       "name": "/v2/carts | /v2/carts/:id",
       "item": [
         {
-          "_postman_id": "b9b0438c-b79d-4607-99fc-c83e6ebbc91e",
           "name": "Customer",
           "item": [
             {
-              "_postman_id": "701364dd-222e-48f8-8200-f29ab073508d",
               "name": "Create customer cart",
               "event": [
                 {
@@ -440,7 +430,6 @@
               "response": []
             },
             {
-              "_postman_id": "e46615e1-842c-41c8-92a4-b2b2f5c6b46d",
               "name": "Get Cart via ME endpoint",
               "event": [
                 {
@@ -491,7 +480,6 @@
               "response": []
             },
             {
-              "_postman_id": "c3b57dc8-76f3-40a5-b085-7177d277aa43",
               "name": "Get cart via {cartId}",
               "event": [
                 {
@@ -541,7 +529,6 @@
               "response": []
             },
             {
-              "_postman_id": "3d807e41-def8-4d99-b042-8ae0b37aee4b",
               "name": "Use bad cartID",
               "event": [
                 {
@@ -594,11 +581,9 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "fc7ea6aa-4d5b-415c-893f-548d0c653dfe",
           "name": "Guest",
           "item": [
             {
-              "_postman_id": "90e45006-8007-48a4-895e-ef6fdb1a1951",
               "name": "ME endpoint as guest",
               "event": [
                 {
@@ -647,7 +632,6 @@
               "response": []
             },
             {
-              "_postman_id": "17ffe483-71e3-4f0c-a492-975bd86418e7",
               "name": "Customer Quote as guest",
               "event": [
                 {
@@ -698,7 +682,6 @@
               "response": []
             },
             {
-              "_postman_id": "67b423b5-bc55-42b2-a85c-53fa6704b3e4",
               "name": "Create guest cart",
               "event": [
                 {
@@ -758,7 +741,6 @@
               "response": []
             },
             {
-              "_postman_id": "6dd5f05f-4deb-46d8-85a8-3286e3d119f6",
               "name": "Guest Quote as guest",
               "event": [
                 {
@@ -811,19 +793,15 @@
       ]
     },
     {
-      "_postman_id": "322931c7-84d8-4b5a-a16f-efafbda6f8d4",
       "name": "/v2/carts/:id/items",
       "item": [
         {
-          "_postman_id": "1fd93cbf-9698-492f-9578-4cf9e412d0de",
           "name": "Product",
           "item": [
             {
-              "_postman_id": "62da65c7-054d-4981-b43c-4d5e2ac6f4a5",
               "name": "Customer - Add",
               "item": [
                 {
-                  "_postman_id": "93970d23-5136-4e3c-a4fa-05fcb04e9263",
                   "name": "/carts: customer",
                   "event": [
                     {
@@ -883,7 +861,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "a22926ac-94ce-40ea-abad-a8fdf95fe5d3",
                   "name": "Bundle + Configurable",
                   "event": [
                     {
@@ -930,7 +907,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "c0784ff9-b3ef-498e-94b7-6382fe8393e5",
                   "name": "Add Configurable: Skirt",
                   "event": [
                     {
@@ -978,7 +954,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "f91adaab-cc2e-48fb-a070-e69957336982",
                   "name": "Add Configurable: Skirt via SKU",
                   "event": [
                     {
@@ -1026,7 +1001,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "265ee51c-51c3-4fb8-b30b-fe80b3c7c0ad",
                   "name": "Bundled",
                   "event": [
                     {
@@ -1074,7 +1048,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "dc3f8167-00a8-4d76-b739-adc54b616e22",
                   "name": "Downloadable",
                   "event": [
                     {
@@ -1122,7 +1095,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "58d60965-ad3c-4a70-92f3-f2bc93f1ab62",
                   "name": "Grouped",
                   "event": [
                     {
@@ -1170,7 +1142,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "2e9aa9f3-3e8b-4c82-93cc-d8448a493f18",
                   "name": "Simple",
                   "event": [
                     {
@@ -1218,7 +1189,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "589252be-3bef-4c90-8748-797291f02119",
                   "name": "GiftCard Combined",
                   "event": [
                     {
@@ -1273,7 +1243,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "e9e6c5d7-32da-4a33-b224-e770a784644b",
                   "name": "GiftCard Virtual CP",
                   "event": [
                     {
@@ -1328,7 +1297,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "3d825f20-3475-460a-a6ef-b2c5ec4a2eaf",
                   "name": "GiftCard Virtual Set",
                   "event": [
                     {
@@ -1386,11 +1354,9 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "44c78c0a-d56e-4c31-a7ed-46fbdd066856",
               "name": "Customer - Update",
               "item": [
                 {
-                  "_postman_id": "b165d658-f056-4151-9f72-5e3f97d052fe",
                   "name": "/carts: customer",
                   "event": [
                     {
@@ -1450,7 +1416,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "d2aaf9a2-2e11-4700-abbf-acec5df8abda",
                   "name": "Simple",
                   "event": [
                     {
@@ -1498,7 +1463,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "7df96554-b8e5-40e3-b507-fb8fe58714dd",
                   "name": "Get cart contents",
                   "event": [
                     {
@@ -1560,7 +1524,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "297a2767-7073-4306-bf05-9df9afdbc70d",
                   "name": "Update simple",
                   "event": [
                     {
@@ -1608,7 +1571,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "562bf860-6148-4a1b-83aa-f8ffa2881b1b",
                   "name": "Get cart contents",
                   "event": [
                     {
@@ -1667,11 +1629,9 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "1bbb01c0-722e-4f66-9009-7c444bad1141",
               "name": "Customer - Delete",
               "item": [
                 {
-                  "_postman_id": "1e58bab4-9857-48e7-bbd1-99e4f6f4c463",
                   "name": "All item removal",
                   "event": [
                     {
@@ -1718,7 +1678,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "f5eed751-1c13-42c3-9245-7ea89fd53927",
                   "name": "Check cart for no items",
                   "event": [
                     {
@@ -1777,15 +1736,12 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "3c462a12-390e-454d-9fea-a5f04f1a178b",
               "name": "Customer - Errors",
               "item": [
                 {
-                  "_postman_id": "af6881bb-be7e-4a5c-aa4b-7520abceb740",
                   "name": "Bad product ID",
                   "item": [
                     {
-                      "_postman_id": "1ba7ac32-c441-4096-a645-10a1ad9b6213",
                       "name": "/carts: customer",
                       "event": [
                         {
@@ -1845,7 +1801,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "81f40731-5fd4-457f-9955-2cc0055baf9f",
                       "name": "Cfg + non-existing",
                       "event": [
                         {
@@ -1892,7 +1847,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "42a88e22-ea24-4b67-b6a2-34eef699fcc2",
                       "name": "Cart should be empty",
                       "event": [
                         {
@@ -1952,11 +1906,9 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "bbb87c07-9d68-400d-9d66-666695f134ef",
                   "name": "Out of stock",
                   "item": [
                     {
-                      "_postman_id": "d443c211-b5cc-412f-8b37-7af817b3bbd3",
                       "name": "/carts: customer",
                       "event": [
                         {
@@ -2016,7 +1968,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "14ffbb5c-3e8d-4fa0-a84e-2273b93c3ca6",
                       "name": "Add simple, qty 999",
                       "event": [
                         {
@@ -2064,7 +2015,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "6e028fd2-93c2-482f-90b8-9979c17d588f",
                       "name": "Check cart errors",
                       "event": [
                         {
@@ -2133,11 +2083,9 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "01e4c070-38b2-4c6c-b257-7c7f2d254369",
                   "name": "Minimum order amount",
                   "item": [
                     {
-                      "_postman_id": "0f073130-07b9-4ab4-bd8f-be9a1a7c443a",
                       "name": "/carts: customer",
                       "event": [
                         {
@@ -2197,7 +2145,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "140c61b3-dffe-45a3-9396-804edbf87218",
                       "name": "Add simple, qty 1",
                       "event": [
                         {
@@ -2245,7 +2192,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "61971903-cee7-46b2-a805-df9bd7f2b0c7",
                       "name": "Check cart errors",
                       "event": [
                         {
@@ -2319,15 +2265,12 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "5aa3f078-8168-4304-8424-2434b017e940",
               "name": "Guest - Add",
               "item": [
                 {
-                  "_postman_id": "d9b48c37-a248-418c-895f-e0b5012b2b76",
                   "name": "Nominal product",
                   "item": [
                     {
-                      "_postman_id": "507d98db-93e2-4a25-9db8-860a295f341f",
                       "name": "/carts: Guest Cart",
                       "event": [
                         {
@@ -2387,7 +2330,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "ec4e21f0-007b-4253-8854-1a5762699062",
                       "name": "Nominal",
                       "event": [
                         {
@@ -2435,7 +2377,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "d3a1d6c1-7e83-4c9d-a642-62df59aa7eb0",
                       "name": "Simple",
                       "event": [
                         {
@@ -2486,7 +2427,6 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "716a3d0a-bd2f-4fe7-a0ba-fb481f7c7cb8",
                   "name": "/carts: Guest Cart",
                   "event": [
                     {
@@ -2546,7 +2486,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "276c8fa0-7576-4d97-af6f-f93b0414d3ac",
                   "name": "Bundle + Configurable",
                   "event": [
                     {
@@ -2593,7 +2532,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "08b9fdcc-a2e0-4f97-aacf-f55fac0ac57a",
                   "name": "Add Configurable: Skirt",
                   "event": [
                     {
@@ -2641,7 +2579,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "d4c0aaeb-4f2e-4e7e-b4ef-f576d9184053",
                   "name": "Bundled",
                   "event": [
                     {
@@ -2689,7 +2626,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "63179ef8-c72f-49a1-aec8-462a79b7081d",
                   "name": "Downloadable",
                   "event": [
                     {
@@ -2737,7 +2673,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "457a5850-2a3e-43d1-9685-25512f5c57e8",
                   "name": "Grouped",
                   "event": [
                     {
@@ -2785,7 +2720,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "41120543-5a0a-45c1-b06e-aea3c3152465",
                   "name": "Simple",
                   "event": [
                     {
@@ -2833,7 +2767,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "f62cdf7d-53c9-4d66-9e6b-64bccc07c922",
                   "name": "GiftCard Combined",
                   "event": [
                     {
@@ -2888,7 +2821,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "b449a9c4-13b8-40d0-ab41-d702530255fb",
                   "name": "GiftCard Virtual CP",
                   "event": [
                     {
@@ -2943,7 +2875,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "534b5542-1282-4bf7-9128-6ff829cc8435",
                   "name": "GiftCard Virtual Set",
                   "event": [
                     {
@@ -3001,15 +2932,12 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "8676fb54-893a-4e08-9d15-5377e81b62a1",
               "name": "Guest - Update",
               "item": [
                 {
-                  "_postman_id": "9258b01d-0440-49d8-8c59-c033baaaa106",
                   "name": "Advanced",
                   "item": [
                     {
-                      "_postman_id": "f63e2d73-46d3-4209-a8d2-13ca4cb90736",
                       "name": "/carts: Guest Cart",
                       "event": [
                         {
@@ -3069,7 +2997,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "6e2c4ef8-47f7-4d21-8ac3-74be9605c638",
                       "name": "Add Simple",
                       "event": [
                         {
@@ -3117,7 +3044,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "711aa548-9d05-4409-ba72-fdc57648f24a",
                       "name": "Cart: qty 1",
                       "event": [
                         {
@@ -3179,7 +3105,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "ff2ffcf3-6329-4952-ad75-1ab493c8e928",
                       "name": "Update simple & add confg",
                       "event": [
                         {
@@ -3226,7 +3151,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "ccb03bed-ccc7-4105-9884-9eb95f05ce32",
                       "name": "Cart: qty updated",
                       "event": [
                         {
@@ -3285,7 +3209,6 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "e1d235f9-2fa7-4b0f-bd4c-323abae854a7",
                   "name": "/carts: Guest Cart",
                   "event": [
                     {
@@ -3345,7 +3268,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "e2ade629-6106-4c37-9ab2-51fec4d50fa0",
                   "name": "Add Simple",
                   "event": [
                     {
@@ -3393,7 +3315,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "4e8a2ce3-779e-4b11-aba8-13f9fe8df7d2",
                   "name": "Cart: qty 1",
                   "event": [
                     {
@@ -3455,7 +3376,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "ab6facec-9b39-4452-a096-735d6d19a5d1",
                   "name": "Update simple",
                   "event": [
                     {
@@ -3503,7 +3423,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "47f5d491-314f-420f-80cd-55f73a76f686",
                   "name": "Cart: qty updated",
                   "event": [
                     {
@@ -3558,7 +3477,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "bbac94a7-6452-47d6-9793-8ac893fca29e",
                   "name": "Simple",
                   "event": [
                     {
@@ -3609,15 +3527,12 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "55118e8d-bbd3-485c-9bb8-668d62509007",
               "name": "Guest - Delete all",
               "item": [
                 {
-                  "_postman_id": "4905c7e9-00c2-4749-b6e0-dec4fc3f046a",
                   "name": "Delete All",
                   "item": [
                     {
-                      "_postman_id": "b31d0e3e-0d6a-4974-a596-c46307b15935",
                       "name": "/carts: Guest Cart",
                       "event": [
                         {
@@ -3677,7 +3592,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "2316bf37-1108-4f9c-b59c-bc32dca13752",
                       "name": "Add Simple",
                       "event": [
                         {
@@ -3725,7 +3639,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "dc57270f-599c-4388-bdf1-8497e61575fc",
                       "name": "All item removal",
                       "event": [
                         {
@@ -3772,7 +3685,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "2b227415-f6e5-4e42-bbb1-f61df6cfa406",
                       "name": "Check cart for no items",
                       "event": [
                         {
@@ -3828,7 +3740,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "6b103f72-d09c-4251-afe0-88aa72bc643a",
                       "name": "/carts: Guest Cart",
                       "event": [
                         {
@@ -3891,11 +3802,9 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "65160d40-49f6-4181-8974-3b0149b67500",
                   "name": "Delete by IDs",
                   "item": [
                     {
-                      "_postman_id": "1d288855-ca91-4b62-8b3c-c49136b82312",
                       "name": "Add Simple",
                       "event": [
                         {
@@ -3943,7 +3852,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "2f316639-0581-4e83-b600-ebc8bf9b8cb6",
                       "name": "Get all cart item ids",
                       "event": [
                         {
@@ -4003,7 +3911,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "f490e837-3f04-4a26-9ad9-4944190a00ad",
                       "name": "{cartId}/items?cartItemIds",
                       "event": [
                         {
@@ -4057,7 +3964,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "4bae0eb1-3581-4498-9324-5001c7e700b9",
                       "name": "Check all items are deleted",
                       "event": [
                         {
@@ -4122,23 +4028,18 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "5ce4318e-415a-4e8e-9d0f-7713fa0e1a39",
           "name": "Coupon",
           "item": [
             {
-              "_postman_id": "4d99c1aa-540e-4886-b8ba-44d1b70e4b44",
               "name": "Customer",
               "item": [
                 {
-                  "_postman_id": "e04ffaad-84af-44f1-9a7d-96dc784154aa",
                   "name": "Add",
                   "item": [
                     {
-                      "_postman_id": "dfd43989-e8b8-4718-9428-dd7be7d54c89",
                       "name": "Auto-Gen",
                       "item": [
                         {
-                          "_postman_id": "8da7340f-dc4b-48d5-ab38-fcf300727f01",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -4198,7 +4099,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "10119f0a-7457-43be-bf72-f9cdaf6e0983",
                           "name": "Add Simple: 500",
                           "event": [
                             {
@@ -4246,7 +4146,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "0807639f-ecc6-4188-bcfd-3802b38e0fd2",
                           "name": "Add 10% off coupon",
                           "event": [
                             {
@@ -4294,7 +4193,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "30ffd0be-13e2-412c-bee5-e9101313cd70",
                           "name": "Check coupon exists",
                           "event": [
                             {
@@ -4375,11 +4273,9 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "074e3049-17a5-4574-b308-de4f0efdf317",
                       "name": "Mobile App Coupon",
                       "item": [
                         {
-                          "_postman_id": "6aafc204-190a-4c9d-81f8-2ed718a4a46f",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -4439,7 +4335,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "6d638517-9f1b-4689-ab11-e033890c1653",
                           "name": "Add Configurable: Boots",
                           "event": [
                             {
@@ -4487,7 +4382,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "b1b81c34-084e-4785-ad36-b5d41fee1cd7",
                           "name": "Add app-only coupon",
                           "event": [
                             {
@@ -4535,7 +4429,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "a2370db2-fd2f-4d48-9906-a968a649579c",
                           "name": "Check coupon exists",
                           "event": [
                             {
@@ -4621,7 +4514,6 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "306db3c2-a8df-4b02-8a05-c28333271c5c",
                       "name": "/carts: customer",
                       "event": [
                         {
@@ -4681,7 +4573,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "64628863-7627-4d0e-ae2e-051652ae3bd0",
                       "name": "Add Configurable: Boots",
                       "event": [
                         {
@@ -4729,7 +4620,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "2fee9f0b-ff61-4588-a6ac-c5e81fd74dc6",
                       "name": "Check no discount",
                       "event": [
                         {
@@ -4791,7 +4681,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "0ca5f26c-63f1-468a-a8f8-b33538b4d47f",
                       "name": "Add 10 flat off coupon",
                       "event": [
                         {
@@ -4839,7 +4728,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "b8e83e87-ff40-4c76-a206-2fc209f42c31",
                       "name": "Check Register10 exists",
                       "event": [
                         {
@@ -4897,15 +4785,12 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "a261e7fb-0d81-4dc0-8fd8-8f64a43d65d1",
                   "name": "Update",
                   "item": [
                     {
-                      "_postman_id": "a6810e4a-311b-468f-9362-e0e13a111553",
                       "name": "Regular coupons",
                       "item": [
                         {
-                          "_postman_id": "7628ad24-2af2-4080-8222-37b07735256a",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -4965,7 +4850,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "86066cc7-cb1e-4c4d-861c-54fc9c0fc0b2",
                           "name": "Add Configurable: Boots",
                           "event": [
                             {
@@ -5013,7 +4897,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "27f94ce8-c2cd-4023-9bb2-65a09b129b0e",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -5068,7 +4951,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "8b772128-4dc0-4410-8247-b339c2ce1538",
                           "name": "Add 10 flat off coupon",
                           "event": [
                             {
@@ -5116,7 +4998,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "5bb3df77-89c8-4a8d-8062-fabba5ae1194",
                           "name": "Check Register10 exists",
                           "event": [
                             {
@@ -5171,7 +5052,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "df2e22fc-13ed-4c94-b055-323d011101b8",
                           "name": "Add Configurable: Skirt",
                           "event": [
                             {
@@ -5219,7 +5099,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "5edad788-4e7f-4b97-ac83-2567da623eb1",
                           "name": "Add 25% off coupon",
                           "event": [
                             {
@@ -5267,7 +5146,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "163bd2c9-4693-4094-8366-3d91b8f3ef03",
                           "name": "Check 25OFF exists",
                           "event": [
                             {
@@ -5322,7 +5200,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "8650ea62-7f0b-47a7-8b46-e80b3a48e29a",
                           "name": "Add 10 flat via Update",
                           "event": [
                             {
@@ -5370,7 +5247,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "8fc8a715-f5cd-44e0-9ba4-364ac5139168",
                           "name": "Check Register10 exists",
                           "event": [
                             {
@@ -5425,7 +5301,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "be2a7273-ed39-4a48-a2f7-03cd2c3d510e",
                           "name": "Add empty coupon",
                           "event": [
                             {
@@ -5473,7 +5348,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "886405b8-eee8-416b-850f-eb07223a5a6f",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -5535,15 +5409,12 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "2ebbeced-3ebd-4b41-8b25-a0ff2709e18a",
                   "name": "Delete",
                   "item": [
                     {
-                      "_postman_id": "e4151cb9-b5a6-4195-aa06-509ba5f76955",
                       "name": "Via Empty Add",
                       "item": [
                         {
-                          "_postman_id": "8aa38bbd-ab5c-42be-8494-08f45512e5ff",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -5603,7 +5474,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "168ad29b-8380-4c45-9c60-03f0166e6263",
                           "name": "Add Configurable: Boots",
                           "event": [
                             {
@@ -5651,7 +5521,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "5360a0ad-3fb6-4977-95fc-1b6d16646881",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -5706,7 +5575,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "0fdc7e5a-69d1-4b0a-9105-4248bb8cee08",
                           "name": "Add 10 flat off coupon",
                           "event": [
                             {
@@ -5754,7 +5622,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "ed810201-aca6-4648-ab29-a36a02e632ab",
                           "name": "Check Register10 exists",
                           "event": [
                             {
@@ -5809,7 +5676,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "80a3c798-9b27-4427-817c-076cf42ff69c",
                           "name": "Add empty coupon",
                           "event": [
                             {
@@ -5857,7 +5723,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "bd8b73fc-a143-4237-b90e-02673a23e186",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -5915,11 +5780,9 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "8e8dcdfa-e8b2-4771-83b6-4cceac30f886",
                       "name": "Via query",
                       "item": [
                         {
-                          "_postman_id": "ed0a3b34-cae9-40cd-ba7e-ded0fc8ce539",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -5979,7 +5842,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "98156d1b-a31a-4c5a-9a10-7ac2125e362f",
                           "name": "Add Configurable: Boots",
                           "event": [
                             {
@@ -6027,7 +5889,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "99f89037-0a1c-4923-9e56-be5d49a9fc62",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -6082,7 +5943,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "f0ad6fb6-a926-4e36-a0b2-03e67b6b7a7f",
                           "name": "Add 10 flat off coupon",
                           "event": [
                             {
@@ -6130,7 +5990,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "3a4ccf94-205b-43eb-b94c-acfce5e76f28",
                           "name": "Check Register10 exists",
                           "event": [
                             {
@@ -6185,7 +6044,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "8eda11b6-0a64-4d31-8c24-a02629fb7416",
                           "name": "Use ?cartItemIds=",
                           "event": [
                             {
@@ -6238,7 +6096,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "553185b2-d24a-4cc0-8676-3ee2b37be3b2",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -6308,19 +6165,15 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "0cd5c306-c443-41aa-a03d-dc474dd9bf6b",
               "name": "Guest",
               "item": [
                 {
-                  "_postman_id": "4bb780e1-830e-4d80-9270-6832e0bf8648",
                   "name": "Add",
                   "item": [
                     {
-                      "_postman_id": "2fea4ab1-d9d8-4bf8-ab06-cb275ba701c6",
                       "name": "Auto-Gen",
                       "item": [
                         {
-                          "_postman_id": "e9a647d2-5bcd-4df9-b040-2e3f8728c602",
                           "name": "/carts: Guest Cart",
                           "event": [
                             {
@@ -6380,7 +6233,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "e2037d8d-9207-4f06-97b3-176dd551a716",
                           "name": "Add Simple: $500",
                           "event": [
                             {
@@ -6428,7 +6280,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "7d51cc8c-27ca-48df-b848-f90e50127122",
                           "name": "Add 10% off coupon",
                           "event": [
                             {
@@ -6476,7 +6327,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "d54a645d-0a59-41e5-8e72-ff3473a4c92b",
                           "name": "Coupon is in cart",
                           "event": [
                             {
@@ -6534,7 +6384,247 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "01f24a1d-2614-48ee-9225-c42c70ca3936",
+                      "name": "Mobile App Coupon",
+                      "item": [
+                        {
+                          "name": "/carts: customer",
+                          "event": [
+                            {
+                              "listen": "test",
+                              "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                  "var jsonData = pm.response.json();",
+                                  "if (responseCode.code === 200 && jsonData.hasOwnProperty('cartId')) {",
+                                  "    pm.environment.set(\"cartId\", jsonData.cartId);",
+                                  "    tests[\"Cart ID is returned\"] = isNumeric(jsonData.cartId) === true;",
+                                  "} else {",
+                                  "    tests[\"Cart ID is not returned\"] = false;",
+                                  "}",
+                                  "",
+                                  "pm.test('Successfull call', function(){",
+                                  "    pm.response.to.be.success;",
+                                  "});",
+                                  "",
+                                  "function isNumeric(n) {",
+                                  "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                                  "}"
+                                ]
+                              }
+                            }
+                          ],
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{guest-access-token}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{}"
+                            },
+                            "url": {
+                              "raw": "{{domain}}{{endpoint_carts}}",
+                              "host": [
+                                "{{domain}}{{endpoint_carts}}"
+                              ]
+                            },
+                            "description": "Creates a customer cart"
+                          },
+                          "response": []
+                        },
+                        {
+                          "name": "Add Configurable: Boots",
+                          "event": [
+                            {
+                              "listen": "test",
+                              "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                  "pm.test('Successfull call', function(){",
+                                  "    pm.response.to.be.success;",
+                                  "});"
+                                ]
+                              }
+                            }
+                          ],
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{guest-access-token}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \t\"product\": {\n\t\t    \"product_id\": \"431\",\n\t\t    \"qty\": 1,\n\t\t    \"super_attribute\": {\n\t\t\t      \"92\": \"20\",\n\t\t\t      \"186\": \"102\"\n\t\t\t}\n\t\t}\n  }\n]"
+                            },
+                            "url": {
+                              "raw": "{{domain}}{{endpoint_carts_id_items}}",
+                              "host": [
+                                "{{domain}}{{endpoint_carts_id_items}}"
+                              ]
+                            },
+                            "description": "ID: 431\nType: Configurable\nName: Ann Ankle Boot\nSKU: aws005c\nURL: borgha-ankle-boot\nPrice: $470.00\nCategory: Shoes\n\n\nSub-Products:\nID: 345 | 346 | 347 | 348 | 349\nName: Ann Ankle Boot\nSKU: aws005 | aws006 | aws007 | aws008 | aws009\nColor (ID: 92): Black (ID: 20)\nShoe size (ID: 186): 6 (ID: 102) | 7 (ID: 101) | 8 (ID: 100) | 9 (ID: 99) | 10 (ID: 98)"
+                          },
+                          "response": []
+                        },
+                        {
+                          "name": "Add app-only coupon",
+                          "event": [
+                            {
+                              "listen": "test",
+                              "script": {
+                                "type": "text/javascript",
+                                "exec": [
+                                  "pm.test('Successfull call', function(){",
+                                  "    pm.response.to.be.success;",
+                                  "});"
+                                ]
+                              }
+                            }
+                          ],
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{guest-access-token}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \t\"coupon\": {\n\t\t    \"couponCode\":\"APP10\"\n\t\t}\n  }\n]"
+                            },
+                            "url": {
+                              "raw": "{{domain}}{{endpoint_carts_id_items}}",
+                              "host": [
+                                "{{domain}}{{endpoint_carts_id_items}}"
+                              ]
+                            },
+                            "description": "Conditions: Client must use shopgate app"
+                          },
+                          "response": []
+                        },
+                        {
+                          "name": "Check coupon exists",
+                          "event": [
+                            {
+                              "listen": "test",
+                              "script": {
+                                "id": "d1a8c36e-413f-4231-b9a1-a9ef388c0879",
+                                "type": "text/javascript",
+                                "exec": [
+                                  "pm.test(\"Status code is 200\", function () {",
+                                  "    pm.response.to.have.status(200);",
+                                  "});",
+                                  "",
+                                  "var jsonData = pm.response.json();",
+                                  "pm.test(\"APP10 code exists\", function () {",
+                                  "    pm.expect(jsonData.coupon_code).to.eql(\"APP10\");",
+                                  "});",
+                                  "",
+                                  "pm.test(\"Check that the quote was not collected. Else it would be a non-string\", function () {",
+                                  "    pm.expect(jsonData.items_qty).to.eql(\"1.0000\");",
+                                  "});"
+                                ]
+                              }
+                            }
+                          ],
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{guest-access-token}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{}"
+                            },
+                            "url": {
+                              "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                              "host": [
+                                "{{domain}}{{endpoint_carts}}"
+                              ],
+                              "path": [
+                                "{{cartId}}"
+                              ]
+                            }
+                          },
+                          "response": []
+                        }
+                      ],
+                      "description": "Tests shopgate coupons with shopgate mobile app type condition only",
+                      "event": [
+                        {
+                          "listen": "prerequest",
+                          "script": {
+                            "id": "ab0a7a2c-0eee-46ae-822a-1c50012f1e12",
+                            "type": "text/javascript",
+                            "exec": [
+                              ""
+                            ]
+                          }
+                        },
+                        {
+                          "listen": "test",
+                          "script": {
+                            "id": "85d5d4b9-13e8-4b68-8914-dad09b901a5c",
+                            "type": "text/javascript",
+                            "exec": [
+                              ""
+                            ]
+                          }
+                        }
+                      ],
+                      "_postman_isSubFolder": true
+                    },
+                    {
                       "name": "/carts: Guest Cart",
                       "event": [
                         {
@@ -6594,7 +6684,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "9967173c-aefa-4111-8cf0-cba5bd7b29bd",
                       "name": "Add Configurable: Skirt",
                       "event": [
                         {
@@ -6642,7 +6731,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "7209959a-39b0-4b28-a7db-80a3d296f2a1",
                       "name": "Add 15 flat off coupon",
                       "event": [
                         {
@@ -6690,7 +6778,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "b13bb5a8-4fd6-41e2-aa2f-2c70c99d37d4",
                       "name": "Check evening15 exists",
                       "event": [
                         {
@@ -6748,11 +6835,9 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "64d30480-e773-4cf2-8df0-152ccce149ed",
                   "name": "Update",
                   "item": [
                     {
-                      "_postman_id": "053090bb-1fd1-4b15-bea9-fa260e5f4ad4",
                       "name": "/carts: Guest Cart",
                       "event": [
                         {
@@ -6812,7 +6897,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "f8ab6ef2-5a56-4e2b-9c90-5a971d29106a",
                       "name": "Add Configurable: Skirt",
                       "event": [
                         {
@@ -6860,7 +6944,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "939c5aa6-d299-48ea-a233-6218166da40b",
                       "name": "Add 15 flat off coupon",
                       "event": [
                         {
@@ -6908,7 +6991,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "461447ca-a4ea-4bc6-9f1e-4ac779676629",
                       "name": "Check evening15 exists",
                       "event": [
                         {
@@ -6963,7 +7045,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "1ff3743c-947d-4942-a9e0-2abd38866c09",
                       "name": "Add app-only coupon",
                       "event": [
                         {
@@ -7011,7 +7092,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "b606677a-1c95-46de-80ea-377a7abc7e48",
                       "name": "Check app-only coupon exists",
                       "event": [
                         {
@@ -7067,7 +7147,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "553ac74e-6dc3-42cc-8f2b-582b9498e6fe",
                       "name": "Update with empty",
                       "event": [
                         {
@@ -7115,7 +7194,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "02a7a1de-60e8-4b9d-9314-cf7168642d33",
                       "name": "Check no discount",
                       "event": [
                         {
@@ -7173,15 +7251,12 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "917a7dc6-aa17-48b5-addd-d680a40f8f83",
                   "name": "Delete",
                   "item": [
                     {
-                      "_postman_id": "7aa4f0b2-a741-47d6-92b4-e702772c5dea",
                       "name": "Via Empty All",
                       "item": [
                         {
-                          "_postman_id": "d7b34a57-8582-4a94-bac7-e5baf1d080ea",
                           "name": "/carts: guest",
                           "event": [
                             {
@@ -7241,7 +7316,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "dc0dd30e-9627-4716-bc8f-e367134444ad",
                           "name": "Add Configurable: Skirt",
                           "event": [
                             {
@@ -7289,7 +7363,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "a3350862-cdd7-4a01-99b3-7aaf281800e6",
                           "name": "Add 15 flat off coupon",
                           "event": [
                             {
@@ -7337,7 +7410,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "2e8b1a6b-6e76-4593-8bc2-0e1654134139",
                           "name": "Check evening15 exists",
                           "event": [
                             {
@@ -7392,7 +7464,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "aec9874e-d41d-4691-beda-60f97effa02f",
                           "name": "Add empty coupon",
                           "event": [
                             {
@@ -7440,7 +7511,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "333bdbe2-5821-47e9-b68d-8f168762c739",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -7495,7 +7565,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "f2841d2d-b418-4a7d-a16f-3388f4e2eefb",
                           "name": "/carts: guest",
                           "event": [
                             {
@@ -7558,11 +7627,9 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "7aa63f25-292b-4d28-a369-bf9681ed2ad1",
                       "name": "Via query",
                       "item": [
                         {
-                          "_postman_id": "06c16b0b-3d96-445e-aae4-ebfda662f54e",
                           "name": "/carts: guest",
                           "event": [
                             {
@@ -7622,7 +7689,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "8f9052c3-67b8-4ced-a8ff-e981d526d7d1",
                           "name": "Add Configurable: Skirt",
                           "event": [
                             {
@@ -7670,7 +7736,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "03243783-7d30-4954-8131-6913a4f6a4c2",
                           "name": "Add 15 flat off coupon",
                           "event": [
                             {
@@ -7718,7 +7783,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "576506e9-9e1e-468e-a9e2-084ab6e097e7",
                           "name": "Check evening15 exists copy",
                           "event": [
                             {
@@ -7773,7 +7837,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "859234a0-6f26-4d58-8c4d-5d8156eef45e",
                           "name": "Use ?cartItemIds=",
                           "event": [
                             {
@@ -7826,7 +7889,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "e35c932c-cb19-45dd-9844-3bd405251f9e",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -7899,23 +7961,18 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "93113f69-54f6-47dd-98cc-5a63c384c73b",
           "name": "Mixed",
           "item": [
             {
-              "_postman_id": "06af3ad5-af02-4e5e-b273-7821abf160ae",
               "name": "Customer",
               "item": [
                 {
-                  "_postman_id": "0d6d9632-5686-4555-bae3-02e6f7d6cf21",
                   "name": "Update",
                   "item": [
                     {
-                      "_postman_id": "c32f79dd-7059-46f6-aef1-5ea99a6fa913",
                       "name": "Product first",
                       "item": [
                         {
-                          "_postman_id": "13cd7f61-26da-489d-b050-f869d9e8ef11",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -7975,7 +8032,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "be0cf6b4-9734-4382-a3a9-6959cd61a9d0",
                           "name": "Add Configurable + Coupon",
                           "event": [
                             {
@@ -8023,7 +8079,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "1f1b6a50-f7df-42d6-bfeb-24847ad99d6f",
                           "name": "Check code + product",
                           "event": [
                             {
@@ -8085,11 +8140,9 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "79f0484a-404e-4d47-87bf-458a0497118f",
                       "name": "Product last",
                       "item": [
                         {
-                          "_postman_id": "b7a03b41-6282-4722-a4d1-d51d7c39d0a7",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -8149,7 +8202,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "cf3b8147-4342-414d-af0e-fc89dc5f67c4",
                           "name": "Add Coupon + Configurable",
                           "event": [
                             {
@@ -8204,15 +8256,12 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "32f4ae11-4e2e-4704-a7ac-bb0821e6304a",
                   "name": "Delete",
                   "item": [
                     {
-                      "_postman_id": "a967f7dc-343f-43fc-ab67-e9c8e69ecf2d",
                       "name": "Via remove all",
                       "item": [
                         {
-                          "_postman_id": "c166e818-1581-47c9-8862-b1994a30bab0",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -8272,7 +8321,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "17a51be9-cc4c-44ff-b907-f5d0d55ab911",
                           "name": "Add Configurable: Boots",
                           "event": [
                             {
@@ -8320,7 +8368,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "3ce06d12-f490-45dc-8dff-9dccd4337870",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -8375,7 +8422,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "d685dec6-03ce-4351-b812-ecdcba567454",
                           "name": "Add 10 flat off coupon",
                           "event": [
                             {
@@ -8423,7 +8469,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "b82f1651-370a-4152-af67-044523c2c8a7",
                           "name": "Check Register10 exists",
                           "event": [
                             {
@@ -8478,7 +8523,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "defff009-3bb3-4e02-8a68-ffc0ead8eabe",
                           "name": "Remove all items",
                           "event": [
                             {
@@ -8525,7 +8569,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "95d887d7-df48-494d-be8f-b5c6b93b1d20",
                           "name": "Check no coupon/prods",
                           "event": [
                             {
@@ -8589,11 +8632,9 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "2f53e8da-0374-4a32-a854-16ab396c1cc5",
                       "name": "Via query",
                       "item": [
                         {
-                          "_postman_id": "b300b8c0-6cd4-4d3e-a4fa-00b00efe91ef",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -8653,7 +8694,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "159e6472-8a2f-4787-9877-7106d119edf3",
                           "name": "Add Configurable: Boots",
                           "event": [
                             {
@@ -8701,7 +8741,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "bb4a5c62-e7c2-47d6-ae3e-8821b376d2a8",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -8756,7 +8795,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "9bbeae1b-1460-4cc7-b141-b170b9cb815c",
                           "name": "Add 10 flat off coupon",
                           "event": [
                             {
@@ -8804,7 +8842,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "61d9a6d8-f19d-4c3d-aa54-9f82b22154ca",
                           "name": "Check Register10 exists",
                           "event": [
                             {
@@ -8859,7 +8896,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "5d23ca31-7d9d-4ad1-a913-addc9b357ba2",
                           "name": "CartItemIds > variable",
                           "event": [
                             {
@@ -8925,7 +8961,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "d0482952-662c-475e-8e17-3189fc5d1de8",
                           "name": "Add simple product",
                           "event": [
                             {
@@ -8973,7 +9008,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "dbf7f5ec-98bd-499f-994e-6af2eec5025c",
                           "name": "Remove config + coupon",
                           "event": [
                             {
@@ -9027,7 +9061,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "0b7cb280-a570-4515-b3ea-7339c5fc2de8",
                           "name": "Check discount/products",
                           "event": [
                             {
@@ -9098,19 +9131,15 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "89a98c1a-32bc-4f6a-94d7-c4251e3f869e",
               "name": "Guest",
               "item": [
                 {
-                  "_postman_id": "0528896e-8285-4812-9aee-7c8f06c84e2d",
                   "name": "Update",
                   "item": [
                     {
-                      "_postman_id": "2deaab98-4ac0-422a-8dce-ed5d9a8553d2",
                       "name": "Product first",
                       "item": [
                         {
-                          "_postman_id": "fe9903a5-e087-4273-aeef-2d4dc38b5ac3",
                           "name": "/carts: guest",
                           "event": [
                             {
@@ -9170,7 +9199,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "1a545aaa-ac87-486d-bb89-76bea014218f",
                           "name": "Add config + coupon",
                           "event": [
                             {
@@ -9218,7 +9246,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "4a5171b3-e871-460d-9077-e16d91600e99",
                           "name": "Check code + product",
                           "event": [
                             {
@@ -9280,11 +9307,9 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "6c119522-9a64-403e-a37b-9069ed67b9d3",
                       "name": "Product last",
                       "item": [
                         {
-                          "_postman_id": "7609f846-0bf8-4603-800f-104b1b979fd2",
                           "name": "/carts: guest",
                           "event": [
                             {
@@ -9344,7 +9369,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "bd988901-f1aa-44e5-a521-5f22ca703b56",
                           "name": "Add coupon + config",
                           "event": [
                             {
@@ -9398,15 +9422,12 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "b9fa2d0a-9d97-4720-89c1-37b9bb66967d",
                   "name": "Delete",
                   "item": [
                     {
-                      "_postman_id": "02368c21-ba71-4dc3-973a-a84a84c15087",
                       "name": "Via Empty All",
                       "item": [
                         {
-                          "_postman_id": "2e3a88a7-3aff-413e-a1ab-7d6e4f7a9c0f",
                           "name": "/carts: guest",
                           "event": [
                             {
@@ -9466,7 +9487,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "7d3d6df2-2ab1-4a39-88fe-6d33f4f8facc",
                           "name": "Add Configurable: Skirt",
                           "event": [
                             {
@@ -9514,7 +9534,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "b8650b0b-7c29-4dc8-a6aa-8941693445aa",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -9570,7 +9589,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "9c2d86ba-9e58-4a39-83b4-261943333382",
                           "name": "Add 15 flat off coupon",
                           "event": [
                             {
@@ -9618,7 +9636,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "66869beb-5da7-4ca6-9abf-7627ce2f203a",
                           "name": "Check evening15 exists",
                           "event": [
                             {
@@ -9673,7 +9690,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "ed4e156c-51c0-421c-8c02-cd987d910bfa",
                           "name": "Remove all items",
                           "event": [
                             {
@@ -9720,7 +9736,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "5b7d5a9f-c631-46e0-a1f9-9072331b59f8",
                           "name": "Check no prod + coupon",
                           "event": [
                             {
@@ -9782,11 +9797,9 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "8a53ce3c-79f7-40a3-882a-2719fbc79d8d",
                       "name": "Via query",
                       "item": [
                         {
-                          "_postman_id": "b77a9ab1-feea-4196-aea0-1755e27ce5ce",
                           "name": "/carts: guest",
                           "event": [
                             {
@@ -9846,7 +9859,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "0add5fc7-d7a7-47fe-adfa-cd852154cd06",
                           "name": "Add Configurable: Skirt",
                           "event": [
                             {
@@ -9894,7 +9906,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "89ad075f-c754-4a79-ad5f-8fffc749a9fd",
                           "name": "Check no discount",
                           "event": [
                             {
@@ -9950,7 +9961,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "d7fa5378-af8e-41e0-bfa2-27365f594d7a",
                           "name": "Add 15 flat off coupon",
                           "event": [
                             {
@@ -9998,7 +10008,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "afb2782d-3a2c-4aa8-81bd-aa76484edaaf",
                           "name": "CartItemIds > variable",
                           "event": [
                             {
@@ -10063,7 +10072,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "5c0f5de4-c7e9-4100-b032-98195510d7db",
                           "name": "Add simple product",
                           "event": [
                             {
@@ -10111,7 +10119,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "00629385-b549-45a8-8d21-59ba071c5b3c",
                           "name": "Remove config + coupon",
                           "event": [
                             {
@@ -10165,7 +10172,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "9e83e8b9-2150-46fc-a961-76b8dbe469d4",
                           "name": "Check discount/products",
                           "event": [
                             {
@@ -10242,27 +10248,21 @@
       ]
     },
     {
-      "_postman_id": "0cd5a4c6-3803-473d-980f-383ac8097d9d",
       "name": "/v2/carts/:id/items/:itemId",
       "item": [
         {
-          "_postman_id": "0a8a1d27-3dd3-4d50-a720-a319b9d655d5",
           "name": "Product",
           "item": [
             {
-              "_postman_id": "9d39c799-20d8-44f4-a7c7-c5e5af6f05f6",
               "name": "Customer",
               "item": [
                 {
-                  "_postman_id": "198a6962-6e7c-43f4-936d-f57ddb91f281",
                   "name": "Update",
                   "item": [
                     {
-                      "_postman_id": "389455d0-8299-48f9-b9e8-46ccf55695ff",
                       "name": "Simple",
                       "item": [
                         {
-                          "_postman_id": "12b6ce0f-10d7-4a1a-8c5e-aebc6fdaf9ef",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -10322,7 +10322,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "d9742f2c-fbcd-4b24-b3dc-8b0f2f06f3d6",
                           "name": "Add Simple",
                           "event": [
                             {
@@ -10370,7 +10369,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "6b0c0612-c71f-44b1-b492-d57112a3ba95",
                           "name": "Carts: qty 1",
                           "event": [
                             {
@@ -10431,7 +10429,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "18270cd0-7746-4e1d-b592-19917c5cd14a",
                           "name": "Update simple",
                           "event": [
                             {
@@ -10482,7 +10479,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "65be9831-4e7b-432e-8099-52966e59ba93",
                           "name": "Carts: qty 3",
                           "event": [
                             {
@@ -10537,7 +10533,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "93cc63f8-6ff8-4a27-bd7e-a46c0bcbaab1",
                           "name": "Alt update",
                           "event": [
                             {
@@ -10588,7 +10583,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "5f8f1a67-be5b-4ae3-9631-cabae94f1a52",
                           "name": "Carts: qty 4",
                           "event": [
                             {
@@ -10646,11 +10640,9 @@
                       "_postman_isSubFolder": true
                     },
                     {
-                      "_postman_id": "ef9dd555-fe45-4aea-a003-23e7b99b352c",
                       "name": "Configurable",
                       "item": [
                         {
-                          "_postman_id": "0bc61159-c619-41e2-9b76-10bb0e14d7b5",
                           "name": "/carts: customer",
                           "event": [
                             {
@@ -10710,7 +10702,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "e2cc04d6-40fe-48f4-80d3-a4587f966a4e",
                           "name": "Add Configurable: Skirt",
                           "event": [
                             {
@@ -10758,7 +10749,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "359bf17f-a950-4862-858d-2f6d3bc9542d",
                           "name": "Carts: qty 1",
                           "event": [
                             {
@@ -10820,7 +10810,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "2119d11a-902a-4c4a-ab26-0ae0d1bd6f8e",
                           "name": "Update configurable",
                           "event": [
                             {
@@ -10871,7 +10860,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "d8e5aff5-aa8b-4b41-9a9a-999ab9b61447",
                           "name": "Carts: qty 3",
                           "event": [
                             {
@@ -10927,7 +10915,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "269321b7-a304-4585-8c75-c6c1a96ffe09",
                           "name": "Alt update",
                           "event": [
                             {
@@ -10978,7 +10965,6 @@
                           "response": []
                         },
                         {
-                          "_postman_id": "bc853869-331d-45cd-befb-9da3a2cb076d",
                           "name": "Carts: qty 4",
                           "event": [
                             {
@@ -11040,11 +11026,9 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "be32f207-5506-4a43-b03a-96de7bb6d3ac",
                   "name": "Delete",
                   "item": [
                     {
-                      "_postman_id": "a32b170e-5432-49c1-96a3-8bcc0a0f13f9",
                       "name": "/carts: customer",
                       "event": [
                         {
@@ -11104,7 +11088,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "170b26cc-30d4-431c-b889-5f477c70d50f",
                       "name": "Add Simple",
                       "event": [
                         {
@@ -11152,7 +11135,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "c4fe8c2e-34f1-4cc3-94c6-8479fd890db3",
                       "name": "Carts: qty 1",
                       "event": [
                         {
@@ -11213,7 +11195,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "6498c909-7911-4031-ad1a-662600143e9b",
                       "name": "Delete by ID",
                       "event": [
                         {
@@ -11263,7 +11244,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "35282790-9c01-4288-81df-bcd435133bca",
                       "name": "Check cart for no items",
                       "event": [
                         {
@@ -11324,15 +11304,12 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "f7c0c9b7-8206-48ef-92d6-26665ef2f872",
               "name": "Guest",
               "item": [
                 {
-                  "_postman_id": "66e31744-af16-4c18-b2d7-7e3700bcc5a5",
                   "name": "Update",
                   "item": [
                     {
-                      "_postman_id": "2fe9f006-e422-4b17-9616-03c940a547ea",
                       "name": "/carts: Guest Cart",
                       "event": [
                         {
@@ -11392,7 +11369,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "68211802-dcae-4558-a54e-39c215fc8326",
                       "name": "Add Simple",
                       "event": [
                         {
@@ -11440,7 +11416,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "711c7b8d-9a2d-415f-849c-a8673bdca6c1",
                       "name": "Carts: qty 1",
                       "event": [
                         {
@@ -11502,7 +11477,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "667b7012-1c6e-4183-8f82-59a6293c9fbc",
                       "name": "Update (no cartItem)",
                       "event": [
                         {
@@ -11553,7 +11527,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "488282e6-2249-4e83-b706-cd9e987a8c74",
                       "name": "Carts: qty 3",
                       "event": [
                         {
@@ -11609,7 +11582,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "c090f059-eeb3-4509-aea2-c8dc8266a6a4",
                       "name": "Alt update",
                       "event": [
                         {
@@ -11660,7 +11632,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "78904579-bfa4-4dbf-88c4-839c31305690",
                       "name": "Carts: qty 4",
                       "event": [
                         {
@@ -11719,11 +11690,9 @@
                   "_postman_isSubFolder": true
                 },
                 {
-                  "_postman_id": "7b6d7a16-fb9d-43df-8b20-23bc837e6538",
                   "name": "Delete",
                   "item": [
                     {
-                      "_postman_id": "238879f0-f461-40b5-b936-97b43d2b57ac",
                       "name": "/carts: Guest Cart",
                       "event": [
                         {
@@ -11783,7 +11752,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "7c35e950-8eb3-4424-b099-e585a066a9d9",
                       "name": "Add Simple",
                       "event": [
                         {
@@ -11831,7 +11799,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "a1ed5326-8444-4d42-8a24-b40a42350b43",
                       "name": "Carts: qty 1",
                       "event": [
                         {
@@ -11892,7 +11859,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "fa852d7f-9024-46bb-8271-c2e98ea9b90f",
                       "name": "Delete by ID",
                       "event": [
                         {
@@ -11942,7 +11908,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "7a3f6ff3-d30b-44e2-bd96-cae24aa70162",
                       "name": "Check cart for no items",
                       "event": [
                         {
@@ -12006,19 +11971,15 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "87cce5c7-6915-423c-b739-dfc334cff7f7",
           "name": "Coupon",
           "item": [
             {
-              "_postman_id": "33be97f9-3627-48af-8bf5-30c23ac1704c",
               "name": "Customer",
               "item": [
                 {
-                  "_postman_id": "bde79d5c-d18c-4192-a4fd-a67c3f61dfb6",
                   "name": "Delete",
                   "item": [
                     {
-                      "_postman_id": "8872679c-3af1-4c03-a0a2-543d5d959229",
                       "name": "/carts: customer",
                       "event": [
                         {
@@ -12078,7 +12039,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "0b16f351-82be-4fb1-94a8-92745804e1a3",
                       "name": "Add Configurable: Boots",
                       "event": [
                         {
@@ -12126,7 +12086,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "2684e860-bc07-4cfa-9993-4f169e38d2c6",
                       "name": "Add 10 flat off coupon",
                       "event": [
                         {
@@ -12174,7 +12133,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "ca0b9035-5e4d-4006-86c5-d6cc19fc564f",
                       "name": "Check Register10 exists",
                       "event": [
                         {
@@ -12229,7 +12187,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "b99809a3-9954-4ae0-88b1-c1894e0d4646",
                       "name": "items/COUPON_X",
                       "event": [
                         {
@@ -12280,7 +12237,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "e24f55d3-752f-4994-9c8e-96f0c7b7930b",
                       "name": "Check discount/products",
                       "event": [
                         {
@@ -12348,15 +12304,12 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "2bbe3fab-6b01-4771-83c6-2fa93877cf1d",
               "name": "Guest",
               "item": [
                 {
-                  "_postman_id": "0e9a6cb2-e3ed-40ee-9126-8e82e196c90f",
                   "name": "Delete",
                   "item": [
                     {
-                      "_postman_id": "219e05b5-1bb7-4508-8926-3014b87e1435",
                       "name": "/carts: guest",
                       "event": [
                         {
@@ -12416,7 +12369,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "ac3d5922-606f-4783-9b6a-248e6335ccb8",
                       "name": "Add Configurable: Skirt",
                       "event": [
                         {
@@ -12464,7 +12416,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "bc6103a2-9430-43c0-acae-f75d0f4f27f5",
                       "name": "Add 15 flat off coupon",
                       "event": [
                         {
@@ -12512,7 +12463,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "3dfd33a6-e13e-4e27-a628-977169e0a2a0",
                       "name": "Code evening15 exists",
                       "event": [
                         {
@@ -12567,7 +12517,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "ab7bd175-2a40-464d-a237-2514f3434ed0",
                       "name": "items/COUPON_X",
                       "event": [
                         {
@@ -12618,7 +12567,6 @@
                       "response": []
                     },
                     {
-                      "_postman_id": "6fec1011-45e7-4a5d-b9e6-6db4ea1ed9b6",
                       "name": "Check discount/products",
                       "event": [
                         {
@@ -12691,15 +12639,12 @@
       ]
     },
     {
-      "_postman_id": "e7db8539-d252-4c79-8105-532bd294d5c1",
       "name": "/v2/carts/:id/checkoutUrl",
       "item": [
         {
-          "_postman_id": "7228f7f2-ecc3-4c9a-b745-5af95a6c13ca",
           "name": "Customer",
           "item": [
             {
-              "_postman_id": "78a5c849-b502-4aeb-8626-a834e157d7e4",
               "name": "Create customer cart",
               "event": [
                 {
@@ -12759,7 +12704,6 @@
               "response": []
             },
             {
-              "_postman_id": "522b1809-d855-466c-8d50-c921d8a3df18",
               "name": "Add simple product to cart",
               "event": [
                 {
@@ -12807,7 +12751,6 @@
               "response": []
             },
             {
-              "_postman_id": "3fb7e218-0734-4e10-a06f-1aaff27f0b31",
               "name": "checkoutURL",
               "event": [
                 {
@@ -12863,11 +12806,9 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "1e008a0f-aada-448b-8bff-6d7ac90af940",
           "name": "Guest",
           "item": [
             {
-              "_postman_id": "b374da1f-43e7-4c46-b8e7-5281e089d3ce",
               "name": "Create guest cart",
               "event": [
                 {
@@ -12927,7 +12868,6 @@
               "response": []
             },
             {
-              "_postman_id": "6f395559-cbcd-4b25-8249-ec7c3203dd0f",
               "name": "Add simple item to cart",
               "event": [
                 {
@@ -12975,7 +12915,6 @@
               "response": []
             },
             {
-              "_postman_id": "0ae84624-eeae-4c6f-82b5-6f4b53e46529",
               "name": "checkoutURL",
               "event": [
                 {
@@ -13033,11 +12972,9 @@
       ]
     },
     {
-      "_postman_id": "6f09c2ef-4ce0-49f1-85b6-85295aeb8b9b",
       "name": "/v2/carts/:id/customer",
       "item": [
         {
-          "_postman_id": "50cb5e78-1dec-401a-a6b3-206cefaac852",
           "name": "Create customer cart",
           "event": [
             {
@@ -13097,7 +13034,6 @@
           "response": []
         },
         {
-          "_postman_id": "2326130e-0e28-4430-a02b-a3c5ab9192b8",
           "name": "Customer: add simple",
           "event": [
             {
@@ -13145,7 +13081,6 @@
           "response": []
         },
         {
-          "_postman_id": "071d68ca-97d1-4f7c-a7df-601f25e54717",
           "name": "Customer: cart qty 1",
           "event": [
             {
@@ -13202,7 +13137,6 @@
           "response": []
         },
         {
-          "_postman_id": "0c4e2dd4-9f18-4279-8acf-98e9d1a11ac6",
           "name": "/carts: Guest Cart",
           "event": [
             {
@@ -13262,7 +13196,6 @@
           "response": []
         },
         {
-          "_postman_id": "6edfc39f-0cef-44ca-9970-a904582d0e4c",
           "name": "Guest: add downloadable",
           "event": [
             {
@@ -13310,7 +13243,6 @@
           "response": []
         },
         {
-          "_postman_id": "e42832e2-2b01-41c4-947a-b47ef6d4089c",
           "name": "Guest: cart qty 1",
           "event": [
             {
@@ -13367,7 +13299,6 @@
           "response": []
         },
         {
-          "_postman_id": "58f3dc37-df14-4ae5-8ea1-9106a5ec04ca",
           "name": "Merge carts",
           "event": [
             {
@@ -13423,7 +13354,6 @@
           "response": []
         },
         {
-          "_postman_id": "a4c3cffa-a9fc-4108-ae3f-2cee4228a4e6",
           "name": "Customer: cart qty 2",
           "event": [
             {
@@ -13480,7 +13410,6 @@
           "response": []
         },
         {
-          "_postman_id": "f5365380-ca39-4046-b6c2-fba92cc861d8",
           "name": "Merge: call ME endpoint",
           "event": [
             {
@@ -13533,11 +13462,9 @@
       ]
     },
     {
-      "_postman_id": "85f95d8f-4e72-460b-82ae-6e86229f4b86",
       "name": "/v2/customers/me",
       "item": [
         {
-          "_postman_id": "f2e3a742-66cf-470a-a94b-06db5967bbfc",
           "name": "Customer: me",
           "event": [
             {
@@ -13601,7 +13528,6 @@
           "response": []
         },
         {
-          "_postman_id": "ae3a7d98-2349-4f90-a83e-d5a38734a6a4",
           "name": "Guest cannot call this endpoint",
           "event": [
             {
@@ -13651,15 +13577,12 @@
       ]
     },
     {
-      "_postman_id": "988b2bc1-29a6-402a-8493-b2123564d226",
       "name": "/v2/customers/:id/addresses",
       "item": [
         {
-          "_postman_id": "84e93cbd-d8ae-4087-8e3b-780b69e86260",
           "name": "Guest",
           "item": [
             {
-              "_postman_id": "fd20bfb2-0b6c-4c65-8fa2-5b9a1cba8995",
               "name": "Get address",
               "event": [
                 {
@@ -13713,7 +13636,6 @@
               "response": []
             },
             {
-              "_postman_id": "867d60eb-e7f6-4e01-bad2-7ec4fa24c8a9",
               "name": "Create address",
               "event": [
                 {
@@ -13772,7 +13694,6 @@
               "response": []
             },
             {
-              "_postman_id": "95ed5403-1ebd-4ad0-b020-10c1a88fcab2",
               "name": "Delete address",
               "event": [
                 {
@@ -13840,11 +13761,9 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "9b9ad819-d5b1-447e-b963-e886338aba2e",
           "name": "Customer 2 (C2)",
           "item": [
             {
-              "_postman_id": "e38d5f38-dccd-46d6-98b7-53945bd9e731",
               "name": "Get C1 ID via ME",
               "event": [
                 {
@@ -13904,7 +13823,6 @@
               "response": []
             },
             {
-              "_postman_id": "3adeeee5-f1c9-4042-90d6-4b279a2b2342",
               "name": "Create address via C1",
               "event": [
                 {
@@ -13964,7 +13882,6 @@
               "response": []
             },
             {
-              "_postman_id": "0427c5eb-c7f8-49f8-b4da-2834b9256457",
               "name": "Create address via C2",
               "event": [
                 {
@@ -14022,7 +13939,6 @@
               "response": []
             },
             {
-              "_postman_id": "37a480a4-06f0-4301-94d0-80e910d10fa7",
               "name": "Get address via C2",
               "event": [
                 {
@@ -14080,7 +13996,6 @@
               "response": []
             },
             {
-              "_postman_id": "dc541b8c-44a2-441b-b2ab-77655558b745",
               "name": "Update address via C2",
               "event": [
                 {
@@ -14142,7 +14057,6 @@
               "response": []
             },
             {
-              "_postman_id": "ca3019a5-839e-49e3-9ac2-fb42972b7fb3",
               "name": "Delete address via C2",
               "event": [
                 {
@@ -14203,7 +14117,6 @@
               "response": []
             },
             {
-              "_postman_id": "fcfa2a1a-9bc6-4dcc-9db1-6da709e10d00",
               "name": "cleanup",
               "event": [
                 {
@@ -14268,15 +14181,12 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "ff6cb5ab-74f7-4a7b-9d62-458db398b4fe",
           "name": "Create",
           "item": [
             {
-              "_postman_id": "d1ddba87-fbaf-4498-b51a-574196b2a74e",
               "name": "Errors",
               "item": [
                 {
-                  "_postman_id": "953a9dcd-57de-4b69-9d9d-b3b0fe6c4024",
                   "name": "Get customer ID via ME",
                   "event": [
                     {
@@ -14336,7 +14246,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "854ada2d-221d-4605-838a-b62ce390ea69",
                   "name": "Required errors",
                   "event": [
                     {
@@ -14412,7 +14321,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "262adb00-87a5-4b0d-b4b3-540627f4dc7e",
                   "name": "Region doesn't exist",
                   "event": [
                     {
@@ -14477,7 +14385,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "b8cbe223-b8c9-4a55-96f1-0fb892c3bf5f",
                   "name": "Region is not a string",
                   "event": [
                     {
@@ -14541,7 +14448,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "b0d0805c-ec08-43b2-b356-d1251ebb2e31",
                   "name": "No region provided",
                   "event": [
                     {
@@ -14606,7 +14512,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "d5383cb0-d4da-4d30-a6be-0eea8eaffd42",
                   "name": "No region needed for Italy",
                   "event": [
                     {
@@ -14670,7 +14575,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "8eb624da-2d82-4335-ae21-a6a40d092540",
                   "name": "Country code too long",
                   "event": [
                     {
@@ -14734,7 +14638,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "f09098a1-8af4-422c-b94d-909853df95db",
                   "name": "Country code too short",
                   "event": [
                     {
@@ -14823,11 +14726,9 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "cac4cfb7-22a6-48a1-9052-0a8d83f59cb3",
               "name": "Defaults",
               "item": [
                 {
-                  "_postman_id": "c398dbae-9d50-4937-86c3-8dff256c0107",
                   "name": "Get customer ID via ME",
                   "event": [
                     {
@@ -14887,7 +14788,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "823b3c5c-f6a6-44a7-9b8e-476253bda931",
                   "name": "Create address (get ID)",
                   "event": [
                     {
@@ -14947,7 +14847,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "f2d00c85-5137-40d0-9aeb-3d35506a0228",
                   "name": "Check default status",
                   "event": [
                     {
@@ -15021,7 +14920,6 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "f9aef226-2908-4e82-bcd7-891a07a02757",
               "name": "Get customer ID via ME",
               "event": [
                 {
@@ -15081,7 +14979,6 @@
               "response": []
             },
             {
-              "_postman_id": "b65b7041-55dd-4a3b-91b7-8f3b66ed7eac",
               "name": "Create address (get ID)",
               "event": [
                 {
@@ -15141,7 +15038,6 @@
               "response": []
             },
             {
-              "_postman_id": "cf88cf9b-5445-405c-8b32-803a2a981876",
               "name": "Check last address entry",
               "event": [
                 {
@@ -15219,7 +15115,6 @@
               "response": []
             },
             {
-              "_postman_id": "201933fd-b617-4421-97d4-ae5a25389cff",
               "name": "Check addresses by ID",
               "event": [
                 {
@@ -15298,7 +15193,6 @@
               "response": []
             },
             {
-              "_postman_id": "28c2b6a6-3e7d-42b0-bbff-049419c431fc",
               "name": "cleanup",
               "event": [
                 {
@@ -15384,15 +15278,12 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "a523a2c4-9aeb-4a55-8267-fe0932647a9b",
           "name": "Update",
           "item": [
             {
-              "_postman_id": "a0419b45-c3c2-4c52-adb0-96fc47109f4a",
               "name": "Errors",
               "item": [
                 {
-                  "_postman_id": "6fef2370-e507-438f-9cf5-331f135ce6e8",
                   "name": "Get customer ID via ME",
                   "event": [
                     {
@@ -15452,7 +15343,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "81a3cb60-5a0b-4ed3-b2c5-73cefd1719b1",
                   "name": "Create address (get ID)",
                   "event": [
                     {
@@ -15512,7 +15402,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "09dbabe6-6821-4fbb-b77a-eec1bb05ea79",
                   "name": "Empty body",
                   "event": [
                     {
@@ -15575,7 +15464,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "b686c49a-cbed-4785-a4bd-5f59a44f10da",
                   "name": "Region doesn't exist",
                   "event": [
                     {
@@ -15643,7 +15531,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "1e6fc6c2-1a23-4be4-ab18-629b5dd8eb91",
                   "name": "Region is not a string",
                   "event": [
                     {
@@ -15710,7 +15597,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "8f762b89-a0bc-4d1d-a414-97025ed1baa6",
                   "name": "No region provided",
                   "event": [
                     {
@@ -15778,7 +15664,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "a6865cf4-5809-4a52-92ab-d7310a94a971",
                   "name": "No region needed for Italy",
                   "event": [
                     {
@@ -15845,7 +15730,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "cd8f9d0a-af8c-4238-b980-cc39e009815b",
                   "name": "Country code too long",
                   "event": [
                     {
@@ -15912,7 +15796,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "932d59e9-50dd-4bdf-bfcb-91d6ae4b7016",
                   "name": "Country code too short",
                   "event": [
                     {
@@ -15979,7 +15862,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "52ee0055-70de-49a8-9a5a-4be3cdf6323c",
                   "name": "cleanup",
                   "event": [
                     {
@@ -16068,11 +15950,9 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "6711a33a-0116-4cca-95fb-cb7001fee515",
               "name": "Defaults",
               "item": [
                 {
-                  "_postman_id": "29ef2847-2e1d-46d6-a3a7-72926d673e30",
                   "name": "Get customer ID via ME",
                   "event": [
                     {
@@ -16132,7 +16012,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "d0cd00c8-cf86-4fd0-8a1b-315947e5d06d",
                   "name": "Create address (get ID)",
                   "event": [
                     {
@@ -16192,7 +16071,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "666bccea-bfb7-4f12-aa04-59a44fbe0a9a",
                   "name": "Attempt set defaults to 0",
                   "event": [
                     {
@@ -16253,7 +16131,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "1cfe5056-8b1a-4d22-a79f-e50321f154f6",
                   "name": "Check error + clean",
                   "event": [
                     {
@@ -16344,7 +16221,6 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "be11c609-1317-494f-a288-5601634ec0c5",
               "name": "Get customer ID via ME",
               "event": [
                 {
@@ -16404,7 +16280,6 @@
               "response": []
             },
             {
-              "_postman_id": "d32c4cf1-d43f-4c6f-8b1d-37b98c3a5149",
               "name": "Create address (get ID)",
               "event": [
                 {
@@ -16464,7 +16339,6 @@
               "response": []
             },
             {
-              "_postman_id": "03d4401f-e45d-49c3-bdc7-4e3a11a781bf",
               "name": "Check address data",
               "event": [
                 {
@@ -16545,7 +16419,6 @@
               "response": []
             },
             {
-              "_postman_id": "2e6acf96-7097-4bb6-9de0-a3ed24201688",
               "name": "Update address data",
               "event": [
                 {
@@ -16607,7 +16480,6 @@
               "response": []
             },
             {
-              "_postman_id": "84c84b9b-f86d-4c0e-ac6e-106dbede0657",
               "name": "Check updated address",
               "event": [
                 {
@@ -16688,7 +16560,6 @@
               "response": []
             },
             {
-              "_postman_id": "25724369-ebb8-4b23-ba34-8a76cfd8220d",
               "name": "Set default",
               "event": [
                 {
@@ -16749,7 +16620,6 @@
               "response": []
             },
             {
-              "_postman_id": "7261bb24-91aa-46eb-9648-b632034f8797",
               "name": "Check default + clean",
               "event": [
                 {
@@ -16842,15 +16712,12 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "8d6ef5b9-47e0-4a95-a545-f048b43b7eb6",
           "name": "Delete",
           "item": [
             {
-              "_postman_id": "f7a5f349-cd14-4ecb-bf84-ec48d185ac52",
               "name": "Single",
               "item": [
                 {
-                  "_postman_id": "bd37c2a6-8bbf-418d-ae56-626e0cda7361",
                   "name": "Get customer ID via ME",
                   "event": [
                     {
@@ -16910,7 +16777,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "7ac5c975-21c6-43d3-b279-4d10c9c4bd95",
                   "name": "Create address",
                   "event": [
                     {
@@ -16978,7 +16844,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "12e1b813-0cfd-4424-88c1-e3d13e8fdc4c",
                   "name": "Delete address by ID",
                   "event": [
                     {
@@ -17039,7 +16904,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "1cf7c105-5f47-4050-b8fb-8a1a53336b80",
                   "name": "No address exists + cleanup",
                   "event": [
                     {
@@ -17112,11 +16976,9 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "19b21c4e-7914-4d6b-a3a7-e3dffd29172e",
               "name": "Multiple",
               "item": [
                 {
-                  "_postman_id": "eb2f5ba9-6bc7-4fcd-ad46-510350134987",
                   "name": "Get customer ID via ME",
                   "event": [
                     {
@@ -17176,7 +17038,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "830930b0-0997-4107-8040-eed55260e127",
                   "name": "Create first address",
                   "event": [
                     {
@@ -17243,7 +17104,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "b77d1194-3084-4f23-8cff-691d564c1737",
                   "name": "Create second address",
                   "event": [
                     {
@@ -17310,7 +17170,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "59a8fd82-9235-44b6-ae54-666880898f3e",
                   "name": "Delete addresses by ID",
                   "event": [
                     {
@@ -17374,7 +17233,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "80a1319a-0272-486b-a1ae-df7f10e36667",
                   "name": "No address 1 + cleanup",
                   "event": [
                     {
@@ -17443,7 +17301,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "80aa98bb-8d74-4f7d-b970-79272a3dc180",
                   "name": "No address 2 + cleanup",
                   "event": [
                     {
@@ -17519,11 +17376,9 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "56b7dcf4-4ca2-47f6-bff3-649272e9ab88",
           "name": "Cleaning routine",
           "item": [
             {
-              "_postman_id": "6bad663b-11f3-4c1e-a880-533e286c1f22",
               "name": "Get customer ID via ME",
               "event": [
                 {
@@ -17582,7 +17437,6 @@
               "response": []
             },
             {
-              "_postman_id": "11cb7d43-f743-4944-be49-0a9653b808ac",
               "name": "Get all addresses",
               "event": [
                 {
@@ -17644,7 +17498,6 @@
               "response": []
             },
             {
-              "_postman_id": "38f97333-009d-42f6-a729-7735658bb960",
               "name": "Create default address",
               "event": [
                 {
@@ -17700,7 +17553,6 @@
               "response": []
             },
             {
-              "_postman_id": "6581f6cf-2ecf-4db3-9b26-0334d8bff8cb",
               "name": "Delete all addresses",
               "event": [
                 {
@@ -17771,15 +17623,12 @@
       ]
     },
     {
-      "_postman_id": "85db2c2d-9f55-4c9b-bf9c-6f9f5d84a320",
       "name": "/v2/products",
       "item": [
         {
-          "_postman_id": "c6a93e6e-4fbe-4027-9945-224dc6d78ac3",
           "name": "Customer",
           "item": [
             {
-              "_postman_id": "69fa1ac0-6088-4ea2-8305-d6a384d93cd2",
               "name": "No limit",
               "event": [
                 {
@@ -17832,7 +17681,6 @@
               "response": []
             },
             {
-              "_postman_id": "1b456f2c-7037-4341-ad42-814b4260943e",
               "name": "Category - New Arrivals",
               "event": [
                 {
@@ -17891,7 +17739,6 @@
               "response": []
             },
             {
-              "_postman_id": "b22f1401-abae-419d-adb5-a115a9b54386",
               "name": "Category - does not exist",
               "event": [
                 {
@@ -17944,7 +17791,6 @@
               "response": []
             },
             {
-              "_postman_id": "ea75fb6a-74aa-4bc6-a96c-3128a5642b3c",
               "name": "Page 1, Limit 4",
               "event": [
                 {
@@ -18010,11 +17856,9 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "f66f9505-83f3-4328-96a0-389a6e43b2fd",
           "name": "Guest",
           "item": [
             {
-              "_postman_id": "a9c94cc4-545e-42b4-9ca6-5fdad94f9c27",
               "name": "No limit",
               "event": [
                 {
@@ -18067,7 +17911,6 @@
               "response": []
             },
             {
-              "_postman_id": "387e580d-eb08-4092-bae9-4a9f2e29e65d",
               "name": "Category - New Arrivals",
               "event": [
                 {
@@ -18126,7 +17969,6 @@
               "response": []
             },
             {
-              "_postman_id": "a786be05-19ed-4593-b293-d3c643fc6187",
               "name": "Category - does not exist",
               "event": [
                 {
@@ -18179,7 +18021,6 @@
               "response": []
             },
             {
-              "_postman_id": "a7172e3e-eaf3-46b4-a681-6eb61500fb27",
               "name": "Page 1, Limit 4",
               "event": [
                 {
@@ -18247,15 +18088,12 @@
       ]
     },
     {
-      "_postman_id": "e9c5b866-4cf3-42a7-a526-9fccc669075f",
       "name": "/v2/products/:id",
       "item": [
         {
-          "_postman_id": "0cfc4202-f229-4653-8be3-9fd245805940",
           "name": "Guest",
           "item": [
             {
-              "_postman_id": "78e3c3f8-9048-40cf-9304-8bbc8b2d9a3c",
               "name": "Bundled: 447",
               "event": [
                 {
@@ -18314,7 +18152,6 @@
               "response": []
             },
             {
-              "_postman_id": "841230f4-19cf-4230-b171-914681d4665d",
               "name": "Configurable: Skirt",
               "event": [
                 {
@@ -18374,7 +18211,6 @@
               "response": []
             },
             {
-              "_postman_id": "47436a00-e3b8-41af-bb47-801009d70743",
               "name": "Downloadable: 563",
               "event": [
                 {
@@ -18433,7 +18269,6 @@
               "response": []
             },
             {
-              "_postman_id": "c9d0d0cd-c377-4e38-9742-4d885ddd3519",
               "name": "Grouped: 439",
               "event": [
                 {
@@ -18492,7 +18327,6 @@
               "response": []
             },
             {
-              "_postman_id": "3dd44d03-2c25-4ab3-abe6-3120faee38b1",
               "name": "Nominal: 564",
               "event": [
                 {
@@ -18551,7 +18385,6 @@
               "response": []
             },
             {
-              "_postman_id": "3fdc289c-444b-499b-a143-f44f9d82047e",
               "name": "Simple: 554",
               "event": [
                 {
@@ -18612,7 +18445,6 @@
               "response": []
             },
             {
-              "_postman_id": "b1537c42-787f-4ee1-baae-3ce12bee3ec8",
               "name": "Simple: 370 + Options",
               "event": [
                 {
@@ -18676,7 +18508,6 @@
               "response": []
             },
             {
-              "_postman_id": "76f46707-3990-4876-95e7-2538870368e3",
               "name": "GiftCard Physical/dropdown: 454",
               "event": [
                 {
@@ -18744,11 +18575,9 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "70d8d27e-8069-43d6-ae81-3523c5b1e948",
           "name": "Customer",
           "item": [
             {
-              "_postman_id": "411be895-61fa-44bc-94d0-f446bdd8701b",
               "name": "Bundled: 447",
               "event": [
                 {
@@ -18806,7 +18635,6 @@
               "response": []
             },
             {
-              "_postman_id": "f5d7c97f-7299-4ac8-90cf-6f78e3d78e90",
               "name": "Configurable: Skirt",
               "event": [
                 {
@@ -18865,7 +18693,6 @@
               "response": []
             },
             {
-              "_postman_id": "6d3f5690-02a2-4fbd-bbe1-12f82521fbf8",
               "name": "Downloadable: 563",
               "event": [
                 {
@@ -18923,7 +18750,6 @@
               "response": []
             },
             {
-              "_postman_id": "f456252a-e308-4ba2-9ef4-f13a9bf6eb81",
               "name": "Grouped: 439",
               "event": [
                 {
@@ -18981,7 +18807,6 @@
               "response": []
             },
             {
-              "_postman_id": "032f0931-8adc-4094-b642-37fdde5d1b77",
               "name": "Nominal: 564",
               "event": [
                 {
@@ -19039,7 +18864,6 @@
               "response": []
             },
             {
-              "_postman_id": "3a84838e-fa20-4fb3-8319-3b7d79046ef4",
               "name": "Simple: 554",
               "event": [
                 {
@@ -19099,7 +18923,6 @@
               "response": []
             },
             {
-              "_postman_id": "dfb3ea75-1e7e-43ef-8d6e-5c36c4836980",
               "name": "Simple: 370 + Options",
               "event": [
                 {
@@ -19162,7 +18985,6 @@
               "response": []
             },
             {
-              "_postman_id": "04088399-ac6b-4fad-801e-e2af6fb38952",
               "name": "GiftCard Physical/dropdown: 454",
               "event": [
                 {
@@ -19232,19 +19054,15 @@
       ]
     },
     {
-      "_postman_id": "4e0fd678-bdd7-4ef3-9b80-2d04e5f2a4cb",
       "name": "Cart Rules (no coupon)",
       "item": [
         {
-          "_postman_id": "ba964735-8819-4f4f-8092-13eb06c6f827",
           "name": "Customer",
           "item": [
             {
-              "_postman_id": "4b027248-dd9b-4645-b336-460a81fcfc67",
               "name": "Buy X get Y free",
               "item": [
                 {
-                  "_postman_id": "0cf5b1f1-83bb-469b-b4b2-be46f148e84f",
                   "name": "Create customer cart",
                   "event": [
                     {
@@ -19304,7 +19122,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "04d1e68c-fff2-4ec9-aa03-37e024a0c5ad",
                   "name": "Add Configurable: Boots",
                   "event": [
                     {
@@ -19352,7 +19169,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "cec6b4fc-b3a5-45bc-8e95-939db5d7ed8a",
                   "name": "Buy one get one free",
                   "event": [
                     {
@@ -19414,11 +19230,9 @@
               "_postman_isSubFolder": true
             },
             {
-              "_postman_id": "9d079c96-f396-4d2e-8f2e-b8bc166dc4d6",
               "name": "Mobile App",
               "item": [
                 {
-                  "_postman_id": "146e8e20-fc1e-440c-9220-6cfb734ea2fd",
                   "name": "SOAP login",
                   "event": [
                     {
@@ -19465,7 +19279,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "78068be0-f2ca-4ca0-ac0d-6be75d842907",
                   "name": "SOAP create cart",
                   "event": [
                     {
@@ -19512,7 +19325,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "6f7ddb26-81c3-4a24-94f6-5b10cfbaa687",
                   "name": "Get customer ID",
                   "event": [
                     {
@@ -19570,7 +19382,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "259a7ba9-782e-48bf-b720-8c9c899b1907",
                   "name": "SOAP set cart customer",
                   "request": {
                     "method": "POST",
@@ -19598,7 +19409,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "1bb0c856-8f05-4127-abe8-f2edde95d09d",
                   "name": "SOAP cart add product",
                   "event": [
                     {
@@ -19641,13 +19451,12 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "68cadc67-b392-4028-811f-91141200a69f",
                   "name": "Check salerule exists",
                   "event": [
                     {
                       "listen": "test",
                       "script": {
-                        "id": "99989220-437d-4ad3-85d9-6825c71343c9",
+                        "id": "16b3cf2d-0779-4ea0-8b4b-a1a44e7658e2",
                         "type": "text/javascript",
                         "exec": [
                           "pm.test(\"Status code is 200\", function () {",
@@ -19655,7 +19464,7 @@
                           "});",
                           "",
                           "var jsonData = pm.response.json();",
-                          "pm.test(\"APP10 code exists\", function () {",
+                          "pm.test(\"Salerule is present in the cart\", function () {",
                           "    pm.expect(jsonData.coupon_code).to.eql(\"1\");",
                           "});",
                           "",
@@ -19730,15 +19539,12 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "88b01aa1-529f-49fc-b6b1-9c6040d96450",
           "name": "Guest",
           "item": [
             {
-              "_postman_id": "6169f29a-25d4-4b3e-b2cd-791918c4d0da",
               "name": "Qty > 5",
               "item": [
                 {
-                  "_postman_id": "925d398e-34a4-4565-ba4d-926ffc610a28",
                   "name": "/carts: Guest Cart",
                   "event": [
                     {
@@ -19798,7 +19604,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "218e04d9-7a7d-4c91-aa4d-8d4bf0d5df82",
                   "name": "Add grouped: qty6",
                   "event": [
                     {
@@ -19846,7 +19651,6 @@
                   "response": []
                 },
                 {
-                  "_postman_id": "1d8b8977-8477-4527-bcef-6455cbd1b7b8",
                   "name": "Cart has discount",
                   "event": [
                     {
@@ -19908,6 +19712,178 @@
                 }
               ],
               "_postman_isSubFolder": true
+            },
+            {
+              "name": "Mobile App",
+              "item": [
+                {
+                  "name": "Create cart",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "var jsonData = pm.response.json();",
+                          "if (responseCode.code === 200 && jsonData.hasOwnProperty('cartId')) {",
+                          "    pm.environment.set(\"cartId\", jsonData.cartId);",
+                          "    tests[\"Cart ID is returned\"] = isNumeric(jsonData.cartId) === true;",
+                          "} else {",
+                          "    tests[\"Cart ID is not returned\"] = false;",
+                          "}",
+                          "",
+                          "pm.test('Successfull call', function(){",
+                          "    pm.response.to.be.success;",
+                          "});",
+                          "",
+                          "function isNumeric(n) {",
+                          "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                          "}"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{guest-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_carts}}",
+                      "host": [
+                        "{{domain}}{{endpoint_carts}}"
+                      ]
+                    },
+                    "description": "Creates a guest cart and assigns the local cartId variable from the one returned"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Add product",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "3329ba14-c7a2-4866-addc-06abf70135a8",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{guest-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"741\",\n\t    \"qty\": 1\n\t  }\n  }\n]"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_carts_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_carts_id_items}}"
+                      ]
+                    },
+                    "description": "ID: 439\nName: Luggage Set\nType: Grouped\nSKU: abl008\nURL: luggage-set\nCategory: Bags & Luggage\n\nSub-Product:\nID: 541 | 377 | 376\nName: Classic Hardshell Suitcase 19\" | Classic Hardshell Suitcase 29\" | Classic Hardshell Suitcase 21\"\nSKU: abl009 | abl007 | abl006\nPrice: 600.00 | 750.00 | 650.00\nQty: 7 | 13 | 15"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Cart has discount",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "f27668dd-5400-41e9-85dc-2a3e1a409644",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});",
+                          "",
+                          "var jsonData = pm.response.json();",
+                          "pm.test(\"Salerule is present in the cart\", function () {",
+                          "    pm.expect(jsonData.coupon_code).to.eql(\"1\");",
+                          "});",
+                          "",
+                          "pm.test(\"Check that the quote was not collected.\", function () {",
+                          "    pm.expect(jsonData.items_qty).to.eql(\"1.0000\");",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{guest-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                      "host": [
+                        "{{domain}}{{endpoint_carts}}"
+                      ],
+                      "path": [
+                        "{{cartId}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "_postman_isSubFolder": true
             }
           ],
           "_postman_isSubFolder": true
@@ -19916,15 +19892,12 @@
       "description": "Tests cart rule combinations that do not have a coupon code attached to them"
     },
     {
-      "_postman_id": "8a8c9e70-7b8d-4087-a29f-a9f4fdfbaa4f",
       "name": "/v2/categories",
       "item": [
         {
-          "_postman_id": "669ad79b-1c00-4658-89fd-ae3df0debde3",
           "name": "Customer",
           "item": [
             {
-              "_postman_id": "23b4b167-3c01-4d8f-9f6f-82b9074db4dd",
               "name": "Simple call",
               "event": [
                 {
@@ -19997,11 +19970,9 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "a1268cea-e72a-4c68-8d87-41e17fe56538",
           "name": "Guest",
           "item": [
             {
-              "_postman_id": "7fdc7292-bbed-4192-8859-d406bf0a9760",
               "name": "Simple call",
               "event": [
                 {
@@ -20054,15 +20025,12 @@
       ]
     },
     {
-      "_postman_id": "0ce3a66c-9627-4182-85e1-b678f05e675e",
       "name": "/v2/categories/:id",
       "item": [
         {
-          "_postman_id": "72dfb042-08fe-4f09-8443-5b8d60aadb18",
           "name": "Customer",
           "item": [
             {
-              "_postman_id": "bfe03a2f-52c0-4dea-ba94-5e615cb0276b",
               "name": "Simple call",
               "event": [
                 {
@@ -20138,11 +20106,9 @@
           "_postman_isSubFolder": true
         },
         {
-          "_postman_id": "b3887ab7-c7bb-4bf3-bd1f-6fd37796c0a8",
           "name": "Guest",
           "item": [
             {
-              "_postman_id": "d14649e3-6ec2-4404-a240-9a895bc7bd93",
               "name": "Simple call",
               "event": [
                 {
@@ -20198,7 +20164,6 @@
       ]
     },
     {
-      "_postman_id": "18be2d92-f88b-4973-9261-cbad838d7358",
       "name": "auth/token: CORS",
       "event": [
         {
