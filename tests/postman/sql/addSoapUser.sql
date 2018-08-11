@@ -7,8 +7,7 @@ INSERT INTO `api_user` (`firstname`, `lastname`, `email`, `username`, `api_key`,
 SET @USER_ID=LAST_INSERT_ID();
 
 INSERT INTO `api_role` (`parent_id`, `tree_level`, `sort_order`, `role_type`, `user_id`, `role_name`) VALUES (0, 1, 0, 'G', 0, 'Shopgate TESTS');
-INSERT INTO `api_role` (`parent_id`, `tree_level`, `sort_order`, `role_type`, `user_id`, `role_name`) VALUES (LAST_INSERT_ID(), 1, 0, 'U', @USER_ID, 'Shopgate');
-
 SET @ROLE_ID=LAST_INSERT_ID();
+INSERT INTO `api_role` (`parent_id`, `tree_level`, `sort_order`, `role_type`, `user_id`, `role_name`) VALUES (@ROLE_ID, 1, 0, 'U', @USER_ID, 'Shopgate');
 
 INSERT INTO `api_rule` (`role_id`, `resource_id`, `api_privileges`, `assert_id`, `role_type`, `api_permission`) VALUES (@ROLE_ID, 'all', null, 0, 'G', 'allow');
