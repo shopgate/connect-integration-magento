@@ -43,6 +43,9 @@ mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='enterpri
 mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/sql/addMobileAppCartRule.sql
 mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/sql/addSoapUser.sql
 
+# Provides helper shell script
+cp -a ${TRAVIS_BUILD_DIR}/tests/postman/scripts/forwarder.php ./${MAGE_FOLDER}/
+
 sudo chmod 777 -R ${MAGE_FOLDER}/var
 
 # return back

@@ -19233,98 +19233,6 @@
               "name": "Mobile App",
               "item": [
                 {
-                  "name": "SOAP login",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "f0dedcb2-e638-4020-ae01-1e74e32e082b",
-                        "type": "text/javascript",
-                        "exec": [
-                          "var responseJson = xml2Json(responseBody);",
-                          "if (responseJson['SOAP-ENV:Envelope'] === undefined) {",
-                          "    tests[\"[INFO] Response: \" + responseJson] = true;",
-                          "    tests[\"Could not login\"] = false;",
-                          "}",
-                          "",
-                          "const session = responseJson['SOAP-ENV:Envelope']['SOAP-ENV:Body']['ns1:loginResponse']['loginReturn']['_'];",
-                          "pm.environment.set(\"sessionId\", session);"
-                        ]
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "text/xml"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:hs=\"http://www.example.com/api/soap_v2//\">\n <soapenv:Body>\n  <login>\n   <username>{{soap_user}}</username>\n   <apiKey>{{soap_apikey}}</apiKey>\n  </login>\n </soapenv:Body>\n</soapenv:Envelope>"
-                    },
-                    "url": {
-                      "raw": "{{domain}}api/v2_soap/",
-                      "host": [
-                        "{{domain}}api"
-                      ],
-                      "path": [
-                        "v2_soap",
-                        ""
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "SOAP create cart",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "dee19615-ea22-4726-a2d0-2c6a14f4e0d5",
-                        "type": "text/javascript",
-                        "exec": [
-                          "var responseJson = xml2Json(responseBody);",
-                          "if (responseJson['SOAP-ENV:Envelope'] === undefined) {",
-                          "    tests[\"[INFO] Response: \" + responseBody] = true;",
-                          "    console.log(responseJson);",
-                          "}",
-                          "",
-                          "const cartId = responseJson['SOAP-ENV:Envelope']['SOAP-ENV:Body']['ns1:shoppingCartCreateResponse']['quoteId']['_'];",
-                          "pm.environment.set(\"cartId\", cartId);"
-                        ]
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "text/xml"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:hs=\"http://www.example.com/api/soap_v2//\">\n <soapenv:Body>\n  <shoppingCartCreate>\n  \t<sessionId>{{sessionId}}</sessionId>\n  \t<storeId>1</storeId>\n  </shoppingCartCreate>\n </soapenv:Body>\n</soapenv:Envelope>"
-                    },
-                    "url": {
-                      "raw": "{{domain}}api/v2_soap/",
-                      "host": [
-                        "{{domain}}api"
-                      ],
-                      "path": [
-                        "v2_soap",
-                        ""
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
                   "name": "Get customer ID",
                   "event": [
                     {
@@ -19382,71 +19290,67 @@
                   "response": []
                 },
                 {
-                  "name": "SOAP set cart customer",
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "text/xml"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:hs=\"http://www.example.com/api/soap_v2//\">\n <soapenv:Body>\n  <shoppingCartCustomerSet>\n  \t<sessionId>{{sessionId}}</sessionId>\n  \t<quoteId>{{cartId}}</quoteId>\n  \t<customer>\n  \t\t<customer_id>{{customer-id}}</customer_id>\n  \t\t<mode>customer</mode>\n  \t</customer>\n  </shoppingCartCustomerSet>\n </soapenv:Body>\n</soapenv:Envelope>"
-                    },
-                    "url": {
-                      "raw": "{{domain}}api/v2_soap/",
-                      "host": [
-                        "{{domain}}api"
-                      ],
-                      "path": [
-                        "v2_soap",
-                        ""
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "SOAP cart add product",
+                  "name": "Create cart + add product",
                   "event": [
                     {
                       "listen": "test",
                       "script": {
-                        "id": "5f665232-9de1-4c90-82a4-2f3b18913886",
+                        "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
                         "type": "text/javascript",
                         "exec": [
-                          "pm.test(\"Status code is 200\", function () {",
-                          "    pm.response.to.have.status(200);",
-                          "});"
+                          "const responseIsNumeric = isNumeric(pm.response.text()) === true;",
+                          "tests[\"Cart ID is returned\"] = responseIsNumeric;",
+                          "if (responseIsNumeric) {",
+                          "    pm.environment.set(\"cartId\", pm.response.text());",
+                          "} else {",
+                          "    console.log(pm.response.text())",
+                          "}",
+                          "",
+                          "function isNumeric(n) {",
+                          "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                          "}"
                         ]
                       }
                     }
                   ],
                   "request": {
                     "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "text/xml"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:hs=\"http://www.example.com/api/soap_v2//\">\n <soapenv:Body>\n  <shoppingCartProductAdd>\n  \t<sessionId>{{sessionId}}</sessionId>\n  \t<quoteId>{{cartId}}</quoteId>\n  \t<products>\n  \t\t<productsData>\n  \t\t\t<sku>Pwt006l</sku>\n  \t\t\t<qty>1</qty>\n  \t\t</productsData>\n  \t</products>\n  </shoppingCartProductAdd>\n </soapenv:Body>\n</soapenv:Envelope>"
-                    },
+                    "header": [],
+                    "body": {},
                     "url": {
-                      "raw": "{{domain}}api/v2_soap/",
+                      "raw": "{{domain}}forwarder.php?quote=new&customer={{customer-id}}&product=741&store=1",
                       "host": [
-                        "{{domain}}api"
+                        "{{domain}}forwarder",
+                        "php"
                       ],
-                      "path": [
-                        "v2_soap",
-                        ""
+                      "query": [
+                        {
+                          "key": "quote",
+                          "value": "new",
+                          "description": "non numeric param will create a new quote. NB! Has to be the first parameter\n"
+                        },
+                        {
+                          "key": "customer",
+                          "value": "{{customer-id}}",
+                          "description": "ID of customer"
+                        },
+                        {
+                          "key": "product",
+                          "value": "741",
+                          "description": "only simple products are currently supported"
+                        },
+                        {
+                          "key": "store",
+                          "value": "1"
+                        },
+                        {
+                          "key": "XDEBUG_SESSION_START",
+                          "value": "PHPSTORM",
+                          "disabled": true
+                        }
                       ]
                     },
-                    "description": "Name: Noa Sheer Blouse\nID: 741\nSKU: Pwt006l \nPrice: 175.00\nQty: 33"
+                    "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
                   },
                   "response": []
                 },
