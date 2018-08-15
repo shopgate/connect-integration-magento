@@ -129,6 +129,14 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * @return bool
+     */
+    public function isShopgateAction()
+    {
+        return $this->isShopgateApi() || $this->isShopgateCheckout();
+    }
+
+    /**
      * Sets the current call as a Shopgate API call
      */
     public function setShopgateApi()
