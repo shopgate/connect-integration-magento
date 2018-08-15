@@ -31,14 +31,12 @@ class Shopgate_Cloudapi_Model_Observers_AddSaleRuleTypeToQuote
     {
         /** @var Mage_Sales_Model_Quote $quote */
         $quote = $observer->getData('quote');
-        if ($quote->hasData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE)
-            || !Mage::helper('shopgate_cloudapi/request')->isShopgateApi()
-        ) {
+        if ($quote->getData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE) !== null) {
             return;
         }
         $empty = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')
-                    ->setQuoteFilter($quote->getId())
-                    ->isEmpty();
+                     ->setQuoteFilter($quote->getId())
+                     ->isEmpty();
         if (!$empty) {
             Mage::helper('shopgate_cloudapi/api2_quote')->addAppSaleRuleCondition($quote);
         }
