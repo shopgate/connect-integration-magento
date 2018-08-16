@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for customer address deletion
 - Endpoint for customer address update
 - Shell script to update our REST attributes / roles
+- Endpoint for wishlists creation
 ### Changed
 - Initial installed admin role, it no longer uses all resources
 
