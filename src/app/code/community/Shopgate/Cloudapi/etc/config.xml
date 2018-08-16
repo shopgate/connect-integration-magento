@@ -137,14 +137,14 @@
             </shopgate>
         </routers>
         <events>
-            <shopgate_cloud_api2_wishlist_create>
+            <shopgate_cloud_api2_wishlists_create>
                 <observers>
                     <shopgate_cloud_rest_wishlist_create>
                         <class>shopgate_cloudapi/api2_observers_wishlistsCreate</class>
                         <method>execute</method>
                     </shopgate_cloud_rest_wishlist_create>
                 </observers>
-            </shopgate_cloud_api2_wishlist_create>
+            </shopgate_cloud_api2_wishlists_create>
             <controller_action_layout_load_before>
                 <observers>
                     <shopgate_controller_action_layout_load_before>
