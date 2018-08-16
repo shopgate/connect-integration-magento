@@ -22,24 +22,4 @@
 
 class Shopgate_Cloudapi_Model_Api2_Auth_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
 {
-    /**
-     * Picks up the attributes from the api2.xml config and compares
-     * the incoming requested parameters against the 'attributes' node.
-     * Need to figure out how to do "optional" parameters still.
-     *
-     * @todo-sg: redesign this part so that we can pass required parameters and optional parameters via api2.xml
-     * @todo-sg: implement on resource class level
-     * @see    Shopgate_Cloudapi_Model_Api2_Resource::dispatch()
-     *
-     * @param array $data - translated body parameters
-     *
-     * @throws Mage_Api2_Exception
-     */
-    protected function checkIncomingData(array $data)
-    {
-        $attributes = $this->getAvailableAttributes($this->getUserType(), $this->getOperation());
-        if (count(array_diff_key($attributes, $data)) !== 0) {
-            $this->_critical(self::RESOURCE_DATA_PRE_VALIDATION_ERROR);
-        }
-    }
 }
