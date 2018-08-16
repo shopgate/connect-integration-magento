@@ -23,14 +23,6 @@
 class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsCreate
 {
     /**
-     * Allows to disable the observer if some other plugin wants to
-     * take precedence of processing the endpoint logic
-     *
-     * @todo-konstantin: make it a setting instead as it's easier to debug
-     */
-    const OBSERVER_DISABLE_KEY = 'SHOPGATE_CLOUD_DISABLE_OBSERVER_WISHLIST_CREATE';
-
-    /**
      * Remember, wishlist data is returned by reference here
      *
      * @param Varien_Event_Observer $observer
@@ -39,9 +31,12 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsCreate
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        if (Mage::registry(self::OBSERVER_DISABLE_KEY) === true) {
+        /** @var Mage_Core_Model_Store $store */
+        $store = $observer->getData('store');
+        if (Mage::getStoreConfigFlag(Shopgate_Cloudapi_Helper_Data::PATH_OBSERVERS_WHISHLISTS_CREATE, $store)) {
             return;
         }
+
         /** @var Mage_Wishlist_Model_Wishlist $wishlist */
         $wishlist   = $observer->getData('wishlist');
         $input      = $observer->getData('input');

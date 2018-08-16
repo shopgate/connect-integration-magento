@@ -37,7 +37,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Rest_Customer_V2 extends Shopgate_C
         try {
             Mage::dispatchEvent(
                 'shopgate_cloud_api2_wishlist_create',
-                array('input' => $filteredData, 'wishlist' => $wishlist)
+                array('input' => $filteredData, 'wishlist' => $wishlist, 'store' => $this->_getStore())
             );
         } catch (Mage_Core_Exception $e) {
             $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
