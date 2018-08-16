@@ -30,9 +30,10 @@ class Shopgate_Cloudapi_Model_Observers_AddSaleRuleTypeToQuote
     public function execute(Varien_Event_Observer $observer)
     {
         /** @var Mage_Sales_Model_Quote $quote */
-        $quote = $observer->getData('quote');
+        $quote         = $observer->getData('quote');
+        $requestHelper = Mage::helper('shopgate_cloudapi/request');
         if ($quote->getData(Shopgate_Cloudapi_Model_SalesRule_Condition::CART_TYPE) !== null
-            || !Mage::helper('shopgate_cloudapi/request')->isShopgateAction()
+            || (!$requestHelper->isShopgateApi() && !$requestHelper->isShopgateCheckout())
         ) {
             return;
         }
