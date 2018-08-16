@@ -285,6 +285,7 @@
                     <customer>
                         <name>Wishlist Name</name>
                         <visibility>Wishlist Visibility Type</visibility>
+                        <shared>Wishlist Visibility Type</shared><!-- Creative Minds support -->
                     </customer>
                 </force_attributes>
                 <routes>
