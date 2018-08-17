@@ -11,7 +11,7 @@ config:set --scope="default" --scope-id="0" "sales/minimum_order/amount" "21"
 config:set --scope="default" --scope-id="0" "tax/calculation/price_includes_tax" ${price_includes_tax}
 # EE options for multiple-wishlists with max 3 per user
 config:set --scope="default" --scope-id="0" "wishlist/general/multiple_enabled" "1"
-config:set --scope="default" --scope-id="0" "wishlist/general/multiple_wishlist_number" "3"
+config:set --scope="default" --scope-id="0" "wishlist/general/multiple_wishlist_number" "2"
 
 # creates in General group by default, no good way to set up without using php scripts
 customer:create ${user1_email} ${user_pass} "Test1" "Mock1" "1"

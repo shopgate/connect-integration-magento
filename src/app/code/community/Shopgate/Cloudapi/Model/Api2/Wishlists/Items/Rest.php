@@ -20,36 +20,43 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Wishlists_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
+class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest extends Shopgate_Cloudapi_Model_Api2_Wishlists_Rest
 {
     /**
+     * For wishlist item manipulation we need
+     * to assign the customer
+     *
+     * @todo-konstantin: test without it to be sure
      * @throws Mage_Api2_Exception
      * @throws Exception
      */
     protected function getWishlist()
     {
-        /** @var Mage_Wishlist_Model_Wishlist $wishlist */
-        $wishlistId = $this->getRequest()->getParam('wishlistId');
-        $wishlist   = Mage::getModel('wishlist/wishlist')->load($wishlistId);
-        $this->validateWishlist($wishlist);
+        /** @var Mage_Customer_Model_Customer $customer */
+        $wishlist = parent::getWishlist();
+        $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
+        Mage::helper('wishlist')->setCustomer($customer);
 
         return $wishlist;
     }
 
     /**
-     * Validates the wishlist and that it is properly created
-     *
-     * @param Mage_Wishlist_Model_Wishlist $wishlist
+     * @param Mage_Wishlist_Model_Item $wishlistItem
      *
      * @throws Mage_Api2_Exception
-     * @throws Exception
      */
-    protected function validateWishlist(Mage_Wishlist_Model_Wishlist $wishlist)
+    protected function validateWishListItem(Mage_Wishlist_Model_Item $wishlistItem)
     {
-        if (!$wishlist->getId() || $wishlist->getCustomerId() !== $this->getApiUser()->getUserId()) {
+        if ($wishlistItem->getData('has_error')) {
             $this->_critical(
-                Mage::helper('wishlist')->__("Requested wishlist doesn't exist"),
-                Mage_Api2_Model_Server::HTTP_NOT_FOUND
+                $wishlistItem->getData('message'),
+                Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR
+            );
+        }
+        if (!$wishlistItem->getId() || $wishlistItem->isDeleted()) {
+            $this->_critical(
+                Mage::helper('wishlist')->__('An error occurred while adding item to wishlist.'),
+                Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR
             );
         }
     }
