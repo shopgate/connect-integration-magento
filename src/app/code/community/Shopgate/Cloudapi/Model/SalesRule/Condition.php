@@ -33,7 +33,7 @@ class Shopgate_Cloudapi_Model_SalesRule_Condition extends Mage_Rule_Model_Condit
     const DEFAULT_IDENTIFIER_SELECT = 'select';
 
     /**
-     * @return $this
+     * @return Shopgate_Cloudapi_Model_SalesRule_Condition
      */
     public function loadAttributeOptions()
     {
