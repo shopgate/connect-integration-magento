@@ -1,0 +1,27 @@
+{
+  "id": "fbc41ff9-5b2a-4b6c-8a2d-222b98835c2b",
+  "name": "Environment variables",
+  "values": [
+    {
+      "key": "domain",
+      "value": "<<domain>>",
+      "description": "Root of the site as appears in the web",
+      "enabled": true
+    },
+    {
+      "key": "mage_type",
+      "value": "<<mage_type>>",
+      "description": "Magento type, enum:[EE, CE]",
+      "enabled": true
+    },
+    {
+      "key": "minimum_order_active",
+      "value": "<<minimum_order_active>>",
+      "description": "Flag on whether minimum order active config is set or not",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2018-08-07T15:00:28.705Z",
+  "_postman_exported_using": "Postman/6.2.3"
+}

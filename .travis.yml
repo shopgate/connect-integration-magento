@@ -26,11 +26,11 @@ script:
       chmod +x ./tests/postman/magento_setup.sh;
       ./tests/postman/magento_setup.sh;
       cd ${TRAVIS_BUILD_DIR}/tests/postman/newman;
-    newman run ./collection.json -g ./globals.json --insecure --reporters json,cli --reporter-json-export verbose-report.json --reporter-cli-no-success-assertions --color --global-var "domain=http://travis.dev/${MAGE_FOLDER}/" --global-var "username1=${USER1_EMAIL}" --global-var "username2=${USER2_EMAIL}" --global-var "password=${USER_PASS}" --global-var "mage_type=${MAGE_TYPE}" --global-var "client_id=${CFG_API_CUSTOMER_NUMBER}-${CFG_API_SHOP_NUMBER}" --global-var "client_secret=${CFG_API_KEY}" --global-var "minimum_order_active=${CFG_MINIMUM_ORDER_ACTIVE}";
+      newman run ./collection.json -g ./globals.json -e ./environment.json -r cli,html --reporter-html-export verbose-report.html --color on --reporter-cli-no-success-assertions --insecure;
     fi
 after_failure:
   # one can check for a link in the terminal as this report file is uploaded to that link
-  - curl --upload-file ./verbose-report.json https://transfer.sh/verbose-report.json
+  - curl --upload-file ./verbose-report.html https://transfer.sh/verbose-report.html
   - sudo less -FX /var/log/apache2/error.log
 
 jobs:
@@ -57,15 +57,18 @@ addons:
 
 env:
   global:
-    WEB_PATH="/var/www"
-    CFG_API_CUSTOMER_NUMBER="11223344"
-    CFG_API_SHOP_NUMBER="12345"
-    CFG_API_KEY="11111111111111111111"
-    CFG_MINIMUM_ORDER_ACTIVE="1"
-    CFG_PRICE_INC_TAX="1"
-    USER1_EMAIL="mage.test+1@shopgate.com"
-    USER2_EMAIL="mage.test+2@shopgate.com"
-    USER_PASS="test123"
+    - HOST1=travis.dev
+    - WEB_PATH="/var/www"
+    - CFG_API_CUSTOMER_NUMBER="11223344"
+    - CFG_API_SHOP_NUMBER="12345"
+    - CFG_API_KEY="11111111111111111111"
+    - CFG_MINIMUM_ORDER_ACTIVE="1"
+    - CFG_PRICE_INC_TAX="1"
+    - USER1_EMAIL="mage.test+1@shopgate.com"
+    - USER2_EMAIL="mage.test+2@shopgate.com"
+    - USER_PASS="test123"
+    - SOAP_USER="shopgate-tests"
+    - SOAP_APIKEY="shopgate-api-key"
   matrix:
     - MAGE_FOLDER="mage_ce_1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2" MAGE_TYPE="CE"
     - MAGE_FOLDER="mage_ce_1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0" MAGE_TYPE="CE" MAGE_LOCALE="en_US"

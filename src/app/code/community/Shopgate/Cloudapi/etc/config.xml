@@ -26,6 +26,9 @@
                     <order_source>
                         <table>shopgate_order_sources</table>
                     </order_source>
+                    <cart_source>
+                        <table>shopgate_cart_sources</table>
+                    </cart_source>
                 </entities>
             </shopgate_cloudapi_resource>
         </models>
@@ -83,6 +86,24 @@
                     </shopgate_enterprise_customer_address_attribute_delete>
                 </observers>
             </enterprise_customer_address_attribute_delete>
+            <salesrule_rule_condition_combine>
+                <observers>
+                    <add_conditions_to_sales_rule>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AddShopgateCartRule</class>
+                        <method>execute</method>
+                    </add_conditions_to_sales_rule>
+                </observers>
+            </salesrule_rule_condition_combine>
+            <sales_quote_collect_totals_before>
+                <observers>
+                    <add_salerule_type_to_quote>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_addSaleRuleTypeToQuote</class>
+                        <method>execute</method>
+                    </add_salerule_type_to_quote>
+                </observers>
+            </sales_quote_collect_totals_before>
         </events>
         <blocks>
             <shopgate_cloudapi>
