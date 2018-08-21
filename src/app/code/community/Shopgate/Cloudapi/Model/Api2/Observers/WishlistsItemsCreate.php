@@ -60,6 +60,7 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsCreate
             /** @noinspection PhpUnhandledExceptionInspection */
             throw new Mage_Api2_Exception($result, Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
         }
+        $wishlist->setData('last_added_item', $result);
     }
 
     /**

@@ -48,7 +48,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
         }
 
         /** @var Mage_Wishlist_Model_Item $wishlistItem */
-        $wishlistItem = $wishlist->getItemCollection()->getLastItem();
+        $wishlistItem = $wishlist->getData('last_added_item');
         $this->validateWishListItem($wishlistItem);
 
         return array('wishlistItemId' => $wishlistItem->getId());

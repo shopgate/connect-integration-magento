@@ -18475,18 +18475,67 @@
               "response": []
             },
             {
+              "name": "Add simple item qty2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "36920c3b-0242-4ef2-81ec-108d8422a225",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Returns the wishlist item id that is the same as previous\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "    pm.expect(jsonData.wishlistItemId).to.be.eq(pm.environment.get(\"wishlist-item-id\"))",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"product_id\": \"554\",\n\t\"qty\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
+              },
+              "response": []
+            },
+            {
               "name": "Add configurable skrit",
               "event": [
                 {
                   "listen": "test",
                   "script": {
-                    "id": "bdcb83b7-832e-44b0-9ac2-dcfde1cec90d",
+                    "id": "b754e252-fd9d-4087-ae36-adc3782381ed",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Returns the wishlist item id\", function () {",
                       "    var jsonData = pm.response.json();",
                       "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
-                      "    pm.environment.set(\"wishlist-item-id\", jsonData.wishlistItemId);",
                       "});"
                     ]
                   }
