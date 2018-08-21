@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "13b9f302-91ac-4546-ae78-48203cfae303",
+    "_postman_id": "ed7e7a0e-26e2-44e2-bc84-62dc91a20dd5",
     "name": "Mage Cloud",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -17623,6 +17623,1130 @@
       ]
     },
     {
+      "name": "v2/wishlists",
+      "item": [
+        {
+          "name": "Add",
+          "item": [
+            {
+              "name": "Add wishlist",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "6c2b232d-71bb-4653-b0a2-ba5b47722d7d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set(\"seed\", \"wishlist-\" + Math.floor(Math.random() * Math.floor(100)));"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "45b7e31d-3e8e-4ce0-a1da-e0a0b7e3dd9c",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"A wishlist was created\", function () {",
+                      "    pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.not.be.empty;",
+                      "    pm.environment.set(\"wishlist-id\", jsonData.wishlistId);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"public\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Cannot create more lists",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "6c2b232d-71bb-4653-b0a2-ba5b47722d7d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set(\"seed\", \"wishlist-\" + Math.floor(Math.random() * Math.floor(100)));"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "27b4c582-d8de-4753-b533-f979fc4097f0",
+                    "type": "text/javascript",
+                    "exec": [
+                      "if (pm.environment.get(\"mage_type\") === 'EE') {",
+                      "    pm.test(\"400 eror indicating that we cannot create more lists\", function () {",
+                      "        pm.response.to.have.status(400);",
+                      "    });",
+                      "} else {",
+                      "    pm.test(\"The default wishlist is retrieved\", function () {",
+                      "        const jsonData = pm.response.json();",
+                      "        pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.be.eq(pm.environment.get(\"wishlist-id\"));",
+                      "    });",
+                      "}",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"public\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        }
+      ]
+    },
+    {
+      "name": "v2/wishlists/:id/items",
+      "item": [
+        {
+          "name": "Add",
+          "item": [
+            {
+              "name": "Errors",
+              "item": [
+                {
+                  "name": "Someone else's wishlist",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "1041153a-142e-4c61-8052-9adc719634cf",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.environment.set(\"temp-wishlist-id\", pm.environment.get(\"wishlist-id\"));",
+                          "pm.environment.set(\"wishlist-id\", \"17\");",
+                          ""
+                        ]
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "1c00c6ef-b5e6-4535-b858-3883b33e56de",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.environment.set(\"wishlist-id\", pm.environment.get(\"temp-wishlist-id\"));",
+                          "pm.environment.unset(\"temp-wishlist-id\");",
+                          "",
+                          "pm.test(\"Customer cannot retrieve someone else's list, 404 is thrown\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\"product_id\": \"554\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "No product id passed",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "9bdf4e46-ea05-424d-b109-e8b74029b749",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Bad request\", function () {",
+                          "    pm.response.to.have.status(400);",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\"qty\": 1\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "No data passed",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "6f411c90-2b55-4ea1-8e27-0863cdeabf7d",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Bad request, sku or product id are required\", function () {",
+                          "    pm.response.to.have.status(400);",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Non-existent product id",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "ed38f7b0-2739-4c68-9758-63854f261e8d",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"No such product exists\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\"product_id\": \"0\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Non-existent product sku",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "ed38f7b0-2739-4c68-9758-63854f261e8d",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"No such product exists\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\"sku\": \"bla-bla\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "_postman_isSubFolder": true
+            },
+            {
+              "name": "No options",
+              "item": [
+                {
+                  "name": "Add skirt with bad params",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "cb2d9967-330f-452d-a2e7-a21750e18406",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Returns the wishlist item id despite bad options!\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"product_id\": \"422\",\n    \"qty\": 1,\n    \"super_attribute\": {\n\t      \"110\": \"110\",\n\t      \"100\": \"100\"\n\t    }\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    },
+                    "description": "ID: 422\nType: Configurable\nName: Essex Pencil Skirt\nSKU: wsd000c\nCategory: Dresses & Skirts\nPrice: $185.00\n\nSub-Products:\nID: 297 | 298 | 299 | 300 | 301\nName: Essex Pencil Skirt\nSKU: wsd000 | wsd001 | wsd002 | wsd003 | wsd004\nColor (ID: 92): Charcoal (ID: 17)\nSize (ID: 180): 2 (ID: 76) | 4 (ID: 75) | 6 (ID: 74) | 8 (ID: 73) | 10 (ID: 72)"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Bundled parent only",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "fc63682c-73ea-4914-8672-7856e1e29fb7",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Returns the wishlist item.\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"product_id\": \"447\",\n    \"qty\": 2\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    },
+                    "description": "ID: 447\nType: Bundle\nName: Pillow and Throw Set\nSKU (dynamic): hdb010\nURL: pillow-and-throw-set\nCategory: Home & Decor -> Bed & Bath\nPrice: N/A\n\nBundle Items:\nTitle: Accent Pillow\nID: 24\nName: Titian Raw Silk Pillow | Shay Printed Pillow\nSKU: hdb005 | hdb006\nID: 381 | 382\nSelection ID: 91 | 92\nPrice: 125.00 | 210.00\n\nTitle: Decorative Throw\nID: 23\nName: Carnegie Alpaca Throw | Row Throw | Gramercy Throw\nSKU: hdb007 | hdb008 | hdb009\nID: 383 | 384 | 385\nPrice: 275.00 | 240.00 | 275.00\nSelection ID: 88 | 89 | 115"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Bundled as simple",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "fc63682c-73ea-4914-8672-7856e1e29fb7",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Returns the wishlist item.\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"product_id\": \"381\",\n    \"qty\": 1\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    },
+                    "description": "ID: 447\nType: Bundle\nName: Pillow and Throw Set\nSKU (dynamic): hdb010\nURL: pillow-and-throw-set\nCategory: Home & Decor -> Bed & Bath\nPrice: N/A\n\nBundle Items:\nTitle: Accent Pillow\nID: 24\nName: Titian Raw Silk Pillow | Shay Printed Pillow\nSKU: hdb005 | hdb006\nID: 381 | 382\nSelection ID: 91 | 92\nPrice: 125.00 | 210.00\n\nTitle: Decorative Throw\nID: 23\nName: Carnegie Alpaca Throw | Row Throw | Gramercy Throw\nSKU: hdb007 | hdb008 | hdb009\nID: 383 | 384 | 385\nPrice: 275.00 | 240.00 | 275.00\nSelection ID: 88 | 89 | 115"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Downloadable (no track)",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "fc63682c-73ea-4914-8672-7856e1e29fb7",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Returns the wishlist item.\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"product_id\": \"563\"\n }"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    },
+                    "description": "ID: 563\nName: Fire [Kalima remix] by Unannounced Guest\nSKU: hbm010\nCategory: Music & Books\nURL: fire-kalima-remix-by-unannounced-guest\nPrice: 2.00\nQty: 1000"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Grouped (no super)",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "fc63682c-73ea-4914-8672-7856e1e29fb7",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"Returns the wishlist item.\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"product_id\": \"439\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    },
+                    "description": "ID: 439\nName: Luggage Set\nType: Grouped\nSKU: abl008\nURL: luggage-set\nCategory: Bags & Luggage\n\nSub-Product:\nID: 541 | 377 | 376\nName: Classic Hardshell Suitcase 19\" | Classic Hardshell Suitcase 29\" | Classic Hardshell Suitcase 21\"\nSKU: abl009 | abl007 | abl006\nPrice: 600.00 | 750.00 | 650.00\nQty: 7 | 13 | 15"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "GC combined (no details)",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "3d35a8e5-848b-4be8-aed4-b95ab6a29390",
+                        "type": "text/javascript",
+                        "exec": [
+                          "if (pm.variables.get(\"mage_type\") === 'EE') {",
+                          "    pm.test('Returns the wishlist item.', function(){",
+                          "        var jsonData = pm.response.json();",
+                          "        pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                          "    });",
+                          "} else {",
+                          "    pm.test(\"Giftcards don't exist in the Community edition\", function () {",
+                          "        pm.response.to.have.status(404);",
+                          "    });",
+                          "}"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"sku\": \"gif001\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    },
+                    "description": "Combined type Gift card with custom price"
+                  },
+                  "response": []
+                }
+              ],
+              "_postman_isSubFolder": true
+            },
+            {
+              "name": "Add simple item",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bdcb83b7-832e-44b0-9ac2-dcfde1cec90d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Returns the wishlist item id\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "    pm.environment.set(\"wishlist-item-id\", jsonData.wishlistItemId);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"product_id\": \"554\",\n\t\"qty\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
+              },
+              "response": []
+            },
+            {
+              "name": "Add configurable skrit",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bdcb83b7-832e-44b0-9ac2-dcfde1cec90d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Returns the wishlist item id\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "    pm.environment.set(\"wishlist-item-id\", jsonData.wishlistItemId);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"product_id\": \"422\",\n    \"qty\": 1,\n    \"super_attribute\": {\n\t      \"92\": \"17\",\n\t      \"180\": \"76\"\n\t    }\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "ID: 422\nType: Configurable\nName: Essex Pencil Skirt\nSKU: wsd000c\nCategory: Dresses & Skirts\nPrice: $185.00\n\nSub-Products:\nID: 297 | 298 | 299 | 300 | 301\nName: Essex Pencil Skirt\nSKU: wsd000 | wsd001 | wsd002 | wsd003 | wsd004\nColor (ID: 92): Charcoal (ID: 17)\nSize (ID: 180): 2 (ID: 76) | 4 (ID: 75) | 6 (ID: 74) | 8 (ID: 73) | 10 (ID: 72)"
+              },
+              "response": []
+            },
+            {
+              "name": "Add bundled",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "fc63682c-73ea-4914-8672-7856e1e29fb7",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Returns the wishlist item.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"product_id\": \"447\",\n    \"qty\": 2,\n    \"bundle_option\": {\n      \"23\": \"88\",\n      \"24\": \"91\"\n    },\n    \"bundle_option_qty\": {\n      \"23\": \"3\",\n      \"24\": \"4\"\n    }\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "ID: 447\nType: Bundle\nName: Pillow and Throw Set\nSKU (dynamic): hdb010\nURL: pillow-and-throw-set\nCategory: Home & Decor -> Bed & Bath\nPrice: N/A\n\nBundle Items:\nTitle: Accent Pillow\nID: 24\nName: Titian Raw Silk Pillow | Shay Printed Pillow\nSKU: hdb005 | hdb006\nID: 381 | 382\nSelection ID: 91 | 92\nPrice: 125.00 | 210.00\n\nTitle: Decorative Throw\nID: 23\nName: Carnegie Alpaca Throw | Row Throw | Gramercy Throw\nSKU: hdb007 | hdb008 | hdb009\nID: 383 | 384 | 385\nPrice: 275.00 | 240.00 | 275.00\nSelection ID: 88 | 89 | 115"
+              },
+              "response": []
+            },
+            {
+              "name": "Add downloadable",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "fc63682c-73ea-4914-8672-7856e1e29fb7",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Returns the wishlist item.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"product_id\": \"563\",\n    \"qty\": 1,\n    \"links\": [\n      \"18\"\n    ]\n }"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "ID: 563\nName: Fire [Kalima remix] by Unannounced Guest\nSKU: hbm010\nCategory: Music & Books\nURL: fire-kalima-remix-by-unannounced-guest\nPrice: 2.00\nQty: 1000"
+              },
+              "response": []
+            },
+            {
+              "name": "Add grouped",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "fc63682c-73ea-4914-8672-7856e1e29fb7",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Returns the wishlist item.\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"product_id\": \"439\",\n    \"qty\": 1,\n    \"super_group\": {\n      \"541\" : 2\n    }\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "ID: 439\nName: Luggage Set\nType: Grouped\nSKU: abl008\nURL: luggage-set\nCategory: Bags & Luggage\n\nSub-Product:\nID: 541 | 377 | 376\nName: Classic Hardshell Suitcase 19\" | Classic Hardshell Suitcase 29\" | Classic Hardshell Suitcase 21\"\nSKU: abl009 | abl007 | abl006\nPrice: 600.00 | 750.00 | 650.00\nQty: 7 | 13 | 15"
+              },
+              "response": []
+            },
+            {
+              "name": "Add GC combined",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "3d35a8e5-848b-4be8-aed4-b95ab6a29390",
+                    "type": "text/javascript",
+                    "exec": [
+                      "if (pm.variables.get(\"mage_type\") === 'EE') {",
+                      "    pm.test('Returns the wishlist item.', function(){",
+                      "        var jsonData = pm.response.json();",
+                      "        pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "    });",
+                      "} else {",
+                      "    pm.test(\"Giftcards don't exist in the Community edition\", function () {",
+                      "        pm.response.to.have.status(404);",
+                      "    });",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"sku\": \"gif001\",\n    \"qty\": 1,\n    \"custom_giftcard_amount\": \"75\",\n    \"giftcard_sender_name\": \"Some sender name\",\n    \"giftcard_sender_email\": \"test@shopgate.com\",\n    \"giftcard_recipient_name\": \"Some recipient name\",\n    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n    \"giftcard_message\": \"Message to recipient\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "Combined type Gift card with custom price"
+              },
+              "response": []
+            },
+            {
+              "name": "Add GC virtual (CP)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "3d35a8e5-848b-4be8-aed4-b95ab6a29390",
+                    "type": "text/javascript",
+                    "exec": [
+                      "if (pm.variables.get(\"mage_type\") === 'EE') {",
+                      "    pm.test('Returns the wishlist item.', function(){",
+                      "        var jsonData = pm.response.json();",
+                      "        pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "    });",
+                      "} else {",
+                      "    pm.test(\"Giftcards don't exist in the Community edition\", function () {",
+                      "        pm.response.to.have.status(404);",
+                      "    });",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"sku\": \"gif003\",\n    \"qty\": 1,\n    \"custom_giftcard_amount\": \"50\",\n    \"giftcard_sender_name\": \"Some sender name\",\n    \"giftcard_sender_email\": \"test@shopgate.com\",\n    \"giftcard_recipient_name\": \"Some recipient name\",\n    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n    \"giftcard_message\": \"Message to recipient\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "Virtual card with custom price set"
+              },
+              "response": []
+            },
+            {
+              "name": "Add GC virtual (set price)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "3d35a8e5-848b-4be8-aed4-b95ab6a29390",
+                    "type": "text/javascript",
+                    "exec": [
+                      "if (pm.variables.get(\"mage_type\") === 'EE') {",
+                      "    pm.test('Returns the wishlist item.', function(){",
+                      "        var jsonData = pm.response.json();",
+                      "        pm.expect(jsonData.wishlistItemId).to.be.a(\"string\").to.not.empty;",
+                      "    });",
+                      "} else {",
+                      "    pm.test(\"Giftcards don't exist in the Community edition\", function () {",
+                      "        pm.response.to.have.status(404);",
+                      "    });",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"sku\": \"gif002\",\n    \"qty\": 1,\n    \"giftcard_sender_name\": \"Some sender name\",\n    \"giftcard_sender_email\": \"test@shopgate.com\",\n    \"giftcard_recipient_name\": \"Some recipient name\",\n    \"giftcard_recipient_email\": \"test2@shopgate.com\",\n    \"giftcard_message\": \"Message to recipient\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "Virtual card with set price"
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        }
+      ]
+    },
+    {
       "name": "/v2/products",
       "item": [
         {
@@ -19316,7 +20440,10 @@
                   "request": {
                     "method": "POST",
                     "header": [],
-                    "body": {},
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
                     "url": {
                       "raw": "{{domain}}forwarder.php?quote=new&customer={{customer-id}}&product=741&store=1",
                       "host": [
