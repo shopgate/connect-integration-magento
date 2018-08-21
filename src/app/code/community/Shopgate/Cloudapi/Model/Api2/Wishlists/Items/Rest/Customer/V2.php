@@ -77,7 +77,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
         /** @noinspection PhpUndefinedVariableInspection */
         $product = Mage::helper('catalog/product')
                        ->getProduct($productId, $this->_getStore()->getId(), $identifierType);
-        if (!$product->getId()) {
+        if (!$product->getId() || !$product->isVisibleInCatalog()) {
             $error = $helper->__('Unable to add the following product(s) to shopping cart: %s.', $productId);
             $this->_critical($error, Mage_Api2_Model_Server::HTTP_NOT_FOUND);
         }

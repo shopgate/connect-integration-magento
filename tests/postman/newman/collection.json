@@ -18019,6 +18019,101 @@
                     }
                   },
                   "response": []
+                },
+                {
+                  "name": "Disabled product ID",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "ed38f7b0-2739-4c68-9758-63854f261e8d",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"No such product exists\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\"product_id\": \"449\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    },
+                    "description": "ID: 449\nType: Downloadable\nName: Olvidalo by Brownout\nSKU: hbm002\nCategory: Books & Music\nPrice: $2.00\nStatus: Disabled"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Disabled product sku",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "ed38f7b0-2739-4c68-9758-63854f261e8d",
+                        "type": "text/javascript",
+                        "exec": [
+                          "pm.test(\"No such product exists\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{customer-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\"sku\": \"hbm002\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                      "host": [
+                        "{{domain}}{{endpoint_wishlists_id_items}}"
+                      ]
+                    }
+                  },
+                  "response": []
                 }
               ],
               "_postman_isSubFolder": true
