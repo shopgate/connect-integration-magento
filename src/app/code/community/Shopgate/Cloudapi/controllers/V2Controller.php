@@ -109,6 +109,7 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
 
         $request = Mage::getSingleton('api2/request');
         $request->setParam('store', Mage::app()->getStore()->getId());
+        Mage::helper('shopgate_cloudapi/request')->setShopgateApi();
 
         parent::preDispatch();
         $this->replaceRestPath($request);

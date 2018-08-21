@@ -34,7 +34,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
     {
         $this->deactivateUserQuote();
         try {
-            $quoteId = (int)$this->createNewQuote()->getId();
+            $quoteId = (int) $this->createNewQuote()->getId();
         } catch (Mage_Api_Exception $e) {
             $error = $this->getFault($e->getMessage(), 'Fault: ' . $e->getMessage() . ' ' . $e->getCustomMessage());
             $this->_critical($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
@@ -52,11 +52,14 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
      *
      * @return array
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Currency_Exception
      */
     protected function _retrieve()
     {
-        $quote       = $this->getUserQuote();
+        $quote = $this->getUserQuote();
+        /* @var Shopgate_Cloudapi_Helper_Api2_Quote $quoteHelper */
         $quoteHelper = Mage::helper('shopgate_cloudapi/api2_quote');
+        $quoteHelper->setSaleRuleType($quote, $this->_getStore());
         $quoteHelper->addQuoteErrors($quote, $this->_getStore());
         $quoteHelper->addItemErrors($quote, $this->_getStore());
         $quoteHelper->addItems($quote);
@@ -72,7 +75,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
     protected function deactivateUserQuote()
     {
         $quote = $this->getUserOldQuote();
-        if ($quote->getId() && (int)$quote->getIsActive() === 1) {
+        if ($quote->getId() && (int) $quote->getIsActive() === 1) {
             $quote->setIsActive(0)
                   ->save();
         }

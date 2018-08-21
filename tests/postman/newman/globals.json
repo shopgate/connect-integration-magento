@@ -3,29 +3,45 @@
   "values": [
     {
       "key": "client_id",
-      "value": "***",
+      "value": "<<client_id>>",
+      "description": "A combination of [customer_number]-[shop_number]",
       "enabled": true
     },
     {
       "key": "client_secret",
-      "value": "***",
+      "value": "<<client_secret>>",
+      "description": "API key",
       "enabled": true
     },
     {
       "key": "username1",
-      "value": "***",
+      "value": "<<username1>>",
+      "description": "Defines the primary customer to test against",
       "enabled": true
     },
     {
       "key": "username2",
-      "value": "***",
-      "description": "",
+      "value": "<<username2>>",
+      "description": "Defines the second customer to test with",
       "type": "text",
       "enabled": true
     },
     {
       "key": "password",
-      "value": "***",
+      "value": "<<password>>",
+      "description": "Password that is the same for username1 and username2",
+      "enabled": true
+    },
+    {
+      "key": "soap_user",
+      "value": "<<soap_user>>",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "soap_apikey",
+      "value": "<<soap_apikey>>",
+      "description": "",
       "enabled": true
     },
     {
@@ -91,6 +107,6 @@
   ],
   "name": "Cloud Plugins Globals",
   "_postman_variable_scope": "globals",
-  "_postman_exported_at": "2018-07-31T17:32:07.449Z",
-  "_postman_exported_using": "Postman/6.2.1"
+  "_postman_exported_at": "2018-08-10T14:57:07.321Z",
+  "_postman_exported_using": "Postman/6.2.3"
 }

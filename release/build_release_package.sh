@@ -23,3 +23,7 @@ rsync -av release/magento_package.php release/magento/magento_package.php
 cd release/magento/
 chmod -R 777 var
 php magento_package.php
+
+cd ../..
+rm -rf release/magento
+rm -rf vendor

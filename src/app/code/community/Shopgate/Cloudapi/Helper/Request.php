@@ -23,7 +23,7 @@
 class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
 {
     /**
-     * Parameter indicating a shopgate cloud request
+     * Parameter indicating a shopgate cloud request via browser
      */
     const KEY_SGCLOUD_INAPP = 'sgcloud_inapp';
 
@@ -31,6 +31,11 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      * Parameter indicating a shopgate cloud is checkout
      */
     const KEY_SGCLOUD_CHECKOUT = 'sgcloud_checkout';
+
+    /**
+     * Parameter indicating whether the call is made via API
+     */
+    const KEY_SGCLOUD_API = 'sgcloud_api';
 
     /**
      * Parameter indicating a shopgate cloud sgcloud_callback_data
@@ -92,11 +97,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
             return false;
         }
 
-        if (!$value) {
-            return true;
-        } else {
-            return $data[$key] === $value;
-        }
+        return !$value ? true : $data[$key] === $value;
     }
 
     /**
@@ -117,6 +118,23 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     public function isShopgateCheckout()
     {
         return $this->cookieIsSet(self::KEY_SGCLOUD_CHECKOUT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShopgateApi()
+    {
+        return true === Mage::registry(self::KEY_SGCLOUD_API);
+    }
+
+    /**
+     * Sets the current call as a Shopgate API call
+     */
+    public function setShopgateApi()
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        Mage::register(self::KEY_SGCLOUD_API, true, true);
     }
 
     /**

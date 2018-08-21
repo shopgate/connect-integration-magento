@@ -20,14 +20,20 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-/** @var Shopgate_Cloudapi_Model_Resource_Setup $installer */
-$installer = $this;
-$installer->startSetup();
+class Shopgate_Cloudapi_Model_System_Config_Source_Cart_Types
+{
+    const APP = 'app';
 
-try {
-    $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
-    $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
-} catch (Exception $e) {
-    Mage::logException($e);
+    /**
+     * @return array
+     */
+    public function toOptionArray()
+    {
+        return array(
+            array(
+                'value' => self::APP,
+                'label' => Mage::helper('shopgate_cloudapi')->__('Shopgate Mobile App'),
+            )
+        );
+    }
 }
-$installer->endSetup();
