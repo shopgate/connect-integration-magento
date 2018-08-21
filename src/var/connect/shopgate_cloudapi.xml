@@ -9,7 +9,7 @@
    <description>The Shopgate Cloud integration for Magento enables you to utilize the Shopgate API endpoints to connect to via the App.</description>
    <license>Apache License</license>
    <license_uri>https://github.com/shopgate/cloud-integration-magento/blob/master/LICENSE</license_uri>
-   <version>3.2.0</version>
+   <version>3.3.0</version>
    <stability>stable</stability>
    <notes>Shopgate Cloudapi Module</notes>
    <authors>
