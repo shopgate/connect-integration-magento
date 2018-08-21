@@ -20,19 +20,26 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Helper_Data extends Mage_Core_Helper_Abstract
+class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest extends Shopgate_Cloudapi_Model_Api2_Wishlists_Rest
 {
     /**
-     * Core_config_data paths
+     * @param Mage_Wishlist_Model_Item $wishlistItem
+     *
+     * @throws Mage_Api2_Exception
      */
-    const PATH_AUTH_CUSTOMER_NUMBER = 'shopgate_cloudapi/authentication/customer_number';
-    const PATH_AUTH_SHOP_NUMBER     = 'shopgate_cloudapi/authentication/shop_number';
-    const PATH_AUTH_API_KEY         = 'shopgate_cloudapi/authentication/api_key';
-    const PATH_LAYOUT_STYLES        = 'shopgate_cloudapi/layout/styles';
-
-    /**
-     * Observer disabling
-     */
-    const PATH_OBSERVERS_WISHLISTS_CREATE   = 'shopgate_cloudapi/observers/wishlists_create';
-    const PATH_OBSERVERS_WISHLISTS_ADD_ITEM = 'shopgate_cloudapi/observers/wishlists_add_item';
+    protected function validateWishListItem(Mage_Wishlist_Model_Item $wishlistItem)
+    {
+        if ($wishlistItem->getData('has_error')) {
+            $this->_critical(
+                $wishlistItem->getData('message'),
+                Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR
+            );
+        }
+        if (!$wishlistItem->getId() || $wishlistItem->isDeleted()) {
+            $this->_critical(
+                Mage::helper('wishlist')->__('An error occurred while adding item to wishlist.'),
+                Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR
+            );
+        }
+    }
 }
