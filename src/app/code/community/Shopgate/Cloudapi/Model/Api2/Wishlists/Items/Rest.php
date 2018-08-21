@@ -23,24 +23,6 @@
 class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest extends Shopgate_Cloudapi_Model_Api2_Wishlists_Rest
 {
     /**
-     * For wishlist item manipulation we need
-     * to assign the customer
-     *
-     * @todo-konstantin: test without it to be sure
-     * @throws Mage_Api2_Exception
-     * @throws Exception
-     */
-    protected function getWishlist()
-    {
-        /** @var Mage_Customer_Model_Customer $customer */
-        $wishlist = parent::getWishlist();
-        $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
-        Mage::helper('wishlist')->setCustomer($customer);
-
-        return $wishlist;
-    }
-
-    /**
      * @param Mage_Wishlist_Model_Item $wishlistItem
      *
      * @throws Mage_Api2_Exception

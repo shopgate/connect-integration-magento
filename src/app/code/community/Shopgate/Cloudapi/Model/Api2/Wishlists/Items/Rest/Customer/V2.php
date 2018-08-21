@@ -64,6 +64,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
      */
     private function validateProductData($data)
     {
+        $helper = Mage::helper('wishlist');
         if (isset($data['product_id'])) {
             $productId      = $data['product_id'];
             $identifierType = 'id';
@@ -71,17 +72,14 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
             $productId      = $data['sku'];
             $identifierType = 'sku';
         } else {
-            //todo-konstantin: check translation, maybe use wishlist instead
-            $this->_critical(
-                Mage::helper('checkout')->__('Product(s) could not be added.'),
-                Mage_Api2_Model_Server::HTTP_BAD_REQUEST
-            );
+            $this->_critical($helper->__('Cannot specify product.'), Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
         }
         /** @noinspection PhpUndefinedVariableInspection */
         $product = Mage::helper('catalog/product')
                        ->getProduct($productId, $this->_getStore()->getId(), $identifierType);
         if (!$product->getId()) {
-            $this->_critical("Product '{$productId}' not found", Mage_Api2_Model_Server::HTTP_NOT_FOUND);
+            $error = $helper->__('Unable to add the following product(s) to shopping cart: %s.', $productId);
+            $this->_critical($error, Mage_Api2_Model_Server::HTTP_NOT_FOUND);
         }
     }
 }

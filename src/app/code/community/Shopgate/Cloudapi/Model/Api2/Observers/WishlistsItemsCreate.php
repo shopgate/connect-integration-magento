@@ -76,8 +76,6 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsCreate
             ? Mage::helper('catalog/product')->getProduct($data['product_id'], (int) $storeId, 'id')
             : Mage::helper('catalog/product')->getProduct($data['sku'], (int) $storeId, 'sku');
 
-        $product->setData('wishlist_store_id', $storeId); //todo-konstantin: may not be needed due to global store set
-
         return $product;
     }
 }
