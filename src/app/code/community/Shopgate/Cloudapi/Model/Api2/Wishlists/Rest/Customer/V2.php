@@ -25,7 +25,8 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Rest_Customer_V2 extends Shopgate_C
     /** @noinspection PhpHierarchyChecksInspection */
     /**
      * Enterprise or 3rd party point, creates a new
-     * wishlist of multiple wishlists are possible
+     * wishlist if multiple wishlists are possible.
+     * Else returns the ID of the default wishlist.
      *
      * @inheritdoc
      * @throws Mage_Api2_Exception

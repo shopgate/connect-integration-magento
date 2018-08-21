@@ -29,28 +29,35 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Rest extends Shopgate_Cloudapi_Mode
     protected function getWishlist()
     {
         /** @var Mage_Wishlist_Model_Wishlist $wishlist */
-        $wishlistId = $this->getRequest()->getParam('wishlistId');
-        $wishlist   = Mage::getModel('wishlist/wishlist')->load($wishlistId);
-        $this->validateWishlist($wishlist);
+        $wishlist = Mage::getModel('wishlist/wishlist')->load($this->getWishlistId());
 
-        return $wishlist;
-    }
-
-    /**
-     * Validates the wishlist and that it is properly created
-     *
-     * @param Mage_Wishlist_Model_Wishlist $wishlist
-     *
-     * @throws Mage_Api2_Exception
-     * @throws Exception
-     */
-    protected function validateWishlist(Mage_Wishlist_Model_Wishlist $wishlist)
-    {
         if (!$wishlist->getId() || $wishlist->getCustomerId() !== $this->getApiUser()->getUserId()) {
             $this->_critical(
                 Mage::helper('wishlist')->__("Requested wishlist doesn't exist"),
                 Mage_Api2_Model_Server::HTTP_NOT_FOUND
             );
         }
+
+        return $wishlist;
+    }
+
+    /**
+     * Sanitizer for incoming data
+     *
+     * @throws Exception
+     * @return int
+     */
+    protected function getWishlistId()
+    {
+        $wishlistId = $this->getRequest()->getParam('wishlistId');
+
+        if (!is_numeric($wishlistId)) {
+            $this->_critical(
+                Mage::helper('wishlist')->__("Requested wishlist doesn't exist"),
+                Mage_Api2_Model_Server::HTTP_NOT_FOUND
+            );
+        }
+
+        return (int) $wishlistId;
     }
 }

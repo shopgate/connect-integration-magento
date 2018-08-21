@@ -23,7 +23,7 @@
 class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsCreate
 {
     /**
-     * Remember, wishlist data is returned by reference here
+     * Remember, wishlist item data is returned by reference here
      *
      * @param Varien_Event_Observer $observer
      *
@@ -64,6 +64,10 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsCreate
     }
 
     /**
+     * Assumes that a previous validation
+     * will determine if either ID or SKU
+     * exist
+     *
      * @param array  $data
      * @param string $storeId
      *

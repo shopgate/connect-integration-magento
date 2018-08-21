@@ -56,5 +56,4 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsCreate
     {
         return Mage::helper('shopgate_cloudapi/api2_wishlists');
     }
-
 }
