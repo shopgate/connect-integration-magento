@@ -33,7 +33,7 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsCreate
     {
         /** @var Mage_Core_Model_Store $store */
         $store = $observer->getData('store');
-        if (Mage::getStoreConfigFlag(Shopgate_Cloudapi_Helper_Data::PATH_OBSERVERS_WHISHLISTS_CREATE, $store)) {
+        if (Mage::getStoreConfigFlag(Shopgate_Cloudapi_Helper_Data::PATH_OBSERVERS_WISHLISTS_CREATE, $store)) {
             return;
         }
 
