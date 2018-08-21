@@ -33,12 +33,60 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
     public function _create(array $filteredData)
     {
         $wishlist = $this->getWishlist();
-        $this->validateProductData($filteredData);
+        $this->validateIncomingProduct($filteredData);
+        $wishlistItem = $this->addItemToWishlist($filteredData, $wishlist);
+        $this->validateWishListItem($wishlistItem);
+
+        return array('wishlistItemId' => $wishlistItem->getId());
+    }
+
+    /**
+     * Adds multiple items at the same time and skips
+     * the ones with issues that we can catch
+     *
+     * @inheritdoc
+     * @throws Mage_Api2_Exception
+     */
+    public function _multiCreate(array $filteredData)
+    {
+        $exception = count($filteredData) === 1;
+        $idList    = array();
+        $wishlist  = $this->getWishlist();
+        foreach ($filteredData as $itemData) {
+            if (!$this->validateIncomingProduct($itemData, $exception)) {
+                continue;
+            }
+
+            $item = $this->addItemToWishlist($itemData, $wishlist);
+            if ($this->validateWishListItem($item, $exception)) {
+                $idList[$this->getId($itemData)] = $item->getId();
+            }
+        }
+
+        if (empty($idList)) {
+            $this->_critical(
+                Mage::helper('wishlist')->__('Cannot specify product.'),
+                Mage_Api2_Model_Server::HTTP_BAD_REQUEST
+            );
+        }
+
+        return array('wishlistItemIds' => $idList);
+    }
+
+    /**
+     * @param array                        $data - single product data
+     * @param Mage_Wishlist_Model_Wishlist $wishlist
+     *
+     * @return Mage_Wishlist_Model_Item
+     * @throws Mage_Api2_Exception
+     */
+    private function addItemToWishlist(array $data, Mage_Wishlist_Model_Wishlist $wishlist)
+    {
         try {
             Mage::dispatchEvent(
                 'shopgate_cloud_api2_wishlists_items_create',
                 array(
-                    'input'    => $filteredData,
+                    'input'    => $data,
                     'wishlist' => $wishlist,
                     'store'    => $this->_getStore()
                 )
@@ -47,11 +95,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
             $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
         }
 
-        /** @var Mage_Wishlist_Model_Item $wishlistItem */
-        $wishlistItem = $wishlist->getData('last_added_item');
-        $this->validateWishListItem($wishlistItem);
-
-        return array('wishlistItemId' => $wishlistItem->getId());
+        return $wishlist->getData('last_added_item');
     }
 
     /**
@@ -59,27 +103,50 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
      * before making the add product call
      *
      * @param array $data
+     * @param bool  $exception - to throw an exception or not
      *
+     * @return bool
      * @throws Mage_Api2_Exception
      */
-    private function validateProductData($data)
+    private function validateIncomingProduct(array $data, $exception = true)
     {
+        $id     = $this->getId($data);
         $helper = Mage::helper('wishlist');
-        if (isset($data['product_id'])) {
-            $productId      = $data['product_id'];
-            $identifierType = 'id';
-        } elseif (isset($data['sku'])) {
-            $productId      = $data['sku'];
-            $identifierType = 'sku';
-        } else {
-            $this->_critical($helper->__('Cannot specify product.'), Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+        if (empty($id)) {
+            if ($exception) {
+                $this->_critical($helper->__('Cannot specify product.'), Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            }
+
+            return false;
         }
         /** @noinspection PhpUndefinedVariableInspection */
         $product = Mage::helper('catalog/product')
-                       ->getProduct($productId, $this->_getStore()->getId(), $identifierType);
+                       ->getProduct($id, $this->_getStore()->getId(), is_int($id) ? 'id' : 'sku');
         if (!$product->getId() || !$product->isVisibleInCatalog()) {
-            $error = $helper->__('Unable to add the following product(s) to shopping cart: %s.', $productId);
-            $this->_critical($error, Mage_Api2_Model_Server::HTTP_NOT_FOUND);
+            if ($exception) {
+                $error = $helper->__('An error occurred while adding item to wishlist: %s', $id);
+                $this->_critical($error, Mage_Api2_Model_Server::HTTP_NOT_FOUND);
+            }
+
+            return false;
         }
+
+        return true;
+    }
+
+    /**
+     * Returns the ID of the incoming item request
+     *
+     * @param array $data
+     *
+     * @return int | string | false
+     */
+    private function getId(array $data)
+    {
+        if (isset($data['product_id']) || isset($data['sku'])) {
+            return isset($data['product_id']) ? (int) $data['product_id'] : $data['sku'];
+        }
+
+        return false;
     }
 }

@@ -27,7 +27,6 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsCreate
      *
      * @param Varien_Event_Observer $observer
      *
-     * @throws Mage_Api2_Exception
      * @throws Mage_Core_Model_Store_Exception
      */
     public function execute(Varien_Event_Observer $observer)
@@ -56,10 +55,6 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsCreate
         $result = $wishlist->addNewItem($product, $input);
         Mage::app()->setCurrentStore($adminStore);
 
-        if (is_string($result)) {
-            /** @noinspection PhpUnhandledExceptionInspection */
-            throw new Mage_Api2_Exception($result, Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
-        }
         $wishlist->setData('last_added_item', $result);
     }
 

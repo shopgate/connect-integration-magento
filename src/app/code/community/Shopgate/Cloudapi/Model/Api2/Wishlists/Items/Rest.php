@@ -23,23 +23,37 @@
 class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest extends Shopgate_Cloudapi_Model_Api2_Wishlists_Rest
 {
     /**
-     * @param Mage_Wishlist_Model_Item $wishlistItem
+     * @param Mage_Wishlist_Model_Item | string $wishlistItem
+     * @param bool                              $exception - whether to throw an exception in this function
      *
+     * @return bool
      * @throws Mage_Api2_Exception
      */
-    protected function validateWishListItem(Mage_Wishlist_Model_Item $wishlistItem)
+    protected function validateWishListItem($wishlistItem, $exception = true)
     {
+        if (is_string($wishlistItem)) {
+            if ($exception) {
+                $this->_critical($wishlistItem, Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+            }
+
+            return false;
+        }
         if ($wishlistItem->getData('has_error')) {
-            $this->_critical(
-                $wishlistItem->getData('message'),
-                Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR
-            );
+            if ($exception) {
+                $this->_critical($wishlistItem->getData('message'), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+            }
+
+            return false;
         }
         if (!$wishlistItem->getId() || $wishlistItem->isDeleted()) {
-            $this->_critical(
-                Mage::helper('wishlist')->__('An error occurred while adding item to wishlist.'),
-                Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR
-            );
+            if ($exception) {
+                $error = Mage::helper('wishlist')->__('An error occurred while adding item to wishlist.');
+                $this->_critical($error, Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+            }
+
+            return false;
         }
+
+        return true;
     }
 }
