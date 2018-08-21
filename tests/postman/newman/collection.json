@@ -17644,6 +17644,68 @@
                 {
                   "listen": "test",
                   "script": {
+                    "id": "56f0df74-77e6-483c-a4f7-a7b0cceb12fe",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"A wishlist was created\", function () {",
+                      "    pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.not.be.empty;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"public\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add wishlist 2",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "6c2b232d-71bb-4653-b0a2-ba5b47722d7d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.set(\"seed\", \"wishlist-\" + Math.floor(Math.random() * Math.floor(100)));"
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
                     "id": "45b7e31d-3e8e-4ce0-a1da-e0a0b7e3dd9c",
                     "type": "text/javascript",
                     "exec": [
