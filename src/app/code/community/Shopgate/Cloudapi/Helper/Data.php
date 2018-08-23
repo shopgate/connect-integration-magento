@@ -29,4 +29,10 @@ class Shopgate_Cloudapi_Helper_Data extends Mage_Core_Helper_Abstract
     const PATH_AUTH_SHOP_NUMBER     = 'shopgate_cloudapi/authentication/shop_number';
     const PATH_AUTH_API_KEY         = 'shopgate_cloudapi/authentication/api_key';
     const PATH_LAYOUT_STYLES        = 'shopgate_cloudapi/layout/styles';
+
+    /**
+     * Observer disabling
+     */
+    const PATH_OBSERVERS_WISHLISTS_CREATE   = 'shopgate_cloudapi/observers/wishlists_create';
+    const PATH_OBSERVERS_WISHLISTS_ADD_ITEM = 'shopgate_cloudapi/observers/wishlists_add_item';
 }

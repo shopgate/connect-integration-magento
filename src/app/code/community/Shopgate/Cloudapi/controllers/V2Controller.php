@@ -58,6 +58,14 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
     }
 
     /**
+     * All calls related to wishlists
+     */
+    public function wishlistsAction()
+    {
+        $this->_getServer()->run();
+    }
+
+    /**
      * All calls related to product action
      */
     public function productsAction()
@@ -85,6 +93,7 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
      * Initializes the entry point and replaces the path to point to REST
      *
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Controller_Request_Exception
      */
     public function preDispatch()
     {

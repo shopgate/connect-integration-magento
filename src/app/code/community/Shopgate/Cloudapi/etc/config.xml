@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.2.0</version>
+            <version>3.3.0</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
@@ -158,6 +158,30 @@
             </shopgate>
         </routers>
         <events>
+            <shopgate_cloud_api2_wishlists_create>
+                <observers>
+                    <shopgate_cloud_rest_wishlist_create>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsCreate</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlist_create>
+                </observers>
+            </shopgate_cloud_api2_wishlists_create>
+            <shopgate_cloud_api2_wishlists_items_create>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_create>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsCreate</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_create>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_create>
+            <catalog_product_collection_apply_limitations_before><!-- EE 1.13 compatibility -->
+                <observers>
+                    <shopgate_cloud_api2_wishlist_store_id_hack>
+                        <class>shopgate_cloudapi/api2_observers_wishlistStoreHandle</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_store_id_hack>
+                </observers>
+            </catalog_product_collection_apply_limitations_before>
             <controller_action_layout_load_before>
                 <observers>
                     <shopgate_controller_action_layout_load_before>
