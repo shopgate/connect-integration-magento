@@ -15043,7 +15043,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "50a057c1-3a2b-4288-9af5-192ce60da704",
+                    "id": "710b0cb7-da08-4fa7-b07e-770488fd65af",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Successfully loaded address data\", function () {",
@@ -15053,21 +15053,22 @@
                       "pm.test(\"Customer address data is returned\", function () {",
                       "    const jsonData = pm.response.json();",
                       "    const lastAddress = jsonData.pop();",
-                      "    pm.expect(lastAddress.customer_id).to.eq(pm.environment.get(\"customer-id\"));",
+                      "    pm.expect(lastAddress.customer_id).to.be.a('string').to.eq(pm.environment.get(\"customer-id\"));",
                       "    pm.expect(lastAddress.created_at).to.not.be.empty;",
                       "    pm.expect(lastAddress.updated_at).to.not.be.empty;",
                       "    pm.expect(lastAddress.firstname).to.eq(pm.environment.get(\"seed\") + \".first\");",
                       "    pm.expect(lastAddress.lastname).to.eq(pm.environment.get(\"seed\") + \".last\");",
-                      "    pm.expect(lastAddress.is_active).to.eq('1');",
+                      "    pm.expect(lastAddress.is_active).to.be.a('string').to.eq('1');",
                       "    pm.expect(lastAddress.company).to.eq(pm.environment.get(\"seed\") + \".company\");",
                       "    pm.expect(lastAddress.city).to.eq(pm.environment.get(\"seed\") + \".city\");",
                       "    pm.expect(lastAddress.country_id).to.eq(\"US\");",
                       "    pm.expect(lastAddress.region).to.eq(\"Arizona\");",
-                      "    pm.expect(lastAddress.postcode).to.eq(\"85000\");",
+                      "    pm.expect(lastAddress.region_code).to.eq(\"AZ\");",
+                      "    pm.expect(lastAddress.postcode).to.be.a('string').to.eq(\"85000\");",
                       "    pm.expect(lastAddress.street[0]).to.eq(pm.environment.get(\"seed\") + \".street1\");",
                       "    pm.expect(lastAddress.street[1]).to.eq(pm.environment.get(\"seed\") + \".street2\");",
                       "    pm.expect(lastAddress.telephone).to.eq(pm.environment.get(\"seed\") + \".phone\");",
-                      "    pm.expect(lastAddress.vat_id).to.eq(pm.environment.get(\"seed\") + \".vat_id\");",
+                      "    pm.expect(lastAddress.vat_id).to.be.a('string').to.eq(pm.environment.get(\"seed\") + \".vat_id\");",
                       "});"
                     ]
                   }
@@ -15120,7 +15121,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "a4db5316-86f5-4c77-ae9d-2a8f07740f5f",
+                    "id": "a47455e0-49e9-4fdc-9d13-79dbdb8e02eb",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Successfully loaded address data\", function () {",
@@ -15133,16 +15134,17 @@
                       "    pm.expect(lastAddress.updated_at).to.not.be.empty;",
                       "    pm.expect(lastAddress.firstname).to.eq(pm.environment.get(\"seed\") + \".first\");",
                       "    pm.expect(lastAddress.lastname).to.eq(pm.environment.get(\"seed\") + \".last\");",
-                      "    pm.expect(lastAddress.is_active).to.eq('1');",
+                      "    pm.expect(lastAddress.is_active).to.be.a('string').to.eq('1');",
                       "    pm.expect(lastAddress.company).to.eq(pm.environment.get(\"seed\") + \".company\");",
                       "    pm.expect(lastAddress.city).to.eq(pm.environment.get(\"seed\") + \".city\");",
                       "    pm.expect(lastAddress.country_id).to.eq(\"US\");",
                       "    pm.expect(lastAddress.region).to.eq(\"Arizona\");",
-                      "    pm.expect(lastAddress.postcode).to.eq(\"85000\");",
+                      "    pm.expect(lastAddress.region_code).to.eq(\"AZ\");",
+                      "    pm.expect(lastAddress.postcode).to.be.a('string').to.eq(\"85000\");",
                       "    pm.expect(lastAddress.street[0]).to.eq(pm.environment.get(\"seed\") + \".street1\");",
                       "    pm.expect(lastAddress.street[1]).to.eq(pm.environment.get(\"seed\") + \".street2\");",
                       "    pm.expect(lastAddress.telephone).to.eq(pm.environment.get(\"seed\") + \".phone\");",
-                      "    pm.expect(lastAddress.vat_id).to.eq(pm.environment.get(\"seed\") + \".vat_id\");",
+                      "    pm.expect(lastAddress.vat_id).to.be.a('string').to.eq(pm.environment.get(\"seed\") + \".vat_id\");",
                       "});"
                     ]
                   }
