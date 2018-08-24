@@ -35,6 +35,7 @@ class Shopgate_Cloudapi_Shell extends Mage_Shell_Abstract
     public function run()
     {
         if ($this->getArg('acl')) {
+            $this->cleanCaches();
             if ($this->getArg('attributes')) {
                 $this->updateAclAttributes();
 
@@ -47,7 +48,7 @@ class Shopgate_Cloudapi_Shell extends Mage_Shell_Abstract
             }
         }
 
-        $this->usageHelp();
+        die($this->usageHelp());
     }
 
     /**
@@ -77,6 +78,20 @@ class Shopgate_Cloudapi_Shell extends Mage_Shell_Abstract
             $role = $this->getRoleHelper()->createAdminRole();
         }
         $this->getRuleHelper()->addAclRules($role->getId());
+    }
+
+    /**
+     * Clean the config & API2 caches
+     */
+    private function cleanCaches()
+    {
+        $cache = Mage::app()->getCacheInstance();
+        foreach (array('config', 'config_api2') as $type) {
+            if ($cache->canUse($type)) {
+                $cache->cleanType($type);
+                Mage::dispatchEvent('adminhtml_cache_refresh_type', array('type' => $type));
+            }
+        }
     }
 
     /**
