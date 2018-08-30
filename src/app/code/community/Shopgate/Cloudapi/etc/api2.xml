@@ -284,6 +284,7 @@
                 <sort_order>80</sort_order>
                 <privileges>
                     <customer>
+                        <retrieve>1</retrieve>
                         <create>1</create>
                     </customer>
                 </privileges>

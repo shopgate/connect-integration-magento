@@ -56,4 +56,54 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Rest_Customer_V2 extends Shopgate_C
         /** @noinspection PhpUndefinedVariableInspection */
         return array('wishlistId' => $wishlist->getId());
     }
+
+    /**
+     * First item of the wishlist collection should be
+     * the default list
+     *
+     * @inheritdoc
+     * @throws Mage_Api2_Exception
+     * @throws Exception
+     */
+    public function _retrieveCollection()
+    {
+        $output = new Varien_Object();
+        try {
+            Mage::dispatchEvent(
+                'shopgate_cloud_api2_wishlists_retrieve',
+                array(
+                    'output' => $output,
+                    'customer_id' => $this->getApiUser()->getUserId(),
+                    'store' => $this->_getStore()
+                )
+            );
+        } catch (Exception $e) {
+            $this->_critical($e->getMessage(), $e->getCode() ? : Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        }
+        $collection = $output->getData('collection');
+        $this->validateWishlistCollection($collection);
+
+        return method_exists($collection, 'getData') ? $collection->getData() : $collection;
+    }
+
+    /**
+     * This is a check for third party implementations, need to make
+     * sure that these wishlists belong to the customer requesting them
+     *
+     * @param Mage_Core_Model_Resource_Db_Collection_Abstract|array $collection
+     *
+     * @throws Mage_Api2_Exception
+     * @throws Exception
+     */
+    private function validateWishlistCollection($collection)
+    {
+        foreach ($collection as $wishlist) {
+            if (!isset($wishlist['customer_id']) || $wishlist['customer_id'] !== $this->getApiUser()->getUserId()) {
+                $this->_critical(
+                    'Wishlist does not belong to this customer',
+                    Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR
+                );
+            }
+        }
+    }
 }

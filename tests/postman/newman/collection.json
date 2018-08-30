@@ -15043,7 +15043,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "710b0cb7-da08-4fa7-b07e-770488fd65af",
+                    "id": "2e871a10-40d1-4628-8192-9186bc65c9ff",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"Successfully loaded address data\", function () {",
@@ -17628,8 +17628,128 @@
       "name": "v2/wishlists",
       "item": [
         {
-          "name": "Add",
+          "name": "Get",
           "item": [
+            {
+              "name": "Get customer ID via ME",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "e4e2fb85-871f-448e-bebf-ea7689ae550a",
+                    "type": "text/javascript",
+                    "exec": [
+                      "if (responseCode.code === 200) {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.environment.set(\"customer-id\", jsonData.customer_id);",
+                      "}"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.unset(\"customer_id\");"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_me}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_me}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No wishlists exist",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "5882f6d0-9f53-4867-a172-2b02f9be6561",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "baed2aeb-1905-4a94-8c92-ed7311b20f30",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"No wishlists exist for new customers\", function () {",
+                      "    pm.expect(jsonData).to.be.a(\"array\").to.be.empty;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"public\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ]
+                }
+              },
+              "response": []
+            },
             {
               "name": "Add wishlist",
               "event": [
@@ -17646,7 +17766,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "56f0df74-77e6-483c-a4f7-a7b0cceb12fe",
+                    "id": "3df81b18-c53b-4896-9196-8f77fe5fabb4",
                     "type": "text/javascript",
                     "exec": [
                       "const jsonData = pm.response.json();",
@@ -17656,6 +17776,7 @@
                       "",
                       "pm.test(\"A wishlist was created\", function () {",
                       "    pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.not.be.empty;",
+                      "    pm.environment.set(\"wishlist-id\", jsonData.wishlistId);",
                       "});"
                     ]
                   }
@@ -17692,6 +17813,78 @@
               },
               "response": []
             },
+            {
+              "name": "Get wishlist data",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "5882f6d0-9f53-4867-a172-2b02f9be6561",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "225a4ad2-fd08-4164-ab27-1af40efd93fa",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test('A created wishlist exists', function () {",
+                      "    const wishlist = jsonData.shift();",
+                      "    pm.expect(wishlist.wishlist_id).to.be.a('string').to.be.eq(pm.environment.get('wishlist-id'));",
+                      "    pm.expect(wishlist.name).to.be.a('string').to.be.eq(pm.environment.get('seed') + '-name');",
+                      "    pm.expect(wishlist.customer_id).to.be.a('string').to.be.eq(pm.environment.get('customer-id'));",
+                      "    pm.expect(wishlist.shared).to.be.a('string').to.be.eq('0');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"public\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Add",
+          "item": [
             {
               "name": "Add wishlist 2",
               "event": [
