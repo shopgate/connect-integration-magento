@@ -74,6 +74,30 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
     }
 
     /**
+     * @inheritdoc
+     * @throws Mage_Api2_Exception
+     */
+    public function _retrieveCollection()
+    {
+        $collection = $this->getWishlist()->getItemCollection();
+        $output     = new Varien_Object();
+        try {
+            Mage::dispatchEvent(
+                'shopgate_cloud_api2_wishlists_items_retrieve',
+                array(
+                    'output'     => $output,
+                    'collection' => $collection,
+                    'store'      => $this->_getStore()
+                )
+            );
+        } catch (Exception $e) {
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        }
+
+        return $output->getData('items');
+    }
+
+    /**
      * @param array                        $data - single product data
      * @param Mage_Wishlist_Model_Wishlist $wishlist
      *

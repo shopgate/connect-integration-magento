@@ -182,6 +182,14 @@
                     </shopgate_cloud_api2_wishlist_items_create>
                 </observers>
             </shopgate_cloud_api2_wishlists_items_create>
+            <shopgate_cloud_api2_wishlists_items_retrieve>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_retrieve>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsRetrieve</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_retrieve>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_retrieve>
             <catalog_product_collection_apply_limitations_before><!-- EE 1.13 compatibility -->
                 <observers>
                     <shopgate_cloud_api2_wishlist_store_id_hack>

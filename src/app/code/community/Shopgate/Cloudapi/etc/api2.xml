@@ -310,6 +310,7 @@
                 <sort_order>90</sort_order>
                 <privileges>
                     <customer>
+                        <retrieve>1</retrieve>
                         <create>1</create>
                     </customer>
                 </privileges>
