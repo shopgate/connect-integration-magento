@@ -333,7 +333,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         if ($this->_isDefaultBillingAddress($address) || $this->_isDefaultShippingAddress($address)) {
             $this->_critical(
                 'Address is default for customer so is not allowed to be deleted',
-                Mage_Api2_Model_Server::HTTP_BAD_REQUEST
+                Mage_Api2_Model_Server::HTTP_METHOD_NOT_ALLOWED
             );
         }
         try {
