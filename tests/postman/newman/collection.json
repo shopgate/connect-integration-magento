@@ -16140,7 +16140,7 @@
                         "type": "text/javascript",
                         "exec": [
                           "pm.test(\"Cannot delete a default address\", function () {",
-                          "    pm.response.to.have.status(400);",
+                          "    pm.response.to.have.status(405);",
                           "});",
                           "",
                           "pm.environment.unset(\"seed\");",
