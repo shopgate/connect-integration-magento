@@ -17829,7 +17829,7 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "225a4ad2-fd08-4164-ab27-1af40efd93fa",
+                    "id": "86c50299-76da-4ef5-ae55-471fd72e904f",
                     "type": "text/javascript",
                     "exec": [
                       "const jsonData = pm.response.json();",
@@ -17840,10 +17840,18 @@
                       "pm.test('A created wishlist exists', function () {",
                       "    const wishlist = jsonData.shift();",
                       "    pm.expect(wishlist.wishlist_id).to.be.a('string').to.be.eq(pm.environment.get('wishlist-id'));",
-                      "    pm.expect(wishlist.name).to.be.a('string').to.be.eq(pm.environment.get('seed') + '-name');",
                       "    pm.expect(wishlist.customer_id).to.be.a('string').to.be.eq(pm.environment.get('customer-id'));",
+                      "    pm.expect(wishlist.sharing_code).to.be.a('string').to.not.be.empty;",
                       "    pm.expect(wishlist.shared).to.be.a('string').to.be.eq('0');",
-                      "});"
+                      "    if (pm.environment.get('mage_type') === 'EE') {",
+                      "        pm.expect(wishlist.name).to.be.a('string').to.be.eq(pm.environment.get('seed') + '-name');",
+                      "        pm.expect(wishlist.visibility).to.be.a('string').to.be.eq('1');",
+                      "    } else {",
+                      "        pm.expect(wishlist.visibility).to.be.a('string').to.be.eq('0');",
+                      "    }",
+                      "});",
+                      "",
+                      ";"
                     ]
                   }
                 }
@@ -17901,18 +17909,21 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "45b7e31d-3e8e-4ce0-a1da-e0a0b7e3dd9c",
+                    "id": "2f2b817b-2046-4106-9576-85c265348c0e",
                     "type": "text/javascript",
                     "exec": [
                       "const jsonData = pm.response.json();",
-                      "pm.test(\"Status code is 200\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "",
-                      "pm.test(\"A wishlist was created\", function () {",
-                      "    pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.not.be.empty;",
-                      "    pm.environment.set(\"wishlist-id\", jsonData.wishlistId);",
-                      "});"
+                      "if (pm.environment.get('mage_type') === 'EE') {",
+                      "    pm.test(\"Status code is 200\", function () {",
+                      "        pm.response.to.have.status(200);",
+                      "    });",
+                      "    ",
+                      "    pm.test(\"A wishlist was created\", function () {",
+                      "        pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.not.be.empty;",
+                      "        pm.environment.set(\"wishlist-id\", jsonData.wishlistId);",
+                      "    });",
+                      "}",
+                      ""
                     ]
                   }
                 }
@@ -17937,7 +17948,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"public\"\n}"
+                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"private\"\n}"
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_wishlists}}",
@@ -17964,19 +17975,13 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "27b4c582-d8de-4753-b533-f979fc4097f0",
+                    "id": "046e9edb-300c-4958-8e56-b1378395e435",
                     "type": "text/javascript",
                     "exec": [
-                      "if (pm.environment.get(\"mage_type\") === 'EE') {",
-                      "    pm.test(\"400 eror indicating that we cannot create more lists\", function () {",
-                      "        pm.response.to.have.status(400);",
-                      "    });",
-                      "} else {",
-                      "    pm.test(\"The default wishlist is retrieved\", function () {",
-                      "        const jsonData = pm.response.json();",
-                      "        pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.be.eq(pm.environment.get(\"wishlist-id\"));",
-                      "    });",
-                      "}",
+                      "pm.test(\"400 error indicating that we cannot create more lists\", function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
                       ""
                     ]
                   }
