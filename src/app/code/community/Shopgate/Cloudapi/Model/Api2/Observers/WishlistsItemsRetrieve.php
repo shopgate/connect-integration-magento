@@ -42,33 +42,11 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
         /** @var Mage_Wishlist_Model_Item $item */
         foreach ($collection as $item) {
             $data               = $item->getData();
-            $data['buyRequest'] = $this->getOptions($item->getOptions());
+            $data['buyRequest'] = $item->getBuyRequest()->getData();
             $items[]            = $data;
         }
 
         $output = $observer->getData('output');
         $output->setData('items', $items);
-    }
-
-    /**
-     * Translate option value into a readable form.
-     * It only takes into account the buyRequest
-     * as it is the only thing that may be needed
-     * to add an item to cart or to wishlist
-     *
-     * @param array $options
-     *
-     * @return string|null
-     */
-    private function getOptions(array $options)
-    {
-        foreach ($options as $option) {
-            /** @var Mage_Wishlist_Model_Item_Option $option */
-            if ($option->getData('code') === 'info_buyRequest') {
-                $value = unserialize($option->getValue());
-            }
-        }
-
-        return !empty($value) ? $value : null;
     }
 }

@@ -17975,14 +17975,12 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "046e9edb-300c-4958-8e56-b1378395e435",
+                    "id": "d39aecf0-108b-4407-9564-162079948db1",
                     "type": "text/javascript",
                     "exec": [
                       "pm.test(\"400 error indicating that we cannot create more lists\", function () {",
                       "    pm.response.to.have.status(400);",
-                      "});",
-                      "",
-                      ""
+                      "});"
                     ]
                   }
                 }
@@ -18446,7 +18444,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "41f07c3b-8975-4738-8ebe-7315b03ca2f4",
+                            "id": "8b804a7b-ec59-4ebd-a3b0-d9aa72e6402b",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -18459,7 +18457,8 @@
                               "    \"super_attribute\": {",
                               "      \"110\": \"110\",",
                               "      \"100\": \"100\"",
-                              "    }",
+                              "    },",
+                              "    \"original_qty\": 1",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -18565,7 +18564,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "a1dae496-49e6-4df8-87b3-fe72680e7ed1",
+                            "id": "964697b8-b6b5-4155-b75e-5598f081c1e0",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -18574,7 +18573,8 @@
                               "",
                               "const buyRequest = {",
                               "    \"product_id\": \"447\",",
-                              "    \"qty\": 2",
+                              "    \"qty\": 2,",
+                              "    \"original_qty\": 2",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -18680,7 +18680,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "33e91b0a-fcd6-4da7-8887-6442248e3022",
+                            "id": "b9923f78-4742-481e-9797-85180fc1925a",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -18689,7 +18689,8 @@
                               "",
                               "const buyRequest = {",
                               "    \"product_id\": \"381\",",
-                              "    \"qty\": 1",
+                              "    \"qty\": 1,",
+                              "    \"original_qty\": 1",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -18795,7 +18796,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "84421ac2-094b-4a70-93d2-d72eb2d86bbd",
+                            "id": "469c3866-af25-4c45-a66a-3b06d969a14a",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -18803,7 +18804,9 @@
                               "});",
                               "",
                               "const buyRequest = {",
-                              "\t\"product_id\": \"563\"",
+                              "\t\"product_id\": \"563\",",
+                              "\t\"qty\": 1,",
+                              "    \"original_qty\": null",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -18909,7 +18912,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "50f93761-91f1-487c-b24d-0d890e96b824",
+                            "id": "61856ced-e10a-4931-a954-1d1dbee7172f",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -18917,7 +18920,9 @@
                               "});",
                               "",
                               "const buyRequest = {",
-                              "    \"product_id\": \"439\"",
+                              "    \"product_id\": \"439\",",
+                              "\t\"qty\": 1,",
+                              "    \"original_qty\": null",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -19025,7 +19030,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "fb3c3593-d4cb-48e8-b815-87bfe17f81da",
+                            "id": "cbba0363-21d8-4bdd-b3fd-446fb99a1f2a",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -19034,7 +19039,9 @@
                               "",
                               "if (pm.variables.get('mage_type') === 'EE') {",
                               "    const buyRequest = {",
-                              "        \"sku\": \"gif001\"",
+                              "        \"sku\": \"gif001\",",
+                              "    \t\"qty\": 1,",
+                              "        \"original_qty\": null",
                               "    };",
                               "    const jsonData = pm.response.json();",
                               "    const lastItem = jsonData.pop();",
@@ -19148,14 +19155,18 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "870fac50-6415-44aa-9d75-7bb589172f37",
+                            "id": "7ec66876-7457-4115-9a06-a3ad7e4a09d8",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
                               "    pm.response.to.have.status(200);",
                               "});",
                               "",
-                              "const buyRequest = {\"product_id\": \"554\",\"qty\": 1};",
+                              "const buyRequest = {",
+                              "    \"product_id\": \"554\",",
+                              "    \"qty\": 1,",
+                              "    \"original_qty\": 1",
+                              "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
                               "pm.test('Returns the previously added wishlist item', function () {",
@@ -19261,14 +19272,18 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "f1d6dbf3-3c46-4fd7-9773-02149d1ce203",
+                            "id": "bb6da98c-1f95-4ea2-a215-0649dd72b0fc",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
                               "    pm.response.to.have.status(200);",
                               "});",
                               "",
-                              "const buyRequest = {\"product_id\": \"554\",\"qty\": 1};",
+                              "const buyRequest = {",
+                              "    \"product_id\": \"554\",",
+                              "    \"qty\": 2,",
+                              "    \"original_qty\": 1",
+                              "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
                               "pm.test('Returns the previously added wishlist item', function () {",
@@ -19373,7 +19388,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "e388ff49-06e2-4937-a643-ad3f4d3f09b6",
+                            "id": "39a29245-377b-456d-8793-49bddefb7a98",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -19386,7 +19401,8 @@
                               "    \"super_attribute\": {",
                               "\t      \"92\": \"17\",",
                               "\t      \"180\": \"76\"",
-                              "\t    }",
+                              "\t    },",
+                              "    \"original_qty\": 1",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -19492,7 +19508,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "69f287e6-5339-4a1c-8476-5287053fbbfc",
+                            "id": "ddd021b7-0018-4db1-8356-1ec59db452b7",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -19509,7 +19525,8 @@
                               "    \"bundle_option_qty\": {",
                               "      \"23\": \"3\",",
                               "      \"24\": \"4\"",
-                              "    }",
+                              "    },",
+                              "    \"original_qty\": 2",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -19615,7 +19632,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "5d7fc856-f4dc-4528-87b3-cce60ecf53e8",
+                            "id": "fadffcb1-6ef2-4b58-83e4-7490bf07b903",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -19627,7 +19644,8 @@
                               "    \"qty\": 1,",
                               "    \"links\": [",
                               "      \"18\"",
-                              "    ]",
+                              "    ],",
+                              "    \"original_qty\": 1",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -19733,7 +19751,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "ddfa388b-3418-49c7-9f12-184de16e1d38",
+                            "id": "6b192e2d-13f0-47cb-8947-29d9c0150fbf",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -19745,7 +19763,8 @@
                               "    \"qty\": 1,",
                               "    \"super_group\": {",
                               "      \"541\" : 2",
-                              "    }",
+                              "    },",
+                              "    \"original_qty\": 1",
                               "};",
                               "const jsonData = pm.response.json();",
                               "const lastItem = jsonData.pop();",
@@ -19853,7 +19872,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "b637e904-eb54-4bad-8946-a5ac6483d01f",
+                            "id": "0c78b232-3023-4916-b612-85ffdfce70e2",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -19869,7 +19888,8 @@
                               "        \"giftcard_sender_email\": \"test@shopgate.com\",",
                               "        \"giftcard_recipient_name\": \"Some recipient name\",",
                               "        \"giftcard_recipient_email\": \"test2@shopgate.com\",",
-                              "        \"giftcard_message\": \"Message to recipient\"",
+                              "        \"giftcard_message\": \"Message to recipient\",",
+                              "        \"original_qty\": 1",
                               "    };",
                               "    const jsonData = pm.response.json();",
                               "    const lastItem = jsonData.pop();",
@@ -19979,7 +19999,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "dd2bf9a7-a8c7-4ea7-a0ae-5b32aad97477",
+                            "id": "d2c15f0d-84f9-42e4-b6c9-53ceb09defe6",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -19995,7 +20015,8 @@
                               "        \"giftcard_sender_email\": \"test@shopgate.com\",",
                               "        \"giftcard_recipient_name\": \"Some recipient name\",",
                               "        \"giftcard_recipient_email\": \"test2@shopgate.com\",",
-                              "        \"giftcard_message\": \"Message to recipient\"",
+                              "        \"giftcard_message\": \"Message to recipient\",",
+                              "        \"original_qty\": 1",
                               "    };",
                               "    const jsonData = pm.response.json();",
                               "    const lastItem = jsonData.pop();",
@@ -20105,7 +20126,7 @@
                         {
                           "listen": "test",
                           "script": {
-                            "id": "bfaa3e03-d7c3-4ffa-b25a-923796062977",
+                            "id": "9196c937-0d20-4e12-8f41-ecfe1b052b98",
                             "type": "text/javascript",
                             "exec": [
                               "pm.test('Status code is 200', function () {",
@@ -20120,7 +20141,8 @@
                               "        \"giftcard_sender_email\": \"test@shopgate.com\",",
                               "        \"giftcard_recipient_name\": \"Some recipient name\",",
                               "        \"giftcard_recipient_email\": \"test2@shopgate.com\",",
-                              "        \"giftcard_message\": \"Message to recipient\"",
+                              "        \"giftcard_message\": \"Message to recipient\",",
+                              "        \"original_qty\": 1",
                               "    };",
                               "    const jsonData = pm.response.json();",
                               "    const lastItem = jsonData.pop();",
@@ -20492,7 +20514,7 @@
                     {
                       "listen": "test",
                       "script": {
-                        "id": "205df16e-c044-4b74-a738-8ea0e4d04949",
+                        "id": "bffc4849-abd1-4a9f-a434-77810209cdb1",
                         "type": "text/javascript",
                         "exec": [
                           "pm.test('Status code is 200', function () {",
@@ -20505,7 +20527,8 @@
                           "    \"super_attribute\": {",
                           "\t      \"92\": \"17\",",
                           "\t      \"180\": \"75\"",
-                          "\t    }",
+                          "\t    },",
+                          "    \"original_qty\": 1",
                           "};",
                           "const jsonData = pm.response.json();",
                           "const size = jsonData.length;",
