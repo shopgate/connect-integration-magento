@@ -36,7 +36,6 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest_Customer_V2
     {
         /* @var $customerAddress Mage_Customer_Model_Address */
         $customerAddress = parent::_loadCustomerAddressById($id);
-        // check owner
         if ($this->getApiUser()->getUserId() !== $customerAddress->getCustomerId()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
@@ -57,7 +56,6 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest_Customer_V2
     {
         /* @var $customer Mage_Customer_Model_Customer */
         $customer = parent::_loadCustomerById($id);
-        // check customer account owner
         if ($this->getApiUser()->getUserId() !== $customer->getId()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
