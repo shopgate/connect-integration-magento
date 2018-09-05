@@ -67,6 +67,7 @@ class Shopgate_Cloudapi_Model_Auth
      *
      * @return Mage_Api2_Model_Auth_User_Admin | Mage_Api2_Model_Auth_User_Customer | Mage_Api2_Model_Auth_User_Guest
      * @throws Mage_Core_Exception
+     * @throws Exception
      */
     protected function retrieveUser($type, $userId = null)
     {

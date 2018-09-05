@@ -44,9 +44,13 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsCreate
         $visibility = $helper->translateVisibility(isset($input['visibility']) ? $input['visibility'] : null);
         $name       = isset($input['name']) ? $input['name'] : 'Default';
 
-        $helper->isEnterpriseMultilist()
-            ? $helper->createEnterpriseWishlist($wishlist, $name, $visibility)
-            : $wishlist->loadByCustomer($wishlist->getCustomerId(), true);
+        if ($helper->isEnterpriseMultilist()) {
+            $helper->createEnterpriseWishlist($wishlist, $name, $visibility);
+        } elseif (!$wishlist->loadByCustomer($wishlist->getCustomerId(), false)->getId()) {
+            $wishlist->loadByCustomer($wishlist->getCustomerId(), true);
+        } else {
+            Mage::throwException(Mage::helper('wishlist')->__('Wishlist could not be created.'));
+        }
     }
 
     /**
