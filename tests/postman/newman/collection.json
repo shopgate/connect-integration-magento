@@ -203,16 +203,6 @@
                   ""
                 ]
               }
-            },
-            {
-              "listen": "prerequest",
-              "script": {
-                "id": "3092705d-cd39-4811-b8df-1c6636d785a4",
-                "type": "text/javascript",
-                "exec": [
-                  ""
-                ]
-              }
             }
           ],
           "request": {
@@ -4250,16 +4240,6 @@
                       "description": "Tests Mage auto-generated coupon codes",
                       "event": [
                         {
-                          "listen": "prerequest",
-                          "script": {
-                            "id": "e405dbd0-8063-4983-a88c-42594f061c2f",
-                            "type": "text/javascript",
-                            "exec": [
-                              ""
-                            ]
-                          }
-                        },
-                        {
                           "listen": "test",
                           "script": {
                             "id": "44e20b0b-25c5-434b-99e6-74fb0f3bfc94",
@@ -4490,16 +4470,6 @@
                       ],
                       "description": "Tests shopgate coupons with shopgate mobile app type condition only",
                       "event": [
-                        {
-                          "listen": "prerequest",
-                          "script": {
-                            "id": "ab0a7a2c-0eee-46ae-822a-1c50012f1e12",
-                            "type": "text/javascript",
-                            "exec": [
-                              ""
-                            ]
-                          }
-                        },
                         {
                           "listen": "test",
                           "script": {
@@ -6601,16 +6571,6 @@
                       ],
                       "description": "Tests shopgate coupons with shopgate mobile app type condition only",
                       "event": [
-                        {
-                          "listen": "prerequest",
-                          "script": {
-                            "id": "ab0a7a2c-0eee-46ae-822a-1c50012f1e12",
-                            "type": "text/javascript",
-                            "exec": [
-                              ""
-                            ]
-                          }
-                        },
                         {
                           "listen": "test",
                           "script": {
@@ -17817,16 +17777,6 @@
               "name": "Get wishlist data",
               "event": [
                 {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "5882f6d0-9f53-4867-a172-2b02f9be6561",
-                    "type": "text/javascript",
-                    "exec": [
-                      ""
-                    ]
-                  }
-                },
-                {
                   "listen": "test",
                   "script": {
                     "id": "86c50299-76da-4ef5-ae55-471fd72e904f",
@@ -18043,8 +17993,7 @@
                             "type": "text/javascript",
                             "exec": [
                               "pm.environment.set(\"temp-wishlist-id\", pm.environment.get(\"wishlist-id\"));",
-                              "pm.environment.set(\"wishlist-id\", \"17\");",
-                              ""
+                              "pm.environment.set(\"wishlist-id\", \"17\");"
                             ]
                           }
                         },
@@ -20212,8 +20161,7 @@
                             "type": "text/javascript",
                             "exec": [
                               "pm.environment.set(\"temp-wishlist-id\", pm.environment.get(\"wishlist-id\"));",
-                              "pm.environment.set(\"wishlist-id\", \"17\");",
-                              ""
+                              "pm.environment.set(\"wishlist-id\", \"17\");"
                             ]
                           }
                         },
@@ -22721,16 +22669,6 @@
               "description": "Creates a cart and adds an item via SOAP as to not trigger our cart assignment",
               "event": [
                 {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "a2b8b8f7-4b99-4ba2-8186-911525e64cd0",
-                    "type": "text/javascript",
-                    "exec": [
-                      ""
-                    ]
-                  }
-                },
-                {
                   "listen": "test",
                   "script": {
                     "id": "17dd1df4-c998-40b2-86fc-165d8117868c",
@@ -23155,16 +23093,6 @@
           },
           "event": [
             {
-              "listen": "prerequest",
-              "script": {
-                "id": "d0079da7-ef5b-476f-a922-53fadcc3b9ba",
-                "type": "text/javascript",
-                "exec": [
-                  ""
-                ]
-              }
-            },
-            {
               "listen": "test",
               "script": {
                 "id": "c3bb5423-bf5c-461f-821c-10556c7d9556",
@@ -23290,16 +23218,6 @@
             ]
           },
           "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "id": "d0079da7-ef5b-476f-a922-53fadcc3b9ba",
-                "type": "text/javascript",
-                "exec": [
-                  ""
-                ]
-              }
-            },
             {
               "listen": "test",
               "script": {

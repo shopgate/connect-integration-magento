@@ -46,7 +46,7 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsCreate
 
         if ($helper->isEnterpriseMultilist()) {
             $helper->createEnterpriseWishlist($wishlist, $name, $visibility);
-        } else if (!$wishlist->loadByCustomer($wishlist->getCustomerId(), false)->getId()) {
+        } elseif (!$wishlist->loadByCustomer($wishlist->getCustomerId(), false)->getId()) {
             $wishlist->loadByCustomer($wishlist->getCustomerId(), true);
         } else {
             Mage::throwException(Mage::helper('wishlist')->__('Wishlist could not be created.'));
