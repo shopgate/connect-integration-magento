@@ -204,9 +204,14 @@
                 <privileges>
                     <customer>
                         <retrieve>1</retrieve>
+                        <create>1</create>
                     </customer>
                 </privileges>
                 <routes>
+                    <route_v2_customers_id>
+                        <route>/v2/customers/:customer_id</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_id>
                     <route_v2_customers_me>
                         <route>/v2/customers/me</route>
                         <action_type>entity</action_type>
