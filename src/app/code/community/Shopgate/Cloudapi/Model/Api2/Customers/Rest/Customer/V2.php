@@ -60,4 +60,23 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
 
         return array_diff_key($data, array_flip($excludeKeys));
     }
+
+    /** @noinspection PhpHierarchyChecksInspection */
+    /**
+     * Update customer data
+     *
+     * @param array $filteredData
+     */
+    public function _update(array $filteredData)
+    {
+        $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
+        unset($filteredData['email']);
+        if ($customer->getId() !== $this->getApiUser()->getUserId()) {
+            $this->_critical(self::RESOURCE_NOT_FOUND);
+        }
+        foreach ($filteredData as $key => $value) {
+            $customer->setData($key, $value);
+        }
+        $customer->save();
+    }
 }
