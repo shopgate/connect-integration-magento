@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for customer address creation
 - Endpoint for customer address deletion
 - Endpoint for customer address update
+- Endpoint for customer data update
 - Shell script to update our REST attributes / roles
 - Support of app-only coupons (except when EE Customer Segments is installed)
 ### Changed
