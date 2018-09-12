@@ -19,7 +19,6 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
 class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
 {
     /** @noinspection PhpHierarchyChecksInspection */
@@ -64,12 +63,22 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
      *
      * @throws Exception
      */
-    public function _update(array $filteredData)
+    protected function _update(array $filteredData)
     {
-        $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
-        if ($customer->getId() !== $this->getApiUser()->getUserId()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
+        $validator    = $this->_getValidator();
+        $filteredData = $validator->filter($filteredData);
+        if (!$validator->isValidData($filteredData, true)) {
+            $this->_render($this->setDetailedErrors($validator)->sendInvalidationResponse());
+
+            return;
         }
-        Mage::getModel('customer/customer_api')->update($this->getApiUser()->getUserId(), $filteredData);
+
+        try {
+            Mage::getModel('customer/customer_api')->update($this->getApiUser()->getUserId(), $filteredData);
+        } catch (Mage_Core_Exception $e) {
+            $this->_error($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        } catch (Exception $e) {
+            $this->_critical(self::RESOURCE_INTERNAL_ERROR);
+        }
     }
 }
