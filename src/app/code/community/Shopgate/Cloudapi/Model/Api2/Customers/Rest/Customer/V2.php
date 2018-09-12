@@ -31,6 +31,11 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
     protected function _retrieve()
     {
         $customerData = Mage::getModel('customer/customer_api')->info($this->getApiUser()->getUserId());
+        if ($customerData['customer_id'] !== $this->getApiUser()->getUserId()) {
+            $this->_critical(self::RESOURCE_NOT_FOUND);
+        }
+        $groupItem                      = Mage::getModel('customer/group')->load($customerData['group_id']);
+        $customerData['customer_group'] = $groupItem->getData();
 
         return $this->filterOutData($customerData);
     }
