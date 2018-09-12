@@ -13577,6 +13577,267 @@
       ]
     },
     {
+      "name": "/v2/customers/:id",
+      "item": [
+        {
+          "name": "Get customer ID via ME",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "9929cd06-eb01-424b-a398-df220840b14a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.environment.set(\"customer-id\", jsonData.customer_id);",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.unset(\"customer_id\");"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_me}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_me}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update customer data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "898b977f-9f9e-40b8-8201-4352c18c619b",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "878ccafd-8752-4982-8896-5f83b8e7aebb",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"should@not.change\",\n    \"firstname\": \"newFirstName\",\n    \"middlename\": \"newMiddleName\",\n    \"lastname\": \"newLastName\"\n}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers}}/{{customer-id}}",
+              "host": [
+                "{{domain}}{{endpoint_customers}}"
+              ],
+              "path": [
+                "{{customer-id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Check updated customer data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "703c3a85-b29b-4f52-82ea-34ab57afcf7d",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Successfully loaded customer data\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Customer data was updated\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.customer_id).to.eq(pm.environment.get(\"customer-id\"));",
+                  "    pm.expect(jsonData.firstname).to.eq('newFirstName');",
+                  "    pm.expect(jsonData.middlename).to.eq('newMiddleName');",
+                  "    pm.expect(jsonData.lastname).to.eq('newLastName');",
+                  "});",
+                  "",
+                  "pm.test(\"Email was not updated\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.email).to.not.eq('should@not.change');",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "2980fc02-9812-4b3b-9b87-0a4ab8678755",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_me}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_me}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Check Update customer data validation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "1af4ac89-c0e5-4bd1-9d73-d9e819168e44",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400 returned\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"One error with country_id path returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.messages.error.length).to.eq(2);",
+                  "    pm.expect(jsonData.messages.error[0].path).to.eq('firstname');",
+                  "    pm.expect(jsonData.messages.error[1].path).to.eq('lastname');",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "40c8d3cd-93c2-429b-bdf8-0bca31e9aa1a",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstname\": \"\",\n    \"middlename\": \"\",\n    \"lastname\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers}}/{{customer-id}}",
+              "host": [
+                "{{domain}}{{endpoint_customers}}"
+              ],
+              "path": [
+                "{{customer-id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "/v2/customers/:id/addresses",
       "item": [
         {
