@@ -13470,7 +13470,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
+                "id": "9af79f56-dba0-4f0d-a976-85ec26419a1d",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
@@ -13480,6 +13480,15 @@
                   "pm.test(\"Customer ID is returned\", function () {",
                   "    var jsonData = pm.response.json();",
                   "    pm.expect(jsonData.customer_id).to.not.be.empty;",
+                  "});",
+                  "",
+                  "pm.test(\"Customer group is returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.customer_group).to.not.to.be.empty;",
+                  "});",
+                  "pm.test(\"Addresses are not returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.addresses).to.be.undefined;",
                   "});",
                   ""
                 ]
