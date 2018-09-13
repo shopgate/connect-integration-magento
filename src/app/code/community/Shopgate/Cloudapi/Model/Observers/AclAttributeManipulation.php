@@ -27,7 +27,7 @@
 class Shopgate_Cloudapi_Model_Observers_AclAttributeManipulation
 {
     /**
-     * After customer and customer custom attributes are saved, they get either
+     * After customer address and customer custom attributes are saved, they get either
      * 1) Removed from the REST attribute list if Visible on Frontend is disabled
      * 2) Added to the REST attribute list if Visible on Frontend is enabled
      *
@@ -40,32 +40,58 @@ class Shopgate_Cloudapi_Model_Observers_AclAttributeManipulation
     {
         /** @var $attribute Mage_Catalog_Model_Resource_Eav_Attribute */
         $attribute = $observer->getEvent()->getData('attribute');
-        $isDeleted = $observer->getEvent()->getName() === 'enterprise_customer_address_attribute_delete';
+        $isDeleted = $this->isDeleted($observer->getEvent()->getName());
         if ($isDeleted
             || ($attribute->getData('is_user_defined') && $attribute->dataHasChangedFor('is_visible'))
         ) {
+            $callName = $this->getCallType($observer->getEvent()->getName());
             /** @var $collection Mage_Api2_Model_Resource_Acl_Filter_Attribute_Collection */
-            $collection = Mage::getResourceModel('api2/acl_filter_attribute_collection');
+            $collection = Mage::getResourceModel('api2/acl_filter_attribute_collection')
+                              ->addFieldToFilter('resource_id', array('eq' => 'shopgate_cloudapi_v2_' . $callName));
             /** @var $aclFilter Mage_Api2_Model_Acl_Filter_Attribute */
             foreach ($collection as $aclFilter) {
+                $allowedAttributes = explode(',', $aclFilter->getAllowedAttributes());
                 /**
-                 * Make sure the resource ALL is not enabled as we don't have to do anything
+                 * If not visible or deleted remove the attribute from the allowable list, else add it.
                  */
-                if ($aclFilter->getResourceId() !== Mage_Api2_Model_Acl_Global_Rule::RESOURCE_ALL
-                    && strpos($aclFilter->getResourceId(), 'shopgate_cloudapi_') !== false
-                ) {
-                    $allowedAttributes = explode(',', $aclFilter->getAllowedAttributes());
-                    /**
-                     * If not visible or deleted, remove the attribute from the allowable list, else add it.
-                     */
-                    $allowedAttributes = !$attribute->getIsVisible() || $isDeleted
-                        ? array_diff($allowedAttributes, array($attribute->getAttributeCode()))
-                        : array_unique(array_merge($allowedAttributes, array($attribute->getAttributeCode())));
-                    $aclFilter->setAllowedAttributes(implode(',', $allowedAttributes))->save();
-                }
+                $allowedAttributes = !$attribute->getIsVisible() || $isDeleted
+                    ? array_diff($allowedAttributes, array($attribute->getAttributeCode()))
+                    : array_unique(array_merge($allowedAttributes, array($attribute->getAttributeCode())));
+                $aclFilter->setAllowedAttributes(implode(',', $allowedAttributes))->save();
             }
         }
 
         return $this;
+    }
+
+    /**
+     * Checks if the current fired event is an attribute removal (delete)
+     *
+     * @param string $eventName
+     *
+     * @return bool
+     */
+    private function isDeleted($eventName)
+    {
+        return in_array(
+            $eventName,
+            array('enterprise_customer_address_attribute_delete', 'enterprise_customer_attribute_delete')
+        );
+    }
+
+    /**
+     * Using the event name we derive the api2 attribute ACL route
+     *
+     * @param string $eventName
+     *
+     * @return string
+     */
+    private function getCallType($eventName)
+    {
+        return str_replace(
+            array('customer', 'address', 'enterprise_', '_attribute_delete', '_attribute_save'),
+            array('customers', 'addresses', '', '', ''),
+            $eventName
+        );
     }
 }

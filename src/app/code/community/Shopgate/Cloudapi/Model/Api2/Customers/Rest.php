@@ -25,22 +25,21 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Mode
     /**
      * Get customer resource validator instance
      *
-     * @return Shopgate_Cloudapi_Model_Api2_Customers_Validator
+     * @return Shopgate_Cloudapi_Model_Api2_Validator
      */
     protected function _getValidator()
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return Mage::getModel('shopgate_cloudapi/api2_customers_validator', array('resource' => $this));
+        return Mage::getModel('shopgate_cloudapi/api2_validator', array('resource' => $this));
     }
 
     /**
      * Sets detailed validation errors to be returned by the address endpoints
      *
-     * @param Shopgate_Cloudapi_Model_Api2_Customers_Validator $validator
+     * @param Shopgate_Cloudapi_Model_Api2_Validator $validator
      *
      * @return Shopgate_Cloudapi_Model_Api2_Customers_Rest
      */
-    protected function setDetailedErrors( $validator)
+    protected function setDetailedErrors($validator)
     {
         foreach ($validator->getDetailedErrors() as $code => $errors) {
             $this->_errorMessage(
