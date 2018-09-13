@@ -40,6 +40,7 @@ mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='catalog/
 mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='enterprise_catalog/product_attribute_backend_urlkey';"
 
 # Adds app-only coupon
+mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/sql/addCustomAttribute.sql
 mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/sql/addMobileAppCartRule.sql
 mysql ${MAGE_FOLDER} < ${TRAVIS_BUILD_DIR}/tests/postman/sql/addSoapUser.sql
 
