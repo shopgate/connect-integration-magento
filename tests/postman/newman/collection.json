@@ -13843,6 +13843,146 @@
             }
           },
           "response": []
+				},
+				{
+					"name": "Update EE specific customer data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ba956825-c91f-4a18-aa7f-3e3f0221e5fa",
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.variables.get(\"mage_type\") === 'EE') {",
+									"    pm.test('Successfull call', function(){",
+									"        pm.response.to.be.success;",
+									"    });",
+									"} else {",
+									"    pm.test(\"Request data is invalid for the Community edition\", function () {",
+									"        pm.response.to.have.status(400);",
+									"    });",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "40c8d3cd-93c2-429b-bdf8-0bca31e9aa1a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer-access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"gender\": \"2\",\n    \"dob\": \"12/31/1980\",\n    \"favorite_number\": \"42\"\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_customers}}/{{customer-id}}?a=1{{debug}}",
+							"host": [
+								"{{domain}}{{endpoint_customers}}"
+							],
+							"path": [
+								"{{customer-id}}"
+							],
+							"query": [
+								{
+									"key": "a",
+									"value": "1{{debug}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check updated EE specific customer data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "53a6f01c-5f2b-464e-bb24-937d56fb0b7a",
+								"type": "text/javascript",
+								"exec": [
+									"if (pm.variables.get(\"mage_type\") === 'EE') {",
+									"    pm.test(\"EE specific customer data was updated\", function () {",
+									"        const jsonData = pm.response.json();",
+									"        pm.expect(jsonData.customer_id).to.eq(pm.environment.get(\"customer-id\"));",
+									"        pm.expect(jsonData.dob).to.eq('1980-12-31 00:00:00');",
+									"        pm.expect(jsonData.gender).to.eq('2');",
+									"        pm.expect(jsonData.favorite_number).to.eq('42');",
+									"    });",
+									"} else {",
+									"    pm.test(\"Customer was not updated in the Community edition\", function () {",
+									"        const jsonData = pm.response.json();",
+									"        pm.expect(jsonData.customer_id).to.eq(pm.environment.get(\"customer-id\"));",
+									"    });",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2980fc02-9812-4b3b-9b87-0a4ab8678755",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer-access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_customers_me}}",
+							"host": [
+								"{{domain}}{{endpoint_customers_me}}"
+							]
+						}
+					},
+					"response": []
         }
       ]
     },
