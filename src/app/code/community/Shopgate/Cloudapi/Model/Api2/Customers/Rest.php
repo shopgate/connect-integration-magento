@@ -60,7 +60,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Mode
      */
     public function sendInvalidationResponse()
     {
-        $this->getResponse()->setHttpResponseCode(400);
+        $this->getResponse()->setHttpResponseCode(Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
 
         return array('messages' => $this->getResponse()->getMessages());
     }

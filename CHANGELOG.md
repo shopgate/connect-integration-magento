@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Support of app-only coupons (except when EE Customer Segments is installed)
 ### Changed
 - Initial installed admin role, it no longer uses all resources
+- Endpoint for basic customer data now retrieves the user group, but not the addresses
 
 ## [3.1.3] - 2018-05-30
 ### Fixed
