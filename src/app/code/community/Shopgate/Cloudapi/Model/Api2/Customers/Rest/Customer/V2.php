@@ -19,6 +19,7 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
+
 class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
 {
     /** @noinspection PhpHierarchyChecksInspection */
