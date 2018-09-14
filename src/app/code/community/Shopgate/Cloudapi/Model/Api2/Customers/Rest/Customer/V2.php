@@ -75,7 +75,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
         try {
             Mage::getModel('customer/customer_api')->update($this->getApiUser()->getUserId(), $filteredData);
         } catch (Mage_Core_Exception $e) {
-            $this->_error($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
         } catch (Exception $e) {
             $this->_critical(self::RESOURCE_INTERNAL_ERROR);
         }
