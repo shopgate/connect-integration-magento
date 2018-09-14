@@ -26,6 +26,9 @@ class Shopgate_Cloudapi_Model_Acl_Filter extends Mage_Api2_Model_Acl_Filter
      */
     public function in(array $requestData)
     {
+        /**
+         * @todo-sg: this will also need to be done for custom options of products
+         */
         if (isset($requestData['product']['recurring_profile_start_datetime'])) {
             $date = Mage::app()->getLocale()->date($requestData['product']['recurring_profile_start_datetime']);
             /** Converting date to locale defined */
