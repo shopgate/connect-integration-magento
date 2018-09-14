@@ -32,4 +32,17 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Clou
     {
         $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
     }
+
+    /** @noinspection PhpHierarchyChecksInspection */
+    /**
+     * Prevent guest from calling customer update endpoint, adjust accordingly
+     *
+     * @param array $filteredData
+     *
+     * @throws Mage_Api2_Exception
+     */
+    protected function _update(array $filteredData)
+    {
+        $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
+    }
 }

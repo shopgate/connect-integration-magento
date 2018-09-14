@@ -19,7 +19,6 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
 class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
 {
     /** @noinspection PhpHierarchyChecksInspection */
@@ -30,17 +29,10 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
      */
     protected function _retrieve()
     {
-        $customerData = Mage::getModel('customer/customer_api')->info($this->getApiUser()->getUserId());
-        $addresses    = array();
-
-        if ($customerData['default_billing']) {
-            $addresses[] = Mage::getModel('customer/address_api')->info($customerData['default_billing']);
-        }
-
-        if ($customerData['default_shipping']) {
-            $addresses[] = Mage::getModel('customer/address_api')->info($customerData['default_shipping']);
-        }
-        $customerData['addresses'] = $addresses;
+        $userId                         = $this->getApiUser()->getUserId();
+        $customerData                   = Mage::getModel('customer/customer_api')->info($userId);
+        $groupItem                      = Mage::getModel('customer/group')->load($customerData['group_id']);
+        $customerData['customer_group'] = $groupItem->getData();
 
         return $this->filterOutData($customerData);
     }
@@ -59,5 +51,32 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
         $excludeKeys = array('password_hash');
 
         return array_diff_key($data, array_flip($excludeKeys));
+    }
+
+    /** @noinspection PhpHierarchyChecksInspection */
+    /**
+     * Update customer data
+     *
+     * @param array $filteredData
+     *
+     * @throws Exception
+     */
+    protected function _update(array $filteredData)
+    {
+        $validator    = $this->_getValidator();
+        $filteredData = $validator->filter($filteredData);
+        if (!$validator->isValidData($filteredData, true)) {
+            $this->_render($this->setDetailedErrors($validator)->sendInvalidationResponse());
+
+            return;
+        }
+
+        try {
+            Mage::getModel('customer/customer_api')->update($this->getApiUser()->getUserId(), $filteredData);
+        } catch (Mage_Core_Exception $e) {
+            $this->_error($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        } catch (Exception $e) {
+            $this->_critical(self::RESOURCE_INTERNAL_ERROR);
+        }
     }
 }
