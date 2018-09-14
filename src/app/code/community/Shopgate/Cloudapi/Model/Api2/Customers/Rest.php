@@ -64,4 +64,17 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Mode
 
         return array('messages' => $this->getResponse()->getMessages());
     }
+
+    /**
+     * @inheritdoc
+     * @return Shopgate_Cloudapi_Model_Acl_Customers_Filter
+     */
+    public function getFilter()
+    {
+        if (!$this->filter) {
+            $this->filter = Mage::getModel('shopgate_cloudapi/acl_customers_filter', $this);
+        }
+
+        return $this->filter;
+    }
 }

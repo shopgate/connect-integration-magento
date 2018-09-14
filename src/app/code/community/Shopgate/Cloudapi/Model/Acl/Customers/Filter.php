@@ -19,17 +19,25 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-class Shopgate_Cloudapi_Model_Acl_Filter extends Mage_Api2_Model_Acl_Filter
+
+class Shopgate_Cloudapi_Model_Acl_Customers_Filter extends Shopgate_Cloudapi_Model_Acl_Filter
 {
     /**
      * @inheritdoc
      */
     public function in(array $requestData)
     {
-        if (isset($requestData['product']['recurring_profile_start_datetime'])) {
-            $date = Mage::app()->getLocale()->date($requestData['product']['recurring_profile_start_datetime']);
-            /** Converting date to locale defined */
-            $requestData['product']['recurring_profile_start_datetime'] = $date->toString();
+        $dateAttributes = Mage::getModel('customer/attribute')
+                             ->getCollection()
+                             ->addFilter('frontend_input', 'date')
+                             ->load();
+        foreach ($dateAttributes as $dateAttribute) {
+            $code = $dateAttribute->getAttributeCode();
+            if (isset($requestData[$code])) {
+                /** Converting date to locale defined */
+                $date = Mage::app()->getLocale()->date($requestData[$code], null, null, false);
+                $requestData[$code] = $date->toString();
+            };
         }
 
         return parent::in($requestData);
