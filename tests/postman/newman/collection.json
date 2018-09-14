@@ -13896,10 +13896,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"gender\": \"2\",\n    \"dob\": \"12/31/1980\",\n    \"favorite_number\": \"42\"\n}"
+							"raw": "{\n    \"gender\": \"2\",\n    \"dob\": \"1980-12-31\",\n    \"favorite_number\": \"42\"\n}"
 						},
 						"url": {
-							"raw": "{{domain}}{{endpoint_customers}}/{{customer-id}}?a=1{{debug}}",
+							"raw": "{{domain}}{{endpoint_customers}}/{{customer-id}}",
 							"host": [
 								"{{domain}}{{endpoint_customers}}"
 							],

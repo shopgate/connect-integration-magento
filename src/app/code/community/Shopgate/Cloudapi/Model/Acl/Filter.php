@@ -34,6 +34,11 @@ class Shopgate_Cloudapi_Model_Acl_Filter extends Mage_Api2_Model_Acl_Filter
             /** Converting date to locale defined */
             $requestData['product']['recurring_profile_start_datetime'] = $date->toString();
         }
+        if (isset($requestData['dob'])) {
+            $date = Mage::app()->getLocale()->date($requestData['dob'], null, null, false);
+            /** Converting date to locale defined */
+            $requestData['dob'] = $date->toString();
+        }
 
         return parent::in($requestData);
     }
