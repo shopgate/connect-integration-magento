@@ -20,29 +20,25 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
+class Shopgate_Cloudapi_Model_Acl_Customers_Filter extends Shopgate_Cloudapi_Model_Acl_Filter
 {
-    /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * Prevent guest from calling ME endpoint, adjust accordingly
-     *
-     * @throws Mage_Api2_Exception
+     * @inheritdoc
      */
-    protected function _retrieve()
+    public function in(array $requestData)
     {
-        $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
-    }
+        $dateAttributes = Mage::getModel('customer/attribute')
+                             ->getCollection()
+                             ->addFilter('frontend_input', 'date');
+        foreach ($dateAttributes as $dateAttribute) {
+            $code = $dateAttribute->getAttributeCode();
+            if (isset($requestData[$code])) {
+                /** Converting date to locale defined */
+                $date = Mage::app()->getLocale()->date($requestData[$code], null, null, false);
+                $requestData[$code] = $date->toString();
+            };
+        }
 
-    /** @noinspection PhpHierarchyChecksInspection */
-    /**
-     * Prevent guest from calling customer update endpoint, adjust accordingly
-     *
-     * @param array $filteredData
-     *
-     * @throws Mage_Api2_Exception
-     */
-    protected function _update(array $filteredData)
-    {
-        $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
+        return parent::in($requestData);
     }
 }

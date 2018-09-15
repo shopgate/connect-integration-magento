@@ -59,7 +59,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         try {
             $address->save();
         } catch (Mage_Core_Exception $e) {
-            $this->_error($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
         } catch (Exception $e) {
             $this->_critical(self::RESOURCE_INTERNAL_ERROR);
         }
@@ -176,7 +176,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         try {
             $address->save();
         } catch (Mage_Core_Exception $e) {
-            $this->_error($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
         } catch (Exception $e) {
             $this->_critical(self::RESOURCE_INTERNAL_ERROR);
         }
@@ -377,7 +377,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
      */
     private function sendInvalidationResponse()
     {
-        $this->getResponse()->setHttpResponseCode(400);
+        $this->getResponse()->setHttpResponseCode(Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
 
         return array('messages' => $this->getResponse()->getMessages());
     }
