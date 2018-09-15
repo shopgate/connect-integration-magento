@@ -23,11 +23,24 @@
 class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
 {
     /**
+     * @inheritdoc
+     * @return Shopgate_Cloudapi_Model_Acl_Customers_Filter
+     */
+    public function getFilter()
+    {
+        if (!$this->filter) {
+            $this->filter = Mage::getModel('shopgate_cloudapi/acl_customers_filter', $this);
+        }
+
+        return $this->filter;
+    }
+
+    /**
      * Get customer resource validator instance
      *
      * @return Shopgate_Cloudapi_Model_Api2_Validator
      */
-    protected function _getValidator()
+    public function getValidator()
     {
         return Mage::getModel('shopgate_cloudapi/api2_validator', array('resource' => $this));
     }
@@ -35,7 +48,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Mode
     /**
      * Sets detailed validation errors to be returned by the address endpoints
      *
-     * @param Shopgate_Cloudapi_Model_Api2_Validator $validator
+     * @param Shopgate_Cloudapi_Model_Api2_Validator|Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator $validator
      *
      * @return Shopgate_Cloudapi_Model_Api2_Customers_Rest
      */
@@ -58,7 +71,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Mode
      * @throws Zend_Controller_Response_Exception
      * @throws Exception
      */
-    public function sendInvalidationResponse()
+    protected function sendInvalidationResponse()
     {
         $this->getResponse()->setHttpResponseCode(Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
 
@@ -66,15 +79,21 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Mode
     }
 
     /**
-     * @inheritdoc
-     * @return Shopgate_Cloudapi_Model_Acl_Customers_Filter
+     * Load customer by id
+     *
+     * @param string|int $id
+     *
+     * @throws Mage_Api2_Exception
+     * @return Mage_Customer_Model_Customer
      */
-    public function getFilter()
+    protected function loadCustomerById($id)
     {
-        if (!$this->filter) {
-            $this->filter = Mage::getModel('shopgate_cloudapi/acl_customers_filter', $this);
+        /* @var $customer Mage_Customer_Model_Customer */
+        $customer = Mage::getModel('customer/customer')->load($id);
+        if (!$customer->getId()) {
+            $this->_critical(self::RESOURCE_NOT_FOUND);
         }
 
-        return $this->filter;
+        return $customer;
     }
 }

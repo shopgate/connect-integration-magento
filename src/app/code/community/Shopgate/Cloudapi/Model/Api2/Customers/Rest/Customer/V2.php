@@ -64,7 +64,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
      */
     protected function _update(array $filteredData)
     {
-        $validator    = $this->_getValidator();
+        $validator    = $this->getValidator();
         $filteredData = $validator->filter($filteredData);
         if (!$validator->isValidData($filteredData, true)) {
             $this->_render($this->setDetailedErrors($validator)->sendInvalidationResponse());

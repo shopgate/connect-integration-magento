@@ -20,7 +20,7 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
+class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
 {
     /**
      * Parameter accepted by the endpoint to filter address collection by id
@@ -39,8 +39,8 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     protected function _create(array $data)
     {
         /* @var $customer Mage_Customer_Model_Customer */
-        $customer  = $this->_loadCustomerById($this->getRequest()->getParam('customer_id'));
-        $validator = $this->_getValidator();
+        $customer  = $this->loadCustomerById($this->getRequest()->getParam('customer_id'));
+        $validator = $this->getValidator();
 
         $data = $validator->filter($data);
         if (!$validator->isValidData($data) || !$validator->isValidDataForCreateAssociationWithCountry($data)) {
@@ -117,7 +117,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     protected function _getCollectionForRetrieve()
     {
         /* @var $customer Mage_Customer_Model_Customer */
-        $customer = $this->_loadCustomerById($this->getRequest()->getParam('customer_id'));
+        $customer = $this->loadCustomerById($this->getRequest()->getParam('customer_id'));
 
         /* @var $collection Mage_Customer_Model_Resource_Address_Collection */
         $collection = $customer->getAddressesCollection();
@@ -154,7 +154,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     {
         /* @var $address Mage_Customer_Model_Address */
         $address   = $this->_loadCustomerAddressById($this->getRequest()->getParam('id'));
-        $validator = $this->_getValidator();
+        $validator = $this->getValidator();
 
         $data = $validator->filter($data);
         if (!$validator->isValidData($data, true)
@@ -222,7 +222,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
      *
      * @return Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator
      */
-    protected function _getValidator()
+    public function getValidator()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return Mage::getModel('shopgate_cloudapi/api2_customers_addresses_validator', array('resource' => $this));
@@ -302,25 +302,6 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     }
 
     /**
-     * Load customer by id
-     *
-     * @param int $id
-     *
-     * @throws Mage_Api2_Exception
-     * @return Mage_Customer_Model_Customer
-     */
-    protected function _loadCustomerById($id)
-    {
-        /* @var $customer Mage_Customer_Model_Customer */
-        $customer = Mage::getModel('customer/customer')->load($id);
-        if (!$customer->getId()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
-        }
-
-        return $customer;
-    }
-
-    /**
      * Retrieve custom attribute key=>value pairs
      *
      * @param int $addressId
@@ -367,38 +348,5 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
         }
 
         return $list;
-    }
-
-    /**
-     * Bypasses the exception state and passes down invalidation errors
-     *
-     * @throws Zend_Controller_Response_Exception
-     * @throws Exception
-     */
-    private function sendInvalidationResponse()
-    {
-        $this->getResponse()->setHttpResponseCode(Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
-
-        return array('messages' => $this->getResponse()->getMessages());
-    }
-
-    /**
-     * Sets detailed validation errors to be returned by the address endpoints
-     *
-     * @param Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator $validator
-     *
-     * @return Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest
-     */
-    private function setDetailedErrors(Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator $validator)
-    {
-        foreach ($validator->getDetailedErrors() as $code => $errors) {
-            $this->_errorMessage(
-                '',
-                Mage_Api2_Model_Server::HTTP_BAD_REQUEST,
-                array('path' => $code, 'messages' => $errors)
-            );
-        }
-
-        return $this;
     }
 }

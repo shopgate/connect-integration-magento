@@ -26,14 +26,14 @@ class Shopgate_Cloudapi_Model_Api2_Validator extends Mage_Api2_Model_Resource_Va
     private $detailedErrors = array();
 
     /**
-     * @param string $errors
+     * @param string $error
      * @param string $attributeCode
      *
      * @return Shopgate_Cloudapi_Model_Api2_Validator
      */
-    protected function addDetailedError($errors, $attributeCode = 'misc')
+    protected function addDetailedError($error, $attributeCode = 'misc')
     {
-        $this->detailedErrors[$attributeCode][] = $errors;
+        $this->detailedErrors[$attributeCode][] = $error;
 
         return $this;
     }
@@ -67,6 +67,7 @@ class Shopgate_Cloudapi_Model_Api2_Validator extends Mage_Api2_Model_Resource_Va
      * Copied over from Mage and added detailed validation printing
      *
      * @inheritdoc
+     * @throws Mage_Core_Exception
      */
     public function isValidData(array $data, $partial = false)
     {

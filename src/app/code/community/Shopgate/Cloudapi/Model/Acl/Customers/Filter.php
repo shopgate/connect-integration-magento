@@ -30,6 +30,7 @@ class Shopgate_Cloudapi_Model_Acl_Customers_Filter extends Shopgate_Cloudapi_Mod
         $dateAttributes = Mage::getModel('customer/attribute')
                              ->getCollection()
                              ->addFilter('frontend_input', 'date');
+        /** @var Mage_Customer_Model_Attribute $dateAttribute */
         foreach ($dateAttributes as $dateAttribute) {
             $code = $dateAttribute->getAttributeCode();
             if (isset($requestData[$code])) {
