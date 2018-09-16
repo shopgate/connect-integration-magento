@@ -31,6 +31,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Password_Validator extends Shopgate
      * Validates the incoming password data
      *
      * @inheritdoc
+     * @throws Zend_Validate_Exception
      */
     public function isValidData(array $data, $partial = false)
     {
@@ -46,7 +47,9 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Password_Validator extends Shopgate
 
         //check new password
         $customer->setPassword($data['password'])->setData('password_confirmation', $data['password']);
-        $errors = $customer->validateResetPassword();
+        $errors = method_exists($customer, 'validateResetPassword')
+            ? $customer->validateResetPassword()
+            : $this->validateResetPassword($customer);
         if (is_array($errors)) {
             $this->addDetailedErrors($errors, self::FIELD_NEW_PSW);
         }
@@ -77,5 +80,36 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Password_Validator extends Shopgate
         }
 
         return $this->customer;
+    }
+
+    /**
+     * Validate customer password on reset
+     * Legacy support for version ~CE1.8, for older versions:
+     *
+     * @see Mage_Customer_Model_Customer::validateResetPassword()
+     *
+     * @param Mage_Customer_Model_Customer $customer
+     *
+     * @return array|bool
+     * @throws Zend_Validate_Exception
+     */
+    public function validateResetPassword(Mage_Customer_Model_Customer $customer)
+    {
+        $errors    = array();
+        $helper    = Mage::helper('customer');
+        $minLength = 6;
+        $maxLength = 256;
+        $password  = $customer->getData('password');
+        if (!Zend_Validate::is($password, 'NotEmpty')) {
+            $errors[] = $helper->__('The password cannot be empty.');
+        }
+        if (!Zend_Validate::is($password, 'StringLength', array($minLength))) {
+            $errors[] = $helper->__('The minimum password length is %s', $minLength);
+        }
+        if (!Zend_Validate::is($password, 'StringLength', array('max' => $maxLength))) {
+            $errors[] = $helper->__('Please enter a password with at most %s characters.', $maxLength);
+        }
+
+        return empty($errors) ? : $errors;
     }
 }
