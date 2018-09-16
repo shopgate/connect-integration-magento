@@ -43,6 +43,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Password_Rest_Customer_V2
         }
 
         $customer->changePassword($data['password']);
+        $customer->sendChangedPasswordOrEmail();
     }
 
     /**
