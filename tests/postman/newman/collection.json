@@ -18417,12 +18417,12 @@
               "response": []
             },
             {
-              "name": "New psw too long",
+              "name": "Wrong user update",
               "event": [
                 {
                   "listen": "prerequest",
                   "script": {
-                    "id": "aeed71cc-9f4a-43e2-a19b-9ba269ba64c4",
+                    "id": "8f466eb5-2868-4c9c-9928-97b16d972b87",
                     "type": "text/javascript",
                     "exec": [
                       ""
@@ -18432,17 +18432,11 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "7b080212-9a17-444f-9c21-e2b3089a3ca0",
+                    "id": "70e625c1-f82e-481f-9b0f-af1e312bc085",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test('Status code is 400', function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});",
-                      "",
-                      "pm.test('New password is too long', function () {",
-                      "    const jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
-                      "    pm.expect(jsonData.messages.error[0].path).to.eql('password');",
+                      "pm.test('Status code is 404', function () {",
+                      "    pm.response.to.have.status(404);",
                       "});"
                     ]
                   }
@@ -18454,7 +18448,7 @@
                   "bearer": [
                     {
                       "key": "token",
-                      "value": "{{customer-access-token}}",
+                      "value": "{{customer-access-token-2}}",
                       "type": "string"
                     }
                   ]
@@ -18468,7 +18462,67 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n\t\"oldPassword\":\"{{password}}\",\n\t\"password\":\"Loremipsumdolorsitametcausaetractatossigniferumqueincumproeicongueiriuredolorumsumoaudiamei quotractatosconcludaturquesedeanameifugittantaspartemhasdoloremvituperatoribuscueratnecessitatibusquiaassumfaceteomnesquequocuinbrutedecoreomniuassakjdqjqwkqjkqjkaahu\"\n}"
+                  "raw": "{\n\t\"oldPassword\":\"{{password}}\",\n\t\"password\":\"some-pass-attempt\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/password",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Guest update",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "8f466eb5-2868-4c9c-9928-97b16d972b87",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "0dfc83e9-9d6e-4d15-ad77-2be028c5eedb",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 401', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"oldPassword\":\"{{password}}\",\n\t\"password\":\"some-pass-attempt\"\n}"
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_customers_id}}/password",
