@@ -18492,11 +18492,11 @@
                 {
                   "listen": "test",
                   "script": {
-                    "id": "0dfc83e9-9d6e-4d15-ad77-2be028c5eedb",
+                    "id": "a7909825-ab99-4747-99d7-ccff891f6b08",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.test('Status code is 401', function () {",
-                      "    pm.response.to.have.status(401);",
+                      "pm.test('Access to this endpoint if forbidden for guests', function () {",
+                      "    pm.response.to.have.status(403);",
                       "});"
                     ]
                   }
