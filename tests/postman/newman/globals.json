@@ -90,6 +90,11 @@
       "enabled": true
     },
     {
+      "key": "endpoint_customers_id",
+      "value": "{{endpoint_customers}}/{{customer-id}}",
+      "enabled": true
+    },
+    {
       "key": "endpoint_customers_id_addresses",
       "value": "{{endpoint_customers}}/{{customer-id}}/addresses",
       "enabled": true

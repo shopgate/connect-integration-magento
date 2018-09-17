@@ -20,29 +20,8 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest_Customer_V2
-    extends Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest
+class Shopgate_Cloudapi_Model_Api2_Customers_Password_Rest extends Shopgate_Cloudapi_Model_Api2_Customers_Rest
 {
-    /**
-     * Load customer address by id
-     *
-     * @param int $id
-     *
-     * @return Mage_Customer_Model_Address
-     * @throws Mage_Api2_Exception
-     * @throws Exception
-     */
-    protected function _loadCustomerAddressById($id)
-    {
-        /* @var $customerAddress Mage_Customer_Model_Address */
-        $customerAddress = parent::_loadCustomerAddressById($id);
-        if ($this->getApiUser()->getUserId() !== $customerAddress->getCustomerId()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
-        }
-
-        return $customerAddress;
-    }
-
     /**
      * Load customer by id
      *

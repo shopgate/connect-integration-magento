@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "ed7e7a0e-26e2-44e2-bc84-62dc91a20dd5",
+    "_postman_id": "607737b4-1215-4218-82db-93b2ec2aa49d",
     "name": "Mage Cloud",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -13783,15 +13783,15 @@
             {
               "listen": "test",
               "script": {
-                "id": "1af4ac89-c0e5-4bd1-9d73-d9e819168e44",
+                "id": "7f44cbd9-43c2-4276-bde0-6e229220b63a",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test(\"Status 400 returned\", function () {",
                   "    pm.response.to.have.status(400);",
                   "});",
                   "",
-                  "pm.test(\"One error with country_id path returned\", function () {",
-                  "    var jsonData = pm.response.json();",
+                  "pm.test(\"We get at least 2 errors regarding first name and last name\", function () {",
+                  "    const jsonData = pm.response.json();",
                   "    pm.expect(jsonData.messages.error.length).to.eq(2);",
                   "    pm.expect(jsonData.messages.error[0].path).to.eq('firstname');",
                   "    pm.expect(jsonData.messages.error[1].path).to.eq('lastname');",
@@ -13843,146 +13843,140 @@
             }
           },
           "response": []
-				},
-				{
-					"name": "Update EE specific customer data",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "ba956825-c91f-4a18-aa7f-3e3f0221e5fa",
-								"type": "text/javascript",
-								"exec": [
-									"if (pm.variables.get(\"mage_type\") === 'EE') {",
-									"    pm.test('Successfull call', function(){",
-									"        pm.response.to.be.success;",
-									"    });",
-									"} else {",
-									"    pm.test(\"Request data is invalid for the Community edition\", function () {",
-									"        pm.response.to.have.status(400);",
-									"    });",
-									"}"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "40c8d3cd-93c2-429b-bdf8-0bca31e9aa1a",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{customer-access-token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"gender\": \"2\",\n    \"dob\": \"1980-12-31\",\n    \"favorite_number\": \"42\"\n}"
-						},
-						"url": {
-							"raw": "{{domain}}{{endpoint_customers}}/{{customer-id}}",
-							"host": [
-								"{{domain}}{{endpoint_customers}}"
-							],
-							"path": [
-								"{{customer-id}}"
-							],
-							"query": [
-								{
-									"key": "a",
-									"value": "1{{debug}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Check updated EE specific customer data",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "53a6f01c-5f2b-464e-bb24-937d56fb0b7a",
-								"type": "text/javascript",
-								"exec": [
-									"if (pm.variables.get(\"mage_type\") === 'EE') {",
-									"    pm.test(\"EE specific customer data was updated\", function () {",
-									"        const jsonData = pm.response.json();",
-									"        pm.expect(jsonData.customer_id).to.eq(pm.environment.get(\"customer-id\"));",
-									"        pm.expect(jsonData.dob).to.eq('1980-12-31 00:00:00');",
-									"        pm.expect(jsonData.gender).to.eq('2');",
-									"        pm.expect(jsonData.favorite_number).to.eq('42');",
-									"    });",
-									"} else {",
-									"    pm.test(\"Customer was not updated in the Community edition\", function () {",
-									"        const jsonData = pm.response.json();",
-									"        pm.expect(jsonData.customer_id).to.eq(pm.environment.get(\"customer-id\"));",
-									"    });",
-									"}"
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "2980fc02-9812-4b3b-9b87-0a4ab8678755",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{customer-access-token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{domain}}{{endpoint_customers_me}}",
-							"host": [
-								"{{domain}}{{endpoint_customers_me}}"
-							]
-						}
-					},
-					"response": []
+        },
+        {
+          "name": "Update EE specific customer data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "025837a2-e229-4d0f-bd6d-3f26e2801b39",
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.variables.get('mage_type') === 'EE') {",
+                  "    pm.test('Successfull call', function(){",
+                  "        pm.response.to.be.success;",
+                  "    });",
+                  "} else {",
+                  "    pm.test('Request data is invalid for the Community edition', function () {",
+                  "        pm.response.to.have.status(400);",
+                  "    });",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "40c8d3cd-93c2-429b-bdf8-0bca31e9aa1a",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"gender\": \"2\",\n    \"dob\": \"1980-12-31\",\n    \"favorite_number\": \"42\"\n}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers}}/{{customer-id}}",
+              "host": [
+                "{{domain}}{{endpoint_customers}}"
+              ],
+              "path": [
+                "{{customer-id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Check updated EE specific customer data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "6ea30813-c530-40dd-ab98-471f13b77cdd",
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.variables.get('mage_type') === 'EE') {",
+                  "    pm.test('EE specific customer data was updated', function () {",
+                  "        const jsonData = pm.response.json();",
+                  "        pm.expect(jsonData.customer_id).to.eq(pm.environment.get('customer-id'));",
+                  "        pm.expect(jsonData.dob).to.eq('1980-12-31 00:00:00');",
+                  "        pm.expect(jsonData.gender).to.eq('2');",
+                  "        pm.expect(jsonData.favorite_number).to.eq('42');",
+                  "    });",
+                  "} else {",
+                  "    pm.test('Customer was not updated in the Community edition', function () {",
+                  "        const jsonData = pm.response.json();",
+                  "        pm.expect(jsonData.customer_id).to.eq(pm.environment.get(\"customer-id\"));",
+                  "    });",
+                  "}"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "2980fc02-9812-4b3b-9b87-0a4ab8678755",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_me}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_me}}"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -18035,6 +18029,802 @@
       ]
     },
     {
+      "name": "/v2/customers/:id/password",
+      "item": [
+        {
+          "name": "Errors",
+          "item": [
+            {
+              "name": "Get customer ID via ME",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ea012073-4774-410e-9933-17dd448960eb",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Successfully loaded customer data via ME endpoint', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.response.to.have.status(200);",
+                      "    pm.environment.set('customer-id', jsonData.customer_id);",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "2956442a-244e-44fd-bf12-7af6ccbc6f14",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.unset('customer_id');"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_me}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_me}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No params",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "48404a65-e7f6-41ad-82a2-499d01ef49a0",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1d36bb86-6978-4fb9-8677-26a17c799812",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/password",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Empty params",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "48404a65-e7f6-41ad-82a2-499d01ef49a0",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "e544b651-49ab-4890-abb4-bf5c60ea7eb3",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test('Both fields needed', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(2);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"oldPassword\":\"\",\n\t\"password\":\"\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/password",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "No old psw",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "b6634a56-9ac1-41c5-b455-941240c19739",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "656e9e80-f50f-4e4e-a91f-93475c22d16e",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test('Old password not provided', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eql('oldPassword');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"password\":\"{{temp-password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/password",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Old psw no good",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "7ebb17b5-4e7c-47aa-98e9-80b4ccd3faa0",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "76e3f60c-beec-41ba-9cca-cdf0b0e84d8f",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test('Old password is incorrect', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eql('oldPassword');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"oldPassword\":\"bad-old-pass\",\n\t\"password\":\"{{temp-password}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/password",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "New psw too short",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "aeed71cc-9f4a-43e2-a19b-9ba269ba64c4",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b252de02-b823-428e-aa00-7ac829f8b48c",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test('New password is too short', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eql('password');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"oldPassword\":\"{{password}}\",\n\t\"password\":\"0\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/password",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Wrong user update",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "8f466eb5-2868-4c9c-9928-97b16d972b87",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "70e625c1-f82e-481f-9b0f-af1e312bc085",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 404', function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token-2}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"oldPassword\":\"{{password}}\",\n\t\"password\":\"some-pass-attempt\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/password",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Guest update",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "8f466eb5-2868-4c9c-9928-97b16d972b87",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "a7909825-ab99-4747-99d7-ccff891f6b08",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Access to this endpoint if forbidden for guests', function () {",
+                      "    pm.response.to.have.status(403);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"oldPassword\":\"{{password}}\",\n\t\"password\":\"some-pass-attempt\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/password",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "password"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Set password",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "ab1294ba-5ea2-4648-967b-29b1638d4bac",
+                "type": "text/javascript",
+                "exec": [
+                  "const tempPass = pm.environment.get('customer-id') + '-' + pm.globals.get('password'); ",
+                  "pm.environment.set('temp-password', tempPass);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "3a3ceec7-7b30-4e18-a785-778df5e4dc12",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"email\": \"example@shopgate.com\",\n\t\"firstname\": \"Example\",\n\t\"oldPassword\":\"{{password}}\",\n\t\"password\":\"{{temp-password}}\"\n}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_id}}/password",
+              "host": [
+                "{{domain}}{{endpoint_customers_id}}"
+              ],
+              "path": [
+                "password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Token: password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3015b5ba-42dd-44e9-8917-feeb0bace473",
+                "type": "text/javascript",
+                "exec": [
+                  "if (responseCode.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('customer-access-token', jsonData.access_token);",
+                  "}",
+                  "",
+                  "pm.test('Successfull call', function(){",
+                  "    pm.response.to.be.success;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "PHP_AUTH_USER",
+                "value": "{{client_id}}"
+              },
+              {
+                "key": "PHP_AUTH_PW",
+                "value": "{{client_secret}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{username1}}\",\n  \"password\": \"{{temp-password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_auth_token}}",
+              "host": [
+                "{{domain}}{{endpoint_auth_token}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "No change in data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "2f37a46f-9858-40d8-ad72-ab2e497f183f",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Successfully loaded customer data via ME endpoint', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.expect(jsonData.email).to.eq(pm.globals.get('username1'));",
+                  "    pm.expect(jsonData.firstname).to.not.eq('Example');",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "a9698550-67e4-44b1-babf-fd75731ff1cd",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_me}}",
+              "host": [
+                "{{domain}}{{endpoint_customers_me}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset back",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "00e81806-4f10-4220-aa04-932afc3c0d3a",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "c7996809-2acd-41f6-8110-c2fa8113213a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.environment.unset('temp-password');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{customer-access-token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"oldPassword\":\"{{temp-password}}\",\n\t\"password\":\"{{password}}\"\n}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_customers_id}}/password",
+              "host": [
+                "{{domain}}{{endpoint_customers_id}}"
+              ],
+              "path": [
+                "password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Token: password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "7691906f-4745-435a-bcf7-f7c8bc284e99",
+                "type": "text/javascript",
+                "exec": [
+                  "if (responseCode.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"customer-access-token\", jsonData.access_token);",
+                  "}",
+                  "",
+                  "pm.test('Successfull call', function(){",
+                  "    pm.response.to.be.success;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "PHP_AUTH_USER",
+                "value": "{{client_id}}"
+              },
+              {
+                "key": "PHP_AUTH_PW",
+                "value": "{{client_secret}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{username1}}\",\n  \"password\": \"{{password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+            },
+            "url": {
+              "raw": "{{domain}}{{endpoint_auth_token}}",
+              "host": [
+                "{{domain}}{{endpoint_auth_token}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "/v2/products",
       "item": [
         {
@@ -19728,7 +20518,10 @@
                   "request": {
                     "method": "POST",
                     "header": [],
-                    "body": {},
+                    "body": {
+                      "mode": "raw",
+                      "raw": ""
+                    },
                     "url": {
                       "raw": "{{domain}}forwarder.php?quote=new&customer={{customer-id}}&product=741&store=1",
                       "host": [

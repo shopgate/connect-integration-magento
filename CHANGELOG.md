@@ -6,17 +6,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- Addresses to the response of the customers/me endpoint
-- Endpoint for customer address retrieval
-- Endpoint for customer address creation
-- Endpoint for customer address deletion
-- Endpoint for customer address update
-- Endpoint for customer data update
+- Endpoint for customer address retrieval   (GET shopgate/v2/customers/:id/addresses)
+- Endpoint for customer address creation    (POST shopgate/v2/customers/:id/addresses)
+- Endpoint for customer address deletion    (DELETE shopgate/v2/customers/:id/addresses/:id)
+- Endpoint for customer address update      (POST shopgate/v2/customers/:id/addresses/:id)
+- Endpoint for customer data update         (POST shopgate/v2/customers/:id)
+- Endpoint for customer password update     (POST shopgate/v2/customers/:id/password)
 - Shell script to update our REST attributes / roles
 - Support of app-only coupons (except when EE Customer Segments is installed)
 ### Changed
 - Initial installed admin role, it no longer uses all resources
-- Endpoint for basic customer data now retrieves the user group, but not the addresses
+- Endpoint for basic customer data now retrieves the user group
 
 ## [3.1.3] - 2018-05-30
 ### Fixed
