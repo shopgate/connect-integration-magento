@@ -22,7 +22,7 @@
 
 class Shopgate_Cloudapi_Model_Api2_Customers_Password_Validator extends Shopgate_Cloudapi_Model_Api2_Validator
 {
-    const FIELD_NEW_PSW = 'password';
+    const FIELD_PSW     = 'password';
     const FIELD_OLD_PSW = 'oldPassword';
     /** @var Mage_Customer_Model_Customer|null */
     private $customer;
@@ -35,23 +35,24 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Password_Validator extends Shopgate
      */
     public function isValidData(array $data, $partial = false)
     {
-        if (empty($data['oldPassword'])) {
+        if (empty($data[self::FIELD_OLD_PSW])) {
             $this->addDetailedError(Mage::helper('customer')->__('The password cannot be empty.'), self::FIELD_OLD_PSW);
         }
 
         $customer = $this->getCustomer();
         // check old password
-        if (!$customer->validatePassword($data['oldPassword'])) {
+        if (!$customer->validatePassword($data[self::FIELD_OLD_PSW])) {
             $this->addDetailedError(Mage::helper('customer')->__('Invalid current password'), self::FIELD_OLD_PSW);
         }
 
         //check new password
-        $customer->setPassword($data['password'])->setData('password_confirmation', $data['password']);
+        $customer->setPassword($data[self::FIELD_PSW])
+                 ->setData('password_confirmation', $data[self::FIELD_PSW]);
         $errors = method_exists($customer, 'validateResetPassword')
             ? $customer->validateResetPassword()
             : $this->validateResetPassword($customer);
         if (is_array($errors)) {
-            $this->addDetailedErrors($errors, self::FIELD_NEW_PSW);
+            $this->addDetailedErrors($errors, self::FIELD_PSW);
         }
 
         return count($this->getDetailedErrors()) === 0;
@@ -99,7 +100,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Password_Validator extends Shopgate
         $helper    = Mage::helper('customer');
         $minLength = 6;
         $maxLength = 256;
-        $password  = $customer->getData('password');
+        $password  = $customer->getData(self::FIELD_PSW);
         if (!Zend_Validate::is($password, 'NotEmpty')) {
             $errors[] = $helper->__('The password cannot be empty.');
         }
