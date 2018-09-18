@@ -42,6 +42,10 @@
                                 <title>Addresses</title>
                                 <sort_order>10</sort_order>
                             </shopgate_cloudapi_v2_customers_addresses>
+                            <shopgate_cloudapi_v2_customers_email translate="title" module="Shopgate_Cloudapi">
+                                <title>Email</title>
+                                <sort_order>20</sort_order>
+                            </shopgate_cloudapi_v2_customers_email>
                             <shopgate_cloudapi_v2_customers_password translate="title" module="Shopgate_Cloudapi">
                                 <title>Password</title>
                                 <sort_order>30</sort_order>
@@ -325,6 +329,40 @@
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_customers_addresses>
+            <shopgate_cloudapi_v2_customers_email>
+                <group>shopgate_cloudapi_v2_customers_email</group>
+                <model>shopgate_cloudapi/api2_customers_email</model>
+                <title>Email</title>
+                <sort_order>67</sort_order>
+                <privileges>
+                    <customer>
+                        <create>1</create>
+                    </customer>
+                </privileges>
+                <force_attributes>
+                    <customer>
+                        <email>New email address</email>
+                    </customer>
+                </force_attributes>
+                <validators>
+                    <eav>
+                        <customer>
+                            <entity_model>customer/customer</entity_model>
+                            <form_model>customer/form</form_model>
+                            <form_code>
+                                <update>customer_account_edit</update>
+                            </form_code>
+                        </customer>
+                    </eav>
+                </validators>
+                <routes>
+                    <route_v2_customers_id_email>
+                        <route>/v2/customers/:customer_id/email</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_id_email>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_customers_email>
             <shopgate_cloudapi_v2_customers_password>
                 <group>shopgate_cloudapi_v2_customers_password</group>
                 <model>shopgate_cloudapi/api2_customers_password</model>
