@@ -51,6 +51,12 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Email_Rest_Customer_V2
             $this->_critical(self::RESOURCE_INTERNAL_ERROR);
         }
 
+        /** @var Magento_Db_Adapter_Pdo_Mysql $writeConnection */
+        $writeConnection = Mage::getSingleton('core/resource')->getConnection('core_write');
+        /** @var Shopgate_Cloudapi_Model_OAuth2_Db_Pdo $storage */
+        $storage = Mage::getModel('shopgate_cloudapi/oAuth2_db_pdo', array($writeConnection->getConnection()));
+        $storage->updateEmailTokens($oldEmail, $data['email']);
+
         if (method_exists($customer, 'sendChangedPasswordOrEmail')) {
             $customer->setData('old_email', $oldEmail);
             $customer->sendChangedPasswordOrEmail();
