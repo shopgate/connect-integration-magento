@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -f cloud-integration-magento-*.tgz
-#rm -f release/magento1702.zip
+rm -f release/magento1702.zip
 rm -rf release/magento
 rm -rf vendor
 
@@ -12,7 +12,7 @@ xmlstarlet edit -L -S -O -u "/_/version" -v "${TRAVIS_TAG}" src/var/connect/shop
 xmlstarlet edit -L -S -u "/config/modules/Shopgate_Cloudapi/version" -v "${TRAVIS_TAG}" src/app/code/community/Shopgate/Cloudapi/etc/config.xml
 
 # Install magento to create package
-#wget --quiet -O release/magento1702.zip http://files.shopgate.com/magento/magento1702.zip > /dev/null
+wget --quiet -O release/magento1702.zip http://files.shopgate.com/magento/magento1702.zip > /dev/null
 unzip release/magento1702.zip -d release/magento > /dev/null
 
 # Sync module files & packager script into magento install

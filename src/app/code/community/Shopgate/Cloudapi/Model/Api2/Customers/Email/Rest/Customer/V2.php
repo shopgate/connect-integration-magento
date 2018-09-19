@@ -25,9 +25,9 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Email_Rest_Customer_V2
 {
     /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * Update password by passing the old and new
+     * Update email address
      *
-     * @param array $data - ('oldPassword' => 'xxx', 'password'=>'xxx')
+     * @param array $data - ('email' => 'example@example.com')
      *
      * @throws Mage_Api2_Exception
      * @throws Exception
