@@ -18304,8 +18304,8 @@
 										"id": "521c31f8-ef19-409d-bd02-4744a0abdd46",
 										"type": "text/javascript",
 										"exec": [
-											"pm.test('Status code is 401', function () {",
-											"    pm.response.to.have.status(401);",
+											"pm.test('Status code is 404', function () {",
+											"    pm.response.to.have.status(404);",
 											"});"
 										]
 									}
@@ -18364,8 +18364,8 @@
 										"id": "f7e5163e-6fba-4868-90c1-99475e3d0fc4",
 										"type": "text/javascript",
 										"exec": [
-											"pm.test('Status code is 401', function () {",
-											"    pm.response.to.have.status(401);",
+											"pm.test('Status code is 403', function () {",
+											"    pm.response.to.have.status(403);",
 											"});"
 										]
 									}
