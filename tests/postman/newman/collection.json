@@ -18029,6 +18029,729 @@
       ]
     },
     {
+			"name": "/v2/customers/:id/email",
+			"item": [
+				{
+					"name": "Errors",
+					"item": [
+						{
+							"name": "Get customer ID via ME",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ea012073-4774-410e-9933-17dd448960eb",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Successfully loaded customer data via ME endpoint', function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.response.to.have.status(200);",
+											"    pm.environment.set('customer-id', jsonData.customer_id);",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2956442a-244e-44fd-bf12-7af6ccbc6f14",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.unset('customer_id');"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customers_me}}",
+									"host": [
+										"{{domain}}{{endpoint_customers_me}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "No params",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "48404a65-e7f6-41ad-82a2-499d01ef49a0",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "1d36bb86-6978-4fb9-8677-26a17c799812",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Status code is 400', function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customers_id}}/email",
+									"host": [
+										"{{domain}}{{endpoint_customers_id}}"
+									],
+									"path": [
+										"email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "new email is empty",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "48404a65-e7f6-41ad-82a2-499d01ef49a0",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "83f2081a-e32a-4c32-8e14-d498e8ea5102",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Status code is 400', function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test('Error: email address cannot be empty', function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.messages.error.length).to.eq(1);",
+											"    pm.expect(jsonData.messages.error[0].path).to.eql('email');",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\":\"\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customers_id}}/email",
+									"host": [
+										"{{domain}}{{endpoint_customers_id}}"
+									],
+									"path": [
+										"email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New email not an email address",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "aeed71cc-9f4a-43e2-a19b-9ba269ba64c4",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "4f4de8d2-8e44-4fa0-9c7d-80e2b0524cc8",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Status code is 400', function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test('Error: Invalid email address', function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.messages.error.length).to.eq(1);",
+											"    pm.expect(jsonData.messages.error[0].path).to.eql('email');",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\":\"userhost.com\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customers_id}}/email",
+									"host": [
+										"{{domain}}{{endpoint_customers_id}}"
+									],
+									"path": [
+										"email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong user update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8f466eb5-2868-4c9c-9928-97b16d972b87",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "521c31f8-ef19-409d-bd02-4744a0abdd46",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Status code is 404', function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer-access-token-2}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\":\"valid@email.com\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customers_id}}/email",
+									"host": [
+										"{{domain}}{{endpoint_customers_id}}"
+									],
+									"path": [
+										"email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Guest update",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8f466eb5-2868-4c9c-9928-97b16d972b87",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "f7e5163e-6fba-4868-90c1-99475e3d0fc4",
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Status code is 403', function () {",
+											"    pm.response.to.have.status(403);",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\":\"valid@email.com\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_customers_id}}/email",
+									"host": [
+										"{{domain}}{{endpoint_customers_id}}"
+									],
+									"path": [
+										"email"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get customer ID via ME",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9929cd06-eb01-424b-a398-df220840b14a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.response.to.have.status(200);",
+									"    pm.environment.set(\"customer-id\", jsonData.customer_id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.unset(\"customer_id\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer-access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_customers_me}}",
+							"host": [
+								"{{domain}}{{endpoint_customers_me}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set email address",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ea7d58b9-0123-47a2-80f3-34648cdcb26a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set('temp-username', 'temp@example.com');"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a3ceec7-7b30-4e18-a785-778df5e4dc12",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer-access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{temp-username}}\",\n\t\"firstname\": \"Example\"\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_customers_id}}/email",
+							"host": [
+								"{{domain}}{{endpoint_customers_id}}"
+							],
+							"path": [
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token: temp email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3015b5ba-42dd-44e9-8917-feeb0bace473",
+								"type": "text/javascript",
+								"exec": [
+									"if (responseCode.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set('customer-access-token', jsonData.access_token);",
+									"}",
+									"",
+									"pm.test('Successfull call', function(){",
+									"    pm.response.to.be.success;",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "PHP_AUTH_USER",
+								"value": "{{client_id}}"
+							},
+							{
+								"key": "PHP_AUTH_PW",
+								"value": "{{client_secret}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{temp-username}}\",\n  \"password\": \"{{password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_auth_token}}",
+							"host": [
+								"{{domain}}{{endpoint_auth_token}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "No change in data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71346931-95d5-4055-b6c9-e0d4f87e419d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Successfully loaded customer data via ME endpoint', function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.email).to.eq(pm.environment.get('temp-username'));",
+									"    pm.expect(jsonData.firstname).to.not.eq('Example');",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a9698550-67e4-44b1-babf-fd75731ff1cd",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer-access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_customers_me}}",
+							"host": [
+								"{{domain}}{{endpoint_customers_me}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset email back",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "00e81806-4f10-4220-aa04-932afc3c0d3a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7996809-2acd-41f6-8110-c2fa8113213a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.environment.unset('temp-password');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{customer-access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"{{username1}}\"\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_customers_id}}/email",
+							"host": [
+								"{{domain}}{{endpoint_customers_id}}"
+							],
+							"path": [
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token: original email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7691906f-4745-435a-bcf7-f7c8bc284e99",
+								"type": "text/javascript",
+								"exec": [
+									"if (responseCode.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"customer-access-token\", jsonData.access_token);",
+									"}",
+									"",
+									"pm.test('Successfull call', function(){",
+									"    pm.response.to.be.success;",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "PHP_AUTH_USER",
+								"value": "{{client_id}}"
+							},
+							{
+								"key": "PHP_AUTH_PW",
+								"value": "{{client_secret}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{username1}}\",\n  \"password\": \"{{password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+						},
+						"url": {
+							"raw": "{{domain}}{{endpoint_auth_token}}",
+							"host": [
+								"{{domain}}{{endpoint_auth_token}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
       "name": "/v2/customers/:id/password",
       "item": [
         {
@@ -20547,11 +21270,6 @@
                         {
                           "key": "store",
                           "value": "1"
-                        },
-                        {
-                          "key": "XDEBUG_SESSION_START",
-                          "value": "PHPSTORM",
-                          "disabled": true
                         }
                       ]
                     },
