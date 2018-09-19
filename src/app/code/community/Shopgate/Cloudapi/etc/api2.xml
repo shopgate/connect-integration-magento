@@ -125,9 +125,9 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_carts>
             <shopgate_cloudapi_v2_carts_items>
-                <group>shopgate_cloudapi_v2_carts_items</group>
+                <group>shopgate_cloudapi_v2_carts</group>
                 <model>shopgate_cloudapi/api2_carts_items</model>
-                <title>Item manipulation</title>
+                <title>Items</title>
                 <sort_order>40</sort_order>
                 <privileges>
                     <customer>
@@ -166,9 +166,9 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_carts_items>
             <shopgate_cloudapi_v2_carts_url>
-                <group>shopgate_cloudapi_v2_carts_url</group>
+                <group>shopgate_cloudapi_v2_carts</group>
                 <model>shopgate_cloudapi/api2_carts_url</model>
-                <title>Checkout</title>
+                <title>Checkout Url</title>
                 <sort_order>50</sort_order>
                 <privileges>
                     <customer>
@@ -187,9 +187,9 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_carts_url>
             <shopgate_cloudapi_v2_carts_customer>
-                <group>shopgate_cloudapi_v2_carts_customer</group>
+                <group>shopgate_cloudapi_v2_carts</group>
                 <model>shopgate_cloudapi/api2_carts_customer</model>
-                <title>Cart Merge</title>
+                <title>Guest Migration</title>
                 <sort_order>60</sort_order>
                 <privileges>
                     <customer>
@@ -277,7 +277,7 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_customers>
             <shopgate_cloudapi_v2_customers_addresses>
-                <group>shopgate_cloudapi_v2_customers_addresses</group>
+                <group>shopgate_cloudapi_v2_customers</group>
                 <model>shopgate_cloudapi/api2_customers_addresses</model>
                 <working_model>customer/address</working_model>
                 <title>Addresses</title>
@@ -330,7 +330,7 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_customers_addresses>
             <shopgate_cloudapi_v2_customers_email>
-                <group>shopgate_cloudapi_v2_customers_email</group>
+                <group>shopgate_cloudapi_v2_customers</group>
                 <model>shopgate_cloudapi/api2_customers_email</model>
                 <title>Email</title>
                 <sort_order>67</sort_order>
@@ -364,7 +364,7 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_customers_email>
             <shopgate_cloudapi_v2_customers_password>
-                <group>shopgate_cloudapi_v2_customers_password</group>
+                <group>shopgate_cloudapi_v2_customers</group>
                 <model>shopgate_cloudapi/api2_customers_password</model>
                 <title>Password</title>
                 <sort_order>68</sort_order>
