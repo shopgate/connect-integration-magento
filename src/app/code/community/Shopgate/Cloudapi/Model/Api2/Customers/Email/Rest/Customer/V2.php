@@ -35,7 +35,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Email_Rest_Customer_V2
     public function _update(array $data)
     {
         $customer  = $this->loadCustomerById((int)$this->getRequest()->getParam('customer_id'));
-        $oldEmail  = $customer->getEmail();
+        $oldEmail  = $customer->getData('email');
         $validator = $this->getValidator();
         if (!$validator->isValidData($data)) {
             $this->_render($this->setDetailedErrors($validator)->sendInvalidationResponse());
@@ -52,7 +52,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Email_Rest_Customer_V2
         }
 
         if (method_exists($customer, 'sendChangedPasswordOrEmail')) {
-            $customer->setOldEmail($oldEmail);
+            $customer->setData('old_email', $oldEmail);
             $customer->sendChangedPasswordOrEmail();
         }
     }
