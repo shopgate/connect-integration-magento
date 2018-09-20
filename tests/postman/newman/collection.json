@@ -18286,6 +18286,72 @@
               "response": []
             },
             {
+              "name": "New email already in use",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "aeed71cc-9f4a-43e2-a19b-9ba269ba64c4",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "0b378cf5-ecce-43f7-ac5a-ce6d810ce0e0",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "pm.test('Error: Customer email already exists', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                      "    pm.expect(jsonData.messages.error[0].path).to.eql('email');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"email\": \"{{username2}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_id}}/email",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_id}}"
+                  ],
+                  "path": [
+                    "email"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
               "name": "Wrong user update",
               "event": [
                 {
@@ -18649,7 +18715,7 @@
             {
               "listen": "test",
               "script": {
-                "id": "9ee3946c-bfcf-41b2-813b-9e1ed84500cb",
+                "id": "2602f412-2f35-4b31-8365-42fa66e651fb",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Successfully loaded customer data via ME endpoint', function () {",
@@ -18658,7 +18724,7 @@
                   "",
                   "pm.test('Email address was reverted', function () {",
                   "    const jsonData = pm.response.json();",
-                  "    pm.expect(jsonData.email).to.eq(pm.environment.get('username1'));",
+                  "    pm.expect(jsonData.email).to.eq(pm.globals.get('username1'));",
                   "});"
                 ]
               }
