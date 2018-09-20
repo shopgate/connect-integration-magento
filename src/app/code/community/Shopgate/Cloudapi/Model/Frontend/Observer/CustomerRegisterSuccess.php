@@ -106,7 +106,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CustomerRegisterSuccess
 
         /** @noinspection PhpParamsInspection */
         return $responseType->createAuthorizationCode(
-            $storage->getClientId(), $customer->getData('email'), 'customer/register'
+            $storage->getClientId(), $customer->getData('entity_id'), 'customer/register'
         );
     }
 

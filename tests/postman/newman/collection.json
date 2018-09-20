@@ -18409,65 +18409,6 @@
           "_postman_isSubFolder": true
         },
         {
-          "name": "Get customer ID via ME",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "id": "9929cd06-eb01-424b-a398-df220840b14a",
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
-                  "    const jsonData = pm.response.json();",
-                  "    pm.response.to.have.status(200);",
-                  "    pm.environment.set(\"customer-id\", jsonData.customer_id);",
-                  "});"
-                ]
-              }
-            },
-            {
-              "listen": "prerequest",
-              "script": {
-                "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                "type": "text/javascript",
-                "exec": [
-                  "pm.environment.unset(\"customer_id\");"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{customer-access-token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": ""
-            },
-            "url": {
-              "raw": "{{domain}}{{endpoint_customers_me}}",
-              "host": [
-                "{{domain}}{{endpoint_customers_me}}"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
           "name": "Set email address",
           "event": [
             {

@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for customer address deletion    (DELETE shopgate/v2/customers/:id/addresses/:id)
 - Endpoint for customer address update      (POST shopgate/v2/customers/:id/addresses/:id)
 - Endpoint for customer data update         (POST shopgate/v2/customers/:id)
+- Endpoint for customer email update        (POST shopgate/v2/customers/:id/email)
 - Endpoint for customer password update     (POST shopgate/v2/customers/:id/password)
 - Shell script to update our REST attributes / roles
 - Support of app-only coupons (except when EE Customer Segments is installed)

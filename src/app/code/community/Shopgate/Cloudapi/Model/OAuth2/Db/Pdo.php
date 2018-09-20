@@ -94,7 +94,7 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
         $customer = Mage::getModel('customer/customer')->setStore($this->store)->loadByEmail($username);
 
         return $customer->getId() ? array(
-            'user_id'  => $customer->getData('email'),
+            'user_id'  => $customer->getData('entity_id'),
             'password' => $customer->getData('password_hash')
         ) : false;
     }
@@ -220,29 +220,6 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
         }
 
         return $stmt->execute(compact('code', 'clientId', 'userId', 'resourceType', 'expires', 'scope'));
-    }
-
-    /**
-     * @param string $oldEmail
-     * @param string $newEmail
-     */
-    public function updateEmailTokens($oldEmail, $newEmail)
-    {
-        $stmt = $this->db->prepare(
-            $sql = sprintf(
-                'UPDATE %s SET user_id=:newEmail WHERE user_id=:oldEmail',
-                $this->config['refresh_token_table']
-            )
-        );
-        $stmt->execute(compact('newEmail', 'oldEmail'));
-
-        $stmt = $this->db->prepare(
-            $sql = sprintf(
-                'UPDATE %s SET user_id=:newEmail WHERE user_id=:oldEmail',
-                $this->config['access_token_table']
-            )
-        );
-        $stmt->execute(compact('newEmail', 'oldEmail'));
     }
 
     /**

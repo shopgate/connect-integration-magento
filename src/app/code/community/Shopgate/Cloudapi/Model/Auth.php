@@ -45,10 +45,10 @@ class Shopgate_Cloudapi_Model_Auth
         }
 
         $store = Mage::app()->getStore($request->getParam('store'));
-        $email = $this->validateRequest($store);
-        if (null !== $email) {
+        $customerId = $this->validateRequest($store);
+        if (null !== $customerId) {
             //todo-sg: maybe pull store from client_id instead? Need to verify that the shop_number store === current?
-            $customer = Mage::getModel('customer/customer')->setStore($store)->loadByEmail($email);
+            $customer = Mage::getModel('customer/customer')->setStore($store)->loadById($customerId);
 
             return $this->retrieveUser(Mage_Api2_Model_Auth_User_Customer::USER_TYPE, $customer->getId());
         }
