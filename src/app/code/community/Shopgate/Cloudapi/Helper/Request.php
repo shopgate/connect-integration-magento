@@ -45,7 +45,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     /**
      * Parameter indicating a shopgate cloud is guest checkout
      */
-    const KEY_SGCLOUD_GUEST_CHECKOUT = 'is_guest_checkout';
+    const KEY_SGCONNECT_GUEST_CHECKOUT = 'is_guest_checkout';
     /**
      * Name and value of cookie created for sg cloud requests
      */
@@ -129,7 +129,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      */
     public function isShopgateGuestCheckout()
     {
-        return $this->getParam(self::KEY_SGCLOUD_GUEST_CHECKOUT);
+        return $this->getParam(self::KEY_SGCONNECT_GUEST_CHECKOUT);
     }
 
     /**
