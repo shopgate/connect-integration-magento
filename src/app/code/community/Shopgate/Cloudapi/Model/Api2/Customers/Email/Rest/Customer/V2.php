@@ -36,7 +36,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Email_Rest_Customer_V2
     {
         $customer  = $this->loadCustomerById((int)$this->getRequest()->getParam('customer_id'));
         $oldEmail  = $customer->getData('email');
-        $validator = $this->getValidator();
+        $validator = $this->getValidator()->setCustomer($customer);
         if (!$validator->isValidData($data)) {
             $this->_render($this->setDetailedErrors($validator)->sendInvalidationResponse());
 

@@ -23,6 +23,8 @@
 class Shopgate_Cloudapi_Model_Api2_Customers_Email_Validator extends Shopgate_Cloudapi_Model_Api2_Validator
 {
     const FIELD_EMAIL = 'email';
+    /** @var Mage_Customer_Model_Customer|null */
+    private $customer;
 
     /**
      * Validates the incoming email address data
@@ -46,6 +48,43 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Email_Validator extends Shopgate_Cl
             );
         }
 
+        $item = Mage::getResourceModel('customer/customer_collection')
+                    ->addFieldToFilter('email', $data[self::FIELD_EMAIL])
+                    ->addFieldToFilter('website_id', $this->getCustomer()->getData('website_id'))
+                    ->addFieldToFilter('entity_id', array('neq' => $this->getCustomer()->getId()))
+                    ->getFirstItem();
+        if ($item->getId()) {
+            $this->addDetailedError(
+                Mage::helper('customer')->__('This customer email already exists'),
+                self::FIELD_EMAIL
+            );
+        }
+
         return count($this->getDetailedErrors()) === 0;
+    }
+
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     *
+     * @return Shopgate_Cloudapi_Model_Api2_Customers_Email_Validator
+     */
+    public function setCustomer(Mage_Customer_Model_Customer $customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * @return Mage_Customer_Model_Customer
+     * @throws Mage_Core_Exception
+     */
+    public function getCustomer()
+    {
+        if (null === $this->customer) {
+            Mage::throwException('Customer needs to be initialized');
+        }
+
+        return $this->customer;
     }
 }

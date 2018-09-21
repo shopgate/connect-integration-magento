@@ -94,7 +94,7 @@ class Shopgate_Cloudapi_Model_OAuth2_Db_Pdo extends \Shopgate\OAuth2\Storage\Pdo
         $customer = Mage::getModel('customer/customer')->setStore($this->store)->loadByEmail($username);
 
         return $customer->getId() ? array(
-            'user_id'  => $customer->getData('email'),
+            'user_id'  => $customer->getData('entity_id'),
             'password' => $customer->getData('password_hash')
         ) : false;
     }
