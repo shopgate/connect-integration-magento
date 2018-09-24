@@ -43,11 +43,11 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     const KEY_SGCLOUD_CALLBACK_DATA = 'sgcloud_callback_data';
 
     /**
-     * Parameter indicating a shopgate cloud is guest checkout
+     * Parameter indicating a shopgate connect guest checkout
      */
     const KEY_SGCONNECT_GUEST_CHECKOUT = 'is_guest_checkout';
     /**
-     * Name and value of cookie created for sg connect requests
+     * Name and value of cookie created for sg cloud requests
      */
     const COOKIE_NAME = 'shopgate';
     const COOKIE_VALUE = '1';
