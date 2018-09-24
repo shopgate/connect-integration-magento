@@ -47,7 +47,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      */
     const KEY_SGCONNECT_GUEST_CHECKOUT = 'is_guest_checkout';
     /**
-     * Name and value of cookie created for sg cloud requests
+     * Name and value of cookie created for sg connect requests
      */
     const COOKIE_NAME = 'shopgate';
     const COOKIE_VALUE = '1';
