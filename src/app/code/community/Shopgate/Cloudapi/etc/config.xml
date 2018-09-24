@@ -149,6 +149,9 @@
                 <shopgate_cloudapi_customer>
                     <file>shopgate/cloudapi/customer.xml</file>
                 </shopgate_cloudapi_customer>
+                <shopgate_cloudapi_checkout>
+                    <file>shopgate/cloudapi/checkout.xml</file>
+                </shopgate_cloudapi_checkout>
             </updates>
         </layout>
         <routers>

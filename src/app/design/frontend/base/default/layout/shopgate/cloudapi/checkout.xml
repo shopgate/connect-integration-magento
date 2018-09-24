@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-    <checkout_onepage_success>
+    <shopgate_cloudapi_checkout_onepage_index>
         <reference name="head">
-            <action method="addJs"><script>shopgate/sgConnect.js</script></action>
+            <action method="addJs">
+                <script>shopgate/sgConnect.js</script>
+            </action>
         </reference>
-    </checkout_onepage_success>
+        <reference name="content">
+            <remove name="checkout.onepage.login"></remove>
+            <block type="core/template" name="shopgate_cloudapi.checkout.onepage.index"
+                   template="shopgate/cloudapi/checkout/index/guest_checkout.phtml"/>
+        </reference>
+    </shopgate_cloudapi_checkout_onepage_index>
 </layout>

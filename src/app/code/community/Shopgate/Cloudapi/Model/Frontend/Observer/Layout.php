@@ -24,16 +24,39 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
     /**
      * Define custom handles
      */
-    private $customHandles = array(
-        array(
-            'path'   => '/customer/account/login',
-            'handle' => 'shopgate_cloudapi_customer_account_login'
-        ),
-        array(
-            'path' => 'checkout/onepage/success',
-            'handle' => 'checkout_onepage_success'
-        )
-    );
+    private $customHandles = array();
+
+    /**
+     * Init custom handles
+     */
+    public function __construct()
+    {
+        $this->customHandles = array(
+            array(
+                'path'     => '/customer/account/login',
+                'handle'   => 'shopgate_cloudapi_customer_account_login',
+                'isActive' => true,
+            ),
+            array(
+                'path'     => 'checkout/onepage/success',
+                'handle'   => 'shopgate_cloudapi_checkout_onepage_success',
+                'isActive' => true,
+            ),
+            array(
+                'path'     => '/checkout/onepage/index',
+                'handle'   => 'shopgate_cloudapi_checkout_onepage_index',
+                'isActive' => $this->getRequestHelper()->isShopgateGuestCheckout(),
+            ),
+        );
+    }
+
+    /**
+     * @return Shopgate_Cloudapi_Helper_Request
+     */
+    protected function getRequestHelper()
+    {
+        return Mage::helper('shopgate_cloudapi/request');
+    }
 
     /**
      * @param Varien_Event_Observer $observer
@@ -43,7 +66,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
+        if (!$this->getRequestHelper()->isShopgateRequest()) {
             return $this;
         }
 
@@ -70,7 +93,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
         );
 
         foreach ($this->customHandles as $handle) {
-            if ($handle['path'] === $path) {
+            if ($handle['path'] === $path && $handle['isActive']) {
                 $layout->getUpdate()->addHandle($handle['handle']);
             }
         }
