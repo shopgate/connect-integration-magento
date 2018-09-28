@@ -21349,7 +21349,7 @@
               "response": []
             },
             {
-              "name": "Get all wishlist item",
+              "name": "Get all wishlist items",
               "event": [
                 {
                   "listen": "test",
