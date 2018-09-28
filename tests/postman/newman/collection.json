@@ -20960,7 +20960,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n\t{\n\t\t\"qty\": 1\n\t},\n\t{\n\t    \"product_id\": \"422\",\n\t    \"qty\": 1,\n\t    \"super_attribute\": {\n\t\t      \"92\": \"17\",\n\t\t      \"180\": \"75\"\n\t\t    }\n\t}\n]"
+                  "raw": ""
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
@@ -21121,7 +21121,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n\t{\n\t\t\"qty\": 1\n\t},\n\t{\n\t    \"product_id\": \"422\",\n\t    \"qty\": 1,\n\t    \"super_attribute\": {\n\t\t      \"92\": \"17\",\n\t\t      \"180\": \"75\"\n\t\t    }\n\t}\n]"
+                  "raw": ""
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_wishlists_id_items}}?wishlistItemIds=",
@@ -21226,7 +21226,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n\t{\n\t\t\"qty\": 1\n\t},\n\t{\n\t    \"product_id\": \"422\",\n\t    \"qty\": 1,\n\t    \"super_attribute\": {\n\t\t      \"92\": \"17\",\n\t\t      \"180\": \"75\"\n\t\t    }\n\t}\n]"
+                  "raw": ""
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_wishlists_id_items}}?wishlistItemIds={{wishlist-item-id-422}}",
@@ -21331,7 +21331,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n\t{\n\t\t\"qty\": 1\n\t},\n\t{\n\t    \"product_id\": \"422\",\n\t    \"qty\": 1,\n\t    \"super_attribute\": {\n\t\t      \"92\": \"17\",\n\t\t      \"180\": \"75\"\n\t\t    }\n\t}\n]"
+                  "raw": ""
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_wishlists_id_items}}?wishlistItemIds={{wishlist-item-id-422}},{{wishlist-item-id-439}},{{wishlist-item-id-447}},{{wishlist-item-id-563}}",

@@ -141,21 +141,20 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
     }
 
     /**
-     * @param array                        $wishlistItemId
+     * @param array                        $wishlistItemIds
      * @param Mage_Wishlist_Model_Wishlist $wishlist
      *
-     * @return Mage_Wishlist_Model_Item
      * @throws Mage_Api2_Exception
      */
-    private function removeItemsFromWishlist($wishlistItemIds, Mage_Wishlist_Model_Wishlist $wishlist)
+    private function removeItemsFromWishlist(array $wishlistItemIds, Mage_Wishlist_Model_Wishlist $wishlist)
     {
         try {
             Mage::dispatchEvent(
                 'shopgate_cloud_api2_wishlists_items_remove',
                 array(
                     'wishlistItemIds' => $wishlistItemIds,
-                    'wishlist'       => $wishlist,
-                    'store'          => $this->_getStore(),
+                    'wishlist'        => $wishlist,
+                    'store'           => $this->_getStore(),
                 )
             );
         } catch (Exception $e) {

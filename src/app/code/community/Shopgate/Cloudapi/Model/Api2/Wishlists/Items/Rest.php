@@ -77,6 +77,6 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest extends Shopgate_Cloudap
             $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
         }
 
-        return explode(',', $wishlistItemIds);
+        return array_map('intval', explode(',', $wishlistItemIds));
     }
 }
