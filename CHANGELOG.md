@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for wishlist creation
 - Endpoint for wishlist retrieval
 - Endpoint for wishlist product adding
+- Endpoint for wishlist product removal
 - Endpoint for wishlist product retrieval
 ### Changed
 - Initial installed admin role, it no longer uses all resources
