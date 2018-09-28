@@ -182,6 +182,14 @@
                     </shopgate_cloud_api2_wishlist_items_create>
                 </observers>
             </shopgate_cloud_api2_wishlists_items_create>
+            <shopgate_cloud_api2_wishlists_items_remove>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_remove>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsRemove</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_remove>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_remove>
             <shopgate_cloud_api2_wishlists_items_retrieve>
                 <observers>
                     <shopgate_cloud_api2_wishlist_items_retrieve>

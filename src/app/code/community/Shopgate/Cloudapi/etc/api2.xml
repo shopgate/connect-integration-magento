@@ -312,6 +312,7 @@
                     <customer>
                         <retrieve>1</retrieve>
                         <create>1</create>
+                        <delete>1</delete>
                     </customer>
                 </privileges>
                 <force_attributes>
