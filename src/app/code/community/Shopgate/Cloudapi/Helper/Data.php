@@ -33,8 +33,9 @@ class Shopgate_Cloudapi_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * Observer disabling
      */
-    const PATH_OBSERVERS_WISHLISTS_RETRIEVE       = 'shopgate_cloudapi/observers/wishlists_retrieve';
     const PATH_OBSERVERS_WISHLISTS_CREATE         = 'shopgate_cloudapi/observers/wishlists_create';
+    const PATH_OBSERVERS_WISHLISTS_REMOVE         = 'shopgate_cloudapi/observers/wishlists_remove';
+    const PATH_OBSERVERS_WISHLISTS_RETRIEVE       = 'shopgate_cloudapi/observers/wishlists_retrieve';
     const PATH_OBSERVERS_WISHLISTS_ADD_ITEM       = 'shopgate_cloudapi/observers/wishlists_add_item';
     const PATH_OBSERVERS_WISHLISTS_REMOVE_ITEMS   = 'shopgate_cloudapi/observers/wishlists_remove_items';
     const PATH_OBSERVERS_WISHLISTS_RETRIEVE_ITEMS = 'shopgate_cloudapi/observers/wishlists_retrieve_items';

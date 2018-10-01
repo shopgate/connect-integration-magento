@@ -158,14 +158,6 @@
             </shopgate>
         </routers>
         <events>
-            <shopgate_cloud_api2_wishlists_retrieve>
-                <observers>
-                    <shopgate_cloud_rest_wishlist_retrieve>
-                        <class>shopgate_cloudapi/api2_observers_wishlistsRetrieve</class>
-                        <method>execute</method>
-                    </shopgate_cloud_rest_wishlist_retrieve>
-                </observers>
-            </shopgate_cloud_api2_wishlists_retrieve>
             <shopgate_cloud_api2_wishlists_create>
                 <observers>
                     <shopgate_cloud_rest_wishlist_create>
@@ -174,6 +166,22 @@
                     </shopgate_cloud_rest_wishlist_create>
                 </observers>
             </shopgate_cloud_api2_wishlists_create>
+            <shopgate_cloud_api2_wishlists_remove>
+                <observers>
+                    <shopgate_cloud_rest_wishlist_remove>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsRemove</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlist_remove>
+                </observers>
+            </shopgate_cloud_api2_wishlists_remove>
+            <shopgate_cloud_api2_wishlists_retrieve>
+                <observers>
+                    <shopgate_cloud_rest_wishlist_retrieve>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsRetrieve</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlist_retrieve>
+                </observers>
+            </shopgate_cloud_api2_wishlists_retrieve>
             <shopgate_cloud_api2_wishlists_items_create>
                 <observers>
                     <shopgate_cloud_api2_wishlist_items_create>

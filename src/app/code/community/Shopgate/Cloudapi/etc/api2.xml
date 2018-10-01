@@ -286,6 +286,7 @@
                     <customer>
                         <retrieve>1</retrieve>
                         <create>1</create>
+                        <delete>1</delete>
                     </customer>
                 </privileges>
                 <force_attributes>
@@ -300,6 +301,10 @@
                         <route>/v2/wishlists</route>
                         <action_type>collection</action_type>
                     </route_v2_wishlists>
+                    <route_v2_wishlists_id>
+                        <route>/v2/wishlists/:wishlistId</route>
+                        <action_type>entity</action_type>
+                    </route_v2_wishlists_id>
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_wishlists>
