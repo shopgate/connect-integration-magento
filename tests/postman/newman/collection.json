@@ -17870,7 +17870,7 @@
                       "    ",
                       "    pm.test(\"A wishlist was created\", function () {",
                       "        pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.not.be.empty;",
-                      "        pm.environment.set(\"wishlist-id\", jsonData.wishlistId);",
+                      "        pm.environment.set(\"wishlist-id-temp\", jsonData.wishlistId);",
                       "    });",
                       "}",
                       ""
@@ -18051,7 +18051,7 @@
                       "    pm.test(\"Status code is 200\", function () {",
                       "        pm.response.to.have.status(200);",
                       "    });",
-                      "    pm.environment.unset(\"wishlist-id-2\");",
+                      "    pm.environment.unset(\"wishlist-id-temp\");",
                       "}",
                       ""
                     ]
@@ -18081,12 +18081,12 @@
                   "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"private\"\n}"
                 },
                 "url": {
-                  "raw": "{{domain}}{{endpoint_wishlists}}/{{wishlist-id-2}}",
+                  "raw": "{{domain}}{{endpoint_wishlists}}/{{wishlist-id-temp}}",
                   "host": [
                     "{{domain}}{{endpoint_wishlists}}"
                   ],
                   "path": [
-                    "{{wishlist-id-2}}"
+                    "{{wishlist-id-temp}}"
                   ]
                 }
               },
