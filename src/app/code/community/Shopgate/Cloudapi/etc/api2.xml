@@ -280,7 +280,7 @@
             <shopgate_cloudapi_v2_wishlists>
                 <group>shopgate_cloudapi_v2_wishlists</group>
                 <model>shopgate_cloudapi/api2_wishlists</model>
-                <title>User wishlists</title>
+                <title>Wishlists</title>
                 <sort_order>80</sort_order>
                 <privileges>
                     <customer>
@@ -309,9 +309,9 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_wishlists>
             <shopgate_cloudapi_v2_wishlists_items>
-                <group>shopgate_cloudapi_v2_wishlists_items</group>
+                <group>shopgate_cloudapi_v2_wishlists</group>
                 <model>shopgate_cloudapi/api2_wishlists_items</model>
-                <title>Manipulate items</title>
+                <title>Items</title>
                 <sort_order>90</sort_order>
                 <privileges>
                     <customer>
