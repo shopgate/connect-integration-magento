@@ -20,29 +20,24 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRemove
+class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsDelete
 {
     /**
      * @param Varien_Event_Observer $observer
      *
      * @throws Mage_Core_Model_Store_Exception
+     * @throws Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
         /** @var Mage_Core_Model_Store $store */
         $store = $observer->getData('store');
-        if (Mage::getStoreConfigFlag(Shopgate_Cloudapi_Helper_Data::PATH_OBSERVERS_WISHLISTS_REMOVE_ITEMS, $store)) {
+        if (Mage::getStoreConfigFlag(Shopgate_Cloudapi_Helper_Data::PATH_OBSERVERS_WISHLISTS_DELETE, $store)) {
             return;
         }
 
         /** @var Mage_Wishlist_Model_Wishlist $wishlist */
-        $wishlist        = $observer->getData('wishlist');
-        $wishlistItemIds = $observer->getData('wishlistItemIds');
-        $wishlistItems   = $wishlist->getItemCollection()
-                                    ->addFieldToFilter('wishlist_item_id', array('in' => $wishlistItemIds));
-
-        foreach ($wishlistItems as $wishlistItem) {
-            $wishlistItem->delete();
-        }
+        $wishlist = $observer->getData('wishlist');
+        $wishlist->delete();
     }
 }

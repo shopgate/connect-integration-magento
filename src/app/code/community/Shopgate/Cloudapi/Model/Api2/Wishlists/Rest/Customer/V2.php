@@ -98,7 +98,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Rest_Customer_V2 extends Shopgate_C
     {
         try {
             Mage::dispatchEvent(
-                'shopgate_cloud_api2_wishlists_remove',
+                'shopgate_cloud_api2_wishlists_delete',
                 array(
                     'wishlist' => $this->getWishlist(),
                     'store'    => $this->_getStore()

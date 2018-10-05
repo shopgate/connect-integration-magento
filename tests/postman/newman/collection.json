@@ -18036,7 +18036,7 @@
                     "id": "6c2b232d-71bb-4653-b0a2-ba5b47722d7d",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.environment.set(\"seed\", \"wishlist-\" + Math.floor(Math.random() * Math.floor(100)));"
+                      ""
                     ]
                   }
                 },
@@ -18078,7 +18078,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"private\"\n}"
+                  "raw": ""
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_wishlists}}/{{wishlist-id-temp}}",
@@ -18156,7 +18156,7 @@
                     "id": "6c2b232d-71bb-4653-b0a2-ba5b47722d7d",
                     "type": "text/javascript",
                     "exec": [
-                      "pm.environment.set(\"seed\", \"wishlist-\" + Math.floor(Math.random() * Math.floor(100)));"
+                      ""
                     ]
                   }
                 },
@@ -18197,7 +18197,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"private\"\n}"
+                  "raw": ""
                 },
                 "url": {
                   "raw": "{{domain}}{{endpoint_wishlists}}/0",

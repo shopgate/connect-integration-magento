@@ -114,7 +114,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
         $wishlistItemIds = $this->getWishlistItemIds($wishlist);
         try {
             Mage::dispatchEvent(
-                'shopgate_cloud_api2_wishlists_items_remove',
+                'shopgate_cloud_api2_wishlists_items_delete',
                 array(
                     'wishlist'        => $wishlist,
                     'wishlistItemIds' => $wishlistItemIds,
