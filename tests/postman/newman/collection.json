@@ -17870,7 +17870,7 @@
                       "    ",
                       "    pm.test(\"A wishlist was created\", function () {",
                       "        pm.expect(jsonData.wishlistId).to.be.a(\"string\").to.not.be.empty;",
-                      "        pm.environment.set(\"wishlist-id\", jsonData.wishlistId);",
+                      "        pm.environment.set(\"wishlist-id-temp\", jsonData.wishlistId);",
                       "    });",
                       "}",
                       ""
@@ -17965,6 +17965,273 @@
                 }
               },
               "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
+          "name": "Delete",
+          "item": [
+            {
+              "name": "Get wishlist data",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ec93d088-5820-4e78-9f1b-d17f18cd7cee",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "if (pm.environment.get('mage_type') === 'EE') {",
+                      "    pm.test(\"Status code is 200\", function () {",
+                      "        pm.response.to.have.status(200);",
+                      "    });",
+                      "    ",
+                      "    pm.test('Two wishlist exists', function () {",
+                      "        pm.expect(jsonData).length(2);",
+                      "    });",
+                      "}",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"public\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete wishlist 2",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "6c2b232d-71bb-4653-b0a2-ba5b47722d7d",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "92ae7d45-65cf-4625-b0b9-0ebe4c523ade",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "if (pm.environment.get('mage_type') === 'EE') {",
+                      "    pm.test(\"Status code is 200\", function () {",
+                      "        pm.response.to.have.status(200);",
+                      "    });",
+                      "    pm.environment.unset(\"wishlist-id-temp\");",
+                      "}",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}/{{wishlist-id-temp}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ],
+                  "path": [
+                    "{{wishlist-id-temp}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get wishlist data",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "c6863644-29c1-40bf-a3fe-50ed2cb103c5",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "if (pm.environment.get('mage_type') === 'EE') {",
+                      "    pm.test(\"Status code is 200\", function () {",
+                      "        pm.response.to.have.status(200);",
+                      "    });",
+                      "    ",
+                      "    pm.test('Two wishlist exists', function () {",
+                      "        pm.expect(jsonData).length(1);",
+                      "    });",
+                      "}",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"name\": \"{{seed}}-name\",\n\t\"visibility\": \"public\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete not existing wishlist",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "6c2b232d-71bb-4653-b0a2-ba5b47722d7d",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "d475d77e-3e24-489e-9d10-e61e7f5d18ee",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const jsonData = pm.response.json();",
+                      "if (pm.environment.get('mage_type') === 'EE') {",
+                      "    pm.test(\"Status code is 404\", function () {",
+                      "        pm.response.to.have.status(404);",
+                      "    });",
+                      "}",
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists}}/0",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists}}"
+                  ],
+                  "path": [
+                    "0"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "d1f3a396-e923-449a-9d8d-18994998b45b",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "c022b984-7c18-411c-a819-113373e876db",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
             }
           ],
           "_postman_isSubFolder": true
@@ -20868,6 +21135,540 @@
             }
           ],
           "_postman_isSubFolder": true
+        },
+        {
+          "name": "Delete",
+          "item": [
+            {
+              "name": "Get all wishlist items",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ef156346-afd7-4f15-b446-485f104995a2",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test('Wishlist has items', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.length).to.be.above(0);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete all wishlist items",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84b48b94-87ad-4eb8-9fce-66a7918b83c8",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all wishlist items",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b490d8eb-ab14-46db-af72-1316d49f8d24",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test('Wishlist has no items', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.length).to.be.eql(0);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add 4 items",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b3067e40-6612-483e-a296-ddcbe188e878",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test('Returns a list of wishlist item ids that were successfully added', function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.wishlistItemIds).to.be.a('object').to.not.be.empty;",
+                      "    pm.expect(jsonData.wishlistItemIds).to.have.property('422');",
+                      "    pm.expect(jsonData.wishlistItemIds).to.have.property('439');",
+                      "    pm.expect(jsonData.wishlistItemIds).to.have.property('447');",
+                      "    pm.expect(jsonData.wishlistItemIds).to.have.property('563');",
+                      "    pm.expect(Object.keys(jsonData.wishlistItemIds)).to.have.lengthOf(4);",
+                      "    pm.environment.set('wishlist-item-id-422', jsonData.wishlistItemIds['422']);",
+                      "    pm.environment.set('wishlist-item-id-439', jsonData.wishlistItemIds['439']);",
+                      "    pm.environment.set('wishlist-item-id-447', jsonData.wishlistItemIds['447']);",
+                      "    pm.environment.set('wishlist-item-id-563', jsonData.wishlistItemIds['563']);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n\t{\n\t    \"product_id\": \"422\"\n\t},\n\t{\n\t    \"product_id\": \"447\"\n\t},\n\t{\n\t    \"product_id\": \"563\"\n\t},\n\t{\n\t\t\"product_id\": \"439\"\n    }\n]"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                },
+                "description": "No options passed in the requests"
+              },
+              "response": []
+            },
+            {
+              "name": "Delete wishlist items with empty filter",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "2ee5b561-f52e-4318-b09a-378a97b87fce",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 400', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}?wishlistItemIds=",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "wishlistItemIds",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all wishlist items",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "3dd73853-9eba-4c58-a1a8-9b03f217f8a4",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test('Wishlist has 4 items', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.length).to.be.eql(4);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete one wishlist item",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84b48b94-87ad-4eb8-9fce-66a7918b83c8",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}?wishlistItemIds={{wishlist-item-id-422}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "wishlistItemIds",
+                      "value": "{{wishlist-item-id-422}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all wishlist items",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "a2132314-e62e-43a1-9af2-2d56cc1038c1",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test('Wishlist has 3 items', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.length).to.be.eql(3);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete three wishlist items and a non existing one",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "84b48b94-87ad-4eb8-9fce-66a7918b83c8",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}?wishlistItemIds={{wishlist-item-id-422}},{{wishlist-item-id-439}},{{wishlist-item-id-447}},{{wishlist-item-id-563}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "wishlistItemIds",
+                      "value": "{{wishlist-item-id-422}},{{wishlist-item-id-439}},{{wishlist-item-id-447}},{{wishlist-item-id-563}}"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all wishlist items",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ca74a872-2e7c-4fb5-9cec-bd6e56c66f55",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test('Wishlist has 0 items', function () {",
+                      "    const jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.length).to.be.eql(0);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_wishlists_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_wishlists_id_items}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
         }
       ]
     },
@@ -22594,11 +23395,6 @@
                         {
                           "key": "store",
                           "value": "1"
-                        },
-                        {
-                          "key": "XDEBUG_SESSION_START",
-                          "value": "PHPSTORM",
-                          "disabled": true
                         }
                       ]
                     },

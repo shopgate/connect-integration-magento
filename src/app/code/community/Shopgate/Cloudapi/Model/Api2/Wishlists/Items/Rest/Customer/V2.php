@@ -23,6 +23,7 @@
 class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
     extends Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest
 {
+    /** @noinspection PhpHierarchyChecksInspection */
     /**
      * Add a wishlist product to the list
      *
@@ -40,6 +41,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
         return array('wishlistItemId' => $wishlistItem->getId());
     }
 
+    /** @noinspection PhpHierarchyChecksInspection */
     /**
      * Adds multiple items at the same time and skips
      * the ones with issues that we can catch
@@ -73,6 +75,7 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
         return array('wishlistItemIds' => $idList);
     }
 
+    /** @noinspection PhpHierarchyChecksInspection */
     /**
      * @inheritdoc
      * @throws Mage_Api2_Exception
@@ -95,6 +98,32 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest_Customer_V2
         }
 
         return $output->getData('items');
+    }
+
+    /** @noinspection PhpHierarchyChecksInspection */
+    /**
+     * Remove wishlist products from the list
+     *
+     * @inheritdoc
+     * @throws Mage_Api2_Exception
+     * @throws Exception
+     */
+    public function _multiDelete(array $filteredData)
+    {
+        $wishlist        = $this->getWishlist();
+        $wishlistItemIds = $this->getWishlistItemIds($wishlist);
+        try {
+            Mage::dispatchEvent(
+                'shopgate_cloud_api2_wishlists_items_delete',
+                array(
+                    'wishlist'        => $wishlist,
+                    'wishlistItemIds' => $wishlistItemIds,
+                    'store'           => $this->_getStore()
+                )
+            );
+        } catch (Exception $e) {
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        }
     }
 
     /**

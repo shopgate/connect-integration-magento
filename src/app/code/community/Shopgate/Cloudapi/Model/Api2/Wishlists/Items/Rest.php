@@ -56,4 +56,27 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Items_Rest extends Shopgate_Cloudap
 
         return true;
     }
+
+    /**
+     * Sanitizer for incoming data
+     *
+     * @param Mage_Wishlist_Model_Wishlist $wishlist
+     *
+     * @throws Exception
+     * @return array
+     */
+    protected function getWishlistItemIds($wishlist)
+    {
+        $wishlistItemIds = $this->getRequest()->getParam('wishlistItemIds');
+
+        if (is_null($wishlistItemIds)) {
+            return $wishlist->getItemCollection()->getAllIds();
+        }
+
+        if ($wishlistItemIds === '') {
+            $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
+        }
+
+        return array_map('intval', explode(',', $wishlistItemIds));
+    }
 }

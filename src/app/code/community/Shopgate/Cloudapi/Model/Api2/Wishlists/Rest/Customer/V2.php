@@ -86,6 +86,29 @@ class Shopgate_Cloudapi_Model_Api2_Wishlists_Rest_Customer_V2 extends Shopgate_C
         return method_exists($collection, 'getData') ? $collection->getData() : $collection;
     }
 
+    /** @noinspection PhpHierarchyChecksInspection */
+    /**
+     * Remove wishlist
+     *
+     * @inheritdoc
+     * @throws Mage_Api2_Exception
+     * @throws Exception
+     */
+    public function _delete()
+    {
+        try {
+            Mage::dispatchEvent(
+                'shopgate_cloud_api2_wishlists_delete',
+                array(
+                    'wishlist' => $this->getWishlist(),
+                    'store'    => $this->_getStore()
+                )
+            );
+        } catch (Exception $e) {
+            $this->_critical($e->getMessage(), $e->getCode() ? : Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        }
+    }
+
     /**
      * This is a check for third party implementations, need to make
      * sure that these wishlists belong to the customer requesting them

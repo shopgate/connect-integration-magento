@@ -158,22 +158,30 @@
             </shopgate>
         </routers>
         <events>
-            <shopgate_cloud_api2_wishlists_retrieve>
-                <observers>
-                    <shopgate_cloud_rest_wishlist_retrieve>
-                        <class>shopgate_cloudapi/api2_observers_wishlistsRetrieve</class>
-                        <method>execute</method>
-                    </shopgate_cloud_rest_wishlist_retrieve>
-                </observers>
-            </shopgate_cloud_api2_wishlists_retrieve>
             <shopgate_cloud_api2_wishlists_create>
                 <observers>
-                    <shopgate_cloud_rest_wishlist_create>
+                    <shopgate_cloud_rest_wishlists_create>
                         <class>shopgate_cloudapi/api2_observers_wishlistsCreate</class>
                         <method>execute</method>
-                    </shopgate_cloud_rest_wishlist_create>
+                    </shopgate_cloud_rest_wishlists_create>
                 </observers>
             </shopgate_cloud_api2_wishlists_create>
+            <shopgate_cloud_api2_wishlists_delete>
+                <observers>
+                    <shopgate_cloud_rest_wishlists_remove>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsDelete</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlists_remove>
+                </observers>
+            </shopgate_cloud_api2_wishlists_delete>
+            <shopgate_cloud_api2_wishlists_retrieve>
+                <observers>
+                    <shopgate_cloud_rest_wishlists_retrieve>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsRetrieve</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlists_retrieve>
+                </observers>
+            </shopgate_cloud_api2_wishlists_retrieve>
             <shopgate_cloud_api2_wishlists_items_create>
                 <observers>
                     <shopgate_cloud_api2_wishlist_items_create>
@@ -182,6 +190,14 @@
                     </shopgate_cloud_api2_wishlist_items_create>
                 </observers>
             </shopgate_cloud_api2_wishlists_items_create>
+            <shopgate_cloud_api2_wishlists_items_delete>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_delete>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsDelete</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_delete>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_delete>
             <shopgate_cloud_api2_wishlists_items_retrieve>
                 <observers>
                     <shopgate_cloud_api2_wishlist_items_retrieve>
