@@ -41,6 +41,7 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
         $items = array();
         /** @var Mage_Wishlist_Model_Item $item */
         foreach ($collection as $item) {
+            $this->appendChildId($item);
             $data               = $item->getData();
             $data['buyRequest'] = $item->getBuyRequest()->getData();
             $items[]            = $data;
@@ -48,5 +49,22 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
 
         $output = $observer->getData('output');
         $output->setData('items', $items);
+    }
+
+    /**
+     * @param Mage_Wishlist_Model_Item $item
+     */
+    private function appendChildId($item)
+    {
+        $buyRequestItem = new Varien_Object($item->getBuyRequest()->getData());
+        $superAttribute = $buyRequestItem->getSuperAttribute();
+        if (is_array($superAttribute) && count($superAttribute)) {
+            $parentProduct = Mage::getModel('catalog/product')->load($item->getProductId());
+            $childProduct  = Mage::getModel('catalog/product_type_configurable')->getProductByAttributes(
+                $superAttribute,
+                $parentProduct
+            );
+            $item->setChildId($childProduct->getId());
+        }
     }
 }
