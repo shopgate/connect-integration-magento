@@ -62,7 +62,16 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
     {
         $superAttribute = $item->getBuyRequest()->getSuperAttribute();
         if (is_array($superAttribute) && count($superAttribute)) {
+
             $parentProduct = Mage::getModel('catalog/product')->load($item->getProductId());
+            $attributes = Mage::getModel('catalog/product_type_configurable')
+                ->getConfigurableAttributes($parentProduct);
+            $requestedAttributesIds = array_keys($superAttribute);
+            foreach ($attributes->getData() as $attribute) {
+                if (!in_array($attribute['product_super_attribute_id'], $requestedAttributesIds)) {
+                    return null;
+                }
+            }
             return $childProduct  = Mage::getModel('catalog/product_type_configurable')->getProductByAttributes(
                 $superAttribute,
                 $parentProduct
