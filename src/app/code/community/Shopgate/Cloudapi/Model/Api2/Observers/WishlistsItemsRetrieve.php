@@ -41,9 +41,9 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
         $items = array();
         /** @var Mage_Wishlist_Model_Item $item */
         foreach ($collection as $item) {
-            $this->appendChildId($item);
             $data               = $item->getData();
             $data['buyRequest'] = $item->getBuyRequest()->getData();
+            $data['child_id']   = $this->getChildId($item);
             $items[]            = $data;
         }
 
@@ -52,19 +52,23 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
     }
 
     /**
+     * Returns the product child id based on parents super attributes if exist
+     *
      * @param Mage_Wishlist_Model_Item $item
+     *
+     * @return null | int
      */
-    private function appendChildId($item)
+    private function getChildId($item)
     {
-        $buyRequestItem = new Varien_Object($item->getBuyRequest()->getData());
-        $superAttribute = $buyRequestItem->getSuperAttribute();
+        $superAttribute = $item->getBuyRequest()->getSuperAttribute();
         if (is_array($superAttribute) && count($superAttribute)) {
             $parentProduct = Mage::getModel('catalog/product')->load($item->getProductId());
-            $childProduct  = Mage::getModel('catalog/product_type_configurable')->getProductByAttributes(
+            return $childProduct  = Mage::getModel('catalog/product_type_configurable')->getProductByAttributes(
                 $superAttribute,
                 $parentProduct
-            );
-            $item->setChildId($childProduct->getId());
+            )->getId();
         }
+
+        return null;
     }
 }
