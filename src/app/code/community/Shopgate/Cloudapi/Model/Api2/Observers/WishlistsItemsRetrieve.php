@@ -23,7 +23,7 @@
 class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
 {
     /**
-     * Remember, wishlist data is returned by reference here.
+     * Remember, wishlist data is returned by reference here
      *
      * @param Varien_Event_Observer $observer
      */
@@ -41,9 +41,12 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
         $items = array();
         /** @var Mage_Wishlist_Model_Item $item */
         foreach ($collection as $item) {
+            /** @var Mage_Catalog_Model_Product $product */
+            $product            = Mage::getModel('catalog/product')->load($item->getProductId());
             $data               = $item->getData();
+            $data['type']       = $product->getTypeId();
             $data['buyRequest'] = $item->getBuyRequest()->getData();
-            $data['child_id']   = $this->getChildId($item);
+            $data['child_id']   = $this->getChildId($product, $item);
             $items[]            = $data;
         }
 
@@ -54,33 +57,20 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
     /**
      * Returns the product child id based on parents super attributes if exist
      *
-     * @param Mage_Wishlist_Model_Item $item
+     * @param Mage_Catalog_Model_Product $product
+     * @param Mage_Wishlist_Model_Item   $item
      *
-     * @return null | int
+     * @return null | string
      */
-    private function getChildId($item)
+    private function getChildId(Mage_Catalog_Model_Product $product, Mage_Wishlist_Model_Item $item)
     {
-        $superAttribute = $item->getBuyRequest()->getSuperAttribute();
-        if (is_array($superAttribute) && count($superAttribute) && count(array_values($superAttribute))) {
-
-            $parentProduct          = Mage::getModel('catalog/product')->load($item->getProductId());
-            $attributes             = Mage::getModel('catalog/product_type_configurable')
-                ->getConfigurableAttributes($parentProduct);
-            $requestedAttributesIds = array_keys($superAttribute);
-
-            foreach ($attributes->getData() as $attribute) {
-                if (!in_array($attribute['attribute_id'], $requestedAttributesIds)) {
-                    return null;
-                }
-            }
-
-            $childProduct = Mage::getModel('catalog/product_type_configurable')->getProductByAttributes(
-                $superAttribute,
-                $parentProduct
-            );
-
-            if ($childProduct) {
-                return $childProduct->getId();
+        if ($product->getTypeId() === Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE) {
+            $superAttribute = $item->getBuyRequest()->getData('super_attribute');
+            if (is_array($superAttribute) && count($superAttribute)) {
+                return Mage::helper('shopgate_cloudapi/product_configurable')->getChildIdFromAttributes(
+                    $product,
+                    $superAttribute
+                );
             }
         }
 
