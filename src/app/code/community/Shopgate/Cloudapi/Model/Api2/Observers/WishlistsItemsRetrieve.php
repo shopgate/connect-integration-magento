@@ -66,12 +66,12 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
     {
         if ($product->getTypeId() === Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE) {
             $superAttribute = $item->getBuyRequest()->getData('super_attribute');
-            if (is_array($superAttribute) && count($superAttribute)) {
-                return Mage::helper('shopgate_cloudapi/product_configurable')->getChildIdFromAttributes(
-                    $product,
-                    $superAttribute
-                );
-            }
+            /** @var Mage_Catalog_Model_Product_Type_Configurable $productType */
+            /** @var Mage_Catalog_Model_Resource_Product_Type_Configurable_Attribute_Collection $allAttributes */
+            $productType     = Mage_Catalog_Model_Product_Type::factory($product);
+            $childAttributes = $productType->getProductByAttributes($superAttribute, $product);
+
+            return $childAttributes ? $childAttributes->getId() : null;
         }
 
         return null;

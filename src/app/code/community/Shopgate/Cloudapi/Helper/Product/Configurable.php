@@ -189,49 +189,4 @@ class Shopgate_Cloudapi_Helper_Product_Configurable extends Shopgate_Cloudapi_He
 
         return $config;
     }
-
-    /**
-     * By passing in a parent ID and supper attributes, this method returns the child ID
-     * if it matches
-     *
-     * @param Mage_Catalog_Model_Product $product        - configurable parent product
-     * @param array                      $superAttribute - key => value
-     *
-     * @return string|null
-     */
-    public function getChildIdFromAttributes(Mage_Catalog_Model_Product $product, $superAttribute)
-    {
-        /** @var Mage_Catalog_Model_Product_Type_Configurable $productType */
-        /** @var Mage_Catalog_Model_Resource_Product_Type_Configurable_Attribute_Collection $allAttributes */
-        $productType   = Mage_Catalog_Model_Product_Type::factory($product);
-        $allAttributes = $productType->getConfigurableAttributes($product);
-        $validated     = $this->validateAttributes($allAttributes, $superAttribute);
-        if (!$validated) {
-            return null;
-        }
-        $childAttributes = $productType->getProductByAttributes($superAttribute, $product);
-
-        return $childAttributes ? $childAttributes->getId() : null;
-    }
-
-    /**
-     * Compares wishlist attributes with actual attributes
-     *
-     * @param Mage_Catalog_Model_Resource_Product_Type_Configurable_Attribute_Collection $attributes
-     * @param array                                                                      $comparedAttributes
-     *
-     * @return bool
-     */
-    private function validateAttributes(
-        Mage_Catalog_Model_Resource_Product_Type_Configurable_Attribute_Collection $attributes,
-        array $comparedAttributes
-    ) {
-        foreach ($attributes as $attribute) {
-            if (!isset($comparedAttributes[$attribute->getAttributeId()])) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }
