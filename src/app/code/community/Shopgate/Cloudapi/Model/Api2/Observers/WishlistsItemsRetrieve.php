@@ -46,7 +46,7 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
             $data               = $item->getData();
             $data['type']       = $product->getTypeId();
             $data['buyRequest'] = $item->getBuyRequest()->getData();
-            $data['child_id']   = $this->getChildId($product, $item);
+            $data['child_ids']  = $this->getChildIds($product, $item);
             $items[]            = $data;
         }
 
@@ -55,23 +55,41 @@ class Shopgate_Cloudapi_Model_Api2_Observers_WishlistsItemsRetrieve
     }
 
     /**
-     * Returns the product child id based on parents super attributes if exist
+     * Returns the product child id(s).
+     * For configurable we should get one child ID.
+     * For bundle we get key (selection ID): value (child ID) pairs.
      *
      * @param Mage_Catalog_Model_Product $product
      * @param Mage_Wishlist_Model_Item   $item
      *
-     * @return null | string
+     * @return null | string[]
      */
-    private function getChildId(Mage_Catalog_Model_Product $product, Mage_Wishlist_Model_Item $item)
+    private function getChildIds(Mage_Catalog_Model_Product $product, Mage_Wishlist_Model_Item $item)
     {
-        if ($product->getTypeId() === Mage_Catalog_Model_Product_Type_Configurable::TYPE_CODE) {
+        if ($product->getTypeId() === Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) {
             $superAttribute = $item->getBuyRequest()->getData('super_attribute');
             /** @var Mage_Catalog_Model_Product_Type_Configurable $productType */
             /** @var Mage_Catalog_Model_Resource_Product_Type_Configurable_Attribute_Collection $allAttributes */
-            $productType     = Mage_Catalog_Model_Product_Type::factory($product);
+            $productType     = $product->getTypeInstance();
             $childAttributes = $productType->getProductByAttributes($superAttribute, $product);
 
-            return $childAttributes ? $childAttributes->getId() : null;
+            return $childAttributes ? array($childAttributes->getId()) : null;
+        }
+
+        if ($product->getTypeId() === Mage_Catalog_Model_Product_Type::TYPE_BUNDLE) {
+            $options = $item->getBuyRequest()->getData('bundle_option');
+            /** @var Mage_Bundle_Model_Product_Type $productType */
+            $productType = $product->getTypeInstance();
+            $list        = null;
+            $selections  = !empty($options)
+                ? $productType->getSelectionsByIds(array_values($options), $product)->getItems()
+                : array();
+            /** @var  Mage_Catalog_Model_Product $option */
+            foreach ($selections as $key => $option) {
+                $list[$key] = $option->getId();
+            }
+
+            return $list;
         }
 
         return null;
