@@ -45,7 +45,9 @@ class Shopgate_Cloudapi_Helper_Frontend_Quote_Token extends Mage_Core_Helper_Abs
         $quote = Mage::getModel('sales/quote')->loadActive($authCode->getResourceId());
         if (!$quote->getId()) {
             $this->getCheckoutHelper()->throwException('Link provided does not match any cart');
-        } elseif ($quote->getData('reserved_order_id')) {
+        }
+        $orderIncrementId = $quote->getData('reserved_order_id');
+        if ($orderIncrementId && Mage::getModel('sales/order')->loadByIncrementId($orderIncrementId)->getId()) {
             $this->getCheckoutHelper()->throwException('Cart by this link was already purchased');
         }
 
