@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 ### Fixed
 - Check for a cart to have been ordered already
+- PayPal cancellation was redirecting back to desktop instead of app
 
 ## [3.2.0] - 2018-10-04
 ### Added

@@ -196,6 +196,15 @@
                     </shopgate_checkout_onepage_controller_success_action>
                 </observers>
             </checkout_onepage_controller_success_action>
+            <controller_action_postdispatch_paypal_express_cancel><!-- todo-konstantin: check other PayPal? -->
+                <observers>
+                    <shopgate_cloudapi_record_paypal_cancellation>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_paypalCancellation</class>
+                        <method>execute</method>
+                    </shopgate_cloudapi_record_paypal_cancellation>
+                </observers>
+            </controller_action_postdispatch_paypal_express_cancel>
         </events>
         <translate>
             <modules>

@@ -19,12 +19,15 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
+
 class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
 {
     /**
      * Define custom handles
+     *
+     * @var array[] $customHandles
      */
-    private $customHandles = array();
+    private $customHandles;
 
     /**
      * Init custom handles
@@ -35,18 +38,23 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
             array(
                 'path'     => '/customer/account/login',
                 'handle'   => 'shopgate_cloudapi_customer_account_login',
-                'isActive' => true,
+                'isActive' => true
             ),
             array(
                 'path'     => 'checkout/onepage/success',
                 'handle'   => 'shopgate_cloudapi_checkout_onepage_success',
-                'isActive' => true,
+                'isActive' => true
             ),
             array(
                 'path'     => '/checkout/onepage/index',
                 'handle'   => 'shopgate_cloudapi_checkout_onepage_index',
-                'isActive' => $this->getRequestHelper()->isShopgateGuestCheckout(),
+                'isActive' => $this->getRequestHelper()->isShopgateGuestCheckout()
             ),
+            array(
+                'path'     => 'checkout/cart/index',
+                'handle'   => 'shopgate_cloudapi_checkout_cart_index',
+                'isActive' => true
+            )
         );
     }
 
@@ -62,7 +70,6 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
      * @param Varien_Event_Observer $observer
      *
      * @return $this
-     * @throws Varien_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
@@ -71,6 +78,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
         }
 
         /** @var Mage_Core_Model_Layout $layout */
+        /** @noinspection PhpUndefinedMethodInspection */
         $layout = $observer->getEvent()->getLayout();
         $layout->getUpdate()->addHandle('shopgate_cloudapi_default');
         $this->addCustomHandles($layout);
