@@ -44,11 +44,6 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
                 'path'     => 'checkout/onepage/index',
                 'handle'   => 'shopgate_cloudapi_checkout_onepage_index',
                 'isActive' => $this->getRequestHelper()->isShopgateGuestCheckout()
-            ),
-            array(
-                'path'     => 'checkout/cart/index',
-                'handle'   => 'shopgate_cloudapi_checkout_cart_index',
-                'isActive' => true
             )
         );
     }

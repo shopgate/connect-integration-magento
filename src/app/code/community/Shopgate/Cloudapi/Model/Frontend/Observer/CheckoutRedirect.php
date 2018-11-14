@@ -20,27 +20,17 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Block_Checkout_Cart extends Mage_Core_Block_Template
+class Shopgate_Cloudapi_Model_Frontend_Observer_CheckoutRedirect
 {
     /**
-     * Checks if we are coming from a PayPal cancellation controller
-     * and delete the cookie that tracks it
-     *
-     * @return bool
+     * Redirects the customer to checkout if this is a call from our App.
+     * Please note that the success/error messages are dumped in this case,
+     * maybe a better alternative needs to be created.
      */
-    public function isPaypalCancellation()
+    public function execute()
     {
-        $isCancellation = $this->paypalHelper()->isCancellation();
-        $this->paypalHelper()->unsetCancellation();
-
-        return $isCancellation;
-    }
-
-    /**
-     * @return Shopgate_Cloudapi_Helper_Frontend_Request_Paypal
-     */
-    private function paypalHelper()
-    {
-        return Mage::helper('shopgate_cloudapi/frontend_request_paypal');
+        if (Mage::helper('shopgate_cloudapi/request')->isShopgateCheckout()) {
+            Mage::app()->getResponse()->setRedirect(Mage::helper('checkout/url')->getCheckoutUrl());
+        }
     }
 }
