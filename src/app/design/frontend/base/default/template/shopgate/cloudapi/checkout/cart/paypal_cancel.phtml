@@ -1,9 +1,9 @@
-<!--suppress JSUnusedLocalSymbols -->
 <script type="text/javascript">
+    <?php
     /**
      * Check if coming from PayPal cancellation call, then redirect back to App instead of desktop site
      */
-    <?php if ($this->isPaypalCancellation()): ?>
+    if ($this->isPaypalCancellation()): ?>
     //<![CDATA[
     function initPipelineCall() {
     }
@@ -13,7 +13,7 @@
             'c': 'broadcastEvent',
             'p': {
                 'event': 'closeInAppBrowser',
-                'parameters': [{ 'redirectTo': '/cart' }] //todo-konstantin: double check url
+                'parameters': [{ 'redirectTo': '/cart' }]
             }
         }
     ];
