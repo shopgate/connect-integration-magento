@@ -41,11 +41,6 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
                 'isActive' => true
             ),
             array(
-                'path'     => 'checkout/onepage/success',
-                'handle'   => 'shopgate_cloudapi_checkout_onepage_success',
-                'isActive' => true
-            ),
-            array(
                 'path'     => 'checkout/onepage/index',
                 'handle'   => 'shopgate_cloudapi_checkout_onepage_index',
                 'isActive' => $this->getRequestHelper()->isShopgateGuestCheckout()

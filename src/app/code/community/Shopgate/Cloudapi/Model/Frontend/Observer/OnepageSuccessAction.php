@@ -29,7 +29,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     /**
      * Shopgate checkout onepage template path
      */
-    const CHECKOUT_ONEPAGE_SUCCESS_TEMPLATE_PATH ='shopgate/cloudapi/checkout/success/header.phtml';
+    const CHECKOUT_ONEPAGE_SUCCESS_TEMPLATE_PATH = 'shopgate/cloudapi/checkout/success/header.phtml';
 
     /**
      * Shopgate Events js path
@@ -37,22 +37,25 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     const SHOPGATE_CONNECT_JS_PATH = 'shopgate/sgConnect.js';
 
     /**
-     * Checks if the order is received from Shopgate API call.
+     * Checks if the order is received from Shopgate App,
+     * if so, we will need to log it via the JS script.
      *
      * @param Varien_Event_Observer $observer
-     * @return $this
+     *
+     * @throws Mage_Core_Exception
      */
     public function execute(Varien_Event_Observer $observer)
     {
         $orderIds = $observer->getEvent()->getData('order_ids');
 
         if ($this->shouldNotExecute($orderIds)) {
-            return $this;
+            return;
         }
 
         $newOrderId = $orderIds[0];
         $layout     = Mage::app()->getLayout();
 
+        /** @var Mage_Page_Block_Html_Head $head */
         $head = $layout->getBlock('head');
         $head->addJs(self::SHOPGATE_CONNECT_JS_PATH);
 
@@ -67,14 +70,18 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_OnepageSuccessAction
     }
 
     /**
+     * Checks that we have an order available
+     * That it is a Shopgate order
+     * That it's not a second reload of this page
+     *
      * @param array $orderIds
+     *
      * @return bool
      */
     protected function shouldNotExecute($orderIds)
     {
         return !isset($orderIds[0])
-               || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest() || Mage::registry(
-                self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY
-            );
+            || !Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()
+            || Mage::registry(self::PREVENT_OBSERVER_CHECKOUT_SUCCESS_KEY);
     }
 }

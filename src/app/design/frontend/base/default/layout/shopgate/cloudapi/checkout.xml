@@ -12,18 +12,6 @@
                    template="shopgate/cloudapi/checkout/index/guest_checkout.phtml"/>
         </reference>
     </shopgate_cloudapi_checkout_onepage_index>
-    <shopgate_cloudapi_checkout_onepage_success>
-        <reference name="head">
-            <action method="addJs">
-                <script>shopgate/sgConnect.js</script>
-            </action>
-        </reference>
-        <reference name="content">
-            <remove name="checkout.onepage.login"/>
-            <block type="shopgate_cloudapi/checkout_onepage_success" name="shopgate_cloudapi.checkout.onepage.success"
-                   template="shopgate/cloudapi/checkout/success/header.phtml"/>
-        </reference>
-    </shopgate_cloudapi_checkout_onepage_success>
     <shopgate_cloudapi_checkout_cart_index>
         <reference name="head">
             <action method="addJs">
