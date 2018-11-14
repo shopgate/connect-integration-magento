@@ -23,13 +23,14 @@
 class Shopgate_Cloudapi_Helper_Frontend_Request_Paypal
 {
     const PAYPAL_CANCELLED = 'shopgate_connect_paypal_cancelled';
+    CONST VALUE_ENABLED    = '1';
 
     /**
      * Sets a cookie to identify that we are coming from a cancelled PayPal page
      */
     public function setCancellation()
     {
-        $this->getCookieFactory()->set(self::PAYPAL_CANCELLED, true);
+        $this->getCookieFactory()->set(self::PAYPAL_CANCELLED, self::VALUE_ENABLED);
     }
 
     /**
@@ -39,7 +40,7 @@ class Shopgate_Cloudapi_Helper_Frontend_Request_Paypal
      */
     public function isCancellation()
     {
-        return $this->getCookieFactory()->get(self::PAYPAL_CANCELLED) === true;
+        return $this->getCookieFactory()->get(self::PAYPAL_CANCELLED) === self::VALUE_ENABLED;
     }
 
     /**
@@ -47,7 +48,7 @@ class Shopgate_Cloudapi_Helper_Frontend_Request_Paypal
      */
     public function unsetCancellation()
     {
-        $this->getCookieFactory()->set(self::PAYPAL_CANCELLED, false, 0);
+        $this->getCookieFactory()->set(self::PAYPAL_CANCELLED, '', -1);
     }
 
     /**
