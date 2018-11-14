@@ -36,7 +36,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
     {
         $this->customHandles = array(
             array(
-                'path'     => '/customer/account/login',
+                'path'     => 'customer/account/login',
                 'handle'   => 'shopgate_cloudapi_customer_account_login',
                 'isActive' => true
             ),
@@ -46,7 +46,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
                 'isActive' => true
             ),
             array(
-                'path'     => '/checkout/onepage/index',
+                'path'     => 'checkout/onepage/index',
                 'handle'   => 'shopgate_cloudapi_checkout_onepage_index',
                 'isActive' => $this->getRequestHelper()->isShopgateGuestCheckout()
             ),
@@ -94,7 +94,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_Layout
         /** @var Mage_Core_Controller_Request_Http $request */
         $request = Mage::app()->getRequest();
         $path    = sprintf(
-            '/%s/%s/%s',
+            '%s/%s/%s',
             $request->getModuleName(),
             $request->getControllerName(),
             $request->getActionName()
