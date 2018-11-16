@@ -32,11 +32,8 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CheckoutRedirect
             return;
         }
 
-        $messages = Mage::getSingleton('checkout/session')->getMessages()->getItems();
-        if (!empty($messages)) {
-            $storage = Mage::getSingleton('shopgate_cloudapi/storage_session');
-            $storage->addMessages($messages);
-            Mage::app()->getResponse()->setRedirect(Mage::helper('checkout/url')->getCheckoutUrl());
-        }
+        $messages = Mage::getSingleton('checkout/session')->getMessages(true)->getItems();
+        Mage::getSingleton('shopgate_cloudapi/storage_session')->addMessages($messages);
+        Mage::app()->getResponse()->setRedirect(Mage::helper('checkout/url')->getCheckoutUrl());
     }
 }
