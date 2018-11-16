@@ -24,8 +24,9 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CheckoutRedirect
 {
     /**
      * Redirects the customer to checkout if this is a call from our App.
-     * Please note that the success/error messages are dumped in this case,
-     * maybe a better alternative needs to be created.
+     * Please note that the success/error messages are not shown on checkout,
+     * a better alternative needs to be created. It would be best to send the
+     * messages to our App cart for preview.
      */
     public function execute()
     {
