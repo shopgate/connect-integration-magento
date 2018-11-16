@@ -20,23 +20,18 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Frontend_Observer_CheckoutRedirect
+class Shopgate_Cloudapi_Model_Storage_Session extends Mage_Core_Model_Session_Abstract
 {
-    /**
-     * Redirects the customer to checkout if this is a call from our App.
-     * Saves the messages in our custom session to pass along to the checkout page.
-     */
-    public function execute()
-    {
-        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateCheckout()) {
-            return;
-        }
 
-        $messages = Mage::getSingleton('checkout/session')->getMessages()->getItems();
-        if (!empty($messages)) {
-            $storage = Mage::getSingleton('shopgate_cloudapi/storage_session');
-            $storage->addMessages($messages);
-            Mage::app()->getResponse()->setRedirect(Mage::helper('checkout/url')->getCheckoutUrl());
-        }
+    const SESSION_KEY = 'shopgate_connect';
+
+    /** @noinspection MagicMethodsValidityInspection */
+    /** @noinspection PhpMissingParentConstructorInspection */
+    /**
+     * Shopgate session setup
+     */
+    public function __construct()
+    {
+        parent::init(self::SESSION_KEY);
     }
 }

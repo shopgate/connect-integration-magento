@@ -196,15 +196,24 @@
                     </shopgate_checkout_onepage_controller_success_action>
                 </observers>
             </checkout_onepage_controller_success_action>
-            <controller_action_postdispatch_paypal_express_cancel>
+            <controller_action_predispatch_checkout_cart_index>
                 <observers>
-                    <shopgate_cloudapi_record_paypal_cancellation>
+                    <shopgate_cloudapi_redirect_on_cart_error_to_checkout>
                         <type>model</type>
                         <class>shopgate_cloudapi/frontend_observer_checkoutRedirect</class>
                         <method>execute</method>
-                    </shopgate_cloudapi_record_paypal_cancellation>
+                    </shopgate_cloudapi_redirect_on_cart_error_to_checkout>
                 </observers>
-            </controller_action_postdispatch_paypal_express_cancel>
+            </controller_action_predispatch_checkout_cart_index>
+            <controller_action_predispatch_checkout_onepage_index>
+                <observers>
+                    <shopgate_cloudapi_load_cart_messages>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_checkoutMessages</class>
+                        <method>execute</method>
+                    </shopgate_cloudapi_load_cart_messages>
+                </observers>
+            </controller_action_predispatch_checkout_onepage_index>
         </events>
         <translate>
             <modules>
