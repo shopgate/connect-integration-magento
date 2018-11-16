@@ -33,8 +33,7 @@ class Shopgate_Cloudapi_Model_Frontend_Observer_CheckoutMessages
 
         $messages = Mage::getSingleton('shopgate_cloudapi/storage_session')->getMessages(true)->getItems();
         if (!empty($messages)) {
-            $session = Mage::getSingleton('core/session');
-            $session->addMessages($messages);
+            Mage::getSingleton('core/session')->addMessages($messages);
         }
     }
 }
