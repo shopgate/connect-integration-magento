@@ -22,7 +22,7 @@
 
 class Shopgate_Cloudapi_Model_Storage_Session extends Mage_Core_Model_Session_Abstract
 {
-
+    /** @var string - unique key for the session */
     const SESSION_KEY = 'shopgate_connect';
 
     /** @noinspection MagicMethodsValidityInspection */
