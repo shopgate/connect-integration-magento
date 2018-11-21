@@ -83,7 +83,7 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
             /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product $product */
             $product = Mage::getModel('shopgate_cloudapi/frontend_checkout_onepage_purchase_product');
             $product->setId($item->getSku());
-            $product->setQuantity(intval($item->getQtyOrdered()));
+            $product->setQuantity((int) $item->getQtyOrdered());
             $product->setName($item->getName());
 
             /** @var Shopgate_Cloudapi_Model_Frontend_Checkout_Onepage_Purchase_Product_Price $price */
@@ -118,6 +118,6 @@ class Shopgate_Cloudapi_Block_Checkout_Onepage_Success extends Mage_Core_Block_T
      */
     protected function formatPrice($price)
     {
-        return floatval(sprintf('%.2f', $price));
+        return (float) sprintf('%.2f', $price);
     }
 }

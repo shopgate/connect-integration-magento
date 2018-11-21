@@ -7,7 +7,7 @@
             </action>
         </reference>
         <reference name="content">
-            <remove name="checkout.onepage.login"></remove>
+            <remove name="checkout.onepage.login"/>
             <block type="core/template" name="shopgate_cloudapi.checkout.onepage.index"
                    template="shopgate/cloudapi/checkout/index/guest_checkout.phtml"/>
         </reference>

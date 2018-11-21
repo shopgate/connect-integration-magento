@@ -5,8 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- A redirect to web checkout when a customer browses with an app, and hits a web cart page
+- All web cart success/error/warning messages are forwarded to the web checkout page
+
 ### Fixed
 - Check for a cart to have been ordered already
+- PayPal cancellation to now redirect to checkout page with a message printed on top
 
 ## [3.2.0] - 2018-10-04
 ### Added
