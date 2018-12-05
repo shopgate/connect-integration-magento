@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [3.3.0] - 2018-12-05
+### Added
+- Endpoint for wishlist retrieval      (GET shopgate/v2/wishlists)
+- Endpoint for wishlist creation       (POST shopgate/v2/wishlists)
+- Endpoint for wishlist deletion       (DELETE shopgate/v2/wishlists/:wishlistId)
+- Endpoint for wishlist item retrieval (GET /v2/wishlists/:wishlistId/items)
+- Endpoint for wishlist item creation  (POST /v2/wishlists/:wishlistId/items)
+- Endpoint for wishlist item deletion  (DELETE /v2/wishlists/:wishlistId/items)
+- A redirect to web checkout when a customer browses with an app, and hits a web cart page
+- All web cart success/error/warning messages are forwarded to the web checkout page
+
+### Fixed
+- Check for a cart to have been ordered already
+- PayPal cancellation to now redirect to checkout page with a message printed on top
+
 ## [3.2.0] - 2018-10-04
 ### Added
 - Endpoint for customer address retrieval   (GET shopgate/v2/customers/:id/addresses)
@@ -18,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Shell script to update our REST attributes / roles
 - Support of app-only coupons (except when EE Customer Segments is installed)
 - Support for guest checkout
+
 ### Changed
 - Initial installed admin role, it no longer uses all resources
 - Endpoint for basic customer data now retrieves the user group
@@ -30,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Support for Magento composer installer
 - Validation for Minimum order amount
+
 ### Fixed
 - Checkout url when using store code in magento url
 - Issues with products endpoint showing tax prices for Magento below CE 1.9 & EE 1.14
@@ -46,6 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for retrieving basic customer information
 - Added logic for custom layout handles and removed unnecessary elements from app webview
 - Endpoint stub (blank) for category retrieval; logic to be added later
+
 ### Fixed
 - oAuth refresh token handling
 
@@ -60,7 +78,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for retrieving a temporary checkout URL
 - Endpoint for retrieving of product details
 
-[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.2.0...HEAD
+[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.0...HEAD
+[3.3.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.1.3...3.2.0
 [3.1.3]: https://github.com/shopgate/cloud-integration-magento/compare/3.1.2...3.1.3
 [3.1.2]: https://github.com/shopgate/cloud-integration-magento/compare/3.1.1...3.1.2

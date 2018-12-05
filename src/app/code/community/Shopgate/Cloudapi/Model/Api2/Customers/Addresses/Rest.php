@@ -77,7 +77,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Rest extends Shopgate_Clo
     protected function _retrieve()
     {
         /* @var $address Mage_Customer_Model_Address */
-        $address               = $this->_loadCustomerAddressById($this->getRequest()->getParam('id'));
+        $address = $this->_loadCustomerAddressById($this->getRequest()->getParam('id'));
         $address->getRegionCode();
         $addressData           = $address->getData();
         $addressData['street'] = $address->getStreet();

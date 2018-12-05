@@ -36,7 +36,7 @@
                     </shopgate_cloudapi_v2_carts>
                     <shopgate_cloudapi_v2_customers>
                         <title>Customers</title>
-                        <sort_order>25</sort_order>
+                        <sort_order>30</sort_order>
                         <children>
                             <shopgate_cloudapi_v2_customers_addresses translate="title" module="Shopgate_Cloudapi">
                                 <title>Addresses</title>
@@ -52,13 +52,23 @@
                             </shopgate_cloudapi_v2_customers_password>
                         </children>
                     </shopgate_cloudapi_v2_customers>
+                    <shopgate_cloudapi_v2_wishlists translate="title" module="Shopgate_Cloudapi">
+                        <title>Wishlists</title>
+                        <sort_order>40</sort_order>
+                        <children>
+                            <shopgate_cloudapi_v2_wishlists_items translate="title" module="Shopgate_Cloudapi">
+                                <title>Items</title>
+                                <sort_order>10</sort_order>
+                            </shopgate_cloudapi_v2_wishlists_items>
+                        </children>
+                    </shopgate_cloudapi_v2_wishlists>
                     <shopgate_cloudapi_v2_products translate="title" module="Shopgate_Cloudapi">
                         <title>Products</title>
-                        <sort_order>30</sort_order>
+                        <sort_order>50</sort_order>
                     </shopgate_cloudapi_v2_products>
                     <shopgate_cloudapi_v2_categories translate="title" module="Shopgate_Cloudapi">
                         <title>Categories</title>
-                        <sort_order>40</sort_order>
+                        <sort_order>60</sort_order>
                     </shopgate_cloudapi_v2_categories>
                 </children>
             </shopgate_cloudapi>
@@ -398,11 +408,80 @@
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_customers_password>
+            <shopgate_cloudapi_v2_wishlists>
+                <group>shopgate_cloudapi_v2_wishlists</group>
+                <model>shopgate_cloudapi/api2_wishlists</model>
+                <title>Wishlists</title>
+                <sort_order>80</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                        <create>1</create>
+                        <delete>1</delete>
+                    </customer>
+                </privileges>
+                <force_attributes>
+                    <customer>
+                        <name>Wishlist Name</name>
+                        <visibility>Wishlist Visibility Type</visibility>
+                        <shared>Wishlist Visibility Type</shared>
+                    </customer>
+                </force_attributes>
+                <routes>
+                    <route_v2_wishlists>
+                        <route>/v2/wishlists</route>
+                        <action_type>collection</action_type>
+                    </route_v2_wishlists>
+                    <route_v2_wishlists_id>
+                        <route>/v2/wishlists/:wishlistId</route>
+                        <action_type>entity</action_type>
+                    </route_v2_wishlists_id>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_wishlists>
+            <shopgate_cloudapi_v2_wishlists_items>
+                <group>shopgate_cloudapi_v2_wishlists</group>
+                <model>shopgate_cloudapi/api2_wishlists_items</model>
+                <title>Items</title>
+                <sort_order>90</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                        <create>1</create>
+                        <delete>1</delete>
+                    </customer>
+                </privileges>
+                <force_attributes>
+                    <customer>
+                        <product_id>Product ID</product_id>
+                        <sku>Product SKU</sku>
+                        <qty>Product Quantity</qty>
+                        <bundle_option>Bundled product options</bundle_option>
+                        <bundle_option_qty>Bundled product option quantity</bundle_option_qty>
+                        <super_attribute>Configurable product attributes</super_attribute>
+                        <links>Downloadable product links</links>
+                        <super_group>Group product pairs</super_group>
+                        <custom_giftcard_amount>Custom amount of Giftcard</custom_giftcard_amount>
+                        <giftcard_sender_name>Giftcard sender name</giftcard_sender_name>
+                        <giftcard_sender_email>Giftcard sender email</giftcard_sender_email>
+                        <giftcard_recipient_name>Giftcard recipient name</giftcard_recipient_name>
+                        <giftcard_recipient_email>Giftcard recipient email</giftcard_recipient_email>
+                        <giftcard_message>Giftcard message</giftcard_message>
+                    </customer>
+                </force_attributes>
+                <routes>
+                    <route_v2_wishlists>
+                        <route>/v2/wishlists/:wishlistId/items</route>
+                        <action_type>collection</action_type>
+                    </route_v2_wishlists>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_wishlists_items>
             <shopgate_cloudapi_v2_products>
                 <group>shopgate_cloudapi_v2_products</group>
                 <model>shopgate_cloudapi/api2_products</model>
                 <title>Product retrieval</title>
-                <sort_order>70</sort_order>
+                <sort_order>100</sort_order>
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>
@@ -427,7 +506,7 @@
                 <group>shopgate_cloudapi_v2_categories</group>
                 <model>shopgate_cloudapi/api2_categories</model>
                 <title>Category retrieval</title>
-                <sort_order>80</sort_order>
+                <sort_order>110</sort_order>
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>

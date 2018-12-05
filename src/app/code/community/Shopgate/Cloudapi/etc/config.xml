@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.2.0</version>
+            <version>3.3.0</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
@@ -179,6 +179,62 @@
             </shopgate>
         </routers>
         <events>
+            <shopgate_cloud_api2_wishlists_create>
+                <observers>
+                    <shopgate_cloud_rest_wishlists_create>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsCreate</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlists_create>
+                </observers>
+            </shopgate_cloud_api2_wishlists_create>
+            <shopgate_cloud_api2_wishlists_delete>
+                <observers>
+                    <shopgate_cloud_rest_wishlists_remove>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsDelete</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlists_remove>
+                </observers>
+            </shopgate_cloud_api2_wishlists_delete>
+            <shopgate_cloud_api2_wishlists_retrieve>
+                <observers>
+                    <shopgate_cloud_rest_wishlists_retrieve>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsRetrieve</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlists_retrieve>
+                </observers>
+            </shopgate_cloud_api2_wishlists_retrieve>
+            <shopgate_cloud_api2_wishlists_items_create>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_create>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsCreate</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_create>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_create>
+            <shopgate_cloud_api2_wishlists_items_delete>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_delete>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsDelete</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_delete>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_delete>
+            <shopgate_cloud_api2_wishlists_items_retrieve>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_retrieve>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsRetrieve</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_retrieve>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_retrieve>
+            <catalog_product_collection_apply_limitations_before><!-- EE 1.13 compatibility -->
+                <observers>
+                    <shopgate_cloud_api2_wishlist_store_id_hack>
+                        <class>shopgate_cloudapi/api2_observers_wishlistStoreHandle</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_store_id_hack>
+                </observers>
+            </catalog_product_collection_apply_limitations_before>
             <controller_action_layout_load_before>
                 <observers>
                     <shopgate_controller_action_layout_load_before>
@@ -196,6 +252,24 @@
                     </shopgate_checkout_onepage_controller_success_action>
                 </observers>
             </checkout_onepage_controller_success_action>
+            <controller_action_predispatch_checkout_cart_index>
+                <observers>
+                    <shopgate_cloudapi_redirect_on_cart_error_to_checkout>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_checkoutRedirect</class>
+                        <method>execute</method>
+                    </shopgate_cloudapi_redirect_on_cart_error_to_checkout>
+                </observers>
+            </controller_action_predispatch_checkout_cart_index>
+            <controller_action_predispatch_checkout_onepage_index>
+                <observers>
+                    <shopgate_cloudapi_load_cart_messages>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_checkoutMessages</class>
+                        <method>execute</method>
+                    </shopgate_cloudapi_load_cart_messages>
+                </observers>
+            </controller_action_predispatch_checkout_onepage_index>
         </events>
         <translate>
             <modules>

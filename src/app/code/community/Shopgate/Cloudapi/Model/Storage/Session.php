@@ -20,6 +20,18 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Auth_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
+class Shopgate_Cloudapi_Model_Storage_Session extends Mage_Core_Model_Session_Abstract
 {
+    /** @var string - unique key for the session */
+    const SESSION_KEY = 'shopgate_connect';
+
+    /** @noinspection MagicMethodsValidityInspection */
+    /** @noinspection PhpMissingParentConstructorInspection */
+    /**
+     * Shopgate session setup
+     */
+    public function __construct()
+    {
+        parent::init(self::SESSION_KEY);
+    }
 }

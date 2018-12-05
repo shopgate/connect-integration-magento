@@ -20,6 +20,14 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Auth_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
-{
+/** @var Shopgate_Cloudapi_Model_Resource_Setup $installer */
+$installer = $this;
+$installer->startSetup();
+
+try {
+    $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
+    $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
+} catch (Exception $e) {
+    Mage::logException($e);
 }
+$installer->endSetup();

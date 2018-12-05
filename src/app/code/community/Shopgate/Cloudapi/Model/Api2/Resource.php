@@ -23,6 +23,7 @@
 /**
  * This class is a utility class for Resource specific rewrites
  * @method void _multiDelete(array $requestData) - deletion of a collection
+ * @method array | void _multiCreate(array $filteredData)
  */
 class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
 {
@@ -83,8 +84,9 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
                 } else {
                     $this->_errorIfMethodNotExist('_multiCreate');
                     $filteredData = $this->getFilter()->collectionIn($requestData);
-                    $this->_multiCreate($filteredData);
-                    $this->_render($this->getResponse()->getMessages());
+                    $return       = $this->_multiCreate($filteredData);
+                    $render       = !empty($return) ? $return : $this->getResponse()->getMessages();
+                    $this->_render($render);
                 }
                 break;
             /* Retrieve */

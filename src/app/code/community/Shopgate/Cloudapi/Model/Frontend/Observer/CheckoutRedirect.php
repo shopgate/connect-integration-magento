@@ -20,6 +20,20 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Api2_Auth_Rest extends Shopgate_Cloudapi_Model_Api2_Resource
+class Shopgate_Cloudapi_Model_Frontend_Observer_CheckoutRedirect
 {
+    /**
+     * Redirects the customer to checkout if this is a call from our App.
+     * Saves the messages in our custom session to pass along to the checkout page.
+     */
+    public function execute()
+    {
+        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateCheckout()) {
+            return;
+        }
+
+        $messages = Mage::getSingleton('checkout/session')->getMessages(true)->getItems();
+        Mage::getSingleton('shopgate_cloudapi/storage_session')->addMessages($messages);
+        Mage::app()->getResponse()->setRedirect(Mage::helper('checkout/url')->getCheckoutUrl());
+    }
 }
