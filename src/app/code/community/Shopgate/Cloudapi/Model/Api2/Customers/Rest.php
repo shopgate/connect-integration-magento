@@ -96,4 +96,21 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest extends Shopgate_Cloudapi_Mode
 
         return $customer;
     }
+
+    /**
+     * Removes sensitive data from retrieval
+     *
+     * @todo-sg: should use the native filter in Shopgate_Cloudapi_Model_Api2_Resource::dispatch
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function filterOutData(array $data)
+    {
+        $excludeKeys = array('password_hash', 'password', 'store');
+
+        return array_diff_key($data, array_flip($excludeKeys));
+    }
+
 }

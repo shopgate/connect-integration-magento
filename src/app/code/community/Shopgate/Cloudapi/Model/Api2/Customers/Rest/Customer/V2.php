@@ -38,22 +38,6 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
         return $this->filterOutData($customerData);
     }
 
-    /**
-     * Removes sensitive data from retrieval
-     *
-     * @todo-sg: should use the native filter in Shopgate_Cloudapi_Model_Api2_Resource::dispatch
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function filterOutData(array $data)
-    {
-        $excludeKeys = array('password_hash');
-
-        return array_diff_key($data, array_flip($excludeKeys));
-    }
-
     /** @noinspection PhpHierarchyChecksInspection */
     /**
      * Update customer data
