@@ -26,6 +26,18 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
      * Request token key
      */
     const REQUEST_TOKEN_KEY = 'token';
+    /**
+     * Module name of the redirect, e.g customer in customer/account/login
+     */
+    const REQUEST_REDIRECT_MODULE = 'module';
+    /**
+     * Controller name of the redirect, e.g account in customer/account/login
+     */
+    const REQUEST_REDIRECT_CONTROLLER = 'controller';
+    /**
+     * Action name of the redirect, e.g login in customer/account/login
+     */
+    const REQUEST_REDIRECT_ACTION = 'action';
 
     /**
      * Register psr-4 autoloader for cloud library
@@ -63,17 +75,19 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
          */
         $params = $this->getRequest()->getParams();
         unset($params[self::REQUEST_TOKEN_KEY]);
+        $redirect = $this->getRedirect();
+
 
         return $this->_redirectUrl(
             Mage::helper('core/url')->addRequestParam(
-                Mage::helper('checkout/url')->getCheckoutUrl(),
+                $redirect ? : Mage::helper('checkout/url')->getCheckoutUrl(),
                 $params
             )
         );
     }
 
     /**
-     * @return Mage_Checkout_Model_Session|Mage_Core_Model_Abstract
+     * @return Mage_Checkout_Model_Session
      */
     protected function getSession()
     {
@@ -86,5 +100,24 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
     protected function getCheckoutHelper()
     {
         return Mage::helper('shopgate_cloudapi/frontend_checkout');
+    }
+
+    /**
+     * Retrieves the passed in redirect URL from parameters
+     *
+     * @return false|string
+     */
+    private function getRedirect()
+    {
+        $req    = $this->getRequest();
+        $module = $req->getParam(self::REQUEST_REDIRECT_MODULE);
+        if ($module) {
+            $controller = $req->getParam(self::REQUEST_REDIRECT_CONTROLLER, 'index');
+            $action     = $req->getParam(self::REQUEST_REDIRECT_ACTION, 'index');
+
+            return Mage::getUrl("$module/$controller/$action", array('_secure' => true));
+        }
+
+        return false;
     }
 }
