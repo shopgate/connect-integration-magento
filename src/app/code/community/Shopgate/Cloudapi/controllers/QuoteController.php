@@ -77,7 +77,6 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
         unset($params[self::REQUEST_TOKEN_KEY]);
         $redirect = $this->getRedirect();
 
-
         return $this->_redirectUrl(
             Mage::helper('core/url')->addRequestParam(
                 $redirect ? : Mage::helper('checkout/url')->getCheckoutUrl(),
