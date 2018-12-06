@@ -51,12 +51,12 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Clou
      * @param array $filteredData
      *
      * @return array
-     * @throws Mage_Core_Exception
+     * @throws Mage_Api2_Exception
      */
     protected function _create($filteredData)
     {
         /** @var Mage_Customer_Model_Customer $customer */
-        $customer = Mage::getModel("customer/customer");
+        $customer = Mage::getModel('customer/customer');
 
         $newCustomerData = new Varien_Object();
         $newCustomerData->setData($filteredData);
@@ -88,7 +88,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Clou
                 $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID, Mage_Api2_Model_Server::HTTP_NOT_FOUND);
             }
 
-            return Mage::getModel('core/store')->load($requestData->getStoreId());
+            return $store;
         }
 
         return $this->_getStore();
