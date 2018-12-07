@@ -229,7 +229,7 @@
                         <create>1</create>
                     </admin>
                 </privileges>
-                <attributes translate="entity_id last_logged_in firstname lastname email website_id created_in group_id confirmation disable_auto_group_change password" module="api2">
+                <attributes translate="entity_id last_logged_in firstname lastname email website_id created_in group_id confirmation disable_auto_group_change" module="api2">
                     <entity_id>Customer ID</entity_id>
                     <last_logged_in>Last Logged In</last_logged_in>
                     <firstname>First Name</firstname>
