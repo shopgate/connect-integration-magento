@@ -48,68 +48,41 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Clou
 
     /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * @param array $filteredData
+     * @param array $data
      *
      * @return array
      * @throws Mage_Api2_Exception
+     * @throws Zend_Controller_Response_Exception
+     * @throws Mage_Core_Exception
      */
-    protected function _create($filteredData)
+    protected function _create($data)
     {
-        /** @var Mage_Customer_Model_Customer $customer */
+        $validator    = $this->getValidator();
+        $filteredData = $validator->filter($data);
+        if (!$validator->isValidData($filteredData)) {
+            return $this->setDetailedErrors($validator)->sendInvalidationResponse();
+        }
+
+        /** @var $customer Mage_Customer_Model_Customer */
         $customer = Mage::getModel('customer/customer');
-
-        $newCustomerData = new Varien_Object();
-        $newCustomerData->setData($filteredData);
-        $newCustomerData->setStore($this->getStore($newCustomerData));
-        $newCustomerData->setWebsiteId($this->getWebsiteId($newCustomerData));
-
-        $customer->setData($newCustomerData->getData());
+        $customer->setData($filteredData);
 
         try {
             $customer->save();
+        } catch (Mage_Core_Exception $e) {
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
         } catch (Exception $e) {
-            $this->_critical($e->getMessage());
+            $this->_critical(self::RESOURCE_INTERNAL_ERROR);
         }
 
-        return $this->filterOutData($customer->getData());
+        return array('customerId' => $customer->getId());
     }
 
     /**
-     * @param Varien_Object $requestData
-     *
-     * @return Mage_Core_Model_Store
-     * @throws Mage_Api2_Exception
+     * @return Shopgate_Cloudapi_Model_Api2_Customers_Validator
      */
-    protected function getStore($requestData)
+    public function getValidator()
     {
-        if ($requestData->hasData('store_id')) {
-            $store = Mage::getModel('core/store')->load($requestData->getStoreId());
-            if (!$store->getid()) {
-                $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID, Mage_Api2_Model_Server::HTTP_NOT_FOUND);
-            }
-
-            return $store;
-        }
-
-        return $this->_getStore();
-    }
-
-    /**
-     * @param array $requestData
-     *
-     * @return integer
-     * @throws Mage_Api2_Exception
-     */
-    protected function getWebsiteId($requestData)
-    {
-        if ($requestData->hasData('website_id')) {
-            if ($requestData->getStore()->getWebsiteId() != $requestData->getWebsiteId()) {
-                $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID, Mage_Api2_Model_Server::HTTP_NOT_FOUND);
-            }
-
-            return $requestData->getWebsiteId();
-        }
-
-        return $requestData->getStore()->getWebsiteId();
+        return Mage::getModel('shopgate_cloudapi/api2_customers_validator', array('resource' => $this));
     }
 }

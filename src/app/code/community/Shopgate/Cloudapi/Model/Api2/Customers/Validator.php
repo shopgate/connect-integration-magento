@@ -20,26 +20,23 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 
-class Shopgate_Cloudapi_Model_Acl_Customers_Filter extends Shopgate_Cloudapi_Model_Acl_Filter
+class Shopgate_Cloudapi_Model_Api2_Customers_Validator extends Shopgate_Cloudapi_Model_Api2_Validator
 {
     /**
-     * @inheritdoc
+     * For some reason password is being filtered out
+     * when it is not supposed to be. We just bring it back.
+     *
+     * @param array $data
+     *
+     * @return array
      */
-    public function in(array $requestData)
+    public function filter(array $data)
     {
-        $dateAttributes = Mage::getModel('customer/attribute')
-                             ->getCollection()
-                             ->addFilter('frontend_input', 'date');
-        /** @var Mage_Customer_Model_Attribute $dateAttribute */
-        foreach ($dateAttributes as $dateAttribute) {
-            $code = $dateAttribute->getAttributeCode();
-            if (isset($requestData[$code])) {
-                /** Converting date to locale defined */
-                $date = Mage::app()->getLocale()->date($requestData[$code], null, null, false);
-                $requestData[$code] = $date->toString();
-            }
+        $newData = parent::filter($data);
+        if (isset($data['password'])) {
+            $newData['password'] = $data['password'];
         }
 
-        return parent::in($requestData);
+        return $newData;
     }
 }
