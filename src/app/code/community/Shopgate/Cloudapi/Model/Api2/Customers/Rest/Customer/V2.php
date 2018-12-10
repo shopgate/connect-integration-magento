@@ -40,6 +40,19 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
 
     /** @noinspection PhpHierarchyChecksInspection */
     /**
+     * Prevent customer from creating a customer account
+     *
+     * @param array $filteredData
+     *
+     * @throws Mage_Api2_Exception
+     */
+    protected function _create(array $filteredData)
+    {
+        $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
+    }
+
+    /** @noinspection PhpHierarchyChecksInspection */
+    /**
      * Update customer data
      *
      * @param array $filteredData

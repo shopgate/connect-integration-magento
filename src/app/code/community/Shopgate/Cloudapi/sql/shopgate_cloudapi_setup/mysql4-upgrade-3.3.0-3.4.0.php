@@ -25,8 +25,16 @@ $installer = $this;
 $installer->startSetup();
 
 try {
+    /**
+     * Add REST ACL attributes
+     */
     $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
     $installer->getAclAttributeHelper()->addAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
+    /**
+     * Add REST admin role rules
+     */
+    $role = $installer->getAclRoleHelper()->getAdminRole();
+    $installer->getAclRuleHelper()->addAclRules($role->getId());
 } catch (Exception $e) {
     Mage::logException($e);
 }
