@@ -23,6 +23,11 @@
 class Shopgate_Cloudapi_Model_Api2_Customers_Validator extends Shopgate_Cloudapi_Model_Api2_Validator
 {
     /**
+     * @var int
+     */
+    protected $websiteId;
+
+    /**
      * For some reason password is being filtered out
      * when it is not supposed to be. We just bring it back.
      *
@@ -37,6 +42,28 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Validator extends Shopgate_Cloudapi
             $newData['password'] = $data['password'];
         }
 
+        if (isset($this->websiteId) && !isset($data['website_id'])) {
+            $newData['website_id'] = $this->websiteId;
+        }
+
+        if (!isset($data['group_id'])) {
+            $groupId             = Mage::getStoreConfig(Mage_Customer_Model_Group::XML_PATH_DEFAULT_ID);
+            $newData['group_id'] = $groupId ? : 1;
+        }
+
         return $newData;
     }
+
+    /**
+     * @param int $websiteId
+     *
+     * @return Shopgate_Cloudapi_Model_Api2_Customers_Validator
+     */
+    public function setWebsiteId($websiteId)
+    {
+        $this->websiteId = $websiteId;
+
+        return $this;
+    }
+
 }

@@ -58,7 +58,9 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Clou
     protected function _create($data)
     {
         $validator    = $this->getValidator();
-        $filteredData = $validator->filter($data);
+        $filteredData = $validator
+            ->setWebsiteId((int) $this->_getStore()->getWebsiteId())
+            ->filter($data);
         if (!$validator->isValidData($filteredData)) {
             return $this->setDetailedErrors($validator)->sendInvalidationResponse();
         }
