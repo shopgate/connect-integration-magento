@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "bf55b20c-9173-47ce-8ad2-c2c8ded9a0ce",
-    "name": "Mage Cloud - Customer add",
+    "name": "Mage Cloud",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -19553,6 +19553,7 @@
                           "pm.test(\"Right customer data returned\", function () {",
                           "    var jsonData = pm.response.json();",
                           "    pm.expect(jsonData.customerId).to.be.a('string').to.not.be.empty;",
+                          "    pm.environment.unset(\"customer-id\");",
                           "    pm.environment.set('customer-id', jsonData.customerId);",
                           "});",
                           ""
@@ -19774,6 +19775,7 @@
                           "pm.test(\"Right customer data returned\", function () {",
                           "    var jsonData = pm.response.json();",
                           "    pm.expect(jsonData.customerId).to.be.a('string').to.not.be.empty;",
+                          "    pm.environment.unset(\"customer-id\");",
                           "    pm.environment.set('customer-id', jsonData.customerId);",
                           "});"
                         ],
