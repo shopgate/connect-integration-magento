@@ -19591,7 +19591,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n\t\"email\": \"{{seed}}.mail@shopgate.com\",\n\t\"password\": \"{{seed}}.{{password}}\",\n\t\"website_id\": 1,\n\t\"group_id\": 4,\n\t\"firstname\" : \"{{seed}}.first\",\n\t\"lastname\" : \"{{seed}}.last\"\n}"
+                      "raw": "{\n\t\"email\": \"{{seed}}.email@shopgate.com\",\n\t\"password\": \"{{seed}}.{{password}}\",\n\t\"website_id\": 1,\n\t\"group_id\": 4,\n\t\"firstname\" : \"{{seed}}.first\",\n\t\"lastname\" : \"{{seed}}.last\"\n}"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_customers}}",
@@ -19651,7 +19651,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{seed}}.mail@shopgate.com\",\n  \"password\": \"{{seed}}.{{password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+                      "raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{seed}}.email@shopgate.com\",\n  \"password\": \"{{seed}}.{{password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
                     },
                     "url": {
                       "raw": "{{domain}}{{endpoint_auth_token}}",
@@ -19677,7 +19677,7 @@
                           "pm.test(\"Customer data is correct\", function () {",
                           "    const jsonData = pm.response.json();",
                           "    pm.expect(jsonData.customer_id).to.be.a('string').to.eq(pm.environment.get('customer-id'));",
-                          "    pm.expect(jsonData.email).to.be.a('string').to.eql(pm.environment.get('seed') + '.mail@shopgate.com');",
+                          "    pm.expect(jsonData.email).to.be.a('string').to.eql(pm.environment.get('seed') + '.email@shopgate.com');",
                           "    pm.expect(jsonData.group_id).to.eql('4');",
                           "    pm.expect(jsonData.website_id).to.eq('1');",
                           "    pm.expect(jsonData.firstname).to.eql(pm.environment.get('seed') + '.first');",
