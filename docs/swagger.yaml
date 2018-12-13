@@ -1,0 +1,165 @@
+swagger: "2.0"
+info:
+  description: "Please note that all the proper REST aattributes and roles need to be set up for the endpoints to work. Upon installation these should be enabled automatically."
+  version: "3.4.0"
+  title: "Magento Connect Integration"
+  contact:
+    email: "support@shopgate.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost"
+basePath: "/shopgate/v2"
+tags:
+  - name: "customer"
+    description: "Anything to do with customer account related calls"
+schemes:
+  - "https"
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  "/customer":
+    post:
+      tags:
+        - "customer"
+      summary: "Create customer"
+      description: ""
+      operationId: "customer-create"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: ""
+          required: true
+          schema:
+            $ref: "#/definitions/RequestCustomerCreate"
+      security:
+        - CustomerBearer: []
+        - GuestBearer: []
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            required: ["customerId"]
+            type: "object"
+            properties:
+              customerId:
+                type: "string"
+                example: "1234"
+                description: "Magento internal customer ID"
+        401:
+          $ref: "#/definitions/ErrorUnauthorized"
+        500:
+          $ref: '#/definitions/ErrorUnknown'
+securityDefinitions:
+  GuestBearer:
+    type: "apiKey"
+    in: "header"
+    name: "Authentication Bearer"
+  CustomerBearer:
+    type: "apiKey"
+    in: "header"
+    name: "Authentication Bearer"
+definitions:
+  RequestCustomerCreate:
+    type: "object"
+    required: ["email", "password", "firstname", "lastname"]
+    properties:
+      email:
+        type: "string"
+        example: "test@shopgate.com"
+      password:
+        type: "string"
+        example: "some.password"
+        format: "password"
+      firstname:
+        type: "string"
+        example: "John"
+      lastname:
+        type: "string"
+        example: "Doe"
+  ErrorUnauthorized:
+    description: "Unauthorized user"
+    type: "object"
+    required:
+      - "error"
+    properties:
+      error:
+        type: "object"
+        required:
+          - "code"
+        properties:
+          code:
+            type: "string"
+            enum: ['EACCESS']
+            example: "EACCESS"
+          message:
+            type: "string"
+            example: "Unauthorized user"
+  ErrorValidation:
+    description: "Validation error"
+    type: "object"
+    required:
+      - "error"
+    properties:
+      error:
+        type: "object"
+        required:
+          - "code"
+        properties:
+          code:
+            type: "string"
+            enum: ['EVALIDATION']
+            example: "EVALIDATION"
+          message:
+            type: "string"
+            example: "There was an error with a request"
+          validationErrors:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                path:
+                  type: "string"
+                  example: "birthday"
+                message:
+                  type: "string"
+                  example: "Invalid date format"
+  ErrorInvalidCall:
+    description: "Invalid data"
+    type: "object"
+    required:
+      - "error"
+    properties:
+      error:
+        type: "object"
+        required:
+          - "code"
+        properties:
+          code:
+            type: "string"
+            enum: ['EINVALIDCALL']
+            example: "EINVALIDCALL"
+          message:
+            type: "string"
+            example: "Invalid data passed to the pipeline"
+  ErrorUnknown:
+    description: "Unknown error"
+    type: "object"
+    required:
+      - "error"
+    properties:
+      error:
+        type: "object"
+        required:
+          - "code"
+        properties:
+          code:
+            type: "string"
+            enum: ['EUNKNOWN']
+            example: "EUNKNOWN"
+          message:
+            type: "string"
+            example: "An internal error occurred."
