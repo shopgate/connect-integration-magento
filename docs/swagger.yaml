@@ -12,10 +12,9 @@ host: "localhost"
 basePath: "/shopgate/v2"
 tags:
   - name: "customer"
-    description: "Anything to do with customer account related calls"
+    description: "Anything to do with customer account related calls. This endpoint closely resembles magento's original REST https://devdocs.magento.com/guides/m1x/api/rest/Resources/resource_customers.html"
 schemes:
   - "https"
-  - "http"
 consumes:
   - "application/json"
 produces:
@@ -25,8 +24,7 @@ paths:
     post:
       tags:
         - "customer"
-      summary: "Create customer"
-      description: ""
+      summary: "Allows you to create a new customer."
       operationId: "customer-create"
       parameters:
         - in: "body"
@@ -36,8 +34,7 @@ paths:
           schema:
             $ref: "#/definitions/RequestCustomerCreate"
       security:
-        - CustomerBearer: []
-        - GuestBearer: []
+        - AdminToken: []
       responses:
         200:
           description: "Successful Operation"
@@ -49,117 +46,168 @@ paths:
                 type: "string"
                 example: "1234"
                 description: "Magento internal customer ID"
+        400:
+          $ref: "#/definitions/ErrorValidation"
         401:
           $ref: "#/definitions/ErrorUnauthorized"
         500:
           $ref: '#/definitions/ErrorUnknown'
 securityDefinitions:
-  GuestBearer:
+  AuthUser:
+    description: "Client ID, a combination of [customer_number]-[shop_number] retrieved in Shopgate merchant panel when creating an interface connection to the site"
     type: "apiKey"
     in: "header"
-    name: "Authentication Bearer"
-  CustomerBearer:
+    name: "PHP_AUTH_USER"
+  AuthPassword:
+    description: "Client Secret, [API key] - retrieved in Shopgate merchant panel when creating an interface connection to the site."
     type: "apiKey"
     in: "header"
-    name: "Authentication Bearer"
+    name: "PHP_AUTH_PW"
+  AdminToken:
+    type: "oauth2"
+    flow: "application"
+    tokenUrl: "localhost/shopgate/v2/auth/token"
+  CustomerToken:
+    type: "oauth2"
+    tokenUrl: "localhost/shopgate/v2/auth/token"
+    flow: "password"
 definitions:
   RequestCustomerCreate:
     type: "object"
     required: ["email", "password", "firstname", "lastname"]
     properties:
       email:
+        description: "The customer email address"
         type: "string"
         example: "test@shopgate.com"
       password:
+        description: "The customer password. The password must contain minimum 7 characters"
         type: "string"
-        example: "some.password"
+        example: "qwerty"
         format: "password"
+        minLength: 7
       firstname:
+        description: "The customer first name"
         type: "string"
         example: "John"
       lastname:
+        description: "The customer last name"
         type: "string"
         example: "Doe"
+      group_id:
+        type: "integer"
+        description: "Customer Group ID. If none provided, defaults to the one default configuration under System > Config > Customer Configuration > Default Group"
+        minimum: 1
+        example: 1
+        format: "int32"
+      website_id:
+        description: "Website the customer should belong to. If none provided, will default to the website->store of the endpoint called."
+        type: "integer"
+        minimum: 1
+        example: 1
+        format: "int32"
+      prefix:
+        type: "string"
+        example: "Dr."
+      suffix:
+        type: "string"
+        example: "Jr."
+      gender:
+        description: "Typically male being 1, female 2, but this can be changed in Enterprise"
+        type: "integer"
+        example: 1
+      taxvat:
+        description: "Customer Tax or VAT number"
+        type: "string"
+        example: "GB999 9999 73"
+      middlename:
+        description: "Customer middle name or initial"
+        type: "string"
+        example: "Eduardo"
+      dob:
+        description: "Date of birth, format depends on the store locale. Magento usually does a good job at reformatting the incoming data, so multiple ways can be attempted."
+        type: "string"
+        example: "14.08.1980"
+        format: "date"
+      disable_auto_group_change:
+        description: "Defines whether the automatic group change for the customer will be disabled"
+        type: "integer"
+        example: 0
   ErrorUnauthorized:
     description: "Unauthorized user"
     type: "object"
-    required:
-      - "error"
+    required: ["messages"]
     properties:
-      error:
+      messages:
         type: "object"
-        required:
-          - "code"
+        required: ["error"]
         properties:
-          code:
-            type: "string"
-            enum: ['EACCESS']
-            example: "EACCESS"
-          message:
-            type: "string"
-            example: "Unauthorized user"
-  ErrorValidation:
-    description: "Validation error"
-    type: "object"
-    required:
-      - "error"
-    properties:
-      error:
-        type: "object"
-        required:
-          - "code"
-        properties:
-          code:
-            type: "string"
-            enum: ['EVALIDATION']
-            example: "EVALIDATION"
-          message:
-            type: "string"
-            example: "There was an error with a request"
-          validationErrors:
+          error:
             type: "array"
             items:
               type: "object"
+              required: ["message", "code"]
+              properties:
+                code:
+                  description: "This is not reliable, use HTTP status instead."
+                  type: "integer"
+                  format: "int32"
+                  example: 401
+                message:
+                  type: "string"
+                  example: "Unauthorized"
+  ErrorValidation:
+    description: "Validation error"
+    type: "object"
+    required: ["messages"]
+    properties:
+      messages:
+        type: "object"
+        required: ["error"]
+        properties:
+          error:
+            type: "array"
+            items:
+              type: "object"
+              required: ["path", "messages", "message", "code"]
               properties:
                 path:
                   type: "string"
-                  example: "birthday"
+                  example: "firstname"
+                messages:
+                  type: "array"
+                  items:
+                    type: "string"
+                    example: "'First Name' is a required value."
+                message:
+                  description: "Empty in case of a 400 error"
+                  type: "string"
+                  example: ""
+                code:
+                  description: "This is helpful, but we advise using the HTTP status instead as a guide"
+                  type: "integer"
+                  format: "int32"
+                  example: 400
+  ErrorUnknown:
+    description: "Unknown internal error"
+    type: "object"
+    required: ["messages"]
+    properties:
+      messages:
+        type: "object"
+        required: ["error"]
+        properties:
+          error:
+            type: "array"
+            items:
+              type: "object"
+              required: ["message", "code"]
+              properties:
+                code:
+                  description: "This is not reliable, use HTTP status instead."
+                  type: "integer"
+                  format: "int32"
+                  example: 500
                 message:
                   type: "string"
-                  example: "Invalid date format"
-  ErrorInvalidCall:
-    description: "Invalid data"
-    type: "object"
-    required:
-      - "error"
-    properties:
-      error:
-        type: "object"
-        required:
-          - "code"
-        properties:
-          code:
-            type: "string"
-            enum: ['EINVALIDCALL']
-            example: "EINVALIDCALL"
-          message:
-            type: "string"
-            example: "Invalid data passed to the pipeline"
-  ErrorUnknown:
-    description: "Unknown error"
-    type: "object"
-    required:
-      - "error"
-    properties:
-      error:
-        type: "object"
-        required:
-          - "code"
-        properties:
-          code:
-            type: "string"
-            enum: ['EUNKNOWN']
-            example: "EUNKNOWN"
-          message:
-            type: "string"
-            example: "An internal error occurred."
+                  example: "An internal error occurred"
