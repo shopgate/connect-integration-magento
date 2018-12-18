@@ -74,7 +74,7 @@ securityDefinitions:
 definitions:
   RequestCustomerCreate:
     type: "object"
-    required: ["email", "password", "firstname", "lastname"]
+    required: ["email", "firstname", "lastname"]
     properties:
       email:
         description: "The customer email address"
