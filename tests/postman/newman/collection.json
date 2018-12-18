@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "bf55b20c-9173-47ce-8ad2-c2c8ded9a0ce",
+    "_postman_id": "98594d1b-97de-416a-be65-18e3f0f97861",
     "name": "Mage Cloud",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -19536,7 +19536,7 @@
           "name": "Guest",
           "item": [
             {
-              "name": "Minimum params",
+              "name": "Minimum params (/w pass)",
               "item": [
                 {
                   "name": "Create /w minimal params",
@@ -19726,6 +19726,98 @@
                       "raw": "{{domain}}{{endpoint_customers_me}}",
                       "host": [
                         "{{domain}}{{endpoint_customers_me}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "704645a8-e254-43ab-ad5e-e234dcf5cdb9",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "144ddbea-87e1-4229-ad9c-e23f1a241b9e",
+                    "type": "text/javascript",
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ],
+              "_postman_isSubFolder": true
+            },
+            {
+              "name": "No Password",
+              "item": [
+                {
+                  "name": "Create w/o pass",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
+                        "exec": [
+                          "pm.test(\"Successfully create customer with minimal parameters\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});",
+                          "",
+                          "pm.test(\"Right customer data returned\", function () {",
+                          "    var jsonData = pm.response.json();",
+                          "    pm.expect(jsonData.customerId).to.be.a('string').to.not.be.empty;",
+                          "    pm.environment.set('customer-id', jsonData.customerId);",
+                          "});",
+                          ""
+                        ],
+                        "type": "text/javascript"
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                        "exec": [
+                          "pm.environment.set('seed', 'customer-' + Math.floor(Math.random() * Math.floor(100)));"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{guest-access-token}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n\t\"email\": \"{{seed}}.email@shopgate.com\",\n\t\"firstname\" : \"{{seed}}.first\",\n\t\"lastname\" : \"{{seed}}.last\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_customers}}",
+                      "host": [
+                        "{{domain}}{{endpoint_customers}}"
                       ]
                     }
                   },
