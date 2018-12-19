@@ -11,6 +11,8 @@ info:
 host: "localhost"
 basePath: "/shopgate/v2"
 tags:
+  - name: "auth"
+    description: "Allows to receive a token for customer/guest. Note that the guest token technically has admin rights within Magento."
   - name: "customer"
     description: "Anything to do with customer account related calls. This endpoint closely resembles magento's original REST https://devdocs.magento.com/guides/m1x/api/rest/Resources/resource_customers.html"
 schemes:
@@ -20,6 +22,33 @@ consumes:
 produces:
   - "application/json"
 paths:
+  "/auth/token":
+    post:
+      tags: ["auth"]
+      summary: "Token retrieval"
+      operationId: "auth-token-create"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: '#/definitions/RequestFacebookCredentials'
+      security:
+        - AuthUser: []
+          AuthPassword: []
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: '#/definitions/ResponseBasicCredentials'
+        400:
+          description: "Bad data/parameters provided"
+          schema:
+            $ref: '#/definitions/ErrorOAuthBadRequest'
+        401:
+          description: "Unauthorized oAuth credentials"
+          schema:
+            $ref: '#/definitions/ErrorOAuthUnauthorized'
   "/customer":
     post:
       tags:
@@ -29,7 +58,6 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: ""
           required: true
           schema:
             $ref: "#/definitions/RequestCustomerCreate"
@@ -72,6 +100,45 @@ securityDefinitions:
     tokenUrl: "localhost/shopgate/v2/auth/token"
     flow: "password"
 definitions:
+  RequestFacebookCredentials:
+    description: "The endpoint will attempt to locate the user by the user_id provided. If it cannot locate the user, it will throw an error."
+    type: "object"
+    required: ["grant_type", "user_id"]
+    properties:
+      grant_type:
+        type: "string"
+        enum: ["facebook"]
+        example: "facebook"
+      user_id:
+        type: "string"
+        example: "test@shopgate.com"
+        format: "email"
+      client_id:
+        description: "Client ID, a combination of [customer_number]-[shop_number] retrieved in Shopgate merchant panel when creating an interface connection to the site. Not required because it can be provided via the header params."
+        type: "string"
+        example: "1234-5678"
+      client_secret:
+        description: "Client Secret, [API key] - retrieved in Shopgate merchant panel when creating an interface connection to the site. Not required because it can be provided via the header params."
+        type: "string"
+        example: "123456789"
+  ResponseBasicCredentials:
+    type: "object"
+    required: ["access_token", "expires_in", "token_type", "scope"]
+    properties:
+      access_token:
+        type: "string"
+        example: "614d0c7efe7a8a6f72bfb2897563ed83c364c4e4"
+      expires_in:
+        description: "Expiration in seconds"
+        type: "integer"
+        example: 3600
+      token_type:
+        description: "Type of token"
+        type: "string"
+        enum: ["Bearer"]
+      scope:
+        type: "string"
+        example: null
   RequestCustomerCreate:
     type: "object"
     required: ["email", "firstname", "lastname"]
@@ -133,8 +200,30 @@ definitions:
         description: "Defines whether the automatic group change for the customer will be disabled"
         type: "integer"
         example: 0
+  ErrorOAuthBadRequest:
+    description: "Incorrect data/parameters provided"
+    type: "object"
+    required: ["error", "error_description"]
+    properties:
+      error:
+        type: "string"
+        example: "invalid_grant"
+      error_description:
+        type: "string"
+        example: "Parameter 'user_id' is not a valid email"
+  ErrorOAuthUnauthorized:
+    description: "Unauthorized in relationship to the oAuth endpoint"
+    type: "object"
+    required: ["error", "error_description"]
+    properties:
+      error:
+        type: "string"
+        example: "invalid_grant"
+      error_description:
+        type: "string"
+        example: "Invalid username and password combination"
   ErrorUnauthorized:
-    description: "Unauthorized user"
+    description: "Unauthorized user in relationship to the Magento's REST Roles"
     type: "object"
     required: ["messages"]
     properties:
