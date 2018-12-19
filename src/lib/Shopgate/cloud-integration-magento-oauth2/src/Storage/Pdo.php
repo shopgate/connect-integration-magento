@@ -22,7 +22,7 @@
 
 namespace Shopgate\OAuth2\Storage;
 
-class Pdo extends \OAuth2\Storage\Pdo
+class Pdo extends \OAuth2\Storage\Pdo implements FacebookCredentialsInterface
 {
     const AUTH_TOKEN_EXPIRE_SECONDS = 30;
     const AUTH_TYPE_CHECKOUT        = 'checkout';
