@@ -39,14 +39,6 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
-                      {
                         "key": "Content-Type",
                         "value": "application/json"
                       }
@@ -88,14 +80,6 @@
                   "request": {
                     "method": "POST",
                     "header": [
-                      {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
                       {
                         "key": "Content-Type",
                         "value": "application/json"
@@ -139,14 +123,6 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
-                      {
                         "key": "Content-Type",
                         "value": "application/json"
                       }
@@ -188,14 +164,6 @@
                   "request": {
                     "method": "POST",
                     "header": [
-                      {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
                       {
                         "key": "Content-Type",
                         "value": "application/json"
@@ -239,14 +207,6 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
-                      {
                         "key": "Content-Type",
                         "value": "application/json"
                       }
@@ -289,14 +249,6 @@
                     "method": "POST",
                     "header": [
                       {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
-                      {
                         "key": "Content-Type",
                         "value": "application/json"
                       }
@@ -338,14 +290,6 @@
                   "request": {
                     "method": "POST",
                     "header": [
-                      {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
                       {
                         "key": "Content-Type",
                         "value": "application/json"
@@ -400,14 +344,6 @@
               "request": {
                 "method": "POST",
                 "header": [
-                  {
-                    "key": "PHP_AUTH_USER",
-                    "value": "{{client_id}}"
-                  },
-                  {
-                    "key": "PHP_AUTH_PW",
-                    "value": "{{client_secret}}"
-                  },
                   {
                     "key": "Content-Type",
                     "value": "application/json"
