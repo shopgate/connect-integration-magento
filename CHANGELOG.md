@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 ### Added
 - Endpoint for customer creation (POST shopgate/v2/customers)
+- Customizable redirect logic to the quote controller
 
 ## [3.3.0] - 2018-12-05
 ### Added
