@@ -32,7 +32,10 @@ class Shopgate_Cloudapi_Model_Observers_AddSaleRuleTypeToMergedQuote
         $newQuoteId = $observer->getData('quote')->getId();
         $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')->setQuoteFilter($oldQuoteId);
         if (!$collection->isEmpty()) {
-            Mage::getModel('shopgate_cloudapi/cart_source')->saveQuote($newQuoteId);
+            $collection->setQuoteFilter($newQuoteId);
+            if ($collection->isEmpty()) {
+                Mage::getModel('shopgate_cloudapi/cart_source')->saveQuote($newQuoteId);
+            }
         }
     }
 }
