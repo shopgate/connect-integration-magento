@@ -28,3 +28,4 @@ php magento_package.php
 cd ../..
 rm -rf release/magento
 rm -rf vendor
+rm -rf src/lib/Shopgate/cloud-integration-magento-oauth2/vendor
