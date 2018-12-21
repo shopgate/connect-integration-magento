@@ -9,6 +9,436 @@
       "name": "oAuth2",
       "item": [
         {
+          "name": "Facebook Strategy",
+          "item": [
+            {
+              "name": "Errors",
+              "item": [
+                {
+                  "name": "Non-existing user",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
+                        "exec": [
+                          "pm.test('No such user exists', function(){",
+                          "    pm.response.to.have.status(401);",
+                          "});",
+                          "",
+                          "pm.test(\"Response has the correct error specified\", function () {",
+                          "    pm.response.to.have.jsonBody('error','invalid_grant');",
+                          "    pm.response.to.have.jsonBody('error_description', 'Unable to retrieve user information');",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"incorrect.email@shopgate.com\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_auth_token}}",
+                      "host": [
+                        "{{domain}}{{endpoint_auth_token}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Bad email format",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
+                        "exec": [
+                          "pm.test('Bad parameters entered', function(){",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "pm.test(\"Response has the correct error specified\", function () {",
+                          "    pm.response.to.have.jsonBody('error','invalid_request');",
+                          "    pm.response.to.have.jsonBody('error_description', 'Parameter \"user_id\" is not a valid email');",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"incorrect.email.format\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_auth_token}}",
+                      "host": [
+                        "{{domain}}{{endpoint_auth_token}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "No email provided",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
+                        "exec": [
+                          "pm.test('Bad parameters entered', function(){",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "pm.test(\"Response has the correct error specified\", function () {",
+                          "    pm.response.to.have.jsonBody('error','invalid_request');",
+                          "    pm.response.to.have.jsonBody('error_description', 'Required parameter \"user_id\" is missing');",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_auth_token}}",
+                      "host": [
+                        "{{domain}}{{endpoint_auth_token}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Bad client_id",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
+                        "exec": [
+                          "pm.test('Bad parameters entered', function(){",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "pm.test(\"Response has the correct error specified\", function () {",
+                          "    pm.response.to.have.jsonBody('error','invalid_client');",
+                          "    pm.response.to.have.jsonBody('error_description', 'The client credentials are invalid');",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_id\": \"bad_client_id\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_auth_token}}",
+                      "host": [
+                        "{{domain}}{{endpoint_auth_token}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Bad client_secret",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
+                        "exec": [
+                          "pm.test('Bad parameters entered', function(){",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "pm.test(\"Response has the correct error specified\", function () {",
+                          "    pm.response.to.have.jsonBody('error','invalid_client');",
+                          "    pm.response.to.have.jsonBody('error_description', 'The client credentials are invalid');",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"bad.secret\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_auth_token}}",
+                      "host": [
+                        "{{domain}}{{endpoint_auth_token}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "No client_id",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
+                        "exec": [
+                          "pm.test('Bad parameters entered', function(){",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "pm.test(\"Response has the correct error specified\", function () {",
+                          "    pm.response.to.have.jsonBody('error','invalid_client');",
+                          "    pm.response.to.have.jsonBody('error_description', 'Client credentials were not found in the headers or body');",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_auth_token}}",
+                      "host": [
+                        "{{domain}}{{endpoint_auth_token}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "No client_secret",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
+                        "exec": [
+                          "pm.test('Bad parameters entered', function(){",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "pm.test(\"Response has the correct error specified\", function () {",
+                          "    pm.response.to.have.jsonBody('error','invalid_client');",
+                          "    pm.response.to.have.jsonBody('error_description', 'client credentials are required');",
+                          "});"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_id\": \"{{client_id}}\"\n}"
+                    },
+                    "url": {
+                      "raw": "{{domain}}{{endpoint_auth_token}}",
+                      "host": [
+                        "{{domain}}{{endpoint_auth_token}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ],
+              "_postman_isSubFolder": true
+            },
+            {
+              "name": "Token: facebook",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
+                    "exec": [
+                      "if (responseCode.code === 200) {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.environment.set(\"facebook-access-token\", jsonData.access_token);",
+                      "}",
+                      "",
+                      "pm.test('Successfull call', function(){",
+                      "    pm.response.to.be.success;",
+                      "});",
+                      "",
+                      "pm.test(\"Response follows the correct json oAuth2 specifications\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.response.to.have.jsonBody('token_type','Bearer');",
+                      "    pm.response.to.have.jsonBody('expires_in', 3600);",
+                      "    pm.response.to.have.jsonBody('access_token');",
+                      "    pm.response.to.have.jsonBody('scope', null);",
+                      "    pm.response.to.not.have.jsonBody('refresh_token');",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_auth_token}}",
+                  "host": [
+                    "{{domain}}{{endpoint_auth_token}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Customer: me + clean",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "9af79f56-dba0-4f0d-a976-85ec26419a1d",
+                    "exec": [
+                      "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Customer ID is returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.customer_id).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Customer group is returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.customer_group).to.not.to.be.empty;",
+                      "});",
+                      "pm.test(\"Addresses are not returned\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.addresses).to.be.undefined;",
+                      "});",
+                      "",
+                      "pm.environment.unset('facebook-access-token');"
+                    ],
+                    "type": "text/javascript"
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{facebook-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_me}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_me}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
           "name": "Token: client_credentials",
           "event": [
             {

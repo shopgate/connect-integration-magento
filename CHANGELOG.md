@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 ### Added
 - Endpoint for customer creation (POST shopgate/v2/customers)
+- Facebook login strategy via POST shopgate/v2/auth/token endpoint
 - Customizable redirect logic to the quote controller
 
 ## [3.3.0] - 2018-12-05
@@ -14,9 +15,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for wishlist retrieval      (GET shopgate/v2/wishlists)
 - Endpoint for wishlist creation       (POST shopgate/v2/wishlists)
 - Endpoint for wishlist deletion       (DELETE shopgate/v2/wishlists/:wishlistId)
-- Endpoint for wishlist item retrieval (GET /v2/wishlists/:wishlistId/items)
-- Endpoint for wishlist item creation  (POST /v2/wishlists/:wishlistId/items)
-- Endpoint for wishlist item deletion  (DELETE /v2/wishlists/:wishlistId/items)
+- Endpoint for wishlist item retrieval (GET shopgate/v2/wishlists/:wishlistId/items)
+- Endpoint for wishlist item creation  (POST shopgate/v2/wishlists/:wishlistId/items)
+- Endpoint for wishlist item deletion  (DELETE shopgate/v2/wishlists/:wishlistId/items)
 - A redirect to web checkout when a customer browses with an app, and hits a web cart page
 - All web cart success/error/warning messages are forwarded to the web checkout page
 
