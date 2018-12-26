@@ -19,6 +19,7 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
+
 class Shopgate_Cloudapi_Model_Observers_AddSaleRuleTypeToMergedQuote
 {
     /**
@@ -28,14 +29,37 @@ class Shopgate_Cloudapi_Model_Observers_AddSaleRuleTypeToMergedQuote
      */
     public function execute(Varien_Event_Observer $observer)
     {
+        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateApi()) {
+            return;
+        }
+
         $oldQuoteId = $observer->getData('source')->getId();
         $newQuoteId = $observer->getData('quote')->getId();
-        $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')->setQuoteFilter($oldQuoteId);
-        if (!$collection->isEmpty()) {
-            $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')->setQuoteFilter($newQuoteId);
-            if ($collection->isEmpty()) {
-                Mage::getModel('shopgate_cloudapi/cart_source')->saveQuote($newQuoteId);
+        /** @var Shopgate_Cloudapi_Model_Resource_Cart_Source_Collection $collection */
+        $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')
+                          ->addFieldToFilter(array('quote_id'), array(array($newQuoteId, $oldQuoteId)))
+                          ->addFieldToFilter('source', Shopgate_Cloudapi_Model_Cart_Source::SOURCE_SHOPGATE_APP);
+        if (null !== $this->getQuoteById($collection, $oldQuoteId)
+            && null === $this->getQuoteById($collection, $newQuoteId)
+        ) {
+            Mage::getModel('shopgate_cloudapi/cart_source')->saveQuote($newQuoteId);
+        }
+    }
+
+    /**
+     * @param Shopgate_Cloudapi_Model_Resource_Cart_Source_Collection $collection
+     * @param string|int                                              $quoteId
+     *
+     * @return null|Shopgate_Cloudapi_Model_Cart_Source
+     */
+    private function getQuoteById(Shopgate_Cloudapi_Model_Resource_Cart_Source_Collection $collection, $quoteId)
+    {
+        foreach ($collection as $item) {
+            if ($item->getQuoteId() === $quoteId) {
+                return $item;
             }
         }
+
+        return null;
     }
 }
