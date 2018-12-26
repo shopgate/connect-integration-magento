@@ -41,6 +41,13 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Customer_Rest extends Shopgate_Cloudapi
                       ->collectTotals()
                       ->save();
 
+        /** @var Shopgate_Cloudapi_Model_Resource_Cart_Source_Collection $collection */
+        $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')
+                          ->setQuoteFilter($customerQuote->getId());
+        if ($collection->isEmpty()) {
+            Mage::getModel('shopgate_cloudapi/cart_source')->saveQuote($customerQuote->getId());
+        }
+
         return array('cartId' => $customerQuote->getId());
     }
 }
