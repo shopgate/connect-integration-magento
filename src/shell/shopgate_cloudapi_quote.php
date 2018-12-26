@@ -77,7 +77,7 @@ class Shopgate_Cloudapi_Quote_Shell extends Mage_Shell_Abstract
             return;
         }
 
-        $this->usageHelp();
+        die($this->usageHelp());
     }
 
     /**

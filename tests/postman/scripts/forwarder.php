@@ -42,7 +42,7 @@ try {
  */
 function validate()
 {
-    $whitelist = array('quote');
+    $whitelist = array('quote', 'db');
     $keys      = array_keys($_GET);
     $route     = array_shift($keys);
     if (!in_array($route, $whitelist, true)) {
