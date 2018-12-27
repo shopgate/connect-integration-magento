@@ -13326,9 +13326,15 @@
                   "raw": "{}"
                 },
                 "url": {
-                  "raw": "{{domain}}{{endpoint_carts_id_customer}}",
+                  "raw": "{{domain}}{{endpoint_carts_id_customer}}?sgcloud_inapp=1",
                   "host": [
                     "{{domain}}{{endpoint_carts_id_customer}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sgcloud_inapp",
+                      "value": "1"
+                    }
                   ]
                 }
               },

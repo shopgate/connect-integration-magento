@@ -23,13 +23,15 @@
 class Shopgate_Cloudapi_Model_Observers_AddSaleRuleTypeToMergedQuote
 {
     /**
-     * Transfers the flag for app-only discounts from a guest cart to the customer cart
+     * Transfers the flag for app-only discounts from a guest cart to the customer cart.
+     * This case is when the guest cart is created/transferred from our App, but the customer
+     * registers on the desktop. The merge of guest to customer quote happens not via our endpoint.
      *
      * @param Varien_Event_Observer $observer
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateApi()) {
+        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
             return;
         }
 
