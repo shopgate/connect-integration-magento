@@ -18,7 +18,6 @@ customer:create ${user1_email} ${user_pass} "Test1" "Mock1" "1"
 customer:create ${user2_email} ${user_pass} "Test2" "Mock1" "1"
 
 # add cloud api plugin to magento structure
-! composer install --no-dev -d ${TRAVIS_BUILD_DIR}/src/lib/Shopgate/cloud-integration-magento-oauth2
 ! rsync -a ${TRAVIS_BUILD_DIR}/src/ ${WEB_PATH}/${folder} > /dev/null
 ! echo "SetEnv MAGE_IS_DEVELOPER_MODE true" >> .htaccess
 
