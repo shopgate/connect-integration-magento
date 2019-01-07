@@ -32,8 +32,7 @@ Our repository does support [Magento composer installer](https://github.com/Coty
 
 ```
 composer require shopgate/connect-integration-magento="~3.1.2"
-cd vendor/shopgate/connect-integration-magento/src/lib/Shopgate/connect-integration-magento-oauth2/
-composer update
+composer install -vvv --no-dev -d vendor/shopgate/connect-integration-magento/src/lib/Shopgate/connect-integration-magento-oauth2
 ```
 
 If you have 'copy' as deployment strategy, then you will need to redeploy (re-copy) the files by running this command at the root:

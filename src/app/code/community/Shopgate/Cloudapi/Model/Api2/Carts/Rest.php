@@ -34,7 +34,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
     {
         $this->deactivateUserQuote();
         try {
-            $quoteId = (int) $this->createNewQuote()->getId();
+            $quoteId = $this->createNewQuote()->getId();
         } catch (Mage_Api_Exception $e) {
             $error = $this->getFault($e->getMessage(), 'Fault: ' . $e->getMessage() . ' ' . $e->getCustomMessage());
             $this->_critical($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);

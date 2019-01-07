@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - oAuth2 library to version 1.11.1
 
+### Fixed
+- app-only discounts for new customers who register in the checkout process
+
 ## [3.3.0] - 2018-12-05
 ### Added
 - Endpoint for wishlist retrieval      (GET shopgate/v2/wishlists)

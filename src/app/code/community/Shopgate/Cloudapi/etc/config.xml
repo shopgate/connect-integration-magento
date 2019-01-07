@@ -122,6 +122,15 @@
                     </add_salerule_type_to_quote>
                 </observers>
             </sales_quote_collect_totals_before>
+            <sales_quote_merge_after>
+                <observers>
+                    <add_salerule_type_to_merged_quote>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_addSaleRuleTypeToMergedQuote</class>
+                        <method>execute</method>
+                    </add_salerule_type_to_merged_quote>
+                </observers>
+            </sales_quote_merge_after>
         </events>
         <blocks>
             <shopgate_cloudapi>
