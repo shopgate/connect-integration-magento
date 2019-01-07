@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "98594d1b-97de-416a-be65-18e3f0f97861",
+    "_postman_id": "6a21afa7-9890-4a8a-bdfc-d22c4c4e4ad5",
     "name": "Mage Cloud",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -8,436 +8,6 @@
     {
       "name": "oAuth2",
       "item": [
-        {
-          "name": "Facebook Strategy",
-          "item": [
-            {
-              "name": "Errors",
-              "item": [
-                {
-                  "name": "Non-existing user",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
-                        "exec": [
-                          "pm.test('No such user exists', function(){",
-                          "    pm.response.to.have.status(401);",
-                          "});",
-                          "",
-                          "pm.test(\"Response has the correct error specified\", function () {",
-                          "    pm.response.to.have.jsonBody('error','invalid_grant');",
-                          "    pm.response.to.have.jsonBody('error_description', 'Unable to retrieve user information');",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"incorrect.email@shopgate.com\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Bad email format",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
-                        "exec": [
-                          "pm.test('Bad parameters entered', function(){",
-                          "    pm.response.to.have.status(400);",
-                          "});",
-                          "",
-                          "pm.test(\"Response has the correct error specified\", function () {",
-                          "    pm.response.to.have.jsonBody('error','invalid_request');",
-                          "    pm.response.to.have.jsonBody('error_description', 'Parameter \"user_id\" is not a valid email');",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"incorrect.email.format\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "No email provided",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
-                        "exec": [
-                          "pm.test('Bad parameters entered', function(){",
-                          "    pm.response.to.have.status(400);",
-                          "});",
-                          "",
-                          "pm.test(\"Response has the correct error specified\", function () {",
-                          "    pm.response.to.have.jsonBody('error','invalid_request');",
-                          "    pm.response.to.have.jsonBody('error_description', 'Required parameter \"user_id\" is missing');",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Bad client_id",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
-                        "exec": [
-                          "pm.test('Bad parameters entered', function(){",
-                          "    pm.response.to.have.status(400);",
-                          "});",
-                          "",
-                          "pm.test(\"Response has the correct error specified\", function () {",
-                          "    pm.response.to.have.jsonBody('error','invalid_client');",
-                          "    pm.response.to.have.jsonBody('error_description', 'The client credentials are invalid');",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_id\": \"bad_client_id\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Bad client_secret",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
-                        "exec": [
-                          "pm.test('Bad parameters entered', function(){",
-                          "    pm.response.to.have.status(400);",
-                          "});",
-                          "",
-                          "pm.test(\"Response has the correct error specified\", function () {",
-                          "    pm.response.to.have.jsonBody('error','invalid_client');",
-                          "    pm.response.to.have.jsonBody('error_description', 'The client credentials are invalid');",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"bad.secret\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "No client_id",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
-                        "exec": [
-                          "pm.test('Bad parameters entered', function(){",
-                          "    pm.response.to.have.status(400);",
-                          "});",
-                          "",
-                          "pm.test(\"Response has the correct error specified\", function () {",
-                          "    pm.response.to.have.jsonBody('error','invalid_client');",
-                          "    pm.response.to.have.jsonBody('error_description', 'Client credentials were not found in the headers or body');",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "No client_secret",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
-                        "exec": [
-                          "pm.test('Bad parameters entered', function(){",
-                          "    pm.response.to.have.status(400);",
-                          "});",
-                          "",
-                          "pm.test(\"Response has the correct error specified\", function () {",
-                          "    pm.response.to.have.jsonBody('error','invalid_client');",
-                          "    pm.response.to.have.jsonBody('error_description', 'client credentials are required');",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_id\": \"{{client_id}}\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                }
-              ],
-              "_postman_isSubFolder": true
-            },
-            {
-              "name": "Token: facebook",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "c1e0e280-a6cd-499c-b353-2e9bb4695a0a",
-                    "exec": [
-                      "if (responseCode.code === 200) {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.environment.set(\"facebook-access-token\", jsonData.access_token);",
-                      "}",
-                      "",
-                      "pm.test('Successfull call', function(){",
-                      "    pm.response.to.be.success;",
-                      "});",
-                      "",
-                      "pm.test(\"Response follows the correct json oAuth2 specifications\", function () {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.response.to.have.jsonBody('token_type','Bearer');",
-                      "    pm.response.to.have.jsonBody('expires_in', 3600);",
-                      "    pm.response.to.have.jsonBody('access_token');",
-                      "    pm.response.to.have.jsonBody('scope', null);",
-                      "    pm.response.to.not.have.jsonBody('refresh_token');",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"grant_type\": \"facebook\",\n  \"user_id\": \"{{username1}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                },
-                "url": {
-                  "raw": "{{domain}}{{endpoint_auth_token}}",
-                  "host": [
-                    "{{domain}}{{endpoint_auth_token}}"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Customer: me + clean",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "9af79f56-dba0-4f0d-a976-85ec26419a1d",
-                    "exec": [
-                      "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
-                      "    pm.response.to.have.status(200);",
-                      "});",
-                      "",
-                      "pm.test(\"Customer ID is returned\", function () {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.customer_id).to.not.be.empty;",
-                      "});",
-                      "",
-                      "pm.test(\"Customer group is returned\", function () {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.customer_group).to.not.to.be.empty;",
-                      "});",
-                      "pm.test(\"Addresses are not returned\", function () {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.addresses).to.be.undefined;",
-                      "});",
-                      "",
-                      "pm.environment.unset('facebook-access-token');"
-                    ],
-                    "type": "text/javascript"
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                    "exec": [
-                      ""
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{facebook-access-token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": ""
-                },
-                "url": {
-                  "raw": "{{domain}}{{endpoint_customers_me}}",
-                  "host": [
-                    "{{domain}}{{endpoint_customers_me}}"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ],
-          "_postman_isSubFolder": true
-        },
         {
           "name": "Token: client_credentials",
           "event": [
@@ -13365,6 +12935,538 @@
       "name": "/v2/carts/:id/customer",
       "item": [
         {
+          "name": "Non-SG customer quote",
+          "item": [
+            {
+              "name": "Get customer ID via ME",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "9929cd06-eb01-424b-a398-df220840b14a",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.response.to.have.status(200);",
+                      "    pm.environment.set(\"customer-id\", jsonData.customer_id);",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.unset(\"customer_id\");"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_me}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_me}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create cart + add product",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const responseIsNumeric = isNumeric(pm.response.text()) === true;",
+                      "tests[\"Cart ID is returned\"] = responseIsNumeric;",
+                      "if (responseIsNumeric) {",
+                      "    pm.environment.set(\"cartId\", pm.response.text());",
+                      "} else {",
+                      "    console.log(pm.response.text())",
+                      "}",
+                      "",
+                      "function isNumeric(n) {",
+                      "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}forwarder.php?quote=new&customer={{customer-id}}&product=741&store=1",
+                  "host": [
+                    "{{domain}}forwarder",
+                    "php"
+                  ],
+                  "query": [
+                    {
+                      "key": "quote",
+                      "value": "new",
+                      "description": "non numeric param will create a new quote. NB! Has to be the first parameter\n"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer-id}}",
+                      "description": "ID of customer"
+                    },
+                    {
+                      "key": "product",
+                      "value": "741",
+                      "description": "only simple products are currently supported"
+                    },
+                    {
+                      "key": "store",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+              },
+              "response": []
+            },
+            {
+              "name": "Customer: cart prod exists",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Initial quantity is 1 after adding a simple product\", function () {",
+                      "    pm.expect(jsonData.items.length).to.eql(1);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts}}"
+                  ],
+                  "path": [
+                    "{{cartId}}"
+                  ]
+                },
+                "description": "Creates a customer cart"
+              },
+              "response": []
+            },
+            {
+              "name": "Guest: create cart",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "936dc0db-5a3c-4653-9128-0d5299e9f32f",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "if (responseCode.code === 200 && jsonData.hasOwnProperty('cartId')) {",
+                      "    pm.environment.set(\"cartId\", jsonData.cartId);",
+                      "    tests[\"Cart ID is returned\"] = isNumeric(jsonData.cartId) === true;",
+                      "} else {",
+                      "    tests[\"Cart ID is not returned\"] = false;",
+                      "}",
+                      "",
+                      "pm.test('Successfull call', function(){",
+                      "    pm.response.to.be.success;",
+                      "});",
+                      "",
+                      "function isNumeric(n) {",
+                      "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts}}"
+                  ]
+                },
+                "description": "Creates a guest cart and assigns the local cartId variable from the one returned"
+              },
+              "response": []
+            },
+            {
+              "name": "Guest: add downloadable prod",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Successfull call', function(){",
+                      "    pm.response.to.be.success;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"563\",\n\t    \"qty\": 1,\n\t    \"links\": [\n\t      \"18\"\n\t    ]\n\t }\n  }\n]"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts_id_items}}"
+                  ]
+                },
+                "description": "ID: 563\nName: Fire [Kalima remix] by Unannounced Guest\nSKU: hbm010\nCategory: Music & Books\nURL: fire-kalima-remix-by-unannounced-guest\nPrice: 2.00\nQty: 1000"
+              },
+              "response": []
+            },
+            {
+              "name": "Guest: cart qty 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Initial quantity is 1 after adding a downlodable product\", function () {",
+                      "    pm.expect(jsonData.items.length).to.eql(1);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts}}"
+                  ],
+                  "path": [
+                    "{{cartId}}"
+                  ]
+                },
+                "description": "calls a customer cart as guest"
+              },
+              "response": []
+            },
+            {
+              "name": "Merge carts",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "657032dd-e469-4194-baa3-08d374f98b92",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "if (responseCode.code === 200 && jsonData.cartId) {",
+                      "    pm.environment.set(\"cartId\", jsonData.cartId);",
+                      "}",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Cart ID is returned\", function () {",
+                      "    pm.expect(jsonData.cartId).to.not.be.empty;",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts_id_customer}}?sgcloud_inapp=1",
+                  "host": [
+                    "{{domain}}{{endpoint_carts_id_customer}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sgcloud_inapp",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Customer: cart qty 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Carts merged, 2 items in cart\", function () {",
+                      "    pm.expect(jsonData.items.length).to.eql(2);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts}}"
+                  ],
+                  "path": [
+                    "{{cartId}}"
+                  ]
+                },
+                "description": "Creates a customer cart"
+              },
+              "response": []
+            },
+            {
+              "name": "Check cart in DB",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+                    "exec": [
+                      "pm.test(\"The customer cart exists in our database after merging\", function () {",
+                      "    pm.expect(pm.response.text()).to.include('1');",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}forwarder.php?db=cart_sources&quote_id={{cartId}}",
+                  "host": [
+                    "{{domain}}forwarder",
+                    "php"
+                  ],
+                  "query": [
+                    {
+                      "key": "db",
+                      "value": "cart_sources"
+                    },
+                    {
+                      "key": "quote_id",
+                      "value": "{{cartId}}"
+                    }
+                  ]
+                },
+                "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+              },
+              "response": []
+            }
+          ],
+          "description": "Testing a guest quote that was created via Shopgate API, but a customer quote that was not created via our API endpoint.",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "e092073b-9075-4db4-b6b0-c5281792d12e",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "54be0361-1948-4f2f-b339-ebb45c0ad17c",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
+        {
           "name": "Create customer cart",
           "event": [
             {
@@ -19956,949 +20058,6 @@
             }
           },
           "response": []
-        }
-      ]
-    },
-    {
-      "name": "/v2/customers",
-      "item": [
-        {
-          "name": "Guest",
-          "item": [
-            {
-              "name": "Minimum params (/w pass)",
-              "item": [
-                {
-                  "name": "Create /w minimal params",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
-                        "exec": [
-                          "pm.test(\"Successfully create customer with minimal parameters\", function () {",
-                          "    pm.response.to.have.status(200);",
-                          "});",
-                          "",
-                          "pm.test(\"Right customer data returned\", function () {",
-                          "    var jsonData = pm.response.json();",
-                          "    pm.expect(jsonData.customerId).to.be.a('string').to.not.be.empty;",
-                          "    pm.environment.set('customer-id', jsonData.customerId);",
-                          "});",
-                          ""
-                        ],
-                        "type": "text/javascript"
-                      }
-                    },
-                    {
-                      "listen": "prerequest",
-                      "script": {
-                        "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                        "exec": [
-                          "pm.environment.set('seed', 'customer-' + Math.floor(Math.random() * Math.floor(100)));"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{guest-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n\t\"email\": \"{{seed}}.email@shopgate.com\",\n\t\"password\": \"{{seed}}.{{password}}\",\n\t\"firstname\" : \"{{seed}}.first\",\n\t\"lastname\" : \"{{seed}}.last\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_customers}}",
-                      "host": [
-                        "{{domain}}{{endpoint_customers}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Token: psw - login new customer",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "655aca92-7b3a-43c5-98cf-f8b614d02964",
-                        "exec": [
-                          "if (responseCode.code === 200) {",
-                          "    var jsonData = pm.response.json();",
-                          "    pm.environment.set(\"refresh-token\", jsonData.refresh_token);",
-                          "    pm.environment.set(\"customer-access-token\", jsonData.access_token);",
-                          "}",
-                          "",
-                          "pm.test('Successfull call', function(){",
-                          "    pm.response.to.be.success;",
-                          "});",
-                          "",
-                          "pm.test(\"Response follows the correct json oAuth2 specifications\", function () {",
-                          "    var jsonData = pm.response.json();",
-                          "    pm.response.to.have.jsonBody('token_type','Bearer');",
-                          "    pm.response.to.have.jsonBody('expires_in', 3600);",
-                          "    pm.response.to.have.jsonBody('refresh_token');",
-                          "    pm.response.to.have.jsonBody('access_token');",
-                          "    pm.response.to.have.jsonBody('scope', null);",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{seed}}.email@shopgate.com\",\n  \"password\": \"{{seed}}.{{password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Check customer data",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "703c3a85-b29b-4f52-82ea-34ab57afcf7d",
-                        "exec": [
-                          "pm.test(\"Successfully loaded customer data\", function () {",
-                          "    pm.response.to.have.status(200);",
-                          "});",
-                          "",
-                          "pm.test(\"Customer data is correct\", function () {",
-                          "    const jsonData = pm.response.json();",
-                          "    pm.expect(jsonData.customer_id).to.be.a('string').to.eq(pm.environment.get('customer-id'));",
-                          "    pm.expect(jsonData.email).to.be.a('string').to.eql(pm.environment.get('seed') + '.email@shopgate.com');",
-                          "    pm.expect(jsonData.group_id).to.eql('1');",
-                          "    pm.expect(jsonData.website_id).to.eq('1');",
-                          "    pm.expect(jsonData.firstname).to.eql(pm.environment.get('seed') + '.first');",
-                          "    pm.expect(jsonData.lastname).to.eql(pm.environment.get('seed') + '.last');",
-                          "    pm.expect(jsonData).to.not.have.property('password');",
-                          "    pm.expect(jsonData).to.not.have.property('password_hash');",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    },
-                    {
-                      "listen": "prerequest",
-                      "script": {
-                        "id": "2980fc02-9812-4b3b-9b87-0a4ab8678755",
-                        "exec": [
-                          ""
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{customer-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "GET",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": ""
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_customers_me}}",
-                      "host": [
-                        "{{domain}}{{endpoint_customers_me}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                }
-              ],
-              "event": [
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "704645a8-e254-43ab-ad5e-e234dcf5cdb9",
-                    "type": "text/javascript",
-                    "exec": [
-                      ""
-                    ]
-                  }
-                },
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "144ddbea-87e1-4229-ad9c-e23f1a241b9e",
-                    "type": "text/javascript",
-                    "exec": [
-                      ""
-                    ]
-                  }
-                }
-              ],
-              "_postman_isSubFolder": true
-            },
-            {
-              "name": "No Password",
-              "item": [
-                {
-                  "name": "Create w/o pass",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
-                        "exec": [
-                          "pm.test(\"Successfully create customer with minimal parameters\", function () {",
-                          "    pm.response.to.have.status(200);",
-                          "});",
-                          "",
-                          "pm.test(\"Right customer data returned\", function () {",
-                          "    var jsonData = pm.response.json();",
-                          "    pm.expect(jsonData.customerId).to.be.a('string').to.not.be.empty;",
-                          "    pm.environment.set('customer-id', jsonData.customerId);",
-                          "});",
-                          ""
-                        ],
-                        "type": "text/javascript"
-                      }
-                    },
-                    {
-                      "listen": "prerequest",
-                      "script": {
-                        "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                        "exec": [
-                          "pm.environment.set('seed', 'customer-' + Math.floor(Math.random() * Math.floor(100)));"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{guest-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n\t\"email\": \"{{seed}}.email@shopgate.com\",\n\t\"firstname\" : \"{{seed}}.first\",\n\t\"lastname\" : \"{{seed}}.last\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_customers}}",
-                      "host": [
-                        "{{domain}}{{endpoint_customers}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                }
-              ],
-              "event": [
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "704645a8-e254-43ab-ad5e-e234dcf5cdb9",
-                    "type": "text/javascript",
-                    "exec": [
-                      ""
-                    ]
-                  }
-                },
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "144ddbea-87e1-4229-ad9c-e23f1a241b9e",
-                    "type": "text/javascript",
-                    "exec": [
-                      ""
-                    ]
-                  }
-                }
-              ],
-              "_postman_isSubFolder": true
-            },
-            {
-              "name": "All params",
-              "item": [
-                {
-                  "name": "Create /w all params",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
-                        "exec": [
-                          "pm.test(\"Successfully create customer with maximal parameters\", function () {",
-                          "    pm.response.to.have.status(200);",
-                          "});",
-                          "",
-                          "pm.test(\"Right customer data returned\", function () {",
-                          "    var jsonData = pm.response.json();",
-                          "    pm.expect(jsonData.customerId).to.be.a('string').to.not.be.empty;",
-                          "    pm.environment.set('customer-id', jsonData.customerId);",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    },
-                    {
-                      "listen": "prerequest",
-                      "script": {
-                        "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                        "exec": [
-                          "pm.environment.set('seed', 'customer-' + Math.floor(Math.random() * Math.floor(100)));"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{guest-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n\t\"email\" : \"{{seed}}.email@shopgate.com\",\n\t\"firstname\" : \"{{seed}}.first\",\n\t\"lastname\" : \"{{seed}}.last\",\n\t\"password\" : \"{{seed}}.{{password}}\",\n\t\"group_id\" : 2,\n\t\"website_id\": 1,\n\t\"prefix\" : \"{{seed}}.prefix\",\n\t\"suffix\" : \"{{seed}}.suffix\",\n\t\"gender\" : 2,\n\t\"taxvat\" : \"{{seed}}.taxvat\",\n\t\"middlename\" : \"{{seed}}.middlename\",\n\t\"dob\" : \"12.08.1980\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_customers}}",
-                      "host": [
-                        "{{domain}}{{endpoint_customers}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Token: psw - login new customer",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "655aca92-7b3a-43c5-98cf-f8b614d02964",
-                        "exec": [
-                          "if (responseCode.code === 200) {",
-                          "    var jsonData = pm.response.json();",
-                          "    pm.environment.set(\"refresh-token\", jsonData.refresh_token);",
-                          "    pm.environment.set(\"customer-access-token\", jsonData.access_token);",
-                          "}",
-                          "",
-                          "pm.test('Successfull call', function(){",
-                          "    pm.response.to.be.success;",
-                          "});",
-                          "",
-                          "pm.test(\"Response follows the correct json oAuth2 specifications\", function () {",
-                          "    var jsonData = pm.response.json();",
-                          "    pm.response.to.have.jsonBody('token_type','Bearer');",
-                          "    pm.response.to.have.jsonBody('expires_in', 3600);",
-                          "    pm.response.to.have.jsonBody('refresh_token');",
-                          "    pm.response.to.have.jsonBody('access_token');",
-                          "    pm.response.to.have.jsonBody('scope', null);",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "PHP_AUTH_USER",
-                        "value": "{{client_id}}"
-                      },
-                      {
-                        "key": "PHP_AUTH_PW",
-                        "value": "{{client_secret}}"
-                      },
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{seed}}.email@shopgate.com\",\n  \"password\": \"{{seed}}.{{password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_auth_token}}",
-                      "host": [
-                        "{{domain}}{{endpoint_auth_token}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                },
-                {
-                  "name": "Check customer data",
-                  "event": [
-                    {
-                      "listen": "test",
-                      "script": {
-                        "id": "703c3a85-b29b-4f52-82ea-34ab57afcf7d",
-                        "exec": [
-                          "pm.test(\"Successfully loaded customer data\", function () {",
-                          "    pm.response.to.have.status(200);",
-                          "});",
-                          "",
-                          "pm.test(\"Customer data is correct\", function () {",
-                          "    const jsonData = pm.response.json();",
-                          "    pm.expect(jsonData.customer_id).to.be.a('string').to.eq(pm.environment.get('customer-id'));",
-                          "    pm.expect(jsonData.email).to.be.a('string').to.eql(pm.environment.get('seed') + '.email@shopgate.com');",
-                          "    pm.expect(jsonData.group_id).to.eql('2');",
-                          "    pm.expect(jsonData.website_id).to.eq('1');",
-                          "    pm.expect(jsonData.firstname).to.eql(pm.environment.get('seed') + '.first');",
-                          "    pm.expect(jsonData.lastname).to.eql(pm.environment.get('seed') + '.last');",
-                          "    pm.expect(jsonData).to.not.have.property('password');",
-                          "    pm.expect(jsonData).to.not.have.property('password_hash');",
-                          "    // optional",
-                          "    pm.expect(jsonData.prefix).to.eql(pm.environment.get('seed') + '.prefix');",
-                          "    pm.expect(jsonData.suffix).to.eql(pm.environment.get('seed') + '.suffix');",
-                          "    pm.expect(jsonData.gender).to.eql('2');",
-                          "    pm.expect(jsonData.taxvat).to.eql(pm.environment.get('seed') + '.taxvat');",
-                          "    pm.expect(jsonData.middlename).to.eql(pm.environment.get('seed') + '.middlename');",
-                          "    pm.expect(jsonData.dob).to.be.a('string').to.not.be.empty;",
-                          "});"
-                        ],
-                        "type": "text/javascript"
-                      }
-                    },
-                    {
-                      "listen": "prerequest",
-                      "script": {
-                        "id": "2980fc02-9812-4b3b-9b87-0a4ab8678755",
-                        "exec": [
-                          ""
-                        ],
-                        "type": "text/javascript"
-                      }
-                    }
-                  ],
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{customer-access-token}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "GET",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": ""
-                    },
-                    "url": {
-                      "raw": "{{domain}}{{endpoint_customers_me}}",
-                      "host": [
-                        "{{domain}}{{endpoint_customers_me}}"
-                      ]
-                    }
-                  },
-                  "response": []
-                }
-              ],
-              "_postman_isSubFolder": true
-            }
-          ],
-          "description": "Note that guest is technically admin scope",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "id": "db71d9c3-6652-495d-b8f6-a096bdb32600",
-                "type": "text/javascript",
-                "exec": [
-                  ""
-                ]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "id": "50e6f263-8279-4088-820c-5bc6a3bc2dc6",
-                "type": "text/javascript",
-                "exec": [
-                  ""
-                ]
-              }
-            }
-          ],
-          "_postman_isSubFolder": true
-        },
-        {
-          "name": "Customer",
-          "item": [
-            {
-              "name": "Not allowed",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
-                    "exec": [
-                      "pm.test(\"Customer cannot access create endpoint\", function () {",
-                      "    pm.response.to.have.status(403);",
-                      "});",
-                      ""
-                    ],
-                    "type": "text/javascript"
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                    "exec": [
-                      ""
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{customer-access-token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n\t\"email\" : \"test@shopgate.com\",\n\t\"password\" : \"123test\"\n}"
-                },
-                "url": {
-                  "raw": "{{domain}}{{endpoint_customers}}",
-                  "host": [
-                    "{{domain}}{{endpoint_customers}}"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ],
-          "_postman_isSubFolder": true
-        },
-        {
-          "name": "Errors",
-          "item": [
-            {
-              "name": "Empty request data",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
-                    "exec": [
-                      "pm.test(\"Check response code\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});",
-                      "",
-                      "/**",
-                      " * Traverses all default errors and checks that they exist as json objects",
-                      " */",
-                      "pm.test(\"All default errors appear correctly\", function () {",
-                      "    var jsonData = pm.response.json();",
-                      "    const list = ['firstname', 'lastname', 'email']",
-                      "    pm.expect(jsonData.messages.error.length).to.be.gte(3);",
-                      "    list.forEach((path) => {",
-                      "        let result = jsonData.messages.error.filter((item) => item.path === path);",
-                      "        pm.expect(result.length).to.eq(1);",
-                      "        if (result.length === 0) {",
-                      "            console.log('This path is not available in this mage instance: ' + path)",
-                      "        }",
-                      "    })",
-                      "});",
-                      ""
-                    ],
-                    "type": "text/javascript"
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                    "exec": [
-                      ""
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{guest-access-token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{}"
-                },
-                "url": {
-                  "raw": "{{domain}}{{endpoint_customers}}",
-                  "host": [
-                    "{{domain}}{{endpoint_customers}}"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Customer already exist",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
-                    "exec": [
-                      "pm.test(\"Check response code\", function () {",
-                      "    pm.response.to.have.status(500);",
-                      "});",
-                      ""
-                    ],
-                    "type": "text/javascript"
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                    "exec": [
-                      ""
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{guest-access-token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n\t\"email\" : \"{{username1}}\",\n\t\"password\" : \"123test\",\n\t\"firstname\" : \"{{seed}}.first\",\n\t\"lastname\" : \"{{seed}}.last\"\n}"
-                },
-                "url": {
-                  "raw": "{{domain}}{{endpoint_customers}}",
-                  "host": [
-                    "{{domain}}{{endpoint_customers}}"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Invalid website ID",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
-                    "exec": [
-                      "pm.test(\"Check response code\", function () {",
-                      "    pm.response.to.have.status(400);",
-                      "});",
-                      "",
-                      "pm.test('Right error message returned', function () {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.expect(jsonData.messages.error[0].path).to.eql('website_id');",
-                      "});",
-                      ""
-                    ],
-                    "type": "text/javascript"
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                    "exec": [
-                      "pm.environment.set('seed', 'customer-' + Math.floor(Math.random() * Math.floor(100)));"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{guest-access-token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n\t\"email\" : \"{{seed}}.email@shopgate.com\",\n\t\"password\" : \"{{customer-password}}\",\n\t\"website_id\": 100,\n\t\"firstname\" : \"{{seed}}.first\",\n\t\"lastname\" : \"{{seed}}.last\"\n}"
-                },
-                "url": {
-                  "raw": "{{domain}}{{endpoint_customers}}",
-                  "host": [
-                    "{{domain}}{{endpoint_customers}}"
-                  ]
-                }
-              },
-              "response": []
-            },
-            {
-              "name": "Invalid Date",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "eda8e7c9-de5e-4f59-8e45-4c7798df6698",
-                    "exec": [
-                      "pm.test(\"Check response code\", function () {",
-                      "    pm.response.to.have.status(500);",
-                      "});"
-                    ],
-                    "type": "text/javascript"
-                  }
-                },
-                {
-                  "listen": "prerequest",
-                  "script": {
-                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
-                    "exec": [
-                      "pm.environment.set('seed', 'customer-' + Math.floor(Math.random() * Math.floor(100)));"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "auth": {
-                  "type": "bearer",
-                  "bearer": [
-                    {
-                      "key": "token",
-                      "value": "{{guest-access-token}}",
-                      "type": "string"
-                    }
-                  ]
-                },
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n\t\"email\" : \"{{seed}}.email@shopgate.com\",\n\t\"password\" : \"123test\",\n\t\"dob\" : \"invalid\"\n}"
-                },
-                "url": {
-                  "raw": "{{domain}}{{endpoint_customers}}",
-                  "host": [
-                    "{{domain}}{{endpoint_customers}}"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ],
-          "_postman_isSubFolder": true
-        },
-        {
-          "name": "Cleanup",
-          "item": [
-            {
-              "name": "Token: regular customer login",
-              "event": [
-                {
-                  "listen": "test",
-                  "script": {
-                    "id": "655aca92-7b3a-43c5-98cf-f8b614d02964",
-                    "exec": [
-                      "if (responseCode.code === 200) {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.environment.set(\"refresh-token\", jsonData.refresh_token);",
-                      "    pm.environment.set(\"customer-access-token\", jsonData.access_token);",
-                      "}",
-                      "",
-                      "pm.test('Successfull call', function(){",
-                      "    pm.response.to.be.success;",
-                      "});",
-                      "",
-                      "pm.test(\"Response follows the correct json oAuth2 specifications\", function () {",
-                      "    var jsonData = pm.response.json();",
-                      "    pm.response.to.have.jsonBody('token_type','Bearer');",
-                      "    pm.response.to.have.jsonBody('expires_in', 3600);",
-                      "    pm.response.to.have.jsonBody('refresh_token');",
-                      "    pm.response.to.have.jsonBody('access_token');",
-                      "    pm.response.to.have.jsonBody('scope', null);",
-                      "});",
-                      "",
-                      "pm.environment.unset('customer-id');",
-                      "pm.environment.unset('seed');"
-                    ],
-                    "type": "text/javascript"
-                  }
-                }
-              ],
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "PHP_AUTH_USER",
-                    "value": "{{client_id}}"
-                  },
-                  {
-                    "key": "PHP_AUTH_PW",
-                    "value": "{{client_secret}}"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{username1}}\",\n  \"password\": \"{{password}}\",\n  \"client_id\": \"{{client_id}}\",\n  \"client_secret\":\"{{client_secret}}\"\n}"
-                },
-                "url": {
-                  "raw": "{{domain}}{{endpoint_auth_token}}",
-                  "host": [
-                    "{{domain}}{{endpoint_auth_token}}"
-                  ]
-                }
-              },
-              "response": []
-            }
-          ],
-          "_postman_isSubFolder": true
         }
       ]
     },

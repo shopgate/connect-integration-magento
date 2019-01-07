@@ -2,8 +2,7 @@
   "name": "shopgate/cloud-integration-magento-oauth2",
   "description": "A PHP framework supporting the implementation of the Shopgate Cloud Service's oAuth2 implementation.",
   "homepage": "http://developers.shopgate.com/",
-  "version": "3.0.0",
-  "license": "proprietary",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Shopgate",
@@ -15,8 +14,8 @@
     "bshaffer/oauth2-server-php": "1.9.* || ~1.11"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master",
-    "phpunit/phpunit": "~4.8"
+    "phpunit/phpunit": "~4.8",
+    "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "psr-4": {

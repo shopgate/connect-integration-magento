@@ -56,3 +56,4 @@ sudo sed -i -e "s/<<soap_apikey>>/${SOAP_APIKEY}/g" ./tests/postman/newman/globa
 
 npm install -g newman@^4.0.0
 npm install -g newman-reporter-html@^1.0.0
+composer install --no-dev -d ${TRAVIS_BUILD_DIR}/src/lib/Shopgate/cloud-integration-magento-oauth2

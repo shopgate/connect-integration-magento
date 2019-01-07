@@ -5,7 +5,6 @@ services:
   - mysql
 install:
   - phpenv config-rm xdebug.ini || return 0
-  - composer install --no-dev -d ${TRAVIS_BUILD_DIR}/src/lib/Shopgate/cloud-integration-magento-oauth2
   # handles node update, do not move to script
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
 

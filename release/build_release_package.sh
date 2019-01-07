@@ -5,6 +5,7 @@ rm -f release/magento1702.zip
 rm -rf release/magento
 rm -rf vendor
 
+composer install -vvv --no-dev -d src/lib/Shopgate/cloud-integration-magento-oauth2
 composer install -vvv --no-dev
 
 # Modify version in magento files just in case it was forgotten
@@ -27,3 +28,4 @@ php magento_package.php
 cd ../..
 rm -rf release/magento
 rm -rf vendor
+rm -rf src/lib/Shopgate/cloud-integration-magento-oauth2/vendor
