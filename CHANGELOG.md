@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [3.3.1] - 2019-01-10
+### Added
+- Customizable redirect logic to the quote controller
+
+### Changed
+- oAuth2 library to version 1.11.1
+
+### Fixed
+- App-only discounts for new customers who register in the checkout process
+
 ## [3.3.0] - 2018-12-05
 ### Added
 - Endpoint for wishlist retrieval      (GET shopgate/v2/wishlists)
@@ -78,7 +88,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for retrieving a temporary checkout URL
 - Endpoint for retrieving of product details
 
-[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.0...HEAD
+[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.1...HEAD
+[3.3.1]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.1.3...3.2.0
 [3.1.3]: https://github.com/shopgate/cloud-integration-magento/compare/3.1.2...3.1.3

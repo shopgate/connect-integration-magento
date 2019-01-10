@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.3.0</version>
+            <version>3.3.1</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
@@ -122,6 +122,15 @@
                     </add_salerule_type_to_quote>
                 </observers>
             </sales_quote_collect_totals_before>
+            <sales_quote_merge_after>
+                <observers>
+                    <add_salerule_type_to_merged_quote>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_addSaleRuleTypeToMergedQuote</class>
+                        <method>execute</method>
+                    </add_salerule_type_to_merged_quote>
+                </observers>
+            </sales_quote_merge_after>
         </events>
         <blocks>
             <shopgate_cloudapi>
@@ -303,7 +312,10 @@
                         .customer-account-create .back-link,
                         .customer-account-forgotpassword .back-link,
                         .customer-account-login #login-form,
-                        #checkout-review-submit .f-left {display: none;}
+                        #checkout-review-submit .f-left,
+                        .sales-order-history.customer-account .main-container .sidebar,
+                        .sales-order-history.customer-account .main-container .link-reorder,
+                        .sales-order-view.customer-account .main-container .sidebar {display: none;}
                         .checkout-onepage-success a {pointer-events: none; cursor: default;}
                     ]]>
                 </styles>

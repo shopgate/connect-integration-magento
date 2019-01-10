@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "e55d0f8a-50a4-4a2a-81ee-f3089cd52567",
+    "_postman_id": "6a21afa7-9890-4a8a-bdfc-d22c4c4e4ad5",
     "name": "Mage Cloud",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -12934,6 +12934,538 @@
     {
       "name": "/v2/carts/:id/customer",
       "item": [
+        {
+          "name": "Non-SG customer quote",
+          "item": [
+            {
+              "name": "Get customer ID via ME",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "9929cd06-eb01-424b-a398-df220840b14a",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test(\"Successfully loaded customer data via ME endpoint\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.response.to.have.status(200);",
+                      "    pm.environment.set(\"customer-id\", jsonData.customer_id);",
+                      "});"
+                    ]
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "f4a1b51e-3eea-4ae6-9dfd-f4c5faf33af3",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.environment.unset(\"customer_id\");"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_customers_me}}",
+                  "host": [
+                    "{{domain}}{{endpoint_customers_me}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create cart + add product",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+                    "type": "text/javascript",
+                    "exec": [
+                      "const responseIsNumeric = isNumeric(pm.response.text()) === true;",
+                      "tests[\"Cart ID is returned\"] = responseIsNumeric;",
+                      "if (responseIsNumeric) {",
+                      "    pm.environment.set(\"cartId\", pm.response.text());",
+                      "} else {",
+                      "    console.log(pm.response.text())",
+                      "}",
+                      "",
+                      "function isNumeric(n) {",
+                      "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}forwarder.php?quote=new&customer={{customer-id}}&product=741&store=1",
+                  "host": [
+                    "{{domain}}forwarder",
+                    "php"
+                  ],
+                  "query": [
+                    {
+                      "key": "quote",
+                      "value": "new",
+                      "description": "non numeric param will create a new quote. NB! Has to be the first parameter\n"
+                    },
+                    {
+                      "key": "customer",
+                      "value": "{{customer-id}}",
+                      "description": "ID of customer"
+                    },
+                    {
+                      "key": "product",
+                      "value": "741",
+                      "description": "only simple products are currently supported"
+                    },
+                    {
+                      "key": "store",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+              },
+              "response": []
+            },
+            {
+              "name": "Customer: cart prod exists",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Initial quantity is 1 after adding a simple product\", function () {",
+                      "    pm.expect(jsonData.items.length).to.eql(1);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts}}"
+                  ],
+                  "path": [
+                    "{{cartId}}"
+                  ]
+                },
+                "description": "Creates a customer cart"
+              },
+              "response": []
+            },
+            {
+              "name": "Guest: create cart",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "936dc0db-5a3c-4653-9128-0d5299e9f32f",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "if (responseCode.code === 200 && jsonData.hasOwnProperty('cartId')) {",
+                      "    pm.environment.set(\"cartId\", jsonData.cartId);",
+                      "    tests[\"Cart ID is returned\"] = isNumeric(jsonData.cartId) === true;",
+                      "} else {",
+                      "    tests[\"Cart ID is not returned\"] = false;",
+                      "}",
+                      "",
+                      "pm.test('Successfull call', function(){",
+                      "    pm.response.to.be.success;",
+                      "});",
+                      "",
+                      "function isNumeric(n) {",
+                      "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts}}"
+                  ]
+                },
+                "description": "Creates a guest cart and assigns the local cartId variable from the one returned"
+              },
+              "response": []
+            },
+            {
+              "name": "Guest: add downloadable prod",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Successfull call', function(){",
+                      "    pm.response.to.be.success;",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"563\",\n\t    \"qty\": 1,\n\t    \"links\": [\n\t      \"18\"\n\t    ]\n\t }\n  }\n]"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts_id_items}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts_id_items}}"
+                  ]
+                },
+                "description": "ID: 563\nName: Fire [Kalima remix] by Unannounced Guest\nSKU: hbm010\nCategory: Music & Books\nURL: fire-kalima-remix-by-unannounced-guest\nPrice: 2.00\nQty: 1000"
+              },
+              "response": []
+            },
+            {
+              "name": "Guest: cart qty 1",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Initial quantity is 1 after adding a downlodable product\", function () {",
+                      "    pm.expect(jsonData.items.length).to.eql(1);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{guest-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts}}"
+                  ],
+                  "path": [
+                    "{{cartId}}"
+                  ]
+                },
+                "description": "calls a customer cart as guest"
+              },
+              "response": []
+            },
+            {
+              "name": "Merge carts",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "657032dd-e469-4194-baa3-08d374f98b92",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "if (responseCode.code === 200 && jsonData.cartId) {",
+                      "    pm.environment.set(\"cartId\", jsonData.cartId);",
+                      "}",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Cart ID is returned\", function () {",
+                      "    pm.expect(jsonData.cartId).to.not.be.empty;",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts_id_customer}}?sgcloud_inapp=1",
+                  "host": [
+                    "{{domain}}{{endpoint_carts_id_customer}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sgcloud_inapp",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Customer: cart qty 2",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var jsonData = pm.response.json();",
+                      "",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Carts merged, 2 items in cart\", function () {",
+                      "    pm.expect(jsonData.items.length).to.eql(2);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{customer-access-token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}{{endpoint_carts}}/{{cartId}}",
+                  "host": [
+                    "{{domain}}{{endpoint_carts}}"
+                  ],
+                  "path": [
+                    "{{cartId}}"
+                  ]
+                },
+                "description": "Creates a customer cart"
+              },
+              "response": []
+            },
+            {
+              "name": "Check cart in DB",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+                    "exec": [
+                      "pm.test(\"The customer cart exists in our database after merging\", function () {",
+                      "    pm.expect(pm.response.text()).to.include('1');",
+                      "});"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{domain}}forwarder.php?db=cart_sources&quote_id={{cartId}}",
+                  "host": [
+                    "{{domain}}forwarder",
+                    "php"
+                  ],
+                  "query": [
+                    {
+                      "key": "db",
+                      "value": "cart_sources"
+                    },
+                    {
+                      "key": "quote_id",
+                      "value": "{{cartId}}"
+                    }
+                  ]
+                },
+                "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+              },
+              "response": []
+            }
+          ],
+          "description": "Testing a guest quote that was created via Shopgate API, but a customer quote that was not created via our API endpoint.",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "e092073b-9075-4db4-b6b0-c5281792d12e",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "54be0361-1948-4f2f-b339-ebb45c0ad17c",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "_postman_isSubFolder": true
+        },
         {
           "name": "Create customer cart",
           "event": [
