@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-
-## [3.3.1] - 2019-01-10
 ### Added
 - Endpoint for customer creation       (POST shopgate/v2/customers)
 - Endpoint for Facebook login strategy (POST shopgate/v2/auth/token)
+
+## [3.3.1] - 2019-01-10
+### Added
 - Customizable redirect logic to the quote controller
 
 ### Changed
