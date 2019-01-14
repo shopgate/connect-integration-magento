@@ -38,20 +38,17 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Customer_V2 extends Shopgate_C
         return $this->filterOutData($customerData);
     }
 
+    /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * Removes sensitive data from retrieval
+     * Prevent customer from creating a customer account
      *
-     * @todo-sg: should use the native filter in Shopgate_Cloudapi_Model_Api2_Resource::dispatch
+     * @param array $filteredData
      *
-     * @param array $data
-     *
-     * @return array
+     * @throws Mage_Api2_Exception
      */
-    private function filterOutData(array $data)
+    protected function _create(array $filteredData)
     {
-        $excludeKeys = array('password_hash');
-
-        return array_diff_key($data, array_flip($excludeKeys));
+        $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
     }
 
     /** @noinspection PhpHierarchyChecksInspection */

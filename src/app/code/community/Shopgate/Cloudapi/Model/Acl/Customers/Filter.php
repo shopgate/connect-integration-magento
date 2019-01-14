@@ -37,7 +37,7 @@ class Shopgate_Cloudapi_Model_Acl_Customers_Filter extends Shopgate_Cloudapi_Mod
                 /** Converting date to locale defined */
                 $date = Mage::app()->getLocale()->date($requestData[$code], null, null, false);
                 $requestData[$code] = $date->toString();
-            };
+            }
         }
 
         return parent::in($requestData);
