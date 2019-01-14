@@ -5,13 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-### Changed
-- The Plugin is now compatible with PWA 6.1, but incompatible with earlier versions
-
 ### Added
 - Endpoint for customer creation       (POST shopgate/v2/customers)
 - Endpoint for Facebook login strategy (POST shopgate/v2/auth/token)
 
+### Changed
+- The Plugin is now compatible with PWA 6.1, but incompatible with earlier versions
 
 ## [3.3.1] - 2019-01-10
 ### Added
