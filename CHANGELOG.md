@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Changed
-- The Plugin is now compatible with PWA 6.1 but incompatible with earlier versions
+- The Plugin is now compatible with PWA 6.1, but incompatible with earlier versions
 
 ## [3.3.1] - 2019-01-10
 ### Added
