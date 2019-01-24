@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- Returning net or gross shipping amount, depennding on Magento settings.
 
 ## [3.3.1] - 2019-01-10
 ### Added

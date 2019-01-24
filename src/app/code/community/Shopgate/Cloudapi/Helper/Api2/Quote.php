@@ -134,19 +134,26 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
      */
     public function addTotals(Mage_Sales_Model_Quote $quote)
     {
-        $totals = $quote->getTotals();
+        $totals = array_map(
+            function (Mage_Sales_Model_Quote_Address_Total $total) {
+                return $total->getData();
+            },
+            $quote->getTotals()
+        );
+
+        if (isset($totals[self::KEY_SHIPPING]) && $totals[self::KEY_SHIPPING]['value']) {
+            $totals[self::KEY_SHIPPING]['value'] = Mage::helper('tax')->getShippingPrice(
+                $totals[self::KEY_SHIPPING]['value'],
+                Mage::helper('tax')->displayShippingPriceIncludingTax() || Mage::helper('tax')->displayShippingBothPrices(),
+                $quote->getShippingAddress(),
+                $quote->getCustomerTaxClassId()
+            );
+        }
+
         $quote->setData(
             self::KEY_TOTALS,
-            array_map(
-                function (Mage_Sales_Model_Quote_Address_Total $total) {
-                    return $total->getData();
-                },
-                $totals
-            )
+            $totals
         );
-        if (isset($totals['discount']) && $quote->getCouponCode() === null) {
-            $quote->setCouponCode('1');
-        }
     }
 
     /**
