@@ -19,7 +19,6 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
 class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
 {
     const KEY_ITEMS                       = 'items';
@@ -27,6 +26,7 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
     const KEY_ERROR_MESSAGES              = 'errors';
     const KEY_ERRORS                      = 'has_error';
     const KEY_CART_PRICE_DISPLAY_SETTINGS = 'cart_price_display_settings';
+    const KEY_ORDER_OPTIONS               = 'options';
 
     /**
      * Adds errors to quote items.
@@ -64,7 +64,9 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
      */
     public function setSaleRuleType(Mage_Sales_Model_Quote $quote, Mage_Core_Model_Store $store)
     {
-        $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')->setQuoteFilter($quote->getId());
+        $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')->setQuoteFilter(
+            $quote->getId()
+        );
         if (!$collection->isEmpty()) {
             return;
         }
@@ -97,10 +99,10 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
         /** @var Mage_Sales_Model_Quote_Item $item */
         if (!$quote->validateMinimumAmount()) {
             $minimumAmount = Mage::app()->getLocale()->currency($store->getCurrentCurrencyCode())
-                                 ->toCurrency(Mage::getStoreConfig('sales/minimum_order/amount'));
+                ->toCurrency(Mage::getStoreConfig('sales/minimum_order/amount'));
 
             $messages[] = Mage::getStoreConfig('sales/minimum_order/description')
-                ? : Mage::helper('checkout')->__('Minimum order amount is %s', $minimumAmount);
+                ?: Mage::helper('checkout')->__('Minimum order amount is %s', $minimumAmount);
 
             $quote->setData(self::KEY_ERRORS, true);
             $quote->setData(self::KEY_ERROR_MESSAGES, $messages);
@@ -119,11 +121,32 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
             self::KEY_ITEMS,
             array_map(
                 function (Mage_Sales_Model_Quote_Item $item) {
+                    if ($this->getOrderOptions($item)->hasData(self::KEY_ORDER_OPTIONS)) {
+                        $item->setData(
+                            self::KEY_ORDER_OPTIONS,
+                            $this->getOrderOptions($item)->getData(self::KEY_ORDER_OPTIONS)
+                        );
+                    }
+
                     return $item->getData();
                 },
                 $quote->getAllItems()
 
             )
+        );
+    }
+
+    /**
+     * @param $item Mage_Sales_Model_Quote_Item
+     *
+     * @return Varien_Object
+     */
+    protected function getOrderOptions($item)
+    {
+        return new Varien_Object(
+            $item->getProduct()
+                ->getTypeInstance(true)
+                ->getOrderOptions($item->getProduct())
         );
     }
 
