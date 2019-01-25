@@ -26,6 +26,7 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
     const KEY_TOTALS                      = 'totals';
     const KEY_ERROR_MESSAGES              = 'errors';
     const KEY_ERRORS                      = 'has_error';
+    const KEY_SHIPPING                    = 'shipping';
     const KEY_CART_PRICE_DISPLAY_SETTINGS = 'cart_price_display_settings';
 
     /**
