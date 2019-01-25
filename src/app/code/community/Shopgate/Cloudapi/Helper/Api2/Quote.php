@@ -154,6 +154,10 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
             self::KEY_TOTALS,
             $totals
         );
+
+        if (isset($totals['discount']) && $quote->getCouponCode() === null) {
+            $quote->setCouponCode('1');
+        }
     }
 
     /**
