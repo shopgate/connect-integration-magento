@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Fixed
-- Returning net or gross shipping amount, depennding on Magento settings.
+- Returning net or gross shipping amount, depending on Magento settings.
 
 ## [3.3.1] - 2019-01-10
 ### Added
