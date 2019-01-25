@@ -121,7 +121,12 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
             self::KEY_ITEMS,
             array_map(
                 function (Mage_Sales_Model_Quote_Item $item) {
-                    $orderOptions = $this->getOrderOptions($item);
+                    $orderOptions = new Varien_Object(
+                        $item->getProduct()
+                            ->getTypeInstance(true)
+                            ->getOrderOptions($item->getProduct())
+                    );
+
                     if ($orderOptions->hasData(self::KEY_ORDER_OPTIONS)) {
                         $item->setData(
                             self::KEY_ORDER_OPTIONS,
@@ -134,20 +139,6 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
                 $quote->getAllItems()
 
             )
-        );
-    }
-
-    /**
-     * @param $item Mage_Sales_Model_Quote_Item
-     *
-     * @return Varien_Object
-     */
-    protected function getOrderOptions(Mage_Sales_Model_Quote_Item $item)
-    {
-        return new Varien_Object(
-            $item->getProduct()
-                ->getTypeInstance(true)
-                ->getOrderOptions($item->getProduct())
         );
     }
 
