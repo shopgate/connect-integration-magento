@@ -99,6 +99,10 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
 
         $quote = $this->loadUserQuote();
         $this->removeItemsFromQuote($quote, $cartItemIds);
+        if ($quote->getShippingAddress()) {
+            $quote->getShippingAddress()->setCollectShippingRates(true);
+        }
+
         $quote->collectTotals()->save();
     }
 
@@ -159,6 +163,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
         $db      = Mage::getSingleton('core/resource')->getConnection('core_write');
         $factory = Mage::getModel('shopgate_cloudapi/api2_carts_factory');
         $list    = $factory->translateCartItems($filteredData, $this->_getStore());
+        $this->recordCart($quote->getId());
         $db->beginTransaction();
 
         try {
@@ -178,6 +183,19 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
         } catch (Exception $e) {
             $db->rollBack();
             $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        }
+    }
+
+    /**
+     * Helps with recording our carts
+     *
+     * @param string|int $quoteId
+     */
+    private function recordCart($quoteId)
+    {
+        $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')->setQuoteFilter($quoteId);
+        if ($collection->isEmpty()) {
+            Mage::getModel('shopgate_cloudapi/cart_source')->saveQuote($quoteId);
         }
     }
 

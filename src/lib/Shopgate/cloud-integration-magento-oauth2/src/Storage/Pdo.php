@@ -73,6 +73,8 @@ class Pdo extends \OAuth2\Storage\Pdo
                   expires             TIMESTAMP      NOT NULL,
                   scope               VARCHAR(4000),
                   id_token            VARCHAR(1000),
+                  resource_id         VARCHAR(80),
+                  resource_type       VARCHAR(255), 
                   PRIMARY KEY (authorization_code)
                 );";
         }
@@ -141,35 +143,27 @@ class Pdo extends \OAuth2\Storage\Pdo
                 );";
         }
 
-        if (!empty($this->config['resource_auth_codes'])) {
-            $sql .= "
-                CREATE TABLE IF NOT EXISTS {$this->config['resource_auth_codes']} (
-                  token         VARCHAR(40)    NOT NULL UNIQUE,
-                  user_id       VARCHAR(80),
-                  resource_id   VARCHAR(80)    NOT NULL,
-                  expires       TIMESTAMP      NOT NULL,
-                  type          VARCHAR(255),
-                  PRIMARY KEY (token)
-                );";
-        }
-
         return $sql;
     }
 
     /**
-     * @param string $token
-     * @param string $type
+     * @param string $authorizationCode
+     * @param string $resourceType
      *
      * @return array | false
      */
-    public function getAuthItemByTokenAndType($token, $type)
+    public function getAuthItemByTokenAndType($authorizationCode, $resourceType)
     {
         $stmt = $this->db->prepare(
-            sprintf('SELECT * from %s where token = :token and type = :type', $this->config['resource_auth_codes'])
+            sprintf(
+                'SELECT * from %s where authorization_code = :authorizationCode and resource_type = :resourceType',
+                $this->config['code_table']
+            )
         );
-        $stmt->execute(compact('token', 'type'));
+        $stmt->execute(compact('authorizationCode', 'resourceType'));
 
-        if ($item = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+        $item = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($item) {
             $item['is_expired'] = strtotime($item['expires']) < time();
         }
 
@@ -177,75 +171,77 @@ class Pdo extends \OAuth2\Storage\Pdo
     }
 
     /**
-     * @param string     $type
-     * @param int        $resource_id
-     * @param null | int $user_id
+     * @param string     $resourceType - type of resource this is
+     * @param int        $resourceId   - variable parameter, quoteId in case of checkout
+     * @param string     $clientId     - CustomerNumber-ShopNumber
+     * @param null | int $userId
      *
      * @return mixed
      */
-    public function createAuthItemByType($type, $resource_id, $user_id = null)
+    public function createAuthItemByType($resourceType, $resourceId, $clientId, $userId = null)
     {
         /** remove exist auth item */
-        $this->unsetAuthItemByResourceIdAndType($resource_id, $type);
+        $this->unsetAuthItemByResourceIdAndType($resourceId, $resourceType);
 
-        $token   = substr(hash('sha512', md5(microtime()) . $type), 0, self::AUTH_TOKEN_LENGTH);
+        $token   = substr(hash('sha512', md5(microtime()) . $resourceType), 0, self::AUTH_TOKEN_LENGTH);
         $expires = date('Y-m-d H:i:s', time() + self::AUTH_TOKEN_EXPIRE_SECONDS);
 
         $stmt = $this->db->prepare(
             sprintf(
-                'INSERT INTO %s (token, user_id, resource_id, type, expires) VALUES (:token, :user_id, :resource_id, :type, :expires)',
-                $this->config['resource_auth_codes']
+                'INSERT INTO %s (authorization_code, client_id, user_id, expires, resource_id, resource_type) VALUES (:token, :clientId, :userId, :expires, :resourceId, :resourceType)',
+                $this->config['code_table']
             )
         );
 
-        $stmt->execute(compact('token', 'user_id', 'resource_id', 'type', 'expires'));
+        $stmt->execute(compact('token', 'clientId', 'userId', 'expires', 'resourceId', 'resourceType'));
 
-        return $this->getAuthItemByTokenAndType($token, $type);
+        return $this->getAuthItemByTokenAndType($token, $resourceType);
     }
 
     /**
-     * @param string $token
+     * @param string $authorizationCode
      *
      * @return bool
      */
-    public function unsetAuthItemByToken($token)
+    public function unsetAuthItemByToken($authorizationCode)
     {
         $stmt = $this->db->prepare(
-            sprintf('DELETE FROM %s WHERE token = :token', $this->config['resource_auth_codes'])
+            sprintf('DELETE FROM %s WHERE authorization_code = :authorizationCode', $this->config['code_table'])
         );
 
-        $stmt->execute(compact('token'));
+        $stmt->execute(compact('authorizationCode'));
 
         return $stmt->rowCount() > 0;
     }
 
     /**
-     * @param int    $resource_id
-     * @param string $type
+     * @param int    $resourceId
+     * @param string $resourceType
      *
      * @return bool
      */
-    public function unsetAuthItemByResourceIdAndType($resource_id, $type)
+    public function unsetAuthItemByResourceIdAndType($resourceId, $resourceType)
     {
         $stmt = $this->db->prepare(
             sprintf(
-                'DELETE FROM %s WHERE resource_id = :resource_id AND type = :type', $this->config['resource_auth_codes']
+                'DELETE FROM %s WHERE resource_id = :resourceId AND resource_type = :resourceType',
+                $this->config['code_table']
             )
         );
 
-        $stmt->execute(compact('resource_id', 'type'));
+        $stmt->execute(compact('resourceId', 'resourceType'));
 
         return $stmt->rowCount() > 0;
     }
 
     /**
-     * Removes all expired resources from the 'resource_auth_codes' table
+     * Removes all expired resources from the 'code_table' table
      *
      * @return bool
      */
     public function removeExpiredResourceAuthCodes()
     {
-        return $this->removeExpiredTokens($this->config['resource_auth_codes']);
+        return $this->removeExpiredTokens($this->config['code_table']);
     }
 
     /**
@@ -277,7 +273,7 @@ class Pdo extends \OAuth2\Storage\Pdo
      */
     protected function removeExpiredTokens($table)
     {
-        $now = date('Y-m-d H:i:s', time());
+        $now = date('Y-m-d H:i:s');
 
         return $this->db->exec(sprintf('DELETE FROM %s WHERE expires < "%s"', $table, $now)) > 0;
     }

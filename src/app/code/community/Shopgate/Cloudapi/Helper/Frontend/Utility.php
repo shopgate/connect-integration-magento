@@ -32,8 +32,7 @@ class Shopgate_Cloudapi_Helper_Frontend_Utility extends Mage_Core_Helper_Abstrac
      */
     public function getStyles()
     {
-
-        if (Mage::helper('shopgate_cloudapi/frontend_checkout')->isShopgateCheckout()) {
+        if (Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
             $styleContent = trim(Mage::getStoreConfig(self::CONFIG_PATH_CSS_PATTERN));
 
             return $styleContent !== '' ? $styleContent : false;

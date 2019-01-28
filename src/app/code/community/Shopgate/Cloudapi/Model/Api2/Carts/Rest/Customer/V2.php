@@ -35,7 +35,7 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Rest_Customer_V2 extends Shopgate_Cloud
         $quote = parent::createNewQuote();
         if ($quote->getId()) {
             $quote->setCustomerId($this->getApiUser()->getUserId());
-            $this->setCustomerData($quote);
+            $quote = $this->getQuoteCustomerHelper()->setCustomerData($quote);
             $quote->save();
         } else {
             $this->_critical('Could not assign customer to quote', Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
@@ -76,21 +76,10 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Rest_Customer_V2 extends Shopgate_Cloud
     }
 
     /**
-     * Helps set data from customer to Quote to facilitate coupon validation
-     *
-     * @param Mage_Sales_Model_Quote $quote
+     * @return Shopgate_Cloudapi_Helper_Frontend_Quote_Customer
      */
-    private function setCustomerData(Mage_Sales_Model_Quote $quote)
+    protected function getQuoteCustomerHelper()
     {
-        $quote->setCustomerGroupId($quote->getCustomer()->getGroupId());
-        $quote->setCustomerEmail($quote->getCustomer()->getData('email'));
-        $quote->setCustomerFirstname($quote->getCustomer()->getData('firstname'));
-        $quote->setCustomerLastname($quote->getCustomer()->getData('lastname'));
-        $quote->setCustomerMiddlename($quote->getCustomer()->getData('middlename'));
-        $quote->setCustomerDob($quote->getCustomer()->getData('dob'));
-        $quote->setCustomerGender($quote->getCustomer()->getData('gender'));
-        $quote->setCustomerPrefix($quote->getCustomer()->getData('prefix'));
-        $quote->setCustomerSuffix($quote->getCustomer()->getData('suffix'));
-        $quote->getCustomerTaxClassId();
+        return Mage::helper('shopgate_cloudapi/frontend_quote_customer');
     }
 }

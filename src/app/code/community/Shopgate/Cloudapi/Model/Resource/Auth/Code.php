@@ -27,6 +27,6 @@ class Shopgate_Cloudapi_Model_Resource_Auth_Code extends Mage_Core_Model_Mysql4_
      */
     protected function _construct()
     {
-        $this->_init('shopgate_cloudapi/auth_code', 'token');
+        $this->_init('shopgate_cloudapi/auth_code', 'authorization_code');
     }
 }

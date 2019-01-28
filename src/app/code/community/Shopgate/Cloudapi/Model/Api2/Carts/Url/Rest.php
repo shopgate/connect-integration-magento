@@ -27,6 +27,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Url_Rest extends Shopgate_Clou
      * @param array $filteredData
      *
      * @return array
+     * @throws Mage_Core_Exception
      */
     protected function _create(array $filteredData)
     {
@@ -37,15 +38,19 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Url_Rest extends Shopgate_Clou
      * @param Mage_Sales_Model_Quote $quote
      *
      * @return array
+     * @throws Mage_Core_Exception
      */
     protected function _createUrl($quote)
     {
         /** @var Shopgate_Cloudapi_Helper_Frontend_Checkout $helper */
         $helper = Mage::helper('shopgate_cloudapi/frontend_checkout');
-        $token  = $helper->generateAuthToken($quote->getId(), $quote->getCustomerId() ? : null);
+        $token  = $helper->generateAuthToken($quote->getId(), $this->_getStore(), $quote->getCustomerId());
         $url    = Mage::getUrl(
             Shopgate_Cloudapi_Helper_Frontend_Checkout::AUTH_CHECKOUT_URL,
-            array('token' => $token->getToken())
+            array(
+                'token' => $token->getAuthorizationCode(),
+                '_store' => $this->_getStore()
+            )
         );
 
         return array(

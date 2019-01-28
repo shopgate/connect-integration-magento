@@ -30,6 +30,7 @@ class Shopgate_Cloudapi_Helper_Preflight extends Mage_Core_Helper_Abstract
      * Checks if this is a CORS Pre-flight call
      *
      * @return bool
+     * @throws Zend_Controller_Request_Exception
      */
     public function isCorsCall()
     {
@@ -78,7 +79,7 @@ class Shopgate_Cloudapi_Helper_Preflight extends Mage_Core_Helper_Abstract
             new Varien_Object(
                 array(
                     'name'    => 'Access-Control-Allow-Methods',
-                    'value'   => 'GET, POST, UPDATE, DELETE, OPTIONS',
+                    'value'   => 'GET, POST, PUT, UPDATE, DELETE, OPTIONS',
                     'replace' => true
                 )
             ),

@@ -4,3 +4,6 @@ src/app/design/frontend/base/default/template/shopgate/*        app/design/front
 src/app/etc/modules/Shopgate_*.xml                              app/etc/modules
 src/app/locale/de_DE/*                                          app/locale/de_DE
 src/lib/Shopgate/*                                              lib/Shopgate
+src/js/shopgate/*                                               js/shopgate/
+src/shell/*                                                     shell/
+src/var/connect/*                                               var/connect

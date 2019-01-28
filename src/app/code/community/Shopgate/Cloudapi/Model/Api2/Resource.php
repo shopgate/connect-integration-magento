@@ -23,6 +23,7 @@
 /**
  * This class is a utility class for Resource specific rewrites
  * @method void _multiDelete(array $requestData) - deletion of a collection
+ * @method array | void _multiCreate(array $filteredData)
  */
 class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
 {
@@ -40,6 +41,9 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
      */
     const FAULT_RESOURCE = '';
 
+    /** @var Shopgate_Cloudapi_Model_Acl_Filter */
+    protected $filter;
+
     /**
      * Hack rewrite of the main dispatch so that we
      * can pass empty POST requests
@@ -53,8 +57,12 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
         switch ($this->getActionType() . $this->getOperation()) {
             /* Create */
             case self::ACTION_TYPE_ENTITY . self::OPERATION_CREATE:
-                // Creation of objects is possible only when working with collection
-                $this->_critical(self::RESOURCE_METHOD_NOT_IMPLEMENTED);
+                /**
+                 * Passthrough to update a single entity as PUT does
+                 * not load body content in PHP5.6<
+                 */
+                $this->setOperation(self::OPERATION_UPDATE);
+                $this->dispatch();
                 break;
             case self::ACTION_TYPE_COLLECTION . self::OPERATION_CREATE:
                 // If no of the methods(multi or single) is implemented, request body is not checked
@@ -76,8 +84,9 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
                 } else {
                     $this->_errorIfMethodNotExist('_multiCreate');
                     $filteredData = $this->getFilter()->collectionIn($requestData);
-                    $this->_multiCreate($filteredData);
-                    $this->_render($this->getResponse()->getMessages());
+                    $return       = $this->_multiCreate($filteredData);
+                    $render       = !empty($return) ? $return : $this->getResponse()->getMessages();
+                    $this->_render($render);
                 }
                 break;
             /* Retrieve */
@@ -152,6 +161,19 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
         $path     = Mage::getModuleDir('etc', $this::FAULT_MODULE) . DS . 'api.xml';
         $faults   = Mage::getModel('api/config', $path)->getFaults($resource);
 
-        return (string)isset($faults[$code]) ? $faults[$code]['message'] : $fallback;
+        return (string) isset($faults[$code]) ? $faults[$code]['message'] : $fallback;
+    }
+
+    /**
+     * @inheritdoc
+     * @return Shopgate_Cloudapi_Model_Acl_Filter
+     */
+    public function getFilter()
+    {
+        if (!$this->filter) {
+            $this->filter = Mage::getModel('shopgate_cloudapi/acl_filter', $this);
+        }
+
+        return $this->filter;
     }
 }

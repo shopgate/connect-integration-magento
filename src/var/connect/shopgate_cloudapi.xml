@@ -9,7 +9,7 @@
    <description>The Shopgate Cloud integration for Magento enables you to utilize the Shopgate API endpoints to connect to via the App.</description>
    <license>Apache License</license>
    <license_uri>https://github.com/shopgate/cloud-integration-magento/blob/master/LICENSE</license_uri>
-   <version>3.0.0</version>
+    <version>3.3.2</version>
    <stability>stable</stability>
    <notes>Shopgate Cloudapi Module</notes>
    <authors>
@@ -70,6 +70,7 @@
          <target>magedesign</target>
          <target>magedesign</target>
          <target>magelib</target>
+         <target>mage</target>
       </target>
       <path>
          <path/>
@@ -79,6 +80,7 @@
          <path>frontend/base/default/layout/shopgate/cloudapi</path>
          <path>frontend/base/default/template/shopgate/cloudapi</path>
          <path>Shopgate</path>
+         <path>js/shopgate/sgConnect.js</path>
       </path>
       <type>
          <type>file</type>
@@ -88,6 +90,7 @@
          <type>dir</type>
          <type>dir</type>
          <type>dir</type>
+         <type>file</type>
       </type>
       <include>
          <include/>
@@ -97,8 +100,10 @@
          <include/>
          <include/>
          <include/>
+         <include/>
       </include>
       <ignore>
+         <ignore/>
          <ignore/>
          <ignore/>
          <ignore/>

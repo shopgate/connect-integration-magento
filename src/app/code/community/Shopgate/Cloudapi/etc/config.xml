@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.0.1</version>
+            <version>3.3.2</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
@@ -26,6 +26,9 @@
                     <order_source>
                         <table>shopgate_order_sources</table>
                     </order_source>
+                    <cart_source>
+                        <table>shopgate_cart_sources</table>
+                    </cart_source>
                 </entities>
             </shopgate_cloudapi_resource>
         </models>
@@ -56,6 +59,78 @@
                     </shopgate_checkout_onepage_controller_success_action>
                 </observers>
             </checkout_onepage_controller_success_action>
+            <customer_register_success>
+                <observers>
+                    <shopgate_customer_register_success>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_customerRegisterSuccess</class>
+                        <method>execute</method>
+                    </shopgate_customer_register_success>
+                </observers>
+            </customer_register_success>
+            <enterprise_customer_attribute_save>
+                <observers>
+                    <shopgate_enterprise_customer_attribute_save>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AclAttributeManipulation</class>
+                        <method>execute</method>
+                    </shopgate_enterprise_customer_attribute_save>
+                </observers>
+            </enterprise_customer_attribute_save>
+            <enterprise_customer_attribute_delete>
+                <observers>
+                    <shopgate_enterprise_customer_attribute_delete>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AclAttributeManipulation</class>
+                        <method>execute</method>
+                    </shopgate_enterprise_customer_attribute_delete>
+                </observers>
+            </enterprise_customer_attribute_delete>
+            <enterprise_customer_address_attribute_save>
+                <observers>
+                    <shopgate_enterprise_customer_address_attribute_save>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AclAttributeManipulation</class>
+                        <method>execute</method>
+                    </shopgate_enterprise_customer_address_attribute_save>
+                </observers>
+            </enterprise_customer_address_attribute_save>
+            <enterprise_customer_address_attribute_delete>
+                <observers>
+                    <shopgate_enterprise_customer_address_attribute_delete>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AclAttributeManipulation</class>
+                        <method>execute</method>
+                    </shopgate_enterprise_customer_address_attribute_delete>
+                </observers>
+            </enterprise_customer_address_attribute_delete>
+            <salesrule_rule_condition_combine>
+                <observers>
+                    <add_conditions_to_sales_rule>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_AddShopgateCartRule</class>
+                        <method>execute</method>
+                    </add_conditions_to_sales_rule>
+                </observers>
+            </salesrule_rule_condition_combine>
+            <sales_quote_collect_totals_before>
+                <observers>
+                    <add_salerule_type_to_quote>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_addSaleRuleTypeToQuote</class>
+                        <method>execute</method>
+                    </add_salerule_type_to_quote>
+                </observers>
+            </sales_quote_collect_totals_before>
+            <sales_quote_merge_after>
+                <observers>
+                    <add_salerule_type_to_merged_quote>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/observers_addSaleRuleTypeToMergedQuote</class>
+                        <method>execute</method>
+                    </add_salerule_type_to_merged_quote>
+                </observers>
+            </sales_quote_merge_after>
         </events>
         <blocks>
             <shopgate_cloudapi>
@@ -77,6 +152,12 @@
     <frontend>
         <layout>
             <updates>
+                <shopgate_cloudapi_default>
+                    <file>shopgate/cloudapi/default.xml</file>
+                </shopgate_cloudapi_default>
+                <shopgate_cloudapi_customer>
+                    <file>shopgate/cloudapi/customer.xml</file>
+                </shopgate_cloudapi_customer>
                 <shopgate_cloudapi_checkout>
                     <file>shopgate/cloudapi/checkout.xml</file>
                 </shopgate_cloudapi_checkout>
@@ -91,8 +172,86 @@
                     <frontName>shopgate-checkout</frontName>
                 </args>
             </shopgate_cloudapi_checkout_redirect>
+            <shopgate_cloudapi_customer>
+                <use>standard</use>
+                <args>
+                    <module>Shopgate_Cloudapi</module>
+                    <frontName>shopgate-customer</frontName>
+                </args>
+            </shopgate_cloudapi_customer>
+            <shopgate>
+                <use>standard</use>
+                <args>
+                    <module>Shopgate_Cloudapi</module>
+                    <frontName>shopgate</frontName>
+                </args>
+            </shopgate>
         </routers>
         <events>
+            <shopgate_cloud_api2_wishlists_create>
+                <observers>
+                    <shopgate_cloud_rest_wishlists_create>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsCreate</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlists_create>
+                </observers>
+            </shopgate_cloud_api2_wishlists_create>
+            <shopgate_cloud_api2_wishlists_delete>
+                <observers>
+                    <shopgate_cloud_rest_wishlists_remove>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsDelete</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlists_remove>
+                </observers>
+            </shopgate_cloud_api2_wishlists_delete>
+            <shopgate_cloud_api2_wishlists_retrieve>
+                <observers>
+                    <shopgate_cloud_rest_wishlists_retrieve>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsRetrieve</class>
+                        <method>execute</method>
+                    </shopgate_cloud_rest_wishlists_retrieve>
+                </observers>
+            </shopgate_cloud_api2_wishlists_retrieve>
+            <shopgate_cloud_api2_wishlists_items_create>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_create>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsCreate</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_create>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_create>
+            <shopgate_cloud_api2_wishlists_items_delete>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_delete>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsDelete</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_delete>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_delete>
+            <shopgate_cloud_api2_wishlists_items_retrieve>
+                <observers>
+                    <shopgate_cloud_api2_wishlist_items_retrieve>
+                        <class>shopgate_cloudapi/api2_observers_wishlistsItemsRetrieve</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_items_retrieve>
+                </observers>
+            </shopgate_cloud_api2_wishlists_items_retrieve>
+            <catalog_product_collection_apply_limitations_before><!-- EE 1.13 compatibility -->
+                <observers>
+                    <shopgate_cloud_api2_wishlist_store_id_hack>
+                        <class>shopgate_cloudapi/api2_observers_wishlistStoreHandle</class>
+                        <method>execute</method>
+                    </shopgate_cloud_api2_wishlist_store_id_hack>
+                </observers>
+            </catalog_product_collection_apply_limitations_before>
+            <controller_action_layout_load_before>
+                <observers>
+                    <shopgate_controller_action_layout_load_before>
+                        <class>shopgate_cloudapi/frontend_observer_layout</class>
+                        <method>execute</method>
+                    </shopgate_controller_action_layout_load_before>
+                </observers>
+            </controller_action_layout_load_before>
             <checkout_onepage_controller_success_action>
                 <observers>
                     <shopgate_checkout_onepage_controller_success_action>
@@ -102,6 +261,24 @@
                     </shopgate_checkout_onepage_controller_success_action>
                 </observers>
             </checkout_onepage_controller_success_action>
+            <controller_action_predispatch_checkout_cart_index>
+                <observers>
+                    <shopgate_cloudapi_redirect_on_cart_error_to_checkout>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_checkoutRedirect</class>
+                        <method>execute</method>
+                    </shopgate_cloudapi_redirect_on_cart_error_to_checkout>
+                </observers>
+            </controller_action_predispatch_checkout_cart_index>
+            <controller_action_predispatch_checkout_onepage_index>
+                <observers>
+                    <shopgate_cloudapi_load_cart_messages>
+                        <type>model</type>
+                        <class>shopgate_cloudapi/frontend_observer_checkoutMessages</class>
+                        <method>execute</method>
+                    </shopgate_cloudapi_load_cart_messages>
+                </observers>
+            </controller_action_predispatch_checkout_onepage_index>
         </events>
         <translate>
             <modules>
@@ -125,4 +302,24 @@
             </shopgate_cloudapi_delete_expired_tokens>
         </jobs>
     </crontab>
+    <default>
+        <shopgate_cloudapi>
+            <layout>
+                <styles>
+                    <![CDATA[
+                        .page-title,
+                        .customer-account-create .rewards,
+                        .customer-account-create .back-link,
+                        .customer-account-forgotpassword .back-link,
+                        .customer-account-login #login-form,
+                        #checkout-review-submit .f-left,
+                        .sales-order-history.customer-account .main-container .sidebar,
+                        .sales-order-history.customer-account .main-container .link-reorder,
+                        .sales-order-view.customer-account .main-container .sidebar {display: none;}
+                        .checkout-onepage-success a {pointer-events: none; cursor: default;}
+                    ]]>
+                </styles>
+            </layout>
+        </shopgate_cloudapi>
+    </default>
 </config>

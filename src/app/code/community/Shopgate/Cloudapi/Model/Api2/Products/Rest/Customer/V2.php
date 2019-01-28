@@ -33,6 +33,7 @@ class Shopgate_Cloudapi_Model_Api2_Products_Rest_Customer_V2 extends Shopgate_Cl
      * Get customer group
      *
      * @return int
+     * @throws Exception
      */
     protected function getCustomerGroupId()
     {
@@ -46,6 +47,7 @@ class Shopgate_Cloudapi_Model_Api2_Products_Rest_Customer_V2 extends Shopgate_Cl
      * @param bool  $withTax
      *
      * @return float
+     * @throws Exception
      */
     protected function applyTaxToPrice($price, $withTax = true)
     {
@@ -66,10 +68,11 @@ class Shopgate_Cloudapi_Model_Api2_Products_Rest_Customer_V2 extends Shopgate_Cl
      * Retrieve current customer
      *
      * @return Mage_Customer_Model_Customer
+     * @throws Exception
      */
     protected function getCustomer()
     {
-        if (is_null($this->customer)) {
+        if (null === $this->customer) {
             /** @var $customer Mage_Customer_Model_Customer */
             $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
             if (!$customer->getId()) {

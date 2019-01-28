@@ -1,30 +1,77 @@
 dist: precise
-sudo: false
+sudo: required
 language: php
+services:
+  - mysql
+install:
+  - phpenv config-rm xdebug.ini || return 0
+  # handles node update, do not move to script
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
 
 before_script:
-- phpenv config-rm xdebug.ini || return 0
-- composer install
+  # If it's a fork PR (no secret keys will exist), then run only CE edition tests. And run only on non commit calls.
+  - if [[ ( "$AWS_ACCESS_KEY_ID" || "$MAGE_TYPE" == "CE" ) && ( "$TRAVIS_TAG" || "$TRAVIS_EVENT_TYPE" != "push" ) ]]; then
+      chmod +x ./tests/postman/test_env_setup.sh;
+      ./tests/postman/test_env_setup.sh;
+    fi
+script:
+  - if [[ ( "$AWS_ACCESS_KEY_ID" || "$MAGE_TYPE" == "CE" ) && ( "$TRAVIS_TAG" || "$TRAVIS_EVENT_TYPE" != "push" ) ]]; then
+      chmod +x ./tests/postman/magento_setup.sh;
+      ./tests/postman/magento_setup.sh;
+      cd ${TRAVIS_BUILD_DIR}/tests/postman/newman;
+      newman run ./collection.json -g ./globals.json -e ./environment.json -r cli,html --reporter-html-export verbose-report.html --color on --reporter-cli-no-success-assertions --insecure;
+    fi
+after_failure:
+  # one can check for a link in the terminal as this report file is uploaded to that link
+  - curl --upload-file ./verbose-report.html https://transfer.sh/verbose-report.html
+  - sudo less -FX /var/log/apache2/error.log
 
 jobs:
   include:
-  - stage: deploy
-    php: 5.6
-    before_script:
-      - sudo apt-get install xmlstarlet
-    script:
-      - if [[ "$TRAVIS_TAG" ]]; then ./release/build_release_package.sh ; fi
-    deploy:
-      provider: releases
-      api_key: ${GITHUB_TOKEN}
-      file: cloud-integration-magento-${TRAVIS_TAG}.tgz
-      skip_cleanup: true
-      on:
-        tags: true
+    - stage: deploy
+      php: 5.6
+      before_script:
+        - sudo apt-get install xmlstarlet
+      script:
+        - if [[ "$TRAVIS_TAG" ]]; then
+            ./release/build_release_package.sh;
+          fi
+      deploy:
+        provider: releases
+        api_key: ${GITHUB_TOKEN}
+        file: cloud-integration-magento-${TRAVIS_TAG}.tgz
+        skip_cleanup: true
+        on:
+          tags: true
 
-notifications:
-  slack:
-    rooms:
-      secure: y40pECJxcziSDPLqL/xjAUYR2wcgEYK8lLAh+qGrwwnQd19PVqZzcht0LfPiFC0HHO+lULvzwBZe1iMLLt91h2IDKvtkXHrwPIOr5RJiciPifKnhA/QK28Xc2XEfrooL4IPsf+eTSyB3Y6EmSqnSOPiIhOXW8YogzgNvfUbFnsUKReX3z1F+vfvy2vZ4einL1E5Qkyclk89apvans+0bFvnJHrlfw+6rXsrGLhkjr2f2GopmAA6sHOZqBTvwCEKbtxYfWB3gZl9LMfdWjUJv1VhX3CsieQKPGdzIagZY3GLX3pFX8vk08/8k4ystmmHWetvceKQBfrdZ/NcT25lqtKPtL6Wus4gVcKqhmVXyqElGNirrLK0CeuZ2lGbgkt1h2YDUYhbs0lPu4hv2LfP6wj5Ct3fvfiYCBiGPO5Ql9hGNFUNJJjkmtiaolqbHZ1XbD5ODftMMGUsIZWKnXe97gizbofHEvjIxfcbG+npQZ3yunaMwOzQhfV/Gay4enR08Rq67k2g1A0kCdY/G6hb5kKP5gfvXlp75cqaVeW2p1zbx8nhTYlU84YAHtxm2bMWPXrn/Gesc3jZZzWjGV01YO7qnhn54s5DeSePQIWLNzymxghJ+vCbju0GAmznUJrjwjylRaRpm+yQbkS5RaFaA94hdTLT5PzqjC2H8uVuYAOU=
-    on_success: change
-    on_failure: always
+addons:
+  hosts:
+    - travis.dev
+
+env:
+  global:
+    - HOST1=travis.dev
+    - WEB_PATH="/var/www"
+    - CFG_API_CUSTOMER_NUMBER="11223344"
+    - CFG_API_SHOP_NUMBER="12345"
+    - CFG_API_KEY="11111111111111111111"
+    - CFG_MINIMUM_ORDER_ACTIVE="1"
+    - CFG_PRICE_INC_TAX="1"
+    - USER1_EMAIL="mage.test+1@shopgate.com"
+    - USER2_EMAIL="mage.test+2@shopgate.com"
+    - USER_PASS="test123"
+    - SOAP_USER="shopgate-tests"
+    - SOAP_APIKEY="shopgate-api-key"
+  matrix:
+    - MAGE_FOLDER="mage_ce_1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2" MAGE_TYPE="CE"
+    - MAGE_FOLDER="mage_ce_1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0" MAGE_TYPE="CE" MAGE_LOCALE="en_US"
+    - MAGE_FOLDER="mage_ce_1936" MAGE_PACKAGE="magento-mirror-1.9.3.6" MAGE_TYPE="CE"
+    - MAGE_FOLDER="mage_ee_11202" MAGE_PACKAGE="magento-1.12.0.2" MAGE_TYPE="EE" MAGE_LOCALE="en_US"
+    - MAGE_FOLDER="mage_ee_11302" MAGE_PACKAGE="magento-1.13.0.2" MAGE_TYPE="EE"
+    - MAGE_FOLDER="mage_ee_11437" MAGE_PACKAGE="magento-1.14.3.7" MAGE_TYPE="EE"

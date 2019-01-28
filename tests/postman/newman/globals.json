@@ -1,0 +1,133 @@
+{
+  "id": "cdbbb6fe-3321-4943-8c7e-11546534e591",
+  "values": [
+    {
+      "key": "client_id",
+      "value": "<<client_id>>",
+      "description": "A combination of [customer_number]-[shop_number]",
+      "enabled": true
+    },
+    {
+      "key": "client_secret",
+      "value": "<<client_secret>>",
+      "description": "API key",
+      "enabled": true
+    },
+    {
+      "key": "username1",
+      "value": "<<username1>>",
+      "description": "Defines the primary customer to test against",
+      "enabled": true
+    },
+    {
+      "key": "username2",
+      "value": "<<username2>>",
+      "description": "Defines the second customer to test against",
+      "enabled": true
+    },
+    {
+      "key": "password",
+      "value": "<<password>>",
+      "description": "Password that is the same for username1 and username2",
+      "enabled": true
+    },
+    {
+      "key": "soap_user",
+      "value": "<<soap_user>>",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "soap_apikey",
+      "value": "<<soap_apikey>>",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "v2",
+      "value": "shopgate/v2",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_auth_token",
+      "value": "{{v2}}/auth/token",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_carts",
+      "value": "{{v2}}/carts",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_carts_id_items",
+      "value": "{{endpoint_carts}}/{{cartId}}/items",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_carts_me_items",
+      "value": "{{endpoint_carts}}/me/items",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_carts_id_checkoutUrl",
+      "value": "{{endpoint_carts}}/{{cartId}}/checkoutUrl",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_carts_id_customer",
+      "value": "{{endpoint_carts}}/{{cartId}}/customer",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_customers",
+      "value": "{{v2}}/customers",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_customers_me",
+      "value": "{{endpoint_customers}}/me",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_customers_id",
+      "value": "{{endpoint_customers}}/{{customer-id}}",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_customers_id_addresses",
+      "value": "{{endpoint_customers}}/{{customer-id}}/addresses",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_wishlists",
+      "value": "{{v2}}/wishlists",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_wishlists_id_items",
+      "value": "{{v2}}/wishlists/{{wishlist-id}}/items",
+      "description": "",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_products",
+      "value": "{{v2}}/products",
+      "enabled": true
+    },
+    {
+      "key": "endpoint_categories",
+      "value": "{{v2}}/categories",
+      "enabled": true
+    },
+    {
+      "value": "?XDEBUG_SESSION_START=PHPSTORM",
+      "key": "xdebug",
+      "enabled": true
+    }
+  ],
+  "name": "Cloud Plugins Globals",
+  "_postman_variable_scope": "globals",
+  "_postman_exported_at": "2018-08-21T08:49:11.842Z",
+  "_postman_exported_using": "Postman/6.2.5"
+}

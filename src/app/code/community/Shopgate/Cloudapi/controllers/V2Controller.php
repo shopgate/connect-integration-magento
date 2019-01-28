@@ -50,9 +50,33 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
     }
 
     /**
+     * All calls related to customers
+     */
+    public function customersAction()
+    {
+        $this->_getServer()->run();
+    }
+
+    /**
+     * All calls related to wishlists
+     */
+    public function wishlistsAction()
+    {
+        $this->_getServer()->run();
+    }
+
+    /**
      * All calls related to product action
      */
     public function productsAction()
+    {
+        $this->_getServer()->run();
+    }
+
+    /**
+     * All calls related to category information retrieval
+     */
+    public function categoriesAction()
     {
         $this->_getServer()->run();
     }
@@ -67,6 +91,9 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
 
     /**
      * Initializes the entry point and replaces the path to point to REST
+     *
+     * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Controller_Request_Exception
      */
     public function preDispatch()
     {
@@ -82,6 +109,7 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
 
         $request = Mage::getSingleton('api2/request');
         $request->setParam('store', Mage::app()->getStore()->getId());
+        Mage::helper('shopgate_cloudapi/request')->setShopgateApi();
 
         parent::preDispatch();
         $this->replaceRestPath($request);
@@ -93,6 +121,8 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
      * does not use the REST response Headers & other data.
      * When we return product data, the headers get sent
      * prematurely, so we avoid header manipulation then.
+     *
+     * @throws Zend_Controller_Response_Exception
      */
     public function postDispatch()
     {
@@ -140,7 +170,7 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
      *
      * @return Shopgate_Cloudapi_Helper_Preflight
      */
-    private final function getCorsHelper()
+    private function getCorsHelper()
     {
         return Mage::helper('shopgate_cloudapi/preflight');
     }

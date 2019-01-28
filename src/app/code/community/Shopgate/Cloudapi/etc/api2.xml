@@ -34,10 +34,42 @@
                             </shopgate_cloudapi_v2_carts_customer>
                         </children>
                     </shopgate_cloudapi_v2_carts>
-                    <shopgate_cloudapi_v2_products>
-                        <title>Products</title>
+                    <shopgate_cloudapi_v2_customers>
+                        <title>Customers</title>
                         <sort_order>30</sort_order>
+                        <children>
+                            <shopgate_cloudapi_v2_customers_addresses translate="title" module="Shopgate_Cloudapi">
+                                <title>Addresses</title>
+                                <sort_order>10</sort_order>
+                            </shopgate_cloudapi_v2_customers_addresses>
+                            <shopgate_cloudapi_v2_customers_email translate="title" module="Shopgate_Cloudapi">
+                                <title>Email</title>
+                                <sort_order>20</sort_order>
+                            </shopgate_cloudapi_v2_customers_email>
+                            <shopgate_cloudapi_v2_customers_password translate="title" module="Shopgate_Cloudapi">
+                                <title>Password</title>
+                                <sort_order>30</sort_order>
+                            </shopgate_cloudapi_v2_customers_password>
+                        </children>
+                    </shopgate_cloudapi_v2_customers>
+                    <shopgate_cloudapi_v2_wishlists translate="title" module="Shopgate_Cloudapi">
+                        <title>Wishlists</title>
+                        <sort_order>40</sort_order>
+                        <children>
+                            <shopgate_cloudapi_v2_wishlists_items translate="title" module="Shopgate_Cloudapi">
+                                <title>Items</title>
+                                <sort_order>10</sort_order>
+                            </shopgate_cloudapi_v2_wishlists_items>
+                        </children>
+                    </shopgate_cloudapi_v2_wishlists>
+                    <shopgate_cloudapi_v2_products translate="title" module="Shopgate_Cloudapi">
+                        <title>Products</title>
+                        <sort_order>50</sort_order>
                     </shopgate_cloudapi_v2_products>
+                    <shopgate_cloudapi_v2_categories translate="title" module="Shopgate_Cloudapi">
+                        <title>Categories</title>
+                        <sort_order>60</sort_order>
+                    </shopgate_cloudapi_v2_categories>
                 </children>
             </shopgate_cloudapi>
         </resource_groups>
@@ -103,9 +135,9 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_carts>
             <shopgate_cloudapi_v2_carts_items>
-                <group>shopgate_cloudapi_v2_carts_items</group>
+                <group>shopgate_cloudapi_v2_carts</group>
                 <model>shopgate_cloudapi/api2_carts_items</model>
-                <title>Item manipulation</title>
+                <title>Items</title>
                 <sort_order>40</sort_order>
                 <privileges>
                     <customer>
@@ -144,9 +176,9 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_carts_items>
             <shopgate_cloudapi_v2_carts_url>
-                <group>shopgate_cloudapi_v2_carts_url</group>
+                <group>shopgate_cloudapi_v2_carts</group>
                 <model>shopgate_cloudapi/api2_carts_url</model>
-                <title>Checkout</title>
+                <title>Checkout Url</title>
                 <sort_order>50</sort_order>
                 <privileges>
                     <customer>
@@ -165,9 +197,9 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_carts_url>
             <shopgate_cloudapi_v2_carts_customer>
-                <group>shopgate_cloudapi_v2_carts_customer</group>
+                <group>shopgate_cloudapi_v2_carts</group>
                 <model>shopgate_cloudapi/api2_carts_customer</model>
-                <title>Cart Merge</title>
+                <title>Guest Migration</title>
                 <sort_order>60</sort_order>
                 <privileges>
                     <customer>
@@ -182,11 +214,274 @@
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_carts_customer>
+            <shopgate_cloudapi_v2_customers>
+                <group>shopgate_cloudapi_v2_customers</group>
+                <model>shopgate_cloudapi/api2_customers</model>
+                <working_model>customer/customer</working_model>
+                <title>Information</title>
+                <sort_order>65</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                        <create>1</create>
+                    </customer>
+                </privileges>
+                <attributes translate="entity_id last_logged_in firstname lastname email website_id created_in group_id confirmation disable_auto_group_change" module="api2">
+                    <entity_id>Customer ID</entity_id>
+                    <last_logged_in>Last Logged In</last_logged_in>
+                    <firstname>First Name</firstname>
+                    <lastname>Last Name</lastname>
+                    <middlename>Middle Name</middlename>
+                    <email>Email</email>
+                    <website_id>Associate to Website</website_id>
+                    <created_in>Created From</created_in>
+                    <group_id>Group</group_id>
+                    <confirmation>Is Confirmed</confirmation>
+                    <disable_auto_group_change>Disable automatic group change based on VAT ID</disable_auto_group_change>
+                </attributes>
+                <exclude_attributes>
+                    <customer>
+                        <read>
+                            <entity_id>1</entity_id>
+                            <last_logged_in>1</last_logged_in>
+                            <website_id>1</website_id>
+                            <created_in>1</created_in>
+                            <disable_auto_group_change>1</disable_auto_group_change>
+                            <confirmation>1</confirmation>
+                            <created_at>1</created_at>
+                        </read>
+                        <write>
+                            <entity_id>1</entity_id>
+                            <email>1</email>
+                            <last_logged_in>1</last_logged_in>
+                            <website_id>1</website_id>
+                            <created_in>1</created_in>
+                            <group_id>1</group_id>
+                            <disable_auto_group_change>1</disable_auto_group_change>
+                            <confirmation>1</confirmation>
+                            <created_at>1</created_at>
+                        </write>
+                    </customer>
+                </exclude_attributes>
+                <validators>
+                    <eav>
+                        <customer>
+                            <entity_model>customer/customer</entity_model>
+                            <form_model>customer/form</form_model>
+                            <form_code>
+                                <update>customer_account_edit</update>
+                            </form_code>
+                        </customer>
+                    </eav>
+                </validators>
+                <routes>
+                    <route_v2_customers_id>
+                        <route>/v2/customers/:customer_id</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_id>
+                    <route_v2_customers_me>
+                        <route>/v2/customers/me</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_me>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_customers>
+            <shopgate_cloudapi_v2_customers_addresses>
+                <group>shopgate_cloudapi_v2_customers</group>
+                <model>shopgate_cloudapi/api2_customers_addresses</model>
+                <working_model>customer/address</working_model>
+                <title>Addresses</title>
+                <sort_order>66</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                        <create>1</create>
+                        <delete>1</delete>
+                    </customer>
+                </privileges>
+                <attributes translate="entity_id is_default_billing is_default_shipping ids" module="api2">
+                    <entity_id>Customer Address ID</entity_id>
+                    <is_default_billing>Is Default Billing Address</is_default_billing>
+                    <is_default_shipping>Is Default Shipping Address</is_default_shipping>
+                    <ids>Filter Address IDs</ids>
+                </attributes>
+                <exclude_attributes>
+                    <customer>
+                        <read>
+                            <region_id>1</region_id>
+                        </read>
+                        <write>
+                            <entity_id>1</entity_id>
+                            <region_id>1</region_id>
+                        </write>
+                    </customer>
+                </exclude_attributes>
+                <validators>
+                    <eav>
+                        <customer>
+                            <entity_model>customer/address</entity_model>
+                            <form_model>customer/form</form_model>
+                            <form_code>
+                                <update>customer_address_edit</update>
+                            </form_code>
+                        </customer>
+                    </eav>
+                </validators>
+                <routes>
+                    <route_v2_customers_id_addresses>
+                        <route>/v2/customers/:customer_id/addresses</route>
+                        <action_type>collection</action_type>
+                    </route_v2_customers_id_addresses>
+                    <route_v2_customers_id_addresses_id>
+                        <route>/v2/customers/:customer_id/addresses/:id</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_id_addresses_id>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_customers_addresses>
+            <shopgate_cloudapi_v2_customers_email>
+                <group>shopgate_cloudapi_v2_customers</group>
+                <model>shopgate_cloudapi/api2_customers_email</model>
+                <title>Email</title>
+                <sort_order>67</sort_order>
+                <privileges>
+                    <customer>
+                        <create>1</create>
+                    </customer>
+                </privileges>
+                <force_attributes>
+                    <customer>
+                        <email>New email address</email>
+                    </customer>
+                </force_attributes>
+                <validators>
+                    <eav>
+                        <customer>
+                            <entity_model>customer/customer</entity_model>
+                            <form_model>customer/form</form_model>
+                            <form_code>
+                                <update>customer_account_edit</update>
+                            </form_code>
+                        </customer>
+                    </eav>
+                </validators>
+                <routes>
+                    <route_v2_customers_id_email>
+                        <route>/v2/customers/:customer_id/email</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_id_email>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_customers_email>
+            <shopgate_cloudapi_v2_customers_password>
+                <group>shopgate_cloudapi_v2_customers</group>
+                <model>shopgate_cloudapi/api2_customers_password</model>
+                <title>Password</title>
+                <sort_order>68</sort_order>
+                <privileges>
+                    <customer>
+                        <create>1</create>
+                    </customer>
+                </privileges>
+                <force_attributes>
+                    <customer>
+                        <oldPassword>Old password to validate against</oldPassword>
+                        <password>New Password</password>
+                    </customer>
+                </force_attributes>
+                <validators>
+                    <eav>
+                        <customer>
+                            <entity_model>customer/customer</entity_model>
+                            <form_model>customer/form</form_model>
+                            <form_code>
+                                <update>customer_account_edit</update>
+                            </form_code>
+                        </customer>
+                    </eav>
+                </validators>
+                <routes>
+                    <route_v2_customers_id_password>
+                        <route>/v2/customers/:customer_id/password</route>
+                        <action_type>entity</action_type>
+                    </route_v2_customers_id_password>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_customers_password>
+            <shopgate_cloudapi_v2_wishlists>
+                <group>shopgate_cloudapi_v2_wishlists</group>
+                <model>shopgate_cloudapi/api2_wishlists</model>
+                <title>Wishlists</title>
+                <sort_order>80</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                        <create>1</create>
+                        <delete>1</delete>
+                    </customer>
+                </privileges>
+                <force_attributes>
+                    <customer>
+                        <name>Wishlist Name</name>
+                        <visibility>Wishlist Visibility Type</visibility>
+                        <shared>Wishlist Visibility Type</shared>
+                    </customer>
+                </force_attributes>
+                <routes>
+                    <route_v2_wishlists>
+                        <route>/v2/wishlists</route>
+                        <action_type>collection</action_type>
+                    </route_v2_wishlists>
+                    <route_v2_wishlists_id>
+                        <route>/v2/wishlists/:wishlistId</route>
+                        <action_type>entity</action_type>
+                    </route_v2_wishlists_id>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_wishlists>
+            <shopgate_cloudapi_v2_wishlists_items>
+                <group>shopgate_cloudapi_v2_wishlists</group>
+                <model>shopgate_cloudapi/api2_wishlists_items</model>
+                <title>Items</title>
+                <sort_order>90</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                        <create>1</create>
+                        <delete>1</delete>
+                    </customer>
+                </privileges>
+                <force_attributes>
+                    <customer>
+                        <product_id>Product ID</product_id>
+                        <sku>Product SKU</sku>
+                        <qty>Product Quantity</qty>
+                        <bundle_option>Bundled product options</bundle_option>
+                        <bundle_option_qty>Bundled product option quantity</bundle_option_qty>
+                        <super_attribute>Configurable product attributes</super_attribute>
+                        <links>Downloadable product links</links>
+                        <super_group>Group product pairs</super_group>
+                        <custom_giftcard_amount>Custom amount of Giftcard</custom_giftcard_amount>
+                        <giftcard_sender_name>Giftcard sender name</giftcard_sender_name>
+                        <giftcard_sender_email>Giftcard sender email</giftcard_sender_email>
+                        <giftcard_recipient_name>Giftcard recipient name</giftcard_recipient_name>
+                        <giftcard_recipient_email>Giftcard recipient email</giftcard_recipient_email>
+                        <giftcard_message>Giftcard message</giftcard_message>
+                    </customer>
+                </force_attributes>
+                <routes>
+                    <route_v2_wishlists>
+                        <route>/v2/wishlists/:wishlistId/items</route>
+                        <action_type>collection</action_type>
+                    </route_v2_wishlists>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_wishlists_items>
             <shopgate_cloudapi_v2_products>
                 <group>shopgate_cloudapi_v2_products</group>
                 <model>shopgate_cloudapi/api2_products</model>
                 <title>Product retrieval</title>
-                <sort_order>70</sort_order>
+                <sort_order>100</sort_order>
                 <privileges>
                     <admin>
                         <retrieve>1</retrieve>
@@ -207,6 +502,31 @@
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_products>
+            <shopgate_cloudapi_v2_categories>
+                <group>shopgate_cloudapi_v2_categories</group>
+                <model>shopgate_cloudapi/api2_categories</model>
+                <title>Category retrieval</title>
+                <sort_order>110</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                </privileges>
+                <routes>
+                    <route_v2_categories>
+                        <route>/v2/categories</route>
+                        <action_type>collection</action_type>
+                    </route_v2_categories>
+                    <route_v2_categories_id>
+                        <route>/v2/categories/:id</route>
+                        <action_type>entity</action_type>
+                    </route_v2_categories_id>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_categories>
         </resources>
     </api2>
 </config>

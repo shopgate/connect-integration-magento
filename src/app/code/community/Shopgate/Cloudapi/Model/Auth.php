@@ -29,9 +29,11 @@ class Shopgate_Cloudapi_Model_Auth
      * @param Mage_Api2_Model_Request $request
      *
      * @return Mage_Api2_Model_Auth_User_Abstract
-     * @throws Mage_Core_Model_Store_Exception
+     * @throws Exception
      * @throws Mage_Api2_Exception
      * @throws Mage_Core_Exception
+     * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Controller_Response_Exception
      */
     public function authenticate(Mage_Api2_Model_Request $request)
     {
@@ -43,10 +45,10 @@ class Shopgate_Cloudapi_Model_Auth
         }
 
         $store = Mage::app()->getStore($request->getParam('store'));
-        $email = $this->validateRequest($store);
-        if (null !== $email) {
+        $customerId = $this->validateRequest($store);
+        if (null !== $customerId) {
             //todo-sg: maybe pull store from client_id instead? Need to verify that the shop_number store === current?
-            $customer = Mage::getModel('customer/customer')->setStore($store)->loadByEmail($email);
+            $customer = Mage::getModel('customer/customer')->setStore($store)->load($customerId);
 
             return $this->retrieveUser(Mage_Api2_Model_Auth_User_Customer::USER_TYPE, $customer->getId());
         }
@@ -65,6 +67,7 @@ class Shopgate_Cloudapi_Model_Auth
      *
      * @return Mage_Api2_Model_Auth_User_Admin | Mage_Api2_Model_Auth_User_Customer | Mage_Api2_Model_Auth_User_Guest
      * @throws Mage_Core_Exception
+     * @throws Exception
      */
     protected function retrieveUser($type, $userId = null)
     {
@@ -89,7 +92,9 @@ class Shopgate_Cloudapi_Model_Auth
      * @param Mage_Core_Model_Store $store
      *
      * @return null | string - customer email address or null if token belongs to a guest
+     * @throws Exception
      * @throws Mage_Api2_Exception
+     * @throws Zend_Controller_Response_Exception
      */
     protected function validateRequest(Mage_Core_Model_Store $store)
     {

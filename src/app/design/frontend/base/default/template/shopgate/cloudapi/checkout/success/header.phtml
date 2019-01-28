@@ -1,0 +1,78 @@
+<script type="text/javascript">
+  function initPipelineCall() {
+    disableCloseButton();
+    exchangeContinueShoppingButton();
+    window.SGAppConnector.sendPipelineRequest(
+        'shopgate.cart.createNewCartForCustomer.v1',
+        false,
+        {'orderId': <?php echo $this->getOrderId(); ?>},
+        function (err, serial, output) {
+          var commands = [
+            {
+              'c': 'broadcastEvent',
+              'p': {
+                'event': 'checkoutSuccess',
+                "parameters": [<?php echo $this->getJsonOrderData() ?>]
+              }
+            },
+            {
+              'c': 'setNavigationBarParams',
+              'p': {
+                'navigationBarParams': {
+                  'rightButton' : true,
+                  'rightButtonType' : 'close',
+                  'rightButtonCallback' : "SGAction.broadcastEvent({event: 'closeInAppBrowser','parameters': [{'redirectTo': '/'}]});"
+                }
+              }
+            }
+          ];
+          window.SGAppConnector.sendAppCommands(commands);
+        }
+    )
+  }
+  function disableCloseButton() {
+    var setNavigationBarParams = {
+      'c': 'setNavigationBarParams',
+      'p': {
+        'navigationBarParams': {
+          'rightButton': false
+        }
+      }
+    }
+    window.SGAppConnector.sendAppCommand(setNavigationBarParams);
+  }
+  function exchangeContinueShoppingButton() {
+    if (<?php echo $this->isShopgateRequest()
+        ? 'true'
+        : 'false'; ?>) {
+      if (document.getElementsByClassName('button')) {
+        var targetButton = null;
+        Array.from(document.getElementsByClassName('button')).forEach(function (button) {
+          //shopBaseUrl is defined in shopgate/cloudapi/pipelineRequest.phtml
+          if ((new RegExp('<?php echo $this->getShopBaseUrl() ?>')).test(button.getAttribute('onclick'))) {
+            targetButton = button;
+          }
+        });
+        if (!targetButton) {
+          console.log('ERROR: Button was not found');
+          return;
+        }
+        if (targetButton.nodeName === 'BUTTON') {
+          // Overwrite default behavior of the "Continue Shopping"-Button
+          targetButton.onclick = (function () {
+            var commands = [
+              {
+                'c': 'broadcastEvent',
+                'p': {
+                  'event': 'closeInAppBrowser',
+                  'parameters': [{'redirectTo': '/'}]
+                }
+              }
+            ];
+            window.SGAppConnector.sendAppCommands(commands);
+          })
+        }
+      }
+    }
+  }
+</script>

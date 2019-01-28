@@ -34,7 +34,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
     {
         $this->deactivateUserQuote();
         try {
-            $quoteId = (int)$this->createNewQuote()->getId();
+            $quoteId = $this->createNewQuote()->getId();
         } catch (Mage_Api_Exception $e) {
             $error = $this->getFault($e->getMessage(), 'Fault: ' . $e->getMessage() . ' ' . $e->getCustomMessage());
             $this->_critical($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
@@ -48,19 +48,23 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
 
     /** @noinspection PhpHierarchyChecksInspection */
     /**
-     * Retrieve user's cart data.
-     * Store setting to frontend allows to output item errors
+     * Retrieve user's cart data
      *
      * @return array
+     * @throws Mage_Core_Model_Store_Exception
+     * @throws Zend_Currency_Exception
      */
     protected function _retrieve()
     {
         $quote = $this->getUserQuote();
-        Mage::app()->setCurrentStore($this->_getStore());
+        /* @var Shopgate_Cloudapi_Helper_Api2_Quote $quoteHelper */
         $quoteHelper = Mage::helper('shopgate_cloudapi/api2_quote');
-        $quoteHelper->addItemErrors($quote);
+        $quoteHelper->setSaleRuleType($quote, $this->_getStore());
+        $quoteHelper->addQuoteErrors($quote, $this->_getStore());
+        $quoteHelper->addItemErrors($quote, $this->_getStore());
         $quoteHelper->addItems($quote);
         $quoteHelper->addTotals($quote);
+        $quoteHelper->addCartPriceDisplaySettings($quote, $this->_getStore());
 
         return $quote->getData();
     }
@@ -71,7 +75,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
     protected function deactivateUserQuote()
     {
         $quote = $this->getUserOldQuote();
-        if ($quote->getId() && (int)$quote->getIsActive() === 1) {
+        if ($quote->getId() && (int) $quote->getIsActive() === 1) {
             $quote->setIsActive(0)
                   ->save();
         }
@@ -81,7 +85,6 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
      * Creates a new quote and sets it to active
      *
      * @return Mage_Sales_Model_Quote
-     * @throws Mage_Api_Exception
      */
     protected function createNewQuote()
     {
