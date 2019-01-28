@@ -22,9 +22,10 @@
 
 class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
 {
-    const KEY_ITEMS       = 'items';
-    const KEY_TOTALS      = 'totals';
-    const KEY_ITEM_ERRORS = 'errors';
+    const KEY_ITEMS         = 'items';
+    const KEY_TOTALS        = 'totals';
+    const KEY_ITEM_ERRORS   = 'errors';
+    const KEY_ORDER_OPTIONS = 'options';
 
     /**
      * Adds errors to quote items
@@ -50,13 +51,43 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
     {
         $quote->setData(
             self::KEY_ITEMS,
-            array_map(
-                function (Mage_Sales_Model_Quote_Item $item) {
-                    return $item->getData();
-                }, $quote->getAllItems()
-
-            )
+            array_map(array($this, 'mapQuoteItems'), $quote->getAllItems())
         );
+    }
+
+    /**
+     * @param $quoteItem Mage_Sales_Model_Quote_Item
+     *
+     * @return array
+     */
+    private function mapQuoteItems(Mage_Sales_Model_Quote_Item $quoteItem)
+    {
+        $orderOptions = $this->getOrderOptions($quoteItem);
+        if ($orderOptions->hasData(self::KEY_ORDER_OPTIONS)) {
+            $quoteItem->setData(
+                self::KEY_ORDER_OPTIONS,
+                $orderOptions->getData(self::KEY_ORDER_OPTIONS)
+            );
+        }
+
+        return $quoteItem->getData();
+    }
+
+    /**
+     * @param $item Mage_Sales_Model_Quote_Item
+     *
+     * @return Varien_Object
+     */
+    private function getOrderOptions(Mage_Sales_Model_Quote_Item $item)
+    {
+        $result = new Varien_Object();
+        $result->setData(
+            $item->getProduct()
+                ->getTypeInstance(true)
+                ->getOrderOptions($item->getProduct())
+        );
+
+        return $result;
     }
 
     /**
