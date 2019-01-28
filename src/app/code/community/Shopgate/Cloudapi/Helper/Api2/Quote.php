@@ -131,12 +131,12 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
     private function mapQuoteItems(Mage_Sales_Model_Quote_Item $quoteItem)
     {
         $orderOptions = $this->getOrderOptions($quoteItem);
-                    if ($orderOptions->hasData(self::KEY_ORDER_OPTIONS)) {
+        if ($orderOptions->hasData(self::KEY_ORDER_OPTIONS)) {
             $quoteItem->setData(
-                            self::KEY_ORDER_OPTIONS,
-                            $orderOptions->getData(self::KEY_ORDER_OPTIONS)
-                        );
-                    }
+                self::KEY_ORDER_OPTIONS,
+                $orderOptions->getData(self::KEY_ORDER_OPTIONS)
+            );
+        }
 
         return $quoteItem->getData();
     }
