@@ -8,3 +8,5 @@ VALUES (@OPTION_ID, 0, 'Engraving');
 
 INSERT INTO `catalog_product_option_price` (`option_id`, `store_id`, `price`, `price_type`)
 VALUES (@OPTION_ID, 0, 5.0000, 'fixed');
+UPDATE `catalog_product_entity` SET `has_options` = 1, `required_options` = 1 WHERE `entity_id` = '553';
+
