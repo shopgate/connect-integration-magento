@@ -22,7 +22,7 @@
 									"    pm.environment.set(\"guest-access-token\", jsonData.access_token);",
 									"}",
 									"",
-                                  "pm.test('Successful call', function(){",
+                                  "pm.test('Successfull call', function(){",
 									"    pm.response.to.be.success;",
 									"});",
 									"",
@@ -795,6 +795,65 @@
                                   "name": "Errors",
                                   "item": [
                                     {
+                                      "name": "/carts: customer",
+                                      "event": [
+                                        {
+                                          "listen": "test",
+                                          "script": {
+                                            "type": "text/javascript",
+                                            "exec": [
+                                              "var jsonData = pm.response.json();",
+                                              "if (responseCode.code === 200 && jsonData.hasOwnProperty('cartId')) {",
+                                              "    pm.environment.set(\"cartId\", jsonData.cartId);",
+                                              "    tests[\"Cart ID is returned\"] = isNumeric(jsonData.cartId) === true;",
+                                              "} else {",
+                                              "    tests[\"Cart ID is not returned\"] = false;",
+                                              "}",
+                                              "",
+                                              "pm.test('Successfull call', function(){",
+                                              "    pm.response.to.be.success;",
+                                              "});",
+                                              "",
+                                              "function isNumeric(n) {",
+                                              "  return !isNaN(parseFloat(n)) && isFinite(n);",
+                                              "}"
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      "request": {
+                                        "auth": {
+                                          "type": "bearer",
+                                          "bearer": [
+                                            {
+                                              "key": "token",
+                                              "value": "{{customer-access-token}}",
+                                              "type": "string"
+                                            }
+                                          ]
+                                        },
+                                        "method": "POST",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{}"
+                                        },
+                                        "url": {
+                                          "raw": "{{domain}}{{endpoint_carts}}",
+                                          "host": [
+                                            "{{domain}}{{endpoint_carts}}"
+                                          ]
+                                        },
+                                        "description": "Creates a customer cart"
+                                      },
+                                      "response": []
+                                    },
+                                    {
                                       "name": "Simple /w bad custom input",
                                       "event": [
                                         {
@@ -850,65 +909,6 @@
                                     }
                                   ],
                                   "_postman_isSubFolder": true
-                                },
-                              {
-									"name": "/carts: customer",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"type": "text/javascript",
-												"exec": [
-													"var jsonData = pm.response.json();",
-													"if (responseCode.code === 200 && jsonData.hasOwnProperty('cartId')) {",
-													"    pm.environment.set(\"cartId\", jsonData.cartId);",
-													"    tests[\"Cart ID is returned\"] = isNumeric(jsonData.cartId) === true;",
-													"} else {",
-													"    tests[\"Cart ID is not returned\"] = false;",
-													"}",
-													"",
-													"pm.test('Successfull call', function(){",
-													"    pm.response.to.be.success;",
-													"});",
-													"",
-													"function isNumeric(n) {",
-													"  return !isNaN(parseFloat(n)) && isFinite(n);",
-													"}"
-												]
-											}
-										}
-									],
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{customer-access-token}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{}"
-										},
-										"url": {
-											"raw": "{{domain}}{{endpoint_carts}}",
-											"host": [
-												"{{domain}}{{endpoint_carts}}"
-											]
-										},
-										"description": "Creates a customer cart"
-									},
-									"response": []
 								},
 								{
 									"name": "Bundle + Configurable",
