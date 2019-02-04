@@ -2996,7 +2996,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "{{customer-access-token}}",
+													"value": "{{guest-access-token}}",
 													"type": "string"
 												}
 											]
@@ -3044,7 +3044,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "{{customer-access-token}}",
+													"value": "{{guest-access-token}}",
 													"type": "string"
 												}
 											]
@@ -3103,7 +3103,7 @@
 											"bearer": [
 												{
 													"key": "token",
-													"value": "{{customer-access-token}}",
+													"value": "{{guest-access-token}}",
 													"type": "string"
 												}
 											]
