@@ -7,3 +7,5 @@ SET @OPTION_ID=LAST_INSERT_ID();
 INSERT INTO `catalog_product_option_title` (`option_id`, `store_id`, `title`)
 VALUES
 	(@OPTION_ID, 0, 'Engraving');
+
+UPDATE `catalog_product_entity` SET `has_options` = 1, `required_options` = 1 WHERE `entity_id` = '553';
