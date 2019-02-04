@@ -22,7 +22,6 @@
 
 class Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Product extends Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Entry
 {
-
     /**
      * Adds product(s) to cart
      *
@@ -50,6 +49,7 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Product extends Shopgate_Clo
      */
     public function update($cartId, $cartItemId)
     {
+        /** @var Mage_Sales_Model_Quote $quote */
         $quote = Mage::getModel('sales/quote')->setStore($this->store)->loadActive($cartId);
         $item  = $quote->getItemById($cartItemId);
         if ($item->getParentItem()) {

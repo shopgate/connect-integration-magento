@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "34c7ef46-1609-4acb-8039-7dc3b11e79a0",
+      "_postman_id": "edc74d59-d4cd-42f6-b319-c56fe9dbf265",
 		"name": "Mage Cloud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -22,7 +22,7 @@
 									"    pm.environment.set(\"guest-access-token\", jsonData.access_token);",
 									"}",
 									"",
-									"pm.test('Successfull call', function(){",
+                                  "pm.test('Successful call', function(){",
 									"    pm.response.to.be.success;",
 									"});",
 									"",
@@ -792,6 +792,66 @@
 							"name": "Customer - Add",
 							"item": [
 								{
+                                  "name": "Errors",
+                                  "item": [
+                                    {
+                                      "name": "Simple /w bad custom input",
+                                      "event": [
+                                        {
+                                          "listen": "test",
+                                          "script": {
+                                            "id": "ea7d8c89-73cd-41a7-9b22-dce8e7131284",
+                                            "exec": [
+                                              "pm.test('Status 400 returned', function () {",
+                                              "    pm.response.to.have.status(400);",
+                                              "});",
+                                              "",
+                                              "pm.test('Correct errors are returned', function () {",
+                                              "    var jsonData = pm.response.json();",
+                                              "    pm.expect(jsonData.messages.error.length).to.eq(1);",
+                                              "    pm.expect(jsonData.messages.error[0].path).to.eq('misc');",
+                                              "});"
+                                            ],
+                                            "type": "text/javascript"
+                                          }
+                                        }
+                                      ],
+                                      "request": {
+                                        "auth": {
+                                          "type": "bearer",
+                                          "bearer": [
+                                            {
+                                              "key": "token",
+                                              "value": "{{customer-access-token}}",
+                                              "type": "string"
+                                            }
+                                          ]
+                                        },
+                                        "method": "POST",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"553\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t    \t\"999\": \"non-existing\"\n\t    }\n\t  }\n  }\n]"
+                                        },
+                                        "url": {
+                                          "raw": "{{domain}}{{endpoint_carts_id_items}}",
+                                          "host": [
+                                            "{{domain}}{{endpoint_carts_id_items}}"
+                                          ]
+                                        },
+                                        "description": "ID: 553\nType: Simple\nName: Silver Desert Necklace\nSKU: acj000\nURL: silver-desert-necklace\nCategory: Jewelry\nPrice: $210.00\nQty: 43"
+                                      },
+                                      "response": []
+                                    }
+                                  ],
+                                  "_postman_isSubFolder": true
+                                },
+                              {
 									"name": "/carts: customer",
 									"event": [
 										{
@@ -1179,7 +1239,7 @@
 									"response": []
 								},
 								{
-									"name": "Simple with Custom Option Input",
+                                  "name": "Simple /w Custom Input",
 									"event": [
 										{
 											"listen": "test",
@@ -1214,26 +1274,20 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"553\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t    \t\"11\": \"input\"\n\t    }\n\t  }\n  }\n]"
+                                          "raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"553\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t    \t\"7\": \"some engraving\"\n\t    }\n\t  }\n  }\n]"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_carts_id_items}}?XDEBUG_SESSION_START=PHPSTORM",
+                                          "raw": "{{domain}}{{endpoint_carts_id_items}}",
 											"host": [
 												"{{domain}}{{endpoint_carts_id_items}}"
-											],
-											"query": [
-												{
-													"key": "XDEBUG_SESSION_START",
-													"value": "PHPSTORM"
-												}
 											]
 										},
-										"description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
+                                      "description": "ID: 553\nType: Simple\nName: Silver Desert Necklace\nSKU: acj000\nURL: silver-desert-necklace\nCategory: Jewelry\nPrice: $210.00\nQty: 43"
 									},
 									"response": []
 								},
 								{
-									"name": "Simple with Custom Option Textarea",
+                                  "name": "Simple /w Custom Textarea",
 									"event": [
 										{
 											"listen": "test",
@@ -1271,15 +1325,9 @@
 											"raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"370\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t    \t\"4\": \"textarea\"\n\t    }\n\t  }\n  }\n]"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_carts_id_items}}?XDEBUG_SESSION_START=PHPSTORM",
+                                          "raw": "{{domain}}{{endpoint_carts_id_items}}",
 											"host": [
 												"{{domain}}{{endpoint_carts_id_items}}"
-											],
-											"query": [
-												{
-													"key": "XDEBUG_SESSION_START",
-													"value": "PHPSTORM"
-												}
 											]
 										},
 										"description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
@@ -1306,7 +1354,7 @@
 													"   ",
 													"   const option = product.options.find(option => option.label === 'Engraving');",
 													"   pm.expect(option).to.be.an('object')",
-													"   pm.expect(option.value).to.be.eql('engraving')",
+                                                  "   pm.expect(option.value).to.be.eql('some engraving')",
 													"});"
 												],
 												"type": "text/javascript"
@@ -2965,18 +3013,12 @@
 											"raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"553\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t    \t\"11\": \"input\"\n\t    }\n\t  }\n  }\n]"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_carts_id_items}}?XDEBUG_SESSION_START=PHPSTORM",
+                                          "raw": "{{domain}}{{endpoint_carts_id_items}}",
 											"host": [
 												"{{domain}}{{endpoint_carts_id_items}}"
-											],
-											"query": [
-												{
-													"key": "XDEBUG_SESSION_START",
-													"value": "PHPSTORM"
-												}
 											]
 										},
-										"description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
+                                      "description": "ID: 553\nType: Simple\nName: Silver Desert Necklace\nSKU: acj000\nURL: silver-desert-necklace\nCategory: Jewelry\nPrice: $210.00\nQty: 43"
 									},
 									"response": []
 								},
@@ -3019,15 +3061,9 @@
 											"raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"370\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t    \t\"4\": \"textarea\"\n\t    }\n\t  }\n  }\n]"
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_carts_id_items}}?XDEBUG_SESSION_START=PHPSTORM",
+                                          "raw": "{{domain}}{{endpoint_carts_id_items}}",
 											"host": [
 												"{{domain}}{{endpoint_carts_id_items}}"
-											],
-											"query": [
-												{
-													"key": "XDEBUG_SESSION_START",
-													"value": "PHPSTORM"
-												}
 											]
 										},
 										"description": "ID: 554\nType: Simple\nName: Swiss Movement Sports Watch\nSKU: acj005\nURL: swiss-movement-sports-watch\nCategory: Jewelry\nPrice: $500.00\nQty: 3"
