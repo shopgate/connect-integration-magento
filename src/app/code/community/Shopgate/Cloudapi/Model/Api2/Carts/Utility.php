@@ -65,7 +65,6 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
      * @param string $quoteId - numeric quote ID
      *
      * @return Mage_Sales_Model_Quote
-     * @throws Mage_Api2_Exception
      */
     protected function loadQuoteById($quoteId)
     {
@@ -89,6 +88,7 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Utility extends Shopgate_Cloudapi_Model
                      ->loadByCustomer($this->getApiUser()->getUserId());
 
         if (!$quote->getId()) {
+            /** @var Mage_Customer_Model_Customer $customer */
             $customer = Mage::getModel('customer/customer')->load($this->getApiUser()->getUserId());
             $quote    = Mage::helper('shopgate_cloudapi/frontend_quote')->createNewCustomerQuote(
                 $customer,
