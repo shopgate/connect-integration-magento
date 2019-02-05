@@ -80,12 +80,12 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
                         $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
                     }
                     $return = $this->_create($filteredData);
-                    $this->_render(!empty($return) ? $return : $this->getMessages());
+                    $this->_render($return ? : $this->getMessages());
                 } else {
                     $this->_errorIfMethodNotExist('_multiCreate');
                     $filteredData = $this->getFilter()->collectionIn($requestData);
                     $return       = $this->_multiCreate($filteredData);
-                    $this->_render(!empty($return) ? $return : $this->getMessages());
+                    $this->_render($return ? : $this->getMessages());
                 }
                 break;
             /* Retrieve */
@@ -94,13 +94,13 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
                 $return = $this->_retrieve();
                 //todo-sg: see if we need to adjust, this is removed because of product retrieval
                 //$filteredData = $this->getFilter()->out($return);
-                $this->_render(!empty($return) ? $return : $this->getMessages());
+                $this->_render($return);
                 break;
             case self::ACTION_TYPE_COLLECTION . self::OPERATION_RETRIEVE:
                 $this->_errorIfMethodNotExist('_retrieveCollection');
                 $return = $this->_retrieveCollection();
                 //$filteredData  = $this->getFilter()->collectionOut($return);
-                $this->_render(!empty($return) ? $return : $this->getMessages());
+                $this->_render($return);
                 break;
             /* Update */
             case self::ACTION_TYPE_ENTITY . self::OPERATION_UPDATE:
