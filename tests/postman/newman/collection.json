@@ -3010,7 +3010,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"553\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t    \t\"11\": \"input\"\n\t    }\n\t  }\n  }\n]"
+											"raw": "[\n  {\n    \"product\": {\n\t    \"product_id\": \"553\",\n\t    \"qty\": 1,\n\t    \"options\": {\n\t    \t\"7\": \"input\"\n\t    }\n\t  }\n  }\n]"
 										},
 										"url": {
                                           "raw": "{{domain}}{{endpoint_carts_id_items}}",
