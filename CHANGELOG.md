@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- Support for custom options of type input and area
+- Support for custom options of type "Field" and "Area" when adding products to cart
 
 ## [3.3.2] - 2019-01-28
 ### Fixed
