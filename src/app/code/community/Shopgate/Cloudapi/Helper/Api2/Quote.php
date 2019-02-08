@@ -142,13 +142,12 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
             $quote->getTotals()
         );
 
-        if (isset($totals[self::KEY_SHIPPING]) && $totals[self::KEY_SHIPPING]['value']) {
-            $totals[self::KEY_SHIPPING]['value'] = Mage::helper('tax')->getShippingPrice(
-                $totals[self::KEY_SHIPPING]['value'],
-                Mage::helper('tax')->displayShippingPriceIncludingTax() || Mage::helper('tax')->displayShippingBothPrices(),
-                $quote->getShippingAddress(),
-                $quote->getCustomerTaxClassId()
-            );
+        if (isset($totals[self::KEY_SHIPPING], $totals[self::KEY_SHIPPING]['value'])
+            && $totals[self::KEY_SHIPPING]['value']
+        ) {
+            $totals[self::KEY_SHIPPING]['value'] = Mage::helper('tax')->displayShippingPriceExcludingTax()
+                ? $quote->getShippingAddress()->getShippingAmount()
+                : $quote->getShippingAddress()->getShippingInclTax();
         }
 
         $quote->setData(
