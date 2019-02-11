@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Changed
-- Simplified tax export for shipping costs
+- Tax export for shipping costs to make them simpler
 
 ## [3.3.2] - 2019-01-28
 ### Fixed
