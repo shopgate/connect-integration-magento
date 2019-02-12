@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [3.3.3] - 2019-02-12
 ### Changed
 - Tax export for shipping costs to make them simpler
 
@@ -94,7 +95,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for retrieving a temporary checkout URL
 - Endpoint for retrieving of product details
 
-[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.2...HEAD
+[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.3...HEAD
+[3.3.3]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.2...3.3.3
 [3.3.2]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.1...3.3.2
 [3.3.1]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.2.0...3.3.0
