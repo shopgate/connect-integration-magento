@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Shopgate_Cloudapi>
-            <version>3.3.2</version>
+            <version>3.3.3</version>
         </Shopgate_Cloudapi>
     </modules>
     <global>
