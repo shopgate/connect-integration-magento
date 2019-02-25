@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [3.4.0] - 2019-02-25
+### Added
+- Endpoint for customer creation       (POST shopgate/v2/customers)
+- Endpoint for Facebook login strategy (POST shopgate/v2/auth/token)
+- Support for custom options of type "Field" and "Area" when adding products to cart
+
 ## [3.3.3] - 2019-02-12
 ### Changed
 - Tax export for shipping costs to make them simpler
@@ -28,9 +35,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for wishlist retrieval      (GET shopgate/v2/wishlists)
 - Endpoint for wishlist creation       (POST shopgate/v2/wishlists)
 - Endpoint for wishlist deletion       (DELETE shopgate/v2/wishlists/:wishlistId)
-- Endpoint for wishlist item retrieval (GET /v2/wishlists/:wishlistId/items)
-- Endpoint for wishlist item creation  (POST /v2/wishlists/:wishlistId/items)
-- Endpoint for wishlist item deletion  (DELETE /v2/wishlists/:wishlistId/items)
+- Endpoint for wishlist item retrieval (GET shopgate/v2/wishlists/:wishlistId/items)
+- Endpoint for wishlist item creation  (POST shopgate/v2/wishlists/:wishlistId/items)
+- Endpoint for wishlist item deletion  (DELETE shopgate/v2/wishlists/:wishlistId/items)
 - A redirect to web checkout when a customer browses with an app, and hits a web cart page
 - All web cart success/error/warning messages are forwarded to the web checkout page
 
@@ -95,7 +102,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for retrieving a temporary checkout URL
 - Endpoint for retrieving of product details
 
-[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.3...HEAD
+[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.4.0...HEAD
+[3.4.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.3...3.4.0
 [3.3.3]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.2...3.3.3
 [3.3.2]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.1...3.3.2
 [3.3.1]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.0...3.3.1

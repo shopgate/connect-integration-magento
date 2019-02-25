@@ -45,4 +45,46 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Rest_Admin_V2 extends Shopgate_Clou
     {
         $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED, Mage_Api2_Model_Server::HTTP_FORBIDDEN);
     }
+
+    /** @noinspection PhpHierarchyChecksInspection */
+    /**
+     * @param array $data
+     *
+     * @return array
+     * @throws Mage_Api2_Exception
+     * @throws Zend_Controller_Response_Exception
+     * @throws Mage_Core_Exception
+     */
+    protected function _create($data)
+    {
+        $validator    = $this->getValidator();
+        $filteredData = $validator
+            ->setWebsiteId((int) $this->_getStore()->getWebsiteId())
+            ->filter($data);
+        if (!$validator->isValidData($filteredData)) {
+            return $this->setDetailedErrors($validator)->sendInvalidationResponse();
+        }
+
+        /** @var $customer Mage_Customer_Model_Customer */
+        $customer = Mage::getModel('customer/customer');
+        $customer->setData($filteredData);
+
+        try {
+            $customer->save();
+        } catch (Mage_Core_Exception $e) {
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        } catch (Exception $e) {
+            $this->_critical(self::RESOURCE_INTERNAL_ERROR);
+        }
+
+        return array('customerId' => $customer->getId());
+    }
+
+    /**
+     * @return Shopgate_Cloudapi_Model_Api2_Customers_Validator
+     */
+    public function getValidator()
+    {
+        return Mage::getModel('shopgate_cloudapi/api2_customers_validator', array('resource' => $this));
+    }
 }

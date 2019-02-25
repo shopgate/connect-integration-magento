@@ -28,7 +28,11 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
     /** @noinspection PhpHierarchyChecksInspection */
     /**
      * @inheritdoc
+     * @return void|array
+     *
+     * @throws Exception
      * @throws Mage_Api2_Exception
+     * @throws Zend_Controller_Response_Exception
      */
     public function _create(array $filteredData)
     {
@@ -36,8 +40,15 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Rest extends Shopgate_Cloudapi
         try {
             $quoteId = $this->createNewQuote()->getId();
         } catch (Mage_Api_Exception $e) {
-            $error = $this->getFault($e->getMessage(), 'Fault: ' . $e->getMessage() . ' ' . $e->getCustomMessage());
-            $this->_critical($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            $error = $this->getFault($e->getMessage(), 'Fault: ' . $e->getMessage());
+            $this->_errorMessage(
+                $error,
+                Mage_Api2_Model_Server::HTTP_BAD_REQUEST,
+                array('path' => 'misc', 'messages' => array($e->getCustomMessage()))
+            );
+            $this->getResponse()->setHttpResponseCode(Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+
+            return;
         } catch (Exception $e) {
             $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
         }

@@ -65,7 +65,8 @@ class Shopgate_Cloudapi_Model_OAuth2_Server
             new \OAuth2\GrantType\ClientCredentials($storage),
             new \OAuth2\GrantType\UserCredentials($storage),
             new \OAuth2\GrantType\RefreshToken($storage, array('unset_refresh_token_after_use' => false)),
-            new \OAuth2\GrantType\AuthorizationCode($storage)
+            new \OAuth2\GrantType\AuthorizationCode($storage),
+            new \Shopgate\OAuth2\GrantType\FacebookCredentials($storage)
         );
     }
 

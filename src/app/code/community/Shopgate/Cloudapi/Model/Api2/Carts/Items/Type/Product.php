@@ -22,7 +22,6 @@
 
 class Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Product extends Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Entry
 {
-
     /**
      * Adds product(s) to cart
      *
@@ -39,7 +38,11 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Product extends Shopgate_Clo
     }
 
     /**
-     * Updates an existing cart item
+     * Updates an existing cart item.
+     * Do not use the Magento API endpoint, it only updates the qty
+     * and it cross checks the custom option every time. This is not needed
+     * in our case as we use the cart item ID to identify the cart item.
+     * Option updating is not currently supported. Possibly use $quote->updateItem()
      *
      * @param string $cartId
      * @param string $cartItemId
@@ -47,9 +50,11 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Product extends Shopgate_Clo
      * @throws Mage_Api2_Exception
      * @throws Mage_Api_Exception
      * @throws Mage_Core_Exception
+     * @throws Exception
      */
     public function update($cartId, $cartItemId)
     {
+        /** @var Mage_Sales_Model_Quote $quote */
         $quote = Mage::getModel('sales/quote')->setStore($this->store)->loadActive($cartId);
         $item  = $quote->getItemById($cartItemId);
         if ($item->getParentItem()) {
@@ -92,6 +97,7 @@ class Shopgate_Cloudapi_Model_Api2_Carts_Items_Type_Product extends Shopgate_Clo
      *
      * @throws Mage_Api_Exception
      * @throws Mage_Api2_Exception
+     * @throws Exception
      */
     private function validateProductData()
     {
