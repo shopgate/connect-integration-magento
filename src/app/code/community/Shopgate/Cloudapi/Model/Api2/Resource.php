@@ -79,29 +79,28 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
                     if (empty($filteredData) && !empty($requestData)) {
                         $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
                     }
-                    $returnData = $this->_create($filteredData);
-                    $this->_render($returnData);
+                    $return = $this->_create($filteredData);
+                    $this->_render($return ? : $this->getMessages());
                 } else {
                     $this->_errorIfMethodNotExist('_multiCreate');
                     $filteredData = $this->getFilter()->collectionIn($requestData);
                     $return       = $this->_multiCreate($filteredData);
-                    $render       = !empty($return) ? $return : $this->getResponse()->getMessages();
-                    $this->_render($render);
+                    $this->_render($return ? : $this->getMessages());
                 }
                 break;
             /* Retrieve */
             case self::ACTION_TYPE_ENTITY . self::OPERATION_RETRIEVE:
                 $this->_errorIfMethodNotExist('_retrieve');
-                $retrievedData = $this->_retrieve();
+                $return = $this->_retrieve();
                 //todo-sg: see if we need to adjust, this is removed because of product retrieval
-                //$filteredData = $this->getFilter()->out($retrievedData);
-                $this->_render($retrievedData);
+                //$filteredData = $this->getFilter()->out($return);
+                $this->_render($return);
                 break;
             case self::ACTION_TYPE_COLLECTION . self::OPERATION_RETRIEVE:
                 $this->_errorIfMethodNotExist('_retrieveCollection');
-                $retrievedData = $this->_retrieveCollection();
-                //$filteredData  = $this->getFilter()->collectionOut($retrievedData);
-                $this->_render($retrievedData);
+                $return = $this->_retrieveCollection();
+                //$filteredData  = $this->getFilter()->collectionOut($return);
+                $this->_render($return);
                 break;
             /* Update */
             case self::ACTION_TYPE_ENTITY . self::OPERATION_UPDATE:
@@ -124,20 +123,20 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
                 }
                 $filteredData = $this->getFilter()->collectionIn($requestData);
                 $this->_multiUpdate($filteredData);
-                $this->_render($this->getResponse()->getMessages());
+                $this->_render($this->getMessages());
                 break;
             /* Delete */
             case self::ACTION_TYPE_ENTITY . self::OPERATION_DELETE:
                 $this->_errorIfMethodNotExist('_delete');
                 $this->_delete();
-                $this->_render(new stdClass());
+                $this->_render($this->getMessages());
                 break;
             case self::ACTION_TYPE_COLLECTION . self::OPERATION_DELETE:
                 $this->_errorIfMethodNotExist('_multiDelete');
                 $requestData  = $this->getRequest()->getParams();
                 $filteredData = $this->getFilter()->in($requestData);
                 $this->_multiDelete($filteredData);
-                $this->_render(new stdClass());
+                $this->_render($this->getMessages());
                 break;
             default:
                 $this->_critical(self::RESOURCE_METHOD_NOT_IMPLEMENTED);
@@ -175,5 +174,18 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
         }
 
         return $this->filter;
+    }
+
+    /**
+     * Helps printing out error messages
+     *
+     * @return array|stdClass|
+     * @throws Exception
+     */
+    private function getMessages()
+    {
+        return $this->getResponse()->hasMessages()
+            ? array('messages' => $this->getResponse()->getMessages())
+            : new stdClass();
     }
 }

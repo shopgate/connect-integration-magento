@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Endpoint for customer creation       (POST shopgate/v2/customers)
 - Endpoint for Facebook login strategy (POST shopgate/v2/auth/token)
+- Support for custom options of type "Field" and "Area" when adding products to cart
 
 ## [3.3.3] - 2019-02-12
 ### Changed

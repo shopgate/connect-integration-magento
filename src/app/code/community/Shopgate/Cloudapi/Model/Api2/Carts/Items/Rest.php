@@ -42,7 +42,6 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
         }
 
         $this->handleRequest($filteredData);
-        $this->_successMessage('Successfully updated the cart', Mage_Api2_Model_Server::HTTP_OK);
     }
 
     /** @noinspection PhpHierarchyChecksInspection */
@@ -50,7 +49,6 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
      * Updates items in cart
      *
      * @inheritdoc
-     * @return stdClass
      *
      * @throws Exception
      * @throws Mage_Api2_Exception
@@ -71,8 +69,6 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
         }
 
         $this->handleRequest(array($filteredData));
-
-        return new stdClass();
     }
 
     /** @noinspection PhpHierarchyChecksInspection */
@@ -156,6 +152,8 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
      * @param array $filteredData
      *
      * @throws Mage_Api2_Exception
+     * @throws Zend_Controller_Response_Exception
+     * @throws Exception
      */
     protected function handleRequest(array $filteredData)
     {
@@ -172,11 +170,16 @@ abstract class Shopgate_Cloudapi_Model_Api2_Carts_Items_Rest extends Shopgate_Cl
         } catch (Mage_Api_Exception $e) {
             $error = $this->getFault(
                 $e->getMessage(),
-                'Fault: ' . $e->getMessage() . ' ' . $e->getCustomMessage(),
+                'Fault: ' . $e->getMessage(),
                 $this->getResourceFromMessage($e->getMessage())
             );
+            $this->_errorMessage(
+                $error,
+                Mage_Api2_Model_Server::HTTP_BAD_REQUEST,
+                array('path' => 'misc', 'messages' => array($e->getCustomMessage()))
+            );
             $db->rollBack();
-            $this->_critical($error, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            $this->getResponse()->setHttpResponseCode(Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
         } catch (Mage_Api2_Exception $e) {
             $db->rollBack();
             $this->_critical($e->getMessage(), $e->getCode());
