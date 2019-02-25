@@ -5,8 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [4.0.0] - 2019-02-25
 ### Changed
-- The Plugin is now compatible with PWA 6.1, but incompatible with earlier versions
+- The Plugin is now compatible with PWA 6.1, but incompatible with earlier versions. Please contact the Shopgate support before updating a live shop
 
 ## [3.4.0] - 2019-02-25
 ### Added
@@ -104,7 +106,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for retrieving a temporary checkout URL
 - Endpoint for retrieving of product details
 
-[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.4.0...HEAD
+[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.4.0...4.0.0
 [3.4.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.3...3.4.0
 [3.3.3]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.2...3.3.3
 [3.3.2]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.1...3.3.2
