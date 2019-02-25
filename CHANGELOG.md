@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- The Plugin is now compatible with PWA 6.1, but incompatible with earlier versions
 
 ## [3.4.0] - 2019-02-25
 ### Added
