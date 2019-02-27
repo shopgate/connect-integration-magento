@@ -66,6 +66,14 @@ class Shopgate_Cloudapi_V2Controller extends Mage_Api_V2_SoapController
     }
 
     /**
+     * All calls related to orders
+     */
+    public function ordersAction()
+    {
+        $this->_getServer()->run();
+    }
+
+    /**
      * All calls related to product action
      */
     public function productsAction()

@@ -70,6 +70,10 @@
                         <title>Categories</title>
                         <sort_order>60</sort_order>
                     </shopgate_cloudapi_v2_categories>
+                    <shopgate_cloudapi_v2_orders translate="title" module="Shopgate_Cloudapi">
+                        <title>Orders</title>
+                        <sort_order>70</sort_order>
+                    </shopgate_cloudapi_v2_orders>
                 </children>
             </shopgate_cloudapi>
         </resource_groups>
@@ -551,6 +555,128 @@
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_categories>
+            <shopgate_cloudapi_v2_orders translate="title">
+                <group>shopgate_cloudapi_v2_orders</group>
+                <sort_order>120</sort_order>
+                <model>shopgate_cloudapi/api2_orders</model>
+                <title>Orders</title>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <!-- @todo-sg: add customer support + tests for it -->
+                    <!--                    <customer>-->
+                    <!--                        <retrieve>1</retrieve>-->
+                    <!--                    </customer>-->
+                </privileges>
+                <attributes translate="entity_id increment_id created_at status shipping_description _payment_method base_currency_code store_currency_code store_name remote_ip store_to_order_rate subtotal subtotal_incl_tax discount_amount base_grand_total grand_total shipping_amount shipping_tax_amount shipping_incl_tax tax_amount _tax_name _tax_rate coupon_code base_discount_amount base_subtotal base_shipping_amount base_shipping_tax_amount base_tax_amount total_paid base_total_paid total_refunded base_total_refunded base_subtotal_incl_tax base_total_due total_due shipping_discount_amount base_shipping_discount_amount discount_description customer_balance_amount base_customer_balance_amount base_customer_balance_amount _gift_message _order_comments customer_id" module="api2">
+                    <entity_id>Order ID (internal)</entity_id>
+                    <increment_id>Order ID</increment_id>
+                    <created_at>Order Date</created_at>
+                    <status>Order Status</status>
+                    <shipping_description>Shipping Method</shipping_description>
+                    <_payment_method>Payment Method</_payment_method>
+                    <base_currency_code>Base Currency</base_currency_code>
+                    <store_currency_code>Order Currency</store_currency_code>
+                    <store_name>Store Name</store_name>
+                    <remote_ip>Placed from IP</remote_ip>
+                    <store_to_order_rate>Store Currency to Order Currency Rate</store_to_order_rate>
+                    <subtotal>Subtotal</subtotal>
+                    <subtotal_incl_tax>Subtotal Including Tax</subtotal_incl_tax>
+                    <discount_amount>Discount</discount_amount>
+                    <base_grand_total>Grand Total to Be Charged</base_grand_total>
+                    <grand_total>Grand Total</grand_total>
+                    <shipping_amount>Shipping Amount</shipping_amount>
+                    <shipping_tax_amount>Shipping Including Tax</shipping_tax_amount>
+                    <shipping_incl_tax>Shipping Tax</shipping_incl_tax>
+                    <tax_amount>Tax Amount</tax_amount>
+                    <_tax_name>Tax Name</_tax_name>
+                    <_tax_rate>Tax Rate</_tax_rate>
+                    <coupon_code>Coupon Code</coupon_code>
+                    <base_discount_amount>Base Discount</base_discount_amount>
+                    <base_subtotal>Base Subtotal</base_subtotal>
+                    <base_shipping_amount>Base Shipping</base_shipping_amount>
+                    <base_shipping_tax_amount>Base Shipping Tax</base_shipping_tax_amount>
+                    <base_tax_amount>Base Tax Amount</base_tax_amount>
+                    <total_paid>Total Paid</total_paid>
+                    <base_total_paid>Base Total Paid</base_total_paid>
+                    <total_refunded>Total Refunded</total_refunded>
+                    <base_total_refunded>Base Total Refunded</base_total_refunded>
+                    <base_subtotal_incl_tax>Base Subtotal Including Tax</base_subtotal_incl_tax>
+                    <base_total_due>Base Total Due</base_total_due>
+                    <total_due>Total Due</total_due>
+                    <shipping_discount_amount>Shipping Discount</shipping_discount_amount>
+                    <base_shipping_discount_amount>Base Shipping Discount</base_shipping_discount_amount>
+                    <discount_description>Discount Description</discount_description>
+                    <customer_balance_amount>Customer Balance</customer_balance_amount>
+                    <base_customer_balance_amount>Base Customer Balance</base_customer_balance_amount>
+                    <_gift_message>Gift Message</_gift_message>
+                    <_order_comments>Order Comments</_order_comments>
+                    <customer_id>Customer ID</customer_id>
+                </attributes>
+                <!--                <include_attributes>-->
+                <!--                    <customer>-->
+                <!--                        <read>-->
+                <!--                            <entity_id>1</entity_id>-->
+                <!--                            <increment_id>1</increment_id>-->
+                <!--                            <created_at>1</created_at>-->
+                <!--                            <status>1</status>-->
+                <!--                            <shipping_description>1</shipping_description>-->
+                <!--                            <_payment_method>1</_payment_method>-->
+                <!--                            <base_currency_code>1</base_currency_code>-->
+                <!--                            <store_currency_code>1</store_currency_code>-->
+                <!--                            <subtotal>1</subtotal>-->
+                <!--                            <subtotal_incl_tax>1</subtotal_incl_tax>-->
+                <!--                            <discount_amount>1</discount_amount>-->
+                <!--                            <base_grand_total>1</base_grand_total>-->
+                <!--                            <grand_total>1</grand_total>-->
+                <!--                            <shipping_amount>1</shipping_amount>-->
+                <!--                            <shipping_tax_amount>1</shipping_tax_amount>-->
+                <!--                            <shipping_incl_tax>1</shipping_incl_tax>-->
+                <!--                            <tax_amount>1</tax_amount>-->
+                <!--                            <_tax_name>1</_tax_name>-->
+                <!--                            <_tax_rate>1</_tax_rate>-->
+                <!--                            <_gift_message>1</_gift_message>-->
+                <!--                            <_order_comments>1</_order_comments>-->
+                <!--                        </read>-->
+                <!--                    </customer>-->
+                <!--                </include_attributes>-->
+                <force_attributes>
+                    <!--                    <customer>-->
+                    <!--                        <payment_method>1</payment_method>-->
+                    <!--                        <addresses>1</addresses>-->
+                    <!--                        <order_items>1</order_items>-->
+                    <!--                        <gift_message_from>1</gift_message_from>-->
+                    <!--                        <gift_message_to>1</gift_message_to>-->
+                    <!--                        <gift_message_body>1</gift_message_body>-->
+                    <!--                        <order_comments>1</order_comments>-->
+                    <!--                        <tax_name>1</tax_name>-->
+                    <!--                        <tax_rate>1</tax_rate>-->
+                    <!--                    </customer>-->
+                    <admin>
+                        <payment_method>1</payment_method>
+                        <addresses>1</addresses>
+                        <order_items>1</order_items>
+                        <gift_message_from>1</gift_message_from>
+                        <gift_message_to>1</gift_message_to>
+                        <gift_message_body>1</gift_message_body>
+                        <order_comments>1</order_comments>
+                        <tax_name>1</tax_name>
+                        <tax_rate>1</tax_rate>
+                    </admin>
+                </force_attributes>
+                <routes>
+                    <route_entity>
+                        <route>/v2/orders/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/v2/orders</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </shopgate_cloudapi_v2_orders>
         </resources>
     </api2>
 </config>

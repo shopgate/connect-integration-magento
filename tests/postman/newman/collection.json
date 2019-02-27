@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e7728e25-02a0-41ae-b74b-63be851d12fb",
+		"_postman_id": "3b473fc4-23f2-4701-9df5-81075c0170bc",
 		"name": "Mage Cloud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -27667,6 +27667,186 @@
 							}
 						]
 					},
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "/v2/orders",
+			"item": [
+				{
+					"name": "Customer",
+					"item": [
+						{
+							"name": "No limit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test(\"Customer cannot access this endpoint at the moment\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Guest",
+					"item": [
+						{
+							"name": "No limit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved 10 products when no limits are applied\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var count = Object.keys(jsonData).length;",
+											"    pm.expect(count).to.eql(10);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Page 1, Limit 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved 3 products from New Arrivals category\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var count = Object.keys(jsonData).length;",
+											"    pm.expect(count).to.eql(4);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?page=1&limit=4",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"_postman_isSubFolder": true
 				}
 			]
