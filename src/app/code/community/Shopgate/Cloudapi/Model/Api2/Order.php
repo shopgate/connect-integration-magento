@@ -42,7 +42,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
      * Filter keys
      */
     const FILTER_KEY_CREATED_AT_FROM = 'created_at_from';
-    const FILTER_KEY_CREATED_AT_TO = 'created_at_to';
+    const FILTER_KEY_CREATED_AT_TO   = 'created_at_to';
 
     /**
      * Add gift message info to select
