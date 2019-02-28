@@ -324,6 +324,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
         foreach ($collection->getItems() as $order) {
             $ordersData[$order->getId()] = $order->toArray();
         }
+
         if ($ordersData) {
             foreach ($this->_getAddresses(array_keys($ordersData)) as $orderId => $addresses) {
                 $ordersData[$orderId]['addresses'] = $addresses;
@@ -336,7 +337,12 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
             }
         }
 
-        return $ordersData;
+        $result = array();
+        foreach ($ordersData as $orderData) {
+            $result[] = $orderData;
+        }
+
+        return $result;
     }
 
     /**
