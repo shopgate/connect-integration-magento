@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1f55313c-7de6-4e0d-9ee6-4ac1b106393e",
+      "_postman_id": "3b473fc4-23f2-4701-9df5-81075c0170bc",
 		"name": "Mage Cloud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14209,7 +14209,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{domain}}forwarder.php?db=cart_sources&quote_id={{cartId}}",
+                                  "raw": "{{domain}}forwarder.php?db=cart_sources&action=get&quote_id={{cartId}}",
 									"host": [
 										"{{domain}}forwarder",
 										"php"
@@ -14220,6 +14220,10 @@
 											"value": "cart_sources"
 										},
 										{
+                                          "key": "action",
+                                          "value": "get"
+                                        },
+                                      {
 											"key": "quote_id",
 											"value": "{{cartId}}"
 										}
@@ -27795,14 +27799,10 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Retrieved 4 orders\", function () {",
+                                          "pm.test(\"Retrieved 3 products from New Arrivals category\", function () {",
 											"    var jsonData = pm.response.json();",
 											"    var count = Object.keys(jsonData).length;",
 											"    pm.expect(count).to.eql(4);",
-											"    ",
-											"    //prepare data for next test",
-											"    var order = jsonData[Object.keys(jsonData)[0]]",
-											"    pm.environment.set(\"orderCreatedAt\", order.created_at);",
 											"});"
 										],
 										"type": "text/javascript"
@@ -27851,22 +27851,22 @@
 							"response": []
 						},
 						{
-							"name": "Filter created_at",
+                          "name": "Filter by AND created_at",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
+                                          "pm.test('Status code is 200', function () {",
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Retrieved 1 order\", function () {",
+                                          "pm.test('Retrieved 1 order', function () {",
 											"    var jsonData = pm.response.json();",
 											"    var count = Object.keys(jsonData).length;",
-											"    var order = jsonData[Object.keys(jsonData)[0]]",
-											"    pm.expect(order.created_at).to.eql(pm.environment.get(\"orderCreatedAt\"));",
+                                          "    var order = jsonData.pop()",
+                                          "    pm.expect(order.created_at).to.eql('2013-03-15 00:01:34');",
 											"    pm.expect(count).to.eql(1);",
 											"});"
 										],
@@ -27917,26 +27917,262 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_orders}}?page=1&limit=4&created_at_from={{orderCreatedAtFrom}}&created_at_to={{orderCreatedAtTo}}",
+                                  "raw": "{{domain}}{{endpoint_orders}}?created_at_gt=2013-03-15 00:01:30&created_at_lt=2013-03-15 00:01:35",
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									],
 									"query": [
 										{
-											"key": "page",
-											"value": "1"
+                                          "key": "created_at_gt",
+                                          "value": "2013-03-15 00:01:30"
+                                        },
+                                      {
+                                        "key": "created_at_lt",
+                                        "value": "2013-03-15 00:01:35"
+                                      }
+                                    ]
+                                }
+                            },
+                          "response": []
+                        },
+                      {
+                        "name": "Filter by OR status",
+                        "event": [
+                          {
+                            "listen": "test",
+                            "script": {
+                              "id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+                              "exec": [
+                                "pm.test('Status code is 200', function () {",
+                                "    pm.response.to.have.status(200);",
+                                "});",
+                                "",
+                                "pm.test('Retrieved 4 orders', function () {",
+                                "    var jsonData = pm.response.json();",
+                                "    var count = jsonData.length;",
+                                "    pm.expect(count).to.eql(4);",
+                                "});"
+                              ],
+                              "type": "text/javascript"
+                            }
+                          },
+                          {
+                            "listen": "prerequest",
+                            "script": {
+                              "id": "b6cf641f-559c-4059-81d9-3b9d4f3dceaa",
+                              "exec": [
+                                "var moment = require('moment')",
+                                "const orderCratedAt = pm.environment.get(\"orderCreatedAt\")",
+                                "const dateFrom = moment(orderCratedAt)",
+                                "        .add(-1, 'seconds')",
+                                "        .format('YYYY-MM-DD HH:mm:ss');",
+                                "const dateTo = moment(orderCratedAt)",
+                                "        .add(1, 'seconds')",
+                                "        .format('YYYY-MM-DD HH:mm:ss');",
+                                "        ",
+                                "pm.environment.set(\"orderCreatedAtFrom\", dateFrom);",
+                                "pm.environment.set(\"orderCreatedAtTo\", dateTo);"
+                              ],
+                              "type": "text/javascript"
+                            }
+                          }
+                        ],
+                        "request": {
+                          "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                              {
+                                "key": "token",
+                                "value": "{{guest-access-token}}",
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "method": "GET",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "body": {
+                            "mode": "raw",
+                            "raw": ""
+                          },
+                          "url": {
+                            "raw": "{{domain}}{{endpoint_orders}}?status_eq=holded,canceled",
+                            "host": [
+                              "{{domain}}{{endpoint_orders}}"
+                            ],
+                            "query": [
+                              {
+                                "key": "status_eq",
+                                "value": "holded,canceled"
+                              }
+                            ]
+                          }
+                        },
+                        "response": []
+                      },
+                      {
+                        "name": "Create SG source",
+                        "event": [
+                          {
+                            "listen": "test",
+                            "script": {
+                              "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+                              "exec": [
+                                "pm.test(\"The table entries were succefully created\", function () {",
+                                "    pm.expect(pm.response.text()).to.include('1');",
+                                "});"
+                              ],
+                              "type": "text/javascript"
+                            }
+                          }
+                        ],
+                        "request": {
+                          "method": "POST",
+                          "header": [],
+                          "body": {
+                            "mode": "raw",
+                            "raw": ""
+                          },
+                          "url": {
+                            "raw": "{{domain}}forwarder.php?db=order_sources&action=set&order_id=42&source=webcheckout",
+                            "host": [
+                              "{{domain}}forwarder",
+                              "php"
+                            ],
+                            "query": [
+                              {
+                                "key": "db",
+                                "value": "order_sources"
+                              },
+                              {
+                                "key": "action",
+                                "value": "set"
+                              },
+                              {
+                                "key": "order_id",
+                                "value": "42"
 										},
 										{
-											"key": "limit",
-											"value": "4"
-										},
+                                          "key": "source",
+                                          "value": "webcheckout"
+                                        }
+                            ]
+                          },
+                          "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+                        },
+                        "response": []
+                      },
+                      {
+                        "name": "Create bogus source",
+                        "event": [
+                          {
+                            "listen": "test",
+                            "script": {
+                              "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+                              "exec": [
+                                "pm.test(\"The table entries were succefully created\", function () {",
+                                "    pm.expect(pm.response.text()).to.include('1');",
+                                "});"
+                              ],
+                              "type": "text/javascript"
+                            }
+                          }
+                        ],
+                        "request": {
+                          "method": "POST",
+                          "header": [],
+                          "body": {
+                            "mode": "raw",
+                            "raw": ""
+                          },
+                          "url": {
+                            "raw": "{{domain}}forwarder.php?db=order_sources&action=set&order_id=43&source=lala",
+                            "host": [
+                              "{{domain}}forwarder",
+                              "php"
+                            ],
+                            "query": [
 										{
-											"key": "created_at_from",
-											"value": "{{orderCreatedAtFrom}}"
-										},
-										{
-											"key": "created_at_to",
-											"value": "{{orderCreatedAtTo}}"
+                                          "key": "db",
+                                          "value": "order_sources"
+                                        },
+                              {
+                                "key": "action",
+                                "value": "set"
+                              },
+                              {
+                                "key": "order_id",
+                                "value": "43"
+                              },
+                              {
+                                "key": "source",
+                                "value": "lala"
+                              }
+                            ]
+                          },
+                          "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+                        },
+                        "response": []
+                      },
+                      {
+                        "name": "Filter by SG source",
+                        "event": [
+                          {
+                            "listen": "test",
+                            "script": {
+                              "id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+                              "exec": [
+                                "pm.test('Status code is 200', function () {",
+                                "    pm.response.to.have.status(200);",
+                                "});",
+                                "",
+                                "pm.test('Retrieved 1 order', function () {",
+                                "    const jsonData = pm.response.json();",
+                                "    const size = jsonData.length;",
+                                "    const order = jsonData.pop();",
+                                "    pm.expect(order.entity_id).to.eql('42');",
+                                "    pm.expect(size).to.eql(1);",
+                                "});"
+                              ],
+                              "type": "text/javascript"
+                            }
+                          }
+                        ],
+                        "request": {
+                          "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                              {
+                                "key": "token",
+                                "value": "{{guest-access-token}}",
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "method": "GET",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "body": {
+                            "mode": "raw",
+                            "raw": ""
+                          },
+                          "url": {
+                            "raw": "{{domain}}{{endpoint_orders}}?shopgate_source_eq=webcheckout",
+                            "host": [
+                              "{{domain}}{{endpoint_orders}}"
+                            ],
+                            "query": [
+                              {
+                                "key": "shopgate_source_eq",
+                                "value": "webcheckout"
 										}
 									]
 								}

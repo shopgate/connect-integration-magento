@@ -35,12 +35,18 @@ class Shopgate_Cloudapi_Db_Shell extends Mage_Shell_Abstract
     public function run()
     {
         if ($db = $this->getArg('db')) {
-            if ($this->hasLookup()) {
-                $data = $this->readDatabase($db, array_slice($this->_args, 1));
-                echo (int) !empty($data);
+            if ('set' === $this->getArg('action')) {
+                echo (int) $this->writeDatabase($db, $this->getColumnValues());
+            } elseif ('get' === $this->getArg('action')) {
+                if ($this->hasLookup()) {
+                    $data = $this->readDatabase($db, $this->getColumnValues());
+                    echo (int) !empty($data);
+                } else {
+                    /** @noinspection ForgottenDebugOutputInspection */
+                    print_r($this->readDatabase($db));
+                }
             } else {
-                /** @noinspection ForgottenDebugOutputInspection */
-                print_r($this->readDatabase($db));
+                throw new RuntimeException('Incorrect action provided');
             }
 
             return;
@@ -72,11 +78,28 @@ class Shopgate_Cloudapi_Db_Shell extends Mage_Shell_Abstract
     }
 
     /**
+     * @param string $table
+     * @param array  $set
+     *
+     * @return array
+     */
+    private function writeDatabase($table, array $set)
+    {
+        if (empty($set)) {
+            throw new RuntimeException('There were no column=value parameters provided for this call');
+        }
+
+        $connection = Mage::getModel('core/resource')->getConnection('core_write');
+
+        return $connection->insertArray("shopgate_{$table}", array_keys($set), array($set));
+    }
+
+    /**
      * @return bool
      */
     private function hasLookup()
     {
-        return count($this->_args) > 1;
+        return count($this->_args) > 2;
     }
 
     /**
@@ -106,13 +129,25 @@ class Shopgate_Cloudapi_Db_Shell extends Mage_Shell_Abstract
     }
 
     /**
+     * Returns a list of column value pairs,
+     * as long as they were provided in the right order
+     *
+     * @return array ('column' => 'value')
+     */
+    private function getColumnValues()
+    {
+        return array_slice($this->_args, 2);
+    }
+
+    /**
      * @return string
      */
     public function usageHelp()
     {
         return <<<USAGE
 Usage:  php -f shopgate_cloudapi_db.php -- [options]
-  db [db_name] [col] [value]    Name of shopgate database table, e.g 'customer' will access shopgate_customer, column value for search
+  db [db_name] action get [col] [value]    Name of SG database table, e.g 'customer' will access shopgate_customer, column value for search
+  db [db_name] action set [col] [value]    Saves column/values to the DB name provided
   -h                            Short alias for help
   help                          This help
 USAGE;
