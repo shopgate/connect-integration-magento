@@ -85,7 +85,33 @@ paths:
       tags:
         - "orders"
       summary: "Allows you to receive orders."
+      description: "You can use all all magento database fields for filtering. <br><br> 
+      The follow suffixes avaliable for each field:<br><br>
+      *_gt - greater than<br>
+      *_lt - lower than<br>
+      *_eq - equels<br>
+      *_neq - not equels<br>
+      *_gteq - greater and equels<br>
+      *_lteq - lower and equels<br><br>
+      All different parameters will create an request with AND condition.<br>
+      OR conditions can be created by comma separated values"
       operationId: "orders"
+      examples: 
+        shopgate_source_neq:
+          summary: "Filter by where shopgate_source IS NOT webcheckout"
+          value: "webcheckout"
+        shopgate_source_eq:
+          summary: "Filter by where shopgate_source IS webcheckout"
+          value: "webcheckout"
+        created_at_gteq:
+          summary: "Filter by where created_at equals and greater than"
+          value: "2013-03-28 20:00:00"
+        created_at_lteq:
+          summary: "Filter by where created_at equals and lower than"
+          value: "2013-03-28 23:00:00"
+        entity_id_eq:
+          summary: "Filter where entity_id equals 41 OR 24 OR 45"
+          value: "41,24,45"
       parameters: 
         - name: page
           in: query
@@ -95,14 +121,16 @@ paths:
           in: query
           description: Limit
           type: integer
-        - name: created_at_from
+        - name: shopgate_source_eq
           in: query
-          description: Created at from
+          description: Filter equals
           type: string
-        - name: created_at_to
+          example: "webcheckout"
+        - name: shopgate_source_neq
           in: query
-          description: Created at to
+          description: Filter not equals
           type: string
+          example: "webcheckout"
       security:
         - AdminToken: []
       responses:
@@ -141,6 +169,9 @@ definitions:
   ResponseOrder: 
     type: object
     properties:
+      shopgate_source:
+        type: string
+        example: "webcheckout"
       entity_id:
         type: string
         example: "41"
