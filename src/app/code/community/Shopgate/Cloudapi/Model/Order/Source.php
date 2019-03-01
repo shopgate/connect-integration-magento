@@ -48,6 +48,7 @@ class Shopgate_Cloudapi_Model_Order_Source extends Mage_Core_Model_Abstract
     {
         $this->setSource(self::SOURCE_WEBCHECKOUT);
         $this->setOrderId($orderId);
+        $this->setUserAgent(Mage::helper('core/http')->getHttpUserAgent());
         $this->save();
     }
 }
