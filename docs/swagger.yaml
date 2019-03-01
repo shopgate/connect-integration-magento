@@ -80,6 +80,40 @@ paths:
           $ref: "#/definitions/ErrorUnauthorized"
         500:
           $ref: '#/definitions/ErrorUnknown'
+  "/orders": 
+    get:
+      tags:
+        - "orders"
+      summary: "Allows you to receive orders."
+      operationId: "orders"
+      parameters: 
+        - name: page
+          in: query
+          description: Page number
+          type: integer
+        - name: limit
+          in: query
+          description: Limit
+          type: integer
+        - name: created_at_from
+          in: query
+          description: Created at from
+          type: string
+        - name: created_at_to
+          in: query
+          description: Created at to
+          type: string
+      security:
+        - AdminToken: []
+      responses:
+        200:
+           description: "Successful Operation"
+           schema: 
+            $ref: "#/definitions/ResponseOrders"
+        401:
+          $ref: "#/definitions/ErrorUnauthorized"
+        500:
+          $ref: '#/definitions/ErrorUnknown'
 securityDefinitions:
   AuthUser:
     description: "Client ID, a combination of [customer_number]-[shop_number] retrieved in Shopgate merchant panel when creating an interface connection to the site"
@@ -100,6 +134,306 @@ securityDefinitions:
     tokenUrl: "localhost/shopgate/v2/auth/token"
     flow: "password"
 definitions:
+  ResponseOrders:
+    type: array
+    items:
+      $ref: '#/definitions/ResponseOrder'
+  ResponseOrder: 
+    type: object
+    properties:
+      entity_id:
+        type: string
+        example: "41"
+      state:
+        type: string
+        example: "new"
+      status:
+        type: string
+        example: "pending"
+      protect_code:
+        type: string
+        example: "8b86d4"
+      shipping_description:
+        type: string
+        example: "United Parcel Service - Ground"
+      is_virtual:
+        type: string
+        example: "0"
+      store_id:
+        type: string
+        example: "1"
+      customer_id:
+        type: string
+        example: null
+      base_discount_amount:
+        type: string
+        example: "0.0000"
+      base_discount_canceled:
+        type: string
+        example: "0.0000"
+      base_discount_invoiced:
+        type: string
+        example: null
+      base_discount_refunded:
+        type: string
+        example: null
+      base_grand_total:
+        type: string
+        example: "698.3000"
+      base_shipping_amount:
+        type: string
+        example: "38.3000"
+      base_shipping_canceled:
+        type: string
+        example: "38.3000"
+      base_shipping_invoiced:
+        type: string
+        example: null
+      base_shipping_refunded:
+        type: string
+        example: null
+      base_shipping_tax_amount:
+        type: string
+        example: "0.0000"
+      base_shipping_tax_refunded:
+        type: string
+        example: null
+      base_subtotal:
+        type: string
+        example: "660.0000"
+      base_subtotal_canceled:
+        type: string
+        example: "660.0000"
+      base_subtotal_invoiced:
+        type: string
+        example: null
+      base_subtotal_refunded:
+        type: string
+        example: null
+      base_tax_amount:
+        type: string
+        example: "0.0000"
+      base_tax_canceled:
+        type: string
+        example: "0.0000"
+      base_tax_invoiced:
+        type: string
+        example: null
+      base_tax_refunded:
+        type: string
+        example: null
+      base_to_global_rate:
+        type: string
+        example: "1.0000"
+      base_to_order_rate:
+        type: string
+        example: "1.0000"
+      base_total_canceled:
+        type: string
+        example: "698.3000"
+      base_total_invoiced:
+        type: string
+        example: null
+      base_total_invoiced_cost:
+        type: string
+        example: null
+      base_total_offline_refunded:
+        type: string
+        example: null
+      base_total_online_refunded:
+        type: string
+        example: null
+      base_total_paid:
+        type: string
+        example: null
+      base_total_qty_ordered:
+        type: string
+        example: null
+      base_total_refunded:
+        type: string
+        example: null
+      discount_amount:
+        type: string
+        example: "0.0000"
+      discount_canceled:
+        type: string
+        example: "0.0000"
+      discount_invoiced:
+        type: string
+        example: null
+      discount_refunded:
+        type: string
+        example: null
+      grand_total:
+        type: string
+        example: "698.3000"
+      shipping_amount:
+        type: string
+        example: "11.5700"
+      shipping_canceled:
+        type: string
+        example: null
+      shipping_invoiced:
+        type: string
+        example: null
+      shipping_refunded:
+        type: string
+        example: null
+      shipping_tax_amount:
+        type: string
+        example: "0.0000"
+      shipping_tax_refunded:
+        type: string
+        example: null
+      store_to_base_rate:
+        type: string
+        example: "1.0000"
+      store_to_order_rate:
+        type: string
+        example: "1.0000"
+      subtotal:
+        type: string
+        example: "750.0000"
+      subtotal_canceled:
+        type: string
+        example: null
+      subtotal_invoiced:
+        type: string
+        example: null
+      subtotal_refunded:
+        type: string
+        example: null
+      tax_amount:
+        type: string
+        example: "61.8800"
+      addresses:
+        type: array
+        items:
+          $ref: '#/definitions/ResponseAddrress'
+      order_items:
+        type: array
+        items:
+          $ref: '#/definitions/ResponseOrderItem'
+  ResponseAddrress:
+    type: "object"
+    properties:
+      region:
+        type: "string"
+        example: "California"
+      postcode:
+        type: "string"
+        example: "90232"
+      lastname:
+        type: "string"
+        example: "Akizian"
+      street:
+        type: "string"
+        example: "10441 Jefferson Blvd., Suite 200"
+      city:
+        type: "string"
+        example: "Culver City"
+      email:
+        type: "string"
+        example: "mosses@ebay.com"
+      telephone:
+        type: "string"
+        example: "3105551212"
+      country_id:
+        type: "string"
+        example: "US"
+      firstname:
+        type: "string"
+        example: "Mosses"
+      address_type:
+        type: "string"
+        example: "billing"
+      prefix:
+        type: "string"
+        example: null
+      middlename:
+        type: "string"
+        example: null
+      suffix:
+        type: "string"
+        example: null
+      company:
+        type: "string"
+        example: null
+  ResponseOrderItem: 
+    type: object
+    properties:
+      item_id:
+        type: string
+        example: "108"
+      parent_item_id:
+        type: string
+        example: null
+      sku:
+        type: string
+        example: "abl007"
+      name:
+        type: string
+        example: "Classic Hardshell Suitcase 29"
+      qty_canceled:
+        type: string
+        example: "0.0000"
+      qty_invoiced:
+        type: string
+        example: "0.0000"
+      qty_ordered:
+        type: string
+        example: "1.0000"
+      qty_refunded:
+        type: string
+        example: "0.0000"
+      qty_shipped:
+        type: string
+        example: "0.0000"
+      price:
+        type: string
+        example: "750.0000"
+      base_price:
+        type: string
+        example: "750.0000"
+      original_price:
+        type: string
+        example: "750.0000"
+      base_original_price:
+        type: string
+        example: "750.0000"
+      tax_percent:
+        type: string
+        example: "8.2500"
+      tax_amount:
+        type: string
+        example: "61.8800"
+      base_tax_amount:
+        type: string
+        example: "61.8800"
+      discount_amount:
+        type: string
+        example: "0.0000"
+      base_discount_amount:
+        type: string
+        example: "0.0000"
+      row_total:
+        type: string
+        example: "750.0000"
+      base_row_total:
+        type: string
+        example: "750.0000"
+      price_incl_tax:
+        type: string
+        example: "811.8800"
+      base_price_incl_tax:
+        type: string
+        example: "811.8800"
+      row_total_incl_tax:
+        type: string
+        example: "811.8800"
+      base_row_total_incl_tax:
+        type: string
+        example: "811.8800"
   RequestFacebookCredentials:
     description: "The endpoint will attempt to locate the user by the user_id provided. If it cannot locate the user, it will throw an error."
     type: "object"
