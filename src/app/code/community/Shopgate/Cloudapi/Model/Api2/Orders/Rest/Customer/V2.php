@@ -26,7 +26,7 @@
  * @package    Mage_Sales
  * @author     Magento Core Team <core@magentocommerce.com>
  */
-class Shopgate_Cloudapi_Model_Api2_Orders_Rest_Customer_V1 extends Shopgate_Cloudapi_Model_Api2_Orders_Rest
+class Shopgate_Cloudapi_Model_Api2_Orders_Rest_Customer_V2 extends Shopgate_Cloudapi_Model_Api2_Orders_Rest
 {
     /**
      * Retrieve collection instance for orders

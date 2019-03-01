@@ -26,6 +26,6 @@
  * @package    Mage_Sales
  * @author     Magento Core Team <core@magentocommerce.com>
  */
-class Shopgate_Cloudapi_Model_Api2_Orders_Rest_Admin_V1 extends Shopgate_Cloudapi_Model_Api2_Orders_Rest
+class Shopgate_Cloudapi_Model_Api2_Orders_Rest_Admin_V2 extends Shopgate_Cloudapi_Model_Api2_Orders_Rest
 {
 }

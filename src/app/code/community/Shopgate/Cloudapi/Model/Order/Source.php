@@ -41,6 +41,8 @@ class Shopgate_Cloudapi_Model_Order_Source extends Mage_Core_Model_Abstract
 
     /**
      * @param int $orderId
+     *
+     * @throws Exception
      */
     public function addForWebCheckout($orderId)
     {

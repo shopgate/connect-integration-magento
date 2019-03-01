@@ -39,12 +39,6 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
     /**#@-*/
 
     /**
-     * Filter keys
-     */
-    const FILTER_KEY_CREATED_AT_FROM = 'created_at_from';
-    const FILTER_KEY_CREATED_AT_TO   = 'created_at_to';
-
-    /**
      * Add gift message info to select
      *
      * @param Mage_Sales_Model_Resource_Order_Collection $collection
@@ -154,8 +148,6 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
         /** @var $collection Mage_Sales_Model_Resource_Order_Collection */
         $collection = Mage::getResourceModel('sales/order_collection');
 
-        $this->applyShopgateFilters($collection);
-        $this->applyQueryFilter($collection);
         $this->_applyCollectionModifiers($collection);
 
         return $collection;
@@ -337,45 +329,6 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
             }
         }
 
-        $result = array();
-        foreach ($ordersData as $orderData) {
-            $result[] = $orderData;
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param Mage_Sales_Model_Resource_Order_Collection $collection
-     *
-     * @throws Exception
-     * @todo-sg: finish up, not tested
-     */
-    private function applyShopgateFilters(Mage_Sales_Model_Resource_Order_Collection $collection)
-    {
-        $source  = $this->getRequest()->getParam('source');
-        $sgOrder = Mage::getResourceModel('shopgate_cloudapi/order_source');
-
-        if ($source === 'some shopgate type') {
-            $collection->getSelect()->join(
-                array('sg_order' => $collection->getTable($sgOrder->getMainTable())),
-                "main_table.{$collection->getIdFieldName()} = sg_order.order_id",
-                array()
-            );
-        }
-    }
-
-    /**
-     * @param Mage_Sales_Model_Resource_Order_Collection $collection
-     */
-    private function applyQueryFilter($collection)
-    {
-        if ($from = $this->getRequest()->getParam(self::FILTER_KEY_CREATED_AT_FROM)) {
-            $collection->addFieldToFilter('created_at', array('gt' => $from));
-        }
-
-        if ($to = $this->getRequest()->getParam(self::FILTER_KEY_CREATED_AT_TO)) {
-            $collection->addFieldToFilter('created_at', array('lt' => $to));
-        }
+        return $ordersData;
     }
 }
