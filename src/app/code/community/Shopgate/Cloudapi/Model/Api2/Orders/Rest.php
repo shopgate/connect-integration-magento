@@ -31,18 +31,18 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     /**
      * Used to create the join
      */
-    const TABLE_ALIAS = 'shopgate_order';
+    const TABLE_ALIAS = 'shopgate_orders';
     /**
      * Field name to prepend
      */
-    const FIELD_START = 'shopgate_';
+    const FIELD_START = 'shopgate_order_';
 
     /**
      * Whitelisting actions that can be filtered by
      *
      * @var array
      */
-    protected $operationWhitelist = array('lt', 'gt', 'eq', 'gteq', 'lteq', 'neq', 'like');
+    protected $operationWhitelist = array('lt', 'gt', 'eq', 'gteq', 'lteq', 'neq', 'like', 'notnull');
 
     /**
      * Retrieve information about specified order item
@@ -94,6 +94,7 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     protected function _getCollectionForRetrieve()
     {
         $collection = parent::_getCollectionForRetrieve();
+        $this->joinShopgateOrderSourcesTable($collection);
         $this->applyShopgateFilters($collection);
 
         return $collection;
@@ -111,9 +112,30 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     }
 
     /**
-     * Applies Shopgate order filters
+     * Left join shopgate_order_sources table and add appropriate column names for return
      *
-     * @todo-sg: there could be an issue with filtering existing framework `shopgate_*` fields
+     * @param Mage_Sales_Model_Resource_Order_Collection $collection
+     */
+    private function joinShopgateOrderSourcesTable(Mage_Sales_Model_Resource_Order_Collection $collection)
+    {
+        $table   = Mage::getResourceModel('shopgate_cloudapi/order_source')->getMainTable();
+        $alias   = self::TABLE_ALIAS;
+        $source  = Shopgate_Cloudapi_Model_Resource_Order_Source::COLUMN_SOURCE;
+        $agent   = Shopgate_Cloudapi_Model_Resource_Order_Source::COLUMN_AGENT;
+        $orderId = Shopgate_Cloudapi_Model_Resource_Order_Source::COLUMN_ORDER_ID;
+        $collection->getSelect()->joinLeft(
+            array($alias => $table),
+            "main_table.entity_id = {$alias}.{$orderId}",
+            array(
+                self::FIELD_START . $source => "{$alias}.{$source}",
+                self::FIELD_START . $agent  => "{$alias}.{$agent}"
+            )
+        );
+    }
+
+    /**
+     * Applies Shopgate order filters
+     * Please note a SQL hard error when filtering by `page` and `shopgate_order_` fields.
      *
      * @param Mage_Sales_Model_Resource_Order_Collection $collection
      *
@@ -122,27 +144,12 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     private function applyShopgateFilters(Mage_Sales_Model_Resource_Order_Collection $collection)
     {
         $filters = $this->getShopgateFiltrationParams();
-        $sgOrder = Mage::getResourceModel('shopgate_cloudapi/order_source');
 
         foreach ($filters as $filter => $conditions) {
             foreach ($conditions as $field => $value) {
-                $orConditions = $this->valueOrConditions($value, $filter);
-                if (!empty($orConditions)) {
-                    $collection->addFieldToFilter(array($field), array($orConditions));
-                } else {
-                    $collection->addFieldToFilter($field, array($filter => $value));
-                }
+                $translated = $this->getConditions($value, $filter);
+                $collection->addFieldToFilter(array($field), array($translated));
             }
-        }
-
-        $columns = $this->getShopgateJoinColumns();
-        if (!empty($columns)) {
-            $alias = self::TABLE_ALIAS;
-            $collection->getSelect()->joinRight(
-                array($alias => $sgOrder->getMainTable()),
-                "main_table.entity_id = {$alias}.order_id",
-                $columns
-            );
         }
     }
 
@@ -173,33 +180,6 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     }
 
     /**
-     * Helper to output a proper select with `shopgate_` attached to the column names
-     *
-     * @return array array('shopgate_source' => [TABLE_ALIAS].source)
-     * @throws Exception
-     */
-    private function getShopgateJoinColumns()
-    {
-        $field   = self::FIELD_START;
-        $sgCheck = function ($value) use ($field) {
-            return (stripos($value, $field) !== false);
-        };
-
-        /**
-         * If we have a shopgate filter param present join order table
-         */
-        $select  = array_filter(array_keys($this->getRequest()->getParams()), $sgCheck);
-        $columns = array();
-        foreach ($select as $attribute) {
-            list($field) = $this->getShopgateParts($attribute);
-            $cleanedField    = $this->removeShopgateFromField($field);
-            $columns[$field] = self::TABLE_ALIAS . '.' . $cleanedField;
-        }
-
-        return $columns;
-    }
-
-    /**
      * Breaks down the incoming params for filtration
      *
      * @param string $key - e.g. shopgate_source_eq
@@ -227,12 +207,12 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     }
 
     /**
-     * @param string $value  - 'halted,canceled'
+     * @param string $value  - 'halted,canceled' or 'webcheckout'
      * @param string $filter - 'eq'
      *
      * @return array array(array('eq' => 'halted'), array('eq' => 'canceled'))
      */
-    private function valueOrConditions($value, $filter)
+    private function getConditions($value, $filter)
     {
         return array_map(
             function ($value) use ($filter) {

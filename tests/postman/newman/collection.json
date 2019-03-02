@@ -27851,7 +27851,7 @@
 							"response": []
 						},
 						{
-                          "name": "Filter by AND created_at",
+                          "name": "Filter gt/lt created_at",
 							"event": [
 								{
 									"listen": "test",
@@ -27947,7 +27947,7 @@
                                 "    pm.response.to.have.status(200);",
                                 "});",
                                 "",
-                                "pm.test('Retrieved 4 orders', function () {",
+                                "pm.test('Retrieved 4 orders that are of holded/canceled status', function () {",
                                 "    var jsonData = pm.response.json();",
                                 "    var count = jsonData.length;",
                                 "    pm.expect(count).to.eql(4);",
@@ -28008,6 +28008,65 @@
                               {
                                 "key": "status_eq",
                                 "value": "holded,canceled"
+                              }
+                            ]
+                          }
+                        },
+                        "response": []
+                      },
+                      {
+                        "name": "Filter like shipping",
+                        "event": [
+                          {
+                            "listen": "test",
+                            "script": {
+                              "id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+                              "exec": [
+                                "pm.test(\"Status code is 200\", function () {",
+                                "    pm.response.to.have.status(200);",
+                                "});",
+                                "",
+                                "pm.test(\"Will not return flat shipping rate order\", function () {",
+                                "    const jsonData = pm.response.json();",
+                                "    const order = jsonData.find((item) => item.entity_id === '46');",
+                                "    pm.expect(order).to.be.undefined;",
+                                "});"
+                              ],
+                              "type": "text/javascript"
+                            }
+                          }
+                        ],
+                        "request": {
+                          "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                              {
+                                "key": "token",
+                                "value": "{{guest-access-token}}",
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "method": "GET",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "body": {
+                            "mode": "raw",
+                            "raw": ""
+                          },
+                          "url": {
+                            "raw": "{{domain}}{{endpoint_orders}}?shipping_description_like=United Parcel%",
+                            "host": [
+                              "{{domain}}{{endpoint_orders}}"
+                            ],
+                            "query": [
+                              {
+                                "key": "shipping_description_like",
+                                "value": "United Parcel%"
                               }
                             ]
                           }
@@ -28119,7 +28178,7 @@
                         "response": []
                       },
                       {
-                        "name": "Filter by SG source",
+                        "name": "Filter eq source",
                         "event": [
                           {
                             "listen": "test",
@@ -28130,7 +28189,7 @@
                                 "    pm.response.to.have.status(200);",
                                 "});",
                                 "",
-                                "pm.test('Retrieved 1 order', function () {",
+                                "pm.test('Retrieved 1 specific order with `webcheckout` source', function () {",
                                 "    const jsonData = pm.response.json();",
                                 "    const size = jsonData.length;",
                                 "    const order = jsonData.pop();",
@@ -28165,13 +28224,76 @@
                             "raw": ""
                           },
                           "url": {
-                            "raw": "{{domain}}{{endpoint_orders}}?shopgate_source_eq=webcheckout",
+                            "raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout",
                             "host": [
                               "{{domain}}{{endpoint_orders}}"
                             ],
                             "query": [
                               {
-                                "key": "shopgate_source_eq",
+                                "key": "shopgate_order_source_eq",
+                                "value": "webcheckout"
+                              }
+                            ]
+                          }
+                        },
+                        "response": []
+                      },
+                      {
+                        "name": "Filter neq source",
+                        "event": [
+                          {
+                            "listen": "test",
+                            "script": {
+                              "id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+                              "exec": [
+                                "pm.test(\"Status code is 200\", function () {",
+                                "    pm.response.to.have.status(200);",
+                                "});",
+                                "",
+                                "pm.test(\"Retrieved orders, but no `webcheckout` order is present\", function () {",
+                                "    const jsonData = pm.response.json();",
+                                "    const webcheckout = jsonData.find((item) => item.shopgate_source === 'webcheckout')",
+                                "    pm.expect(webcheckout).to.be.undefined;",
+                                "});"
+                              ],
+                              "type": "text/javascript"
+                            }
+                          }
+                        ],
+                        "request": {
+                          "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                              {
+                                "key": "token",
+                                "value": "{{guest-access-token}}",
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "method": "GET",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "body": {
+                            "mode": "raw",
+                            "raw": ""
+                          },
+                          "url": {
+                            "raw": "{{domain}}{{endpoint_orders}}?limit=4&shopgate_order_source_neq=webcheckout",
+                            "host": [
+                              "{{domain}}{{endpoint_orders}}"
+                            ],
+                            "query": [
+                              {
+                                "key": "limit",
+                                "value": "4"
+                              },
+                              {
+                                "key": "shopgate_order_source_neq",
                                 "value": "webcheckout"
 										}
 									]

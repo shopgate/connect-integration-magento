@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "Please note that all the proper REST aattributes and roles need to be set up for the endpoints to work. Upon installation these should be enabled automatically."
+  description: "Please note that all the proper REST attributes and roles need to be set up for the endpoints to work. Upon installation these should be enabled automatically."
   version: "3.4.0"
   title: "Magento Connect Integration"
   contact:
@@ -80,28 +80,29 @@ paths:
           $ref: "#/definitions/ErrorUnauthorized"
         500:
           $ref: '#/definitions/ErrorUnknown'
-  "/orders": 
+  "/orders":
     get:
       tags:
         - "orders"
-      summary: "Allows you to receive orders."
-      description: "You can use all all magento database fields for filtering. <br><br> 
-      The follow suffixes avaliable for each field:<br><br>
+      summary: "Allows you to retrieve orders."
+      description: "You can use all all magento database fields for filtering. <br><br>
+      The follow suffixes available for each field:<br><br>
       *_gt - greater than<br>
       *_lt - lower than<br>
-      *_eq - equels<br>
-      *_neq - not equels<br>
-      *_gteq - greater and equels<br>
-      *_lteq - lower and equels<br><br>
-      All different parameters will create an request with AND condition.<br>
-      OR conditions can be created by comma separated values"
+      *_eq - equals<br>
+      *_like - same as MySQL LIKE, can use '%' construction<br>
+      *_neq - not equals<br>
+      *_gteq - greater and equals<br>
+      *_lteq - lower and equals<br><br>
+      Using different parameters will create request joined by AND conditions.<br>
+      OR conditions can be created by using comma separated values"
       operationId: "orders"
-      examples: 
-        shopgate_source_neq:
-          summary: "Filter by where shopgate_source IS NOT webcheckout"
+      examples:
+        shopgate_order_source_neq:
+          summary: "Filter by where shopgate_order_source IS NOT webcheckout"
           value: "webcheckout"
-        shopgate_source_eq:
-          summary: "Filter by where shopgate_source IS webcheckout"
+        shopgate_order__source_eq:
+          summary: "Filter by where shopgate_order_source IS webcheckout"
           value: "webcheckout"
         created_at_gteq:
           summary: "Filter by where created_at equals and greater than"
@@ -112,7 +113,7 @@ paths:
         entity_id_eq:
           summary: "Filter where entity_id equals 41 OR 24 OR 45"
           value: "41,24,45"
-      parameters: 
+      parameters:
         - name: page
           in: query
           description: Page number
@@ -121,22 +122,23 @@ paths:
           in: query
           description: Limit
           type: integer
-        - name: shopgate_source_eq
+        - name: shopgate_order_source_eq
           in: query
           description: Filter equals
           type: string
           example: "webcheckout"
-        - name: shopgate_source_neq
+        - name: shopgate_order_source_neq
           in: query
           description: Filter not equals
           type: string
           example: "webcheckout"
       security:
         - AdminToken: []
+        - CustomerToken: []
       responses:
         200:
-           description: "Successful Operation"
-           schema: 
+          description: "Successful Operation"
+          schema:
             $ref: "#/definitions/ResponseOrders"
         401:
           $ref: "#/definitions/ErrorUnauthorized"
@@ -166,12 +168,15 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/ResponseOrder'
-  ResponseOrder: 
+  ResponseOrder:
     type: object
     properties:
-      shopgate_source:
+      shopgate_order_source:
         type: string
         example: "webcheckout"
+      shopgate_order_http_agent:
+        type: string
+        example: "Mozilla/5.0"
       entity_id:
         type: string
         example: "41"
@@ -340,12 +345,12 @@ definitions:
       addresses:
         type: array
         items:
-          $ref: '#/definitions/ResponseAddrress'
+          $ref: '#/definitions/ResponseAddress'
       order_items:
         type: array
         items:
           $ref: '#/definitions/ResponseOrderItem'
-  ResponseAddrress:
+  ResponseAddress:
     type: "object"
     properties:
       region:
@@ -356,7 +361,7 @@ definitions:
         example: "90232"
       lastname:
         type: "string"
-        example: "Akizian"
+        example: "Doe"
       street:
         type: "string"
         example: "10441 Jefferson Blvd., Suite 200"
@@ -374,7 +379,7 @@ definitions:
         example: "US"
       firstname:
         type: "string"
-        example: "Mosses"
+        example: "John"
       address_type:
         type: "string"
         example: "billing"
@@ -390,7 +395,7 @@ definitions:
       company:
         type: "string"
         example: null
-  ResponseOrderItem: 
+  ResponseOrderItem:
     type: object
     properties:
       item_id:

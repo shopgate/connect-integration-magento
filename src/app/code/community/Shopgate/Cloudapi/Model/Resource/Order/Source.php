@@ -22,6 +22,10 @@
 
 class Shopgate_Cloudapi_Model_Resource_Order_Source extends Mage_Core_Model_Mysql4_Abstract
 {
+    const COLUMN_ORDER_ID = 'order_id';
+    const COLUMN_SOURCE   = 'source';
+    const COLUMN_AGENT    = 'user_agent';
+
     /**
      * Initialize configuration data
      */

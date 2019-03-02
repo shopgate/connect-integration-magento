@@ -613,8 +613,10 @@
                     <_gift_message>Gift Message</_gift_message>
                     <_order_comments>Order Comments</_order_comments>
                     <customer_id>Customer ID</customer_id>
-                    <shopgate_source>Shopgate Order Source</shopgate_source>
-                    <shopgate_user_agent>Shopgate User Agent</shopgate_user_agent>
+                    <shopgate_payment_fee>Shopgate Payment Fee</shopgate_payment_fee>
+                    <base_shopgate_payment_fee>Base Shopgate Payment Fee</base_shopgate_payment_fee>
+                    <shopgate_order_source>Shopgate Order Source</shopgate_order_source>
+                    <shopgate_order_user_agent>Shopgate User Agent</shopgate_order_user_agent>
                 </attributes>
                 <!--                <include_attributes>-->
                 <!--                    <customer>-->
