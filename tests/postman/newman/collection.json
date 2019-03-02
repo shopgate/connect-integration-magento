@@ -27682,15 +27682,20 @@
 					"name": "Customer",
 					"item": [
 						{
-							"name": "No limit",
+                          "name": "Orders",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
 										"exec": [
-											"pm.test(\"Customer cannot access this endpoint at the moment\", function () {",
-											"    pm.response.to.have.status(401);",
+                                          "pm.test('Success registered', function () {",
+                                          "    pm.response.to.have.status(200);",
+                                          "});",
+                                          "",
+                                          "pm.test('An empty array means we are good to go', function () {",
+                                          "    var jsonData = pm.response.json();",
+                                          "    pm.expect(jsonData).to.be.a('array').to.be.empty;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -27703,7 +27708,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{guest-access-token}}",
+                                          "value": "{{customer-access-token}}",
 											"type": "string"
 										}
 									]
@@ -27724,7 +27729,8 @@
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									]
-								}
+                                },
+                              "description": "We do not have any customers with orders yet, that's why this is just a check for empty return"
 							},
 							"response": []
 						}
@@ -27735,6 +27741,70 @@
 					"name": "Guest",
 					"item": [
 						{
+                          "name": "Errors",
+                          "item": [
+                            {
+                              "name": "Issue with page filter",
+                              "event": [
+                                {
+                                  "listen": "test",
+                                  "script": {
+                                    "id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+                                    "exec": [
+                                      "pm.test('Error due to using `shopgate_order_` & `page` filter at the same time', function () {",
+                                      "    pm.response.to.have.status(500);",
+                                      "});"
+                                    ],
+                                    "type": "text/javascript"
+                                  }
+                                }
+                              ],
+                              "request": {
+                                "auth": {
+                                  "type": "bearer",
+                                  "bearer": [
+                                    {
+                                      "key": "token",
+                                      "value": "{{guest-access-token}}",
+                                      "type": "string"
+                                    }
+                                  ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": ""
+                                },
+                                "url": {
+                                  "raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=1",
+                                  "host": [
+                                    "{{domain}}{{endpoint_orders}}"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "shopgate_order_source_eq",
+                                      "value": "webcheckout"
+                                    },
+                                    {
+                                      "key": "page",
+                                      "value": "1"
+                                    }
+                                  ]
+                                },
+                                "description": "There is an issue with using shopgate_order filter + page filter at the same time. This is in magento core, so we cannot do much about it."
+                              },
+                              "response": []
+                            }
+                          ],
+                          "_postman_isSubFolder": true
+                        },
+                      {
 							"name": "No limit",
 							"event": [
 								{
@@ -28299,6 +28369,128 @@
 									]
 								}
 							},
+                        "response": []
+                      }
+                    ],
+                  "_postman_isSubFolder": true
+                }
+            ]
+        },
+      {
+        "name": "/v2/orders/:id",
+        "item": [
+          {
+            "name": "Guest",
+            "item": [
+              {
+                "name": "Single order load",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+                      "exec": [
+                        "pm.test(\"Status code is 200\", function () {",
+                        "    pm.response.to.have.status(200);",
+                        "});",
+                        "",
+                        "pm.test(\"Retrieved one specific order\", function () {",
+                        "    const jsonData = pm.response.json();",
+                        "    pm.expect(jsonData.entity_id).to.eql('43');",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{guest-access-token}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": ""
+                  },
+                  "url": {
+                    "raw": "{{domain}}{{endpoint_orders}}/43",
+                    "host": [
+                      "{{domain}}{{endpoint_orders}}"
+                    ],
+                    "path": [
+                      "43"
+                    ]
+                  }
+                },
+                "response": []
+              }
+            ],
+            "_postman_isSubFolder": true
+          },
+          {
+            "name": "Customer",
+            "item": [
+              {
+                "name": "Cannot load someone else's",
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+                      "exec": [
+                        "pm.test(\"Order exists, but does not belong to the customer\", function () {",
+                        "    pm.response.to.have.status(404);",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ],
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{customer-access-token}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": {
+                    "mode": "raw",
+                    "raw": ""
+                  },
+                  "url": {
+                    "raw": "{{domain}}{{endpoint_orders}}/43",
+                    "host": [
+                      "{{domain}}{{endpoint_orders}}"
+                    ],
+                    "path": [
+                      "43"
+                    ]
+                  }
+                },
 							"response": []
 						}
 					],

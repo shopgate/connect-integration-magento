@@ -564,10 +564,9 @@
                     <admin>
                         <retrieve>1</retrieve>
                     </admin>
-                    <!-- @todo-sg: add customer support + tests for it -->
-                    <!--                    <customer>-->
-                    <!--                        <retrieve>1</retrieve>-->
-                    <!--                    </customer>-->
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
                 </privileges>
                 <attributes translate="entity_id increment_id created_at status shipping_description _payment_method base_currency_code store_currency_code store_name remote_ip store_to_order_rate subtotal subtotal_incl_tax discount_amount base_grand_total grand_total shipping_amount shipping_tax_amount shipping_incl_tax tax_amount _tax_name _tax_rate coupon_code base_discount_amount base_subtotal base_shipping_amount base_shipping_tax_amount base_tax_amount total_paid base_total_paid total_refunded base_total_refunded base_subtotal_incl_tax base_total_due total_due shipping_discount_amount base_shipping_discount_amount discount_description customer_balance_amount base_customer_balance_amount base_customer_balance_amount _gift_message _order_comments customer_id" module="api2">
                     <entity_id>Order ID (internal)</entity_id>
@@ -618,45 +617,45 @@
                     <shopgate_order_source>Shopgate Order Source</shopgate_order_source>
                     <shopgate_order_user_agent>Shopgate User Agent</shopgate_order_user_agent>
                 </attributes>
-                <!--                <include_attributes>-->
-                <!--                    <customer>-->
-                <!--                        <read>-->
-                <!--                            <entity_id>1</entity_id>-->
-                <!--                            <increment_id>1</increment_id>-->
-                <!--                            <created_at>1</created_at>-->
-                <!--                            <status>1</status>-->
-                <!--                            <shipping_description>1</shipping_description>-->
-                <!--                            <_payment_method>1</_payment_method>-->
-                <!--                            <base_currency_code>1</base_currency_code>-->
-                <!--                            <store_currency_code>1</store_currency_code>-->
-                <!--                            <subtotal>1</subtotal>-->
-                <!--                            <subtotal_incl_tax>1</subtotal_incl_tax>-->
-                <!--                            <discount_amount>1</discount_amount>-->
-                <!--                            <base_grand_total>1</base_grand_total>-->
-                <!--                            <grand_total>1</grand_total>-->
-                <!--                            <shipping_amount>1</shipping_amount>-->
-                <!--                            <shipping_tax_amount>1</shipping_tax_amount>-->
-                <!--                            <shipping_incl_tax>1</shipping_incl_tax>-->
-                <!--                            <tax_amount>1</tax_amount>-->
-                <!--                            <_tax_name>1</_tax_name>-->
-                <!--                            <_tax_rate>1</_tax_rate>-->
-                <!--                            <_gift_message>1</_gift_message>-->
-                <!--                            <_order_comments>1</_order_comments>-->
-                <!--                        </read>-->
-                <!--                    </customer>-->
-                <!--                </include_attributes>-->
+                <include_attributes>
+                    <customer>
+                        <read>
+                            <entity_id>1</entity_id>
+                            <increment_id>1</increment_id>
+                            <created_at>1</created_at>
+                            <status>1</status>
+                            <shipping_description>1</shipping_description>
+                            <_payment_method>1</_payment_method>
+                            <base_currency_code>1</base_currency_code>
+                            <store_currency_code>1</store_currency_code>
+                            <subtotal>1</subtotal>
+                            <subtotal_incl_tax>1</subtotal_incl_tax>
+                            <discount_amount>1</discount_amount>
+                            <base_grand_total>1</base_grand_total>
+                            <grand_total>1</grand_total>
+                            <shipping_amount>1</shipping_amount>
+                            <shipping_tax_amount>1</shipping_tax_amount>
+                            <shipping_incl_tax>1</shipping_incl_tax>
+                            <tax_amount>1</tax_amount>
+                            <_tax_name>1</_tax_name>
+                            <_tax_rate>1</_tax_rate>
+                            <_gift_message>1</_gift_message>
+                            <_order_comments>1</_order_comments>
+                        </read>
+                    </customer>
+                </include_attributes>
                 <force_attributes>
-                    <!--                    <customer>-->
-                    <!--                        <payment_method>1</payment_method>-->
-                    <!--                        <addresses>1</addresses>-->
-                    <!--                        <order_items>1</order_items>-->
-                    <!--                        <gift_message_from>1</gift_message_from>-->
-                    <!--                        <gift_message_to>1</gift_message_to>-->
-                    <!--                        <gift_message_body>1</gift_message_body>-->
-                    <!--                        <order_comments>1</order_comments>-->
-                    <!--                        <tax_name>1</tax_name>-->
-                    <!--                        <tax_rate>1</tax_rate>-->
-                    <!--                    </customer>-->
+                    <customer>
+                        <payment_method>1</payment_method>
+                        <addresses>1</addresses>
+                        <order_items>1</order_items>
+                        <gift_message_from>1</gift_message_from>
+                        <gift_message_to>1</gift_message_to>
+                        <gift_message_body>1</gift_message_body>
+                        <order_comments>1</order_comments>
+                        <tax_name>1</tax_name>
+                        <tax_rate>1</tax_rate>
+                    </customer>
                     <admin>
                         <payment_method>1</payment_method>
                         <addresses>1</addresses>

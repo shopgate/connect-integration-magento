@@ -88,12 +88,25 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     }
 
     /**
-     * @return Mage_Sales_Model_Resource_Order_Collection
+     * @inheritDoc
      * @throws Exception
      */
     protected function _getCollectionForRetrieve()
     {
         $collection = parent::_getCollectionForRetrieve();
+        $this->joinShopgateOrderSourcesTable($collection);
+        $this->applyShopgateFilters($collection);
+
+        return $collection;
+    }
+
+    /**
+     * @inheritDoc
+     * @throws Exception
+     */
+    protected function _getCollectionForSingleRetrieve($orderId)
+    {
+        $collection = parent::_getCollectionForSingleRetrieve($orderId);
         $this->joinShopgateOrderSourcesTable($collection);
         $this->applyShopgateFilters($collection);
 
