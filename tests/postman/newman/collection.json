@@ -27842,9 +27842,13 @@
 											"    pm.expect(order.shipping_method).to.be.a('string').to.eq('ups_GND');",
 											"    pm.expect(order.created_at).to.be.a('string').to.eq('2013-03-15 00:01:34');",
 											"    pm.expect(order.tax_rate).to.be.a('string').to.eq('8.2500');",
-											"    pm.expect(order.base_shopgate_payment_fee).to.be.null;",
-											"    pm.expect(order.shopgate_order_source).to.be.null;",
+											"    pm.expect(order.shopgate_order_source, 'shopgate_order_source issue').to.be.null;",
 											"    pm.expect(order.payment_method).to.be.a('string').to.eq('checkmo');",
+											"    ",
+											"    // SG framework specific test, may not exist",
+											"    if (order.hasOwnProperty('base_shopgate_payment_fee')) {",
+											"        pm.expect(order.base_shopgate_payment_fee, 'base_shopgate_payment_fee issue').to.be.null;",
+											"    }",
 											"});"
 										],
 										"type": "text/javascript"
@@ -28105,10 +28109,10 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test('Retrieved 4 orders that are of holded/canceled status', function () {",
-											"    var jsonData = pm.response.json();",
-											"    var count = jsonData.length;",
-											"    pm.expect(count).to.eql(4);",
+											"pm.test('Retrieved orders that are of holded/canceled status only', function () {",
+											"    const jsonData = pm.response.json();",
+											"    const find = jsonData.filter(item => item.status !== 'holded').filter(item => item.status !== 'canceled');",
+											"    pm.expect(find).to.be.empty;",
 											"});"
 										],
 										"type": "text/javascript"
@@ -28628,9 +28632,13 @@
 											"    pm.expect(order.shipping_method).to.be.a('string').to.eq('ups_GND');",
 											"    pm.expect(order.created_at).to.be.a('string').to.eq('2013-03-15 00:01:34');",
 											"    pm.expect(order.tax_rate).to.be.a('string').to.eq('8.2500');",
-											"    pm.expect(order.base_shopgate_payment_fee).to.be.null;",
 											"    pm.expect(order.shopgate_order_source).to.be.null;",
 											"    pm.expect(order.payment_method).to.be.a('string').to.eq('checkmo');",
+											"    ",
+											"    // SG framework specific test, may not exist",
+											"    if (order.hasOwnProperty('base_shopgate_payment_fee')) {",
+											"        pm.expect(order.base_shopgate_payment_fee, 'base_shopgate_payment_fee issue').to.be.null;",
+											"    }",
 											"});"
 										],
 										"type": "text/javascript"
