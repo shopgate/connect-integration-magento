@@ -36,7 +36,6 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
      * Field name to prepend
      */
     const FIELD_START = 'shopgate_order_';
-
     /**
      * Whitelisting actions that can be filtered by
      *
@@ -122,6 +121,42 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     protected function _retrieveCollection()
     {
         return array_values(parent::_retrieveCollection());
+    }
+
+    /**
+     * This will need Magento ACL Attribute -> Order -> Comments
+     *
+     * @inheritDoc
+     */
+    protected function _getComments(array $orderIds)
+    {
+        $this->setVersion('1');
+
+        return parent::_getComments($orderIds);
+    }
+
+    /**
+     * This will need Magento ACL Attribute -> Order -> Addresses
+     *
+     * @inheritDoc
+     */
+    protected function _getAddresses(array $orderIds)
+    {
+        $this->setVersion('1');
+
+        return parent::_getAddresses($orderIds);
+    }
+
+    /**
+     * This will need Magento ACL Attribute -> Order -> Items
+     *
+     * @inheritDoc
+     */
+    protected function _getItems(array $orderIds)
+    {
+        $this->setVersion('1');
+
+        return parent::_getItems($orderIds);
     }
 
     /**

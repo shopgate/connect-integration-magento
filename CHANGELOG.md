@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - Endpoint for multiple order retrieval (GET shopgate/v2/orders)
 - Endpoint for single order retrieval   (GET shopgate/v2/orders/:orderId)
+- Ability to retrieve order addresses/items/comments if Magento REST permissions are enabled
 
 ## [4.0.0] - 2019-02-25
 ### Changed

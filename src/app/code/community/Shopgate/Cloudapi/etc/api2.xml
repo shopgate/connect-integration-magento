@@ -628,7 +628,7 @@
                 <group>shopgate_cloudapi_v2_catalog</group>
                 <model>shopgate_cloudapi/api2_categories</model>
                 <working_model>catalog/category</working_model>
-                <title>Category</title>
+                <title>Categories</title>
                 <sort_order>110</sort_order>
                 <privileges>
                     <admin>
