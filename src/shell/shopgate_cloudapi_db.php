@@ -43,7 +43,7 @@ class Shopgate_Cloudapi_Db_Shell extends Mage_Shell_Abstract
                     echo (int) !empty($data);
                 } else {
                     /** @noinspection ForgottenDebugOutputInspection */
-                    print_r($this->readDatabase($db));
+                    echo json_encode($this->readDatabase($db));
                 }
             } else {
                 throw new RuntimeException('Incorrect action provided');
@@ -64,7 +64,8 @@ class Shopgate_Cloudapi_Db_Shell extends Mage_Shell_Abstract
     private function readDatabase($table, array $where = array())
     {
         $connection = Mage::getModel('core/resource')->getConnection('core_read');
-        $sql        = "SELECT * FROM shopgate_{$table}";
+        /** @noinspection SqlResolve */
+        $sql = "SELECT * FROM shopgate_{$table}";
 
         if (!empty($where)) {
             $sql .= ' WHERE ';
@@ -155,4 +156,5 @@ USAGE;
 }
 
 $shell = new Shopgate_Cloudapi_Db_Shell();
+/** @noinspection PhpUnhandledExceptionInspection */
 $shell->run();
