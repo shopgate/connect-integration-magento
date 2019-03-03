@@ -26,7 +26,7 @@
  * @package    Mage_Sales
  * @author     Magento Core Team <core@magentocommerce.com>
  */
-abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudapi_Model_Api2_Order
+abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudapi_Model_Api2_Orders
 {
     /**
      * Used to create the join

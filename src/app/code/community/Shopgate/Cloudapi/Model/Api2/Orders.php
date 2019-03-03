@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright Shopgate Inc.
  *
@@ -26,7 +27,7 @@
  * @package    Mage_Sales
  * @author     Magento Core Team <core@magentocommerce.com>
  */
-class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Resource
+class Shopgate_Cloudapi_Model_Api2_Orders extends Shopgate_Cloudapi_Model_Api2_Resource
 {
     /**#@+
      * Parameters' names in config with special ACL meaning
@@ -43,7 +44,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
      *
      * @param Mage_Sales_Model_Resource_Order_Collection $collection
      *
-     * @return Shopgate_Cloudapi_Model_Api2_Order
+     * @return Shopgate_Cloudapi_Model_Api2_Orders
      */
     protected function _addGiftMessageInfo(Mage_Sales_Model_Resource_Order_Collection $collection)
     {
@@ -65,7 +66,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
      *
      * @param Mage_Sales_Model_Resource_Order_Collection $collection
      *
-     * @return Shopgate_Cloudapi_Model_Api2_Order
+     * @return Shopgate_Cloudapi_Model_Api2_Orders
      */
     protected function _addPaymentMethodInfo(Mage_Sales_Model_Resource_Order_Collection $collection)
     {
@@ -83,7 +84,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
      *
      * @param Mage_Sales_Model_Resource_Order_Collection $collection
      *
-     * @return Shopgate_Cloudapi_Model_Api2_Order
+     * @return Shopgate_Cloudapi_Model_Api2_Orders
      */
     protected function _addTaxInfo(Mage_Sales_Model_Resource_Order_Collection $collection)
     {
@@ -129,6 +130,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
 
                 $collection->addAttributeToFilter('parent_id', $orderIds);
 
+                /** @var Mage_Sales_Model_Order_Address $item */
                 foreach ($collection->getItems() as $item) {
                     $addresses[$item->getParentId()][] = $addressesFilter->out($item->toArray());
                 }
@@ -186,6 +188,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
             $commentsFilter = $this->_getSubModel('order_comment', array())->getFilter();
             // do comments request if at least one attribute allowed
             if ($commentsFilter->getAllowedAttributes()) {
+                /** @var Mage_Sales_Model_Order_Status_History $item */
                 foreach ($this->_getCommentsCollection($orderIds)->getItems() as $item) {
                     $comments[$item->getParentId()][] = $commentsFilter->out($item->toArray());
                 }
@@ -200,7 +203,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
      *
      * @param array $orderIds Orders' identifiers
      *
-     * @return Mage_Sales_Model_Resource_Order_Status_History_Collection|Object
+     * @return Mage_Sales_Model_Resource_Order_Status_History_Collection
      */
     protected function _getCommentsCollection(array $orderIds)
     {
@@ -231,9 +234,9 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
             if ($itemsFilter->getAllowedAttributes()) {
                 /* @var $collection Mage_Sales_Model_Resource_Order_Item_Collection */
                 $collection = Mage::getResourceModel('sales/order_item_collection');
-
                 $collection->addAttributeToFilter('order_id', $orderIds);
 
+                /** @var Mage_Sales_Model_Order_Item $item */
                 foreach ($collection->getItems() as $item) {
                     $items[$item->getOrderId()][] = $itemsFilter->out($item->toArray());
                 }
@@ -312,7 +315,7 @@ class Shopgate_Cloudapi_Model_Api2_Order extends Shopgate_Cloudapi_Model_Api2_Re
         $this->_addTaxInfo($collection);
 
         $ordersData = array();
-
+        /** @var Mage_Sales_Model_Order $order */
         foreach ($collection->getItems() as $order) {
             $ordersData[$order->getId()] = $order->toArray();
         }

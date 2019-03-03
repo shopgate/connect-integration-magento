@@ -92,7 +92,7 @@ class Shopgate_Cloudapi_Model_Api2_Resource extends Mage_Api2_Model_Resource
             case self::ACTION_TYPE_ENTITY . self::OPERATION_RETRIEVE:
                 $this->_errorIfMethodNotExist('_retrieve');
                 $return = $this->_retrieve();
-                //todo-sg: see if we need to adjust, this is removed because of product retrieval
+                //todo-sg: TD, bring back filtration, tests needed for all retrieving
                 //$filteredData = $this->getFilter()->out($return);
                 $this->_render($return);
                 break;

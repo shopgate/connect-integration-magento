@@ -43,6 +43,7 @@ class Shopgate_Cloudapi_Model_Server extends Mage_Api2_Model_Server
      * manipulate the Header Version via URL parameter.
      *
      * @inheritdoc
+     * @throws Mage_Api2_Exception
      */
     protected function _dispatch(
         Mage_Api2_Model_Request $request,
