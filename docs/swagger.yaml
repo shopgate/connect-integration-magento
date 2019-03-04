@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "Please note that all the proper REST attributes and roles need to be set up for the endpoints to work. Upon installation these should be enabled automatically."
-  version: "3.4.0"
+  version: "4.1.0"
   title: "Magento Connect Integration"
   contact:
     email: "support@shopgate.com"
