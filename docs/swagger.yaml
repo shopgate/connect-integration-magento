@@ -101,7 +101,7 @@ paths:
         shopgate_order_source_neq:
           summary: "Filter by where shopgate_order_source IS NOT webcheckout"
           value: "webcheckout"
-        shopgate_order__source_eq:
+        shopgate_order_source_eq:
           summary: "Filter by where shopgate_order_source IS webcheckout"
           value: "webcheckout"
         created_at_gteq:
