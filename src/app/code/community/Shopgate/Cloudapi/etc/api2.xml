@@ -62,14 +62,14 @@
                             </shopgate_cloudapi_v2_wishlists_items>
                         </children>
                     </shopgate_cloudapi_v2_wishlists>
-                    <shopgate_cloudapi_v2_products translate="title" module="Shopgate_Cloudapi">
-                        <title>Products</title>
+                    <shopgate_cloudapi_v2_catalog translate="title" module="Shopgate_Cloudapi">
+                        <title>Catalog</title>
                         <sort_order>50</sort_order>
-                    </shopgate_cloudapi_v2_products>
-                    <shopgate_cloudapi_v2_categories translate="title" module="Shopgate_Cloudapi">
-                        <title>Categories</title>
-                        <sort_order>60</sort_order>
-                    </shopgate_cloudapi_v2_categories>
+                    </shopgate_cloudapi_v2_catalog>
+                    <shopgate_cloudapi_v2_sales translate="title" module="Shopgate_Cloudapi">
+                        <title>Sales</title>
+                        <sort_order>70</sort_order>
+                    </shopgate_cloudapi_v2_sales>
                 </children>
             </shopgate_cloudapi>
         </resource_groups>
@@ -229,8 +229,7 @@
                         <create>1</create>
                     </admin>
                 </privileges>
-                <attributes
-                        translate="entity_id last_logged_in firstname lastname email website_id created_in group_id confirmation disable_auto_group_change password" module="api2">
+                <attributes translate="entity_id last_logged_in firstname lastname email website_id created_in group_id confirmation disable_auto_group_change password" module="api2">
                     <entity_id>Customer ID</entity_id>
                     <last_logged_in>Last Logged In</last_logged_in>
                     <firstname>First Name</firstname>
@@ -502,9 +501,10 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_wishlists_items>
             <shopgate_cloudapi_v2_products>
-                <group>shopgate_cloudapi_v2_products</group>
+                <group>shopgate_cloudapi_v2_catalog</group>
                 <model>shopgate_cloudapi/api2_products</model>
-                <title>Product retrieval</title>
+                <working_model>catalog/product</working_model>
+                <title>Products</title>
                 <sort_order>100</sort_order>
                 <privileges>
                     <admin>
@@ -514,6 +514,104 @@
                         <retrieve>1</retrieve>
                     </customer>
                 </privileges>
+                <attributes translate="entity_id type_id attribute_set_id stock_data image_url is_saleable total_reviews_count url buy_now_url has_custom_options is_in_stock regular_price_with_tax regular_price_without_tax final_price_with_tax final_price_without_tax use_config_gift_message_available use_config_gift_wrapping_available url_key_create_redirect" module="api2">
+                    <entity_id>Product ID</entity_id>
+                    <type_id>Product Type</type_id>
+                    <attribute_set_id>Attribute Set</attribute_set_id>
+                    <stock_data>Inventory Data</stock_data>
+                    <image_url>Default Image</image_url>
+                    <is_saleable>Salability Status</is_saleable>
+                    <total_reviews_count>Total Reviews Count</total_reviews_count>
+                    <url>Product URL</url>
+                    <buy_now_url>Buy Now URL</buy_now_url>
+                    <has_custom_options>Has Custom Options</has_custom_options>
+                    <is_in_stock>Stock Status</is_in_stock>
+                    <regular_price_with_tax>Regular Price With Tax</regular_price_with_tax>
+                    <regular_price_without_tax>Regular Price Without Tax</regular_price_without_tax>
+                    <final_price_with_tax>Final Price With Tax</final_price_with_tax>
+                    <final_price_without_tax>Final Price Without Tax</final_price_without_tax>
+                    <use_config_gift_message_available>Use Config Settings for Allow Gift Message</use_config_gift_message_available>
+                    <use_config_gift_wrapping_available>Use Config Settings for Allow Gift Wrapping</use_config_gift_wrapping_available>
+                    <url_key_create_redirect>Create Permanent Redirect for old URL</url_key_create_redirect>
+                </attributes>
+                <entity_only_attributes>
+                    <customer>
+                        <read>
+                            <has_custom_options>1</has_custom_options>
+                            <tier_price>1</tier_price>
+                            <total_reviews_count>1</total_reviews_count>
+                            <url>1</url>
+                            <buy_now_url>1</buy_now_url>
+                            <has_custom_options>1</has_custom_options>
+                            <is_in_stock>1</is_in_stock>
+                        </read>
+                    </customer>
+                </entity_only_attributes>
+                <exclude_attributes>
+                    <customer>
+                        <read>
+                            <attribute_set_id>1</attribute_set_id>
+                            <stock_data>1/</stock_data>
+                            <use_config_gift_message_available>1</use_config_gift_message_available>
+                            <use_config_gift_wrapping_available>1</use_config_gift_wrapping_available>
+                            <url_key_create_redirect>1</url_key_create_redirect>
+                        </read>
+                    </customer>
+                    <admin>
+                        <read>
+                            <allow_open_amount>1</allow_open_amount>
+                            <giftcard_amounts>1</giftcard_amounts>
+                            <open_amount_min>1</open_amount_min>
+                            <open_amount_max>1</open_amount_max>
+                            <image>1</image>
+                            <is_recurring>1</is_recurring>
+                            <gallery>1</gallery>
+                            <media_gallery>1</media_gallery>
+                            <price_view>1</price_view>
+                            <small_image>1</small_image>
+                            <image_url>1</image_url>
+                            <is_saleable>1</is_saleable>
+                            <total_reviews_count>1</total_reviews_count>
+                            <url>1</url>
+                            <buy_now_url>1</buy_now_url>
+                            <has_custom_options>1</has_custom_options>
+                            <is_in_stock>1</is_in_stock>
+                            <regular_price_with_tax>1</regular_price_with_tax>
+                            <regular_price_without_tax>1</regular_price_without_tax>
+                            <final_price_with_tax>1</final_price_with_tax>
+                            <final_price_without_tax>1</final_price_without_tax>
+                            <recurring_profile>1</recurring_profile>
+                            <thumbnail>1</thumbnail>
+                            <url_key_create_redirect>1</url_key_create_redirect>
+                        </read>
+                        <write>
+                            <allow_open_amount>1</allow_open_amount>
+                            <giftcard_amounts>1</giftcard_amounts>
+                            <open_amount_min>1</open_amount_min>
+                            <open_amount_max>1</open_amount_max>
+                            <image>1</image>
+                            <is_recurring>1</is_recurring>
+                            <gallery>1</gallery>
+                            <media_gallery>1</media_gallery>
+                            <price_view>1</price_view>
+                            <small_image>1</small_image>
+                            <image_url>1</image_url>
+                            <is_saleable>1</is_saleable>
+                            <total_reviews_count>1</total_reviews_count>
+                            <url>1</url>
+                            <buy_now_url>1</buy_now_url>
+                            <has_custom_options>1</has_custom_options>
+                            <is_in_stock>1</is_in_stock>
+                            <regular_price_with_tax>1</regular_price_with_tax>
+                            <regular_price_without_tax>1</regular_price_without_tax>
+                            <final_price_with_tax>1</final_price_with_tax>
+                            <final_price_without_tax>1</final_price_without_tax>
+                            <recurring_profile>1</recurring_profile>
+                            <thumbnail>1</thumbnail>
+                            <entity_id>1</entity_id>
+                        </write>
+                    </admin>
+                </exclude_attributes>
                 <routes>
                     <route_v2_products>
                         <route>/v2/products</route>
@@ -527,9 +625,10 @@
                 <versions>2</versions>
             </shopgate_cloudapi_v2_products>
             <shopgate_cloudapi_v2_categories>
-                <group>shopgate_cloudapi_v2_categories</group>
+                <group>shopgate_cloudapi_v2_catalog</group>
                 <model>shopgate_cloudapi/api2_categories</model>
-                <title>Category retrieval</title>
+                <working_model>catalog/category</working_model>
+                <title>Categories</title>
                 <sort_order>110</sort_order>
                 <privileges>
                     <admin>
@@ -539,6 +638,20 @@
                         <retrieve>1</retrieve>
                     </customer>
                 </privileges>
+                <attributes translate="category_id" module="api2">
+                    <category_id>Category ID</category_id>
+                </attributes>
+                <validators>
+                    <fields>
+                        <category_id>
+                            <required>1</required>
+                            <int translate="message" module="api2">
+                                <type>Int</type>
+                                <message>Please use numbers only in "category_id" field.</message>
+                            </int>
+                        </category_id>
+                    </fields>
+                </validators>
                 <routes>
                     <route_v2_categories>
                         <route>/v2/categories</route>
@@ -551,6 +664,131 @@
                 </routes>
                 <versions>2</versions>
             </shopgate_cloudapi_v2_categories>
+            <shopgate_cloudapi_v2_orders translate="title">
+                <group>shopgate_cloudapi_v2_sales</group>
+                <sort_order>120</sort_order>
+                <model>shopgate_cloudapi/api2_orders</model>
+                <title>Orders</title>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                </privileges>
+                <attributes translate="entity_id increment_id created_at status shipping_description _payment_method base_currency_code store_currency_code store_name remote_ip store_to_order_rate subtotal subtotal_incl_tax discount_amount base_grand_total grand_total shipping_amount shipping_tax_amount shipping_incl_tax tax_amount _tax_name _tax_rate coupon_code base_discount_amount base_subtotal base_shipping_amount base_shipping_tax_amount base_tax_amount total_paid base_total_paid total_refunded base_total_refunded base_subtotal_incl_tax base_total_due total_due shipping_discount_amount base_shipping_discount_amount discount_description customer_balance_amount base_customer_balance_amount base_customer_balance_amount _gift_message _order_comments customer_id" module="api2">
+                    <entity_id>Order ID (internal)</entity_id>
+                    <increment_id>Order ID</increment_id>
+                    <created_at>Order Date</created_at>
+                    <status>Order Status</status>
+                    <shipping_description>Shipping Method</shipping_description>
+                    <_payment_method>Payment Method</_payment_method>
+                    <base_currency_code>Base Currency</base_currency_code>
+                    <store_currency_code>Order Currency</store_currency_code>
+                    <store_name>Store Name</store_name>
+                    <remote_ip>Placed from IP</remote_ip>
+                    <store_to_order_rate>Store Currency to Order Currency Rate</store_to_order_rate>
+                    <subtotal>Subtotal</subtotal>
+                    <subtotal_incl_tax>Subtotal Including Tax</subtotal_incl_tax>
+                    <discount_amount>Discount</discount_amount>
+                    <base_grand_total>Grand Total to Be Charged</base_grand_total>
+                    <grand_total>Grand Total</grand_total>
+                    <shipping_amount>Shipping Amount</shipping_amount>
+                    <shipping_tax_amount>Shipping Including Tax</shipping_tax_amount>
+                    <shipping_incl_tax>Shipping Tax</shipping_incl_tax>
+                    <tax_amount>Tax Amount</tax_amount>
+                    <_tax_name>Tax Name</_tax_name>
+                    <_tax_rate>Tax Rate</_tax_rate>
+                    <coupon_code>Coupon Code</coupon_code>
+                    <base_discount_amount>Base Discount</base_discount_amount>
+                    <base_subtotal>Base Subtotal</base_subtotal>
+                    <base_shipping_amount>Base Shipping</base_shipping_amount>
+                    <base_shipping_tax_amount>Base Shipping Tax</base_shipping_tax_amount>
+                    <base_tax_amount>Base Tax Amount</base_tax_amount>
+                    <total_paid>Total Paid</total_paid>
+                    <base_total_paid>Base Total Paid</base_total_paid>
+                    <total_refunded>Total Refunded</total_refunded>
+                    <base_total_refunded>Base Total Refunded</base_total_refunded>
+                    <base_subtotal_incl_tax>Base Subtotal Including Tax</base_subtotal_incl_tax>
+                    <base_total_due>Base Total Due</base_total_due>
+                    <total_due>Total Due</total_due>
+                    <shipping_discount_amount>Shipping Discount</shipping_discount_amount>
+                    <base_shipping_discount_amount>Base Shipping Discount</base_shipping_discount_amount>
+                    <discount_description>Discount Description</discount_description>
+                    <customer_balance_amount>Customer Balance</customer_balance_amount>
+                    <base_customer_balance_amount>Base Customer Balance</base_customer_balance_amount>
+                    <_gift_message>Gift Message</_gift_message>
+                    <_order_comments>Order Comments</_order_comments>
+                    <customer_id>Customer ID</customer_id>
+                    <shopgate_payment_fee>Shopgate Payment Fee</shopgate_payment_fee>
+                    <base_shopgate_payment_fee>Base Shopgate Payment Fee</base_shopgate_payment_fee>
+                    <shopgate_order_source>Shopgate Order Source</shopgate_order_source>
+                    <shopgate_order_user_agent>Shopgate User Agent</shopgate_order_user_agent>
+                </attributes>
+                <include_attributes>
+                    <customer>
+                        <read>
+                            <entity_id>1</entity_id>
+                            <increment_id>1</increment_id>
+                            <created_at>1</created_at>
+                            <status>1</status>
+                            <shipping_description>1</shipping_description>
+                            <_payment_method>1</_payment_method>
+                            <base_currency_code>1</base_currency_code>
+                            <store_currency_code>1</store_currency_code>
+                            <subtotal>1</subtotal>
+                            <subtotal_incl_tax>1</subtotal_incl_tax>
+                            <discount_amount>1</discount_amount>
+                            <base_grand_total>1</base_grand_total>
+                            <grand_total>1</grand_total>
+                            <shipping_amount>1</shipping_amount>
+                            <shipping_tax_amount>1</shipping_tax_amount>
+                            <shipping_incl_tax>1</shipping_incl_tax>
+                            <tax_amount>1</tax_amount>
+                            <_tax_name>1</_tax_name>
+                            <_tax_rate>1</_tax_rate>
+                            <_gift_message>1</_gift_message>
+                            <_order_comments>1</_order_comments>
+                        </read>
+                    </customer>
+                </include_attributes>
+                <force_attributes>
+                    <customer>
+                        <payment_method>1</payment_method>
+                        <addresses>1</addresses>
+                        <order_items>1</order_items>
+                        <gift_message_from>1</gift_message_from>
+                        <gift_message_to>1</gift_message_to>
+                        <gift_message_body>1</gift_message_body>
+                        <order_comments>1</order_comments>
+                        <tax_name>1</tax_name>
+                        <tax_rate>1</tax_rate>
+                    </customer>
+                    <admin>
+                        <payment_method>1</payment_method>
+                        <addresses>1</addresses>
+                        <order_items>1</order_items>
+                        <gift_message_from>1</gift_message_from>
+                        <gift_message_to>1</gift_message_to>
+                        <gift_message_body>1</gift_message_body>
+                        <order_comments>1</order_comments>
+                        <tax_name>1</tax_name>
+                        <tax_rate>1</tax_rate>
+                    </admin>
+                </force_attributes>
+                <routes>
+                    <route_entity>
+                        <route>/v2/orders/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/v2/orders</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>2</versions>
+            </shopgate_cloudapi_v2_orders>
         </resources>
     </api2>
 </config>
