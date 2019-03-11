@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Shopgate Inc.
  *
@@ -19,33 +18,32 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-
 /**
  * @method setSource(string $source)
  * @method string getSource()
  * @method setOrderId(int $orderId)
  * @method int getOrderId()
  */
-
 class Shopgate_Cloudapi_Model_Order_Source extends Mage_Core_Model_Abstract
 {
     const SOURCE_WEBCHECKOUT = 'webcheckout';
-
-   /**
+    /**
      * Init model
      */
     protected function _construct()
     {
         $this->_init('shopgate_cloudapi/order_source');
     }
-
     /**
      * @param int $orderId
+     *
+     * @throws Exception
      */
     public function addForWebCheckout($orderId)
     {
         $this->setSource(self::SOURCE_WEBCHECKOUT);
         $this->setOrderId($orderId);
+        $this->setUserAgent(Mage::helper('core/http')->getHttpUserAgent());
         $this->save();
     }
 }

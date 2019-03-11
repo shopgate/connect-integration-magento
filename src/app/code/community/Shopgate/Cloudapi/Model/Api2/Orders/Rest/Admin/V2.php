@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Shopgate Inc.
  *
@@ -19,16 +18,13 @@
  * @copyright Shopgate Inc
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
-class Shopgate_Cloudapi_Model_Resource_Order_Source extends Mage_Core_Model_Mysql4_Abstract
+/**
+ * API2 class for orders (admin)
+ *
+ * @category   Mage
+ * @package    Mage_Sales
+ * @author     Magento Core Team <core@magentocommerce.com>
+ */
+class Shopgate_Cloudapi_Model_Api2_Orders_Rest_Admin_V2 extends Shopgate_Cloudapi_Model_Api2_Orders_Rest
 {
-    const COLUMN_ORDER_ID = 'order_id';
-    const COLUMN_SOURCE   = 'source';
-    const COLUMN_AGENT    = 'user_agent';
-    /**
-     * Initialize configuration data
-     */
-    protected function _construct()
-    {
-        $this->_init('shopgate_cloudapi/order_source', 'entity_id');
-    }
 }

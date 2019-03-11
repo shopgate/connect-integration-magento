@@ -116,6 +116,11 @@
       "enabled": true
     },
     {
+        "key": "endpoint_orders",
+        "value": "{{v2}}/orders",
+        "enabled": true
+    },
+    {
       "key": "endpoint_categories",
       "value": "{{v2}}/categories",
       "enabled": true

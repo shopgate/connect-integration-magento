@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright Shopgate Inc.
  *
@@ -20,12 +19,9 @@
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
  */
 /** @noinspection PhpIncludeInspection */
-
-require_once './abstract.php';
-
+require_once __DIR__ . '/abstract.php';
 /** @noinspection AutoloadingIssuesInspection */
-
-class Shopgate_Cloudapi_Shell extends Mage_Shell_Abstract
+class Shopgate_Cloudapi_Db_Shell extends Mage_Shell_Abstract
 {
     /**
      * Run SG script
@@ -34,104 +30,111 @@ class Shopgate_Cloudapi_Shell extends Mage_Shell_Abstract
      */
     public function run()
     {
-        if ($this->getArg('acl')) {
-            $this->cleanCaches();
-            if ($this->getArg('attributes')) {
-                $this->updateAclAttributes();
-
-                return;
+        if ($db = $this->getArg('db')) {
+            if ('set' === $this->getArg('action')) {
+                echo (int) $this->writeDatabase($db, $this->getColumnValues());
+            } elseif ('get' === $this->getArg('action')) {
+                if ($this->hasLookup()) {
+                    $data = $this->readDatabase($db, $this->getColumnValues());
+                    echo (int) !empty($data);
+                } else {
+                    /** @noinspection ForgottenDebugOutputInspection */
+                    echo json_encode($this->readDatabase($db));
+                }
+            } else {
+                throw new RuntimeException('Incorrect action provided');
             }
-            if ($this->getArg('rules')) {
-                $this->updateAclRules();
-
-                return;
-            }
+            return;
         }
-
         die($this->usageHelp());
     }
-
     /**
-     * Make all Shopgate Cloud endpoints under
-     * REST Roles > Customer to be accessible
+     * @param string $table
+     * @param array  $where
      *
-     * @throws Exception
+     * @return array
      */
-    private function updateAclAttributes()
+    private function readDatabase($table, array $where = array())
     {
-        $helper = $this->getAttrHelper();
-        $helper->addAclAttributes(Mage_Api2_Model_Auth_User_Customer::USER_TYPE);
-        $helper->addAclAttributes(Mage_Api2_Model_Auth_User_Admin::USER_TYPE);
-    }
-
-    /**
-     * Deletes all ACL Rules & adds them back
-     *
-     * @throws Exception
-     */
-    private function updateAclRules()
-    {
-        $this->getRuleHelper()->addAclRules();
-
-        $role = $this->getRoleHelper()->getAdminRole();
-        if (!$role->getId()) {
-            $role = $this->getRoleHelper()->createAdminRole();
-        }
-        $this->getRuleHelper()->addAclRules($role->getId());
-    }
-
-    /**
-     * Clean the config & API2 caches
-     */
-    private function cleanCaches()
-    {
-        $cache = Mage::app()->getCacheInstance();
-        foreach (array('config', 'config_api2') as $type) {
-            if ($cache->canUse($type)) {
-                $cache->cleanType($type);
-                Mage::dispatchEvent('adminhtml_cache_refresh_type', array('type' => $type));
+        $connection = Mage::getModel('core/resource')->getConnection('core_read');
+        /** @noinspection SqlResolve */
+        $sql = "SELECT * FROM shopgate_{$table}";
+        if (!empty($where)) {
+            $sql .= ' WHERE ';
+            foreach ($where as $col => $value) {
+                $sql .= "$col=$value AND ";
             }
+            $sql = rtrim($sql, ' AND');
         }
+        return $connection->fetchAll($sql);
     }
-
     /**
-     * @return Shopgate_Cloudapi_Helper_Api2_Acl_Attributes
+     * @param string $table
+     * @param array  $set
+     *
+     * @return array
      */
-    private function getAttrHelper()
+    private function writeDatabase($table, array $set)
     {
-        return Mage::helper('shopgate_cloudapi/api2_acl_attributes');
+        if (empty($set)) {
+            throw new RuntimeException('There were no column=value parameters provided for this call');
+        }
+        $connection = Mage::getModel('core/resource')->getConnection('core_write');
+        return $connection->insertArray("shopgate_{$table}", array_keys($set), array($set));
     }
-
     /**
-     * @return Shopgate_Cloudapi_Helper_Api2_Acl_Rules
+     * @return bool
      */
-    private function getRuleHelper()
+    private function hasLookup()
     {
-        return Mage::helper('shopgate_cloudapi/api2_acl_rules');
+        return count($this->_args) > 2;
     }
-
     /**
-     * @return Shopgate_Cloudapi_Helper_Api2_Acl_Roles
+     * Parse input arguments
+     *
+     * @return Mage_Shell_Abstract
      */
-    private function getRoleHelper()
+    protected function _parseArgs()
     {
-        return Mage::helper('shopgate_cloudapi/api2_acl_roles');
+        if ($_SERVER['argv'][1] === 'help') {
+            $this->_args['help'] = true;
+            return $this;
+        }
+        if (count($_SERVER['argv']) % 2 === 0) {
+            throw new RuntimeException('Need to have an even amount of parameters passed to this shell');
+        }
+        $size = count($_SERVER['argv']) - 1;
+        for ($i = 1; $i <= $size; $i += 2) {
+            $value1               = $_SERVER['argv'][$i];
+            $value2               = $_SERVER['argv'][$i + 1];
+            $this->_args[$value1] = $value2;
+        }
+        return $this;
     }
-
+    /**
+     * Returns a list of column value pairs,
+     * as long as they were provided in the right order
+     *
+     * @return array ('column' => 'value')
+     */
+    private function getColumnValues()
+    {
+        return array_slice($this->_args, 2);
+    }
     /**
      * @return string
      */
     public function usageHelp()
     {
         return <<<USAGE
-Usage:  php -f shopgate_cloudapi.php -- [options]
-  acl attributes    Enable all Shopgate REST attributes (endpoint incoming data)
-  acl rules         Enable all Shopgate REST Rules (endpoint access)
-  -h                Short alias for help
-  help              This help
+Usage:  php -f shopgate_cloudapi_db.php -- [options]
+  db [db_name] action get [col] [value]    Name of SG database table, e.g 'customer' will access shopgate_customer, column value for search
+  db [db_name] action set [col] [value]    Saves column/values to the DB name provided
+  -h                            Short alias for help
+  help                          This help
 USAGE;
     }
 }
-
-$shell = new Shopgate_Cloudapi_Shell();
+$shell = new Shopgate_Cloudapi_Db_Shell();
+/** @noinspection PhpUnhandledExceptionInspection */
 $shell->run();
