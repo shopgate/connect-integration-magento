@@ -9,7 +9,7 @@
    <description>The Shopgate Connect integration for Magento enables you to utilize the Shopgate API endpoints.</description>
    <license>Apache License</license>
    <license_uri>https://github.com/shopgate/cloud-integration-magento/blob/master/LICENSE</license_uri>
-   <version>3.4.0</version>
+   <version>3.5.0</version>
    <stability>stable</stability>
    <notes>Shopgate Connect Module</notes>
    <authors>

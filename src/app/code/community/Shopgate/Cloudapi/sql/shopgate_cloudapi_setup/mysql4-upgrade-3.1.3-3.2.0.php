@@ -67,10 +67,12 @@ try {
                            'entity_id',
                            Varien_Db_Ddl_Table::ACTION_CASCADE
                        )
-                       ->addIndex('UNQ_INDEX_QUOTE_ID_TO_SOURCE', array('quote_id', 'source'), array('type' => 'unique'))
-                       ->setComment(
-                           'Shopgate Quote/Cart References'
-                       );
+                       ->addIndex(
+                           'UNQ_INDEX_QUOTE_ID_TO_SOURCE',
+                           array('quote_id', 'source'),
+                           array('type' => Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE)
+                       )
+                       ->setComment('Shopgate Quote/Cart References');
     $installer->getConnection()->createTable($table);
 } catch (Exception $e) {
     Mage::logException($e);
