@@ -50,7 +50,7 @@ try {
                            ),
                            'As defined in sales_flat_quote:entity_id'
                        )
-        ->addColumn(
+                       ->addColumn(
                            'source',
                            Varien_Db_Ddl_Table::TYPE_VARCHAR,
                            100,
@@ -60,21 +60,19 @@ try {
                            ),
                            'Helps ID certain quote entities'
                        )
-        ->addForeignKey(
+                       ->addForeignKey(
                            $installer->getFkName('shopgate_cart_sources', 'quote_id', 'sales/quote', 'entity_id'),
                            'quote_id',
                            $installer->getTable('sales/quote'),
                            'entity_id',
                            Varien_Db_Ddl_Table::ACTION_CASCADE
                        )
-        ->addIndex(
-            'UNQ_INDEX_QUOTE_ID_TO_SOURCE',
-            array('quote_id', 'source'),
-            array('type' => Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE)
-        )
-        ->setComment(
-                           'Shopgate Quote/Cart References'
-                       );
+                       ->addIndex(
+                           'UNQ_INDEX_QUOTE_ID_TO_SOURCE',
+                           array('quote_id', 'source'),
+                           array('type' => Varien_Db_Adapter_Interface::INDEX_TYPE_UNIQUE)
+                       )
+                       ->setComment('Shopgate Quote/Cart References');
     $installer->getConnection()->createTable($table);
 } catch (Exception $e) {
     Mage::logException($e);

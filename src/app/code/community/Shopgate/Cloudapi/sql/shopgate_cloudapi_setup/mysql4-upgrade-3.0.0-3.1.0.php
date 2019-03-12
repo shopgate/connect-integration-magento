@@ -75,7 +75,7 @@ try {
         $installer->getConnection()->query(
             'INSERT INTO `shopgate_oauth_authorization_codes` (`authorization_code`, `client_id`, `user_id`, `expires`, `resource_id`, `resource_type`) SELECT `token`, 0, `user_id`, `expires`, `resource_id`, `type` FROM `shopgate_resource_auth_codes`;'
         );
-        $installer->getConnection()->dropTable( 'shopgate_resource_auth_codes' );
+        $installer->getConnection()->dropTable('shopgate_resource_auth_codes');
     }
 } catch (Exception $e) {
     Mage::logException($e);
