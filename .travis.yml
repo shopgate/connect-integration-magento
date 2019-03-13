@@ -34,7 +34,7 @@ after_failure:
 
 jobs:
   include:
-    - stage: test
+    - stage: "Swagger validation"
       php: "7.1"
       before_script:
         # Load the shUnit2 for running shell-script unit test for swagger
