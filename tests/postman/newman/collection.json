@@ -27741,70 +27741,6 @@
 					"name": "Guest",
 					"item": [
 						{
-							"name": "Errors",
-							"item": [
-								{
-									"name": "Issue with page filter",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
-												"exec": [
-													"pm.test('Error due to using `shopgate_order_` & `page` filter at the same time', function () {",
-													"    pm.response.to.have.status(500);",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{guest-access-token}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": ""
-										},
-										"url": {
-											"raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=1",
-											"host": [
-												"{{domain}}{{endpoint_orders}}"
-											],
-											"query": [
-												{
-													"key": "shopgate_order_source_eq",
-													"value": "webcheckout"
-												},
-												{
-													"key": "page",
-													"value": "1"
-												}
-											]
-										},
-										"description": "There is an issue with using shopgate_order filter + page filter at the same time. This is in magento core, so we cannot do much about it."
-									},
-									"response": []
-								}
-							],
-							"_postman_isSubFolder": true
-						},
-						{
 							"name": "Check fields",
 							"event": [
 								{
@@ -28526,6 +28462,69 @@
 										}
 									]
 								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edge case - empty",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test('Successfully returns and empty list', function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Empty collection\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.a('array').be.empty;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=1",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "shopgate_order_source_eq",
+											"value": "webcheckout"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								},
+								"description": "There is an issue with using shopgate_order filter + page filter at the same time. This is in magento core, so this is a test that we handle the exception."
 							},
 							"response": []
 						}

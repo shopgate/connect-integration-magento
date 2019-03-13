@@ -116,11 +116,25 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
      * Flatten orders instead of array('order_id' => array(ORDER_DATA))
      *
      * @return array array('entity_id' => '...', ...)
-     * @throws Exception
+     * @throws Mage_Api2_Exception
      */
     protected function _retrieveCollection()
     {
-        return array_values(parent::_retrieveCollection());
+        $collection = array();
+
+        try {
+            $collection = array_values(parent::_retrieveCollection());
+        } catch (Exception $e) {
+            /**
+             * Faulty SQL state due to how Mage handles ?page filter and a custom join condition
+             */
+            if (42 === $e->getCode()) {
+                return $collection;
+            }
+            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        }
+
+        return $collection;
     }
 
     /**
