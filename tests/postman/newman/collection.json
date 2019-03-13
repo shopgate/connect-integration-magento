@@ -27751,16 +27751,8 @@
 											"script": {
 												"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
 												"exec": [
-													"pm.test(\"Status code is 200\", function () {",
-													"    pm.response.to.have.status(200);",
-													"});",
-													"",
-													"pm.test(\"Retrieved 4 products with last one being 53\", function () {",
-													"    const jsonData = pm.response.json();",
-													"    const count = Object.keys(jsonData).length;",
-													"    const order = jsonData.pop();",
-													"    pm.expect(count).to.eql(4);",
-													"    pm.expect(order.entity_id).to.eq('53');",
+                                                  "pm.test(\"Cannot ask for more than a 100 orders\", function () {",
+                                                  "    pm.response.to.have.status(400);",
 													"});"
 												],
 												"type": "text/javascript"
@@ -27790,18 +27782,18 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{domain}}{{endpoint_orders}}?page=3&limit=4",
+                                          "raw": "{{domain}}{{endpoint_orders}}?page=1&limit=101",
 											"host": [
 												"{{domain}}{{endpoint_orders}}"
 											],
 											"query": [
 												{
 													"key": "page",
-													"value": "3"
+                                                  "value": "1"
 												},
 												{
 													"key": "limit",
-													"value": "4"
+                                                  "value": "101"
 												}
 											]
 										}
