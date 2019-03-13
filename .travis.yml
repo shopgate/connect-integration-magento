@@ -15,18 +15,12 @@ php:
   - "5.6"
 
 before_script:
-  # Load the shUnit2 for running shell-script unit test for swagger
-  - curl -L "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/shunit2/shunit2-2.1.6.tgz" | tar zx
   # If it's a fork PR (no secret keys will exist), then run only CE edition tests. And run only on non commit calls.
   - if [[ ( "$AWS_ACCESS_KEY_ID" || "$MAGE_TYPE" == "CE" ) && ( "$TRAVIS_TAG" || "$TRAVIS_EVENT_TYPE" != "push" ) ]]; then
       chmod +x ./tests/postman/test_env_setup.sh;
       ./tests/postman/test_env_setup.sh;
     fi
 script:
-  # Get proper branch name based on http://graysonkoonce.com/getting-the-current-branch-name-during-a-pull-request-in-travis-ci/
-  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo `curl -s $PR | jq -r .head.ref`; fi)
-  - chmod +x ./tests/swagger/validator.sh
-  - bash ./tests/swagger/validator.sh
   - if [[ ( "$AWS_ACCESS_KEY_ID" || "$MAGE_TYPE" == "CE" ) && ( "$TRAVIS_TAG" || "$TRAVIS_EVENT_TYPE" != "push" ) ]]; then
       chmod +x ./tests/postman/magento_setup.sh;
       ./tests/postman/magento_setup.sh;
@@ -40,6 +34,16 @@ after_failure:
 
 jobs:
   include:
+    - stage: test
+      php: "7.1"
+      before_script:
+        # Load the shUnit2 for running shell-script unit test for swagger
+        - curl -L "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/shunit2/shunit2-2.1.6.tgz" | tar zx
+      script:
+        # Get proper branch name based on http://graysonkoonce.com/getting-the-current-branch-name-during-a-pull-request-in-travis-ci/
+        - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo `curl -s $PR | jq -r .head.ref`; fi)
+        - chmod +x ./tests/swagger/validator.sh
+        - bash ./tests/swagger/validator.sh
     - stage: deploy
       php: "5.6"
       before_script:

@@ -3,7 +3,7 @@
 # NOTE: This file is modified version taken from:
 # https://github.com/amardeshbd/medium-api-specification/blob/master/api-spec_validation_test.sh
 
-# Tests the swagger specificaton using online service
+# Tests the swagger specification using online service
 testOpenApiSpecValidity() {
     expectedOutput="{}"
     expectedOutputSize=${#expectedOutput}
