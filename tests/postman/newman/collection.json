@@ -27845,8 +27845,8 @@
 											"});",
 											"",
 											"pm.test(\"Retrieved 10 products when no limits are applied\", function () {",
-											"    var jsonData = pm.response.json();",
-											"    var count = Object.keys(jsonData).length;",
+											"    const jsonData = pm.response.json();",
+											"    const count = Object.keys(jsonData).length;",
 											"    pm.expect(count).to.eql(10);",
 											"});"
 										],
@@ -27886,7 +27886,7 @@
 							"response": []
 						},
 						{
-                          "name": "Page 3, Limit 4",
+							"name": "Page 3, Limit 4",
 							"event": [
 								{
 									"listen": "test",
@@ -27897,10 +27897,12 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-											"pm.test(\"Retrieved 3 products from New Arrivals category\", function () {",
-											"    var jsonData = pm.response.json();",
-											"    var count = Object.keys(jsonData).length;",
+											"pm.test(\"Retrieved 4 products with last one being 53\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const count = Object.keys(jsonData).length;",
+											"    const order = jsonData.pop();",
 											"    pm.expect(count).to.eql(4);",
+											"    pm.expect(order.entity_id).to.eq('53');",
 											"});"
 										],
 										"type": "text/javascript"
@@ -27930,18 +27932,91 @@
 									"raw": ""
 								},
 								"url": {
-                                  "raw": "{{domain}}{{endpoint_orders}}?page=3&limit=4",
+									"raw": "{{domain}}{{endpoint_orders}}?page=3&limit=4",
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									],
 									"query": [
 										{
 											"key": "page",
-                                          "value": "3"
+											"value": "3"
 										},
 										{
 											"key": "limit",
 											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Page 3, Limit 4, Dir dcs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved 4 products in a descending fashion with last one being 122\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const count = Object.keys(jsonData).length;",
+											"    const order = jsonData.pop();",
+											"    pm.expect(count).to.eql(4);",
+											"    pm.expect(order.entity_id).to.eq('122');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?page=3&limit=4&order=entity_id&dir=dcs",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "3"
+										},
+										{
+											"key": "limit",
+											"value": "4"
+										},
+										{
+											"key": "order",
+											"value": "entity_id"
+										},
+										{
+											"key": "dir",
+											"value": "dcs"
 										}
 									]
 								}
@@ -27961,9 +28036,9 @@
 											"});",
 											"",
 											"pm.test('Retrieved 1 order', function () {",
-											"    var jsonData = pm.response.json();",
-											"    var count = Object.keys(jsonData).length;",
-											"    var order = jsonData.pop()",
+											"    const jsonData = pm.response.json();",
+											"    const count = Object.keys(jsonData).length;",
+											"    const order = jsonData.pop();",
 											"    pm.expect(order.created_at).to.eql('2013-03-15 00:01:34');",
 											"    pm.expect(count).to.eql(1);",
 											"});"
@@ -28214,58 +28289,58 @@
 											"value": "42"
 										},
 										{
-                                          "key": "source",
-                                          "value": "webcheckout"
-                                        }
-                                    ]
-                                },
-                              "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
-                            },
-                          "response": []
-                        },
-                      {
-                        "name": "Create SG source 2",
-                        "event": [
-                          {
-                            "listen": "test",
-                            "script": {
-                              "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
-                              "exec": [
-                                "pm.test(\"The table entries were succefully created\", function () {",
-                                "    pm.expect(pm.response.text()).to.include('1');",
-                                "});"
-                              ],
-                              "type": "text/javascript"
-                            }
-                          }
-                        ],
-                        "request": {
-                          "method": "POST",
-                          "header": [],
-                          "body": {
-                            "mode": "raw",
-                            "raw": ""
-                          },
-                          "url": {
-                            "raw": "{{domain}}forwarder.php?db=order_sources&action=set&order_id=51&source=webcheckout",
-                            "host": [
-                              "{{domain}}forwarder",
-                              "php"
-                            ],
-                            "query": [
-                              {
-                                "key": "db",
-                                "value": "order_sources"
-                              },
-                              {
-                                "key": "action",
-                                "value": "set"
-                              },
-                              {
-                                "key": "order_id",
-                                "value": "51"
-                              },
-                              {
+											"key": "source",
+											"value": "webcheckout"
+										}
+									]
+								},
+								"description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+							},
+							"response": []
+						},
+						{
+							"name": "Create SG source 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+										"exec": [
+											"pm.test(\"The table entries were succefully created\", function () {",
+											"    pm.expect(pm.response.text()).to.include('1');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}forwarder.php?db=order_sources&action=set&order_id=51&source=webcheckout",
+									"host": [
+										"{{domain}}forwarder",
+										"php"
+									],
+									"query": [
+										{
+											"key": "db",
+											"value": "order_sources"
+										},
+										{
+											"key": "action",
+											"value": "set"
+										},
+										{
+											"key": "order_id",
+											"value": "51"
+										},
+										{
 											"key": "source",
 											"value": "webcheckout"
 										}
@@ -28332,7 +28407,7 @@
 							"response": []
 						},
 						{
-                          "name": "Filter eq source & limits",
+							"name": "Filter eq source & limits",
 							"event": [
 								{
 									"listen": "test",
@@ -28347,7 +28422,7 @@
 											"    const jsonData = pm.response.json();",
 											"    const size = jsonData.length;",
 											"    const order = jsonData.pop();",
-                                          "    pm.expect(order.entity_id).to.eql('51');",
+											"    pm.expect(order.entity_id).to.eql('51');",
 											"    pm.expect(size).to.eql(1);",
 											"});"
 										],
@@ -28378,7 +28453,7 @@
 									"raw": ""
 								},
 								"url": {
-                                  "raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=2&limit=1",
+									"raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=2&limit=1",
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									],
@@ -28386,14 +28461,24 @@
 										{
 											"key": "shopgate_order_source_eq",
 											"value": "webcheckout"
-                                        },
-                                      {
-                                        "key": "page",
-                                        "value": "2"
-                                      },
-                                      {
-                                        "key": "limit",
-                                        "value": "1"
+										},
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										},
+										{
+											"key": "order",
+											"value": "entity_id",
+											"disabled": true
+										},
+										{
+											"key": "dir",
+											"value": "asc",
+											"disabled": true
 										}
 									]
 								}
@@ -28414,7 +28499,7 @@
 											"",
 											"pm.test(\"Retrieved orders, but no `webcheckout` order is present\", function () {",
 											"    const jsonData = pm.response.json();",
-											"    const webcheckout = jsonData.find((item) => item.shopgate_source === 'webcheckout')",
+											"    const webcheckout = jsonData.find((item) => item.shopgate_source === 'webcheckout');",
 											"    pm.expect(webcheckout).to.be.undefined;",
 											"});"
 										],
@@ -28445,14 +28530,14 @@
 									"raw": ""
 								},
 								"url": {
-                                  "raw": "{{domain}}{{endpoint_orders}}?page=0&shopgate_order_source_neq=webcheckout",
+									"raw": "{{domain}}{{endpoint_orders}}?page=0&shopgate_order_source_neq=webcheckout",
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									],
 									"query": [
 										{
-                                          "key": "page",
-                                          "value": "0"
+											"key": "page",
+											"value": "0"
 										},
 										{
 											"key": "shopgate_order_source_neq",
@@ -28526,7 +28611,7 @@
 							"response": []
 						},
 						{
-                          "name": "Limit out of bounds",
+							"name": "Limit out of bounds",
 							"event": [
 								{
 									"listen": "test",
@@ -28537,10 +28622,10 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
-                                          "pm.test('Mage does not use page if it is out of bounds', function () {",
-                                          "    const jsonData = pm.response.json();",
-                                          "    pm.expect(jsonData).to.be.a('array').not.be.empty;",
-                                          "    pm.expect(jsonData.length).to.eq(2);",
+											"pm.test('Mage does not use page if it is out of bounds', function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.a('array').not.be.empty;",
+											"    pm.expect(jsonData.length).to.eq(2);",
 											"});"
 										],
 										"type": "text/javascript"
@@ -28570,7 +28655,7 @@
 									"raw": ""
 								},
 								"url": {
-                                  "raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=3&limit=5",
+									"raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=3&limit=5",
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									],
@@ -28581,15 +28666,15 @@
 										},
 										{
 											"key": "page",
-                                          "value": "3"
-                                        },
-                                      {
-                                        "key": "limit",
-                                        "value": "5"
+											"value": "3"
+										},
+										{
+											"key": "limit",
+											"value": "5"
 										}
 									]
 								},
-                              "description": "An edge case for out of bounds limit"
+								"description": "An edge case for out of bounds limit"
 							},
 							"response": []
 						}
