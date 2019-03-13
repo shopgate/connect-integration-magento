@@ -35,8 +35,7 @@ after_failure:
 jobs:
   include:
     - stage: "Swagger validation"
-      php: "7.1"
-      install:
+      before_script:
         - npm install -g swagger-cli
       script:
         - swagger-cli validate ./docs/swagger.yaml
@@ -74,10 +73,10 @@ env:
     - USER_PASS="test123"
     - SOAP_USER="shopgate-tests"
     - SOAP_APIKEY="shopgate-api-key"
-  matrix:
-    - MAGE_FOLDER="mage_ce_1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2" MAGE_TYPE="CE"
-    - MAGE_FOLDER="mage_ce_1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0" MAGE_TYPE="CE" MAGE_LOCALE="en_US"
-    - MAGE_FOLDER="mage_ce_1936" MAGE_PACKAGE="magento-mirror-1.9.3.6" MAGE_TYPE="CE"
-    - MAGE_FOLDER="mage_ee_11202" MAGE_PACKAGE="magento-1.12.0.2" MAGE_TYPE="EE" MAGE_LOCALE="en_US"
-    - MAGE_FOLDER="mage_ee_11302" MAGE_PACKAGE="magento-1.13.0.2" MAGE_TYPE="EE"
-    - MAGE_FOLDER="mage_ee_11437" MAGE_PACKAGE="magento-1.14.3.7" MAGE_TYPE="EE"
+    #matrix:
+    #- MAGE_FOLDER="mage_ce_1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2" MAGE_TYPE="CE"
+    #- MAGE_FOLDER="mage_ce_1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0" MAGE_TYPE="CE" MAGE_LOCALE="en_US"
+    #- MAGE_FOLDER="mage_ce_1936" MAGE_PACKAGE="magento-mirror-1.9.3.6" MAGE_TYPE="CE"
+    #- MAGE_FOLDER="mage_ee_11202" MAGE_PACKAGE="magento-1.12.0.2" MAGE_TYPE="EE" MAGE_LOCALE="en_US"
+    #- MAGE_FOLDER="mage_ee_11302" MAGE_PACKAGE="magento-1.13.0.2" MAGE_TYPE="EE"
+    #- MAGE_FOLDER="mage_ee_11437" MAGE_PACKAGE="magento-1.14.3.7" MAGE_TYPE="EE"
