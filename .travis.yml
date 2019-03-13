@@ -36,14 +36,10 @@ jobs:
   include:
     - stage: "Swagger validation"
       php: "7.1"
-      before_script:
-        # Load the shUnit2 for running shell-script unit test for swagger
-        - curl -L "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/shunit2/shunit2-2.1.6.tgz" | tar zx
+      install:
+        - npm install -g swagger-cli
       script:
-        # Get proper branch name based on http://graysonkoonce.com/getting-the-current-branch-name-during-a-pull-request-in-travis-ci/
-        - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo `curl -s $PR | jq -r .head.ref`; fi)
-        - chmod +x ./tests/swagger/validator.sh
-        - bash ./tests/swagger/validator.sh
+        - swagger-cli validate ./docs/swagger.yaml
     - stage: deploy
       php: "5.6"
       before_script:
@@ -78,7 +74,6 @@ env:
     - USER_PASS="test123"
     - SOAP_USER="shopgate-tests"
     - SOAP_APIKEY="shopgate-api-key"
-    - PR="https://api.github.com/repos/$TRAVIS_REPO_SLUG/pulls/$TRAVIS_PULL_REQUEST"
   matrix:
     - MAGE_FOLDER="mage_ce_1702" MAGE_PACKAGE="sg-magento-mirror-1.7.0.2" MAGE_TYPE="CE"
     - MAGE_FOLDER="mage_ce_1810" MAGE_PACKAGE="sg-magento-mirror-1.8.1.0" MAGE_TYPE="CE" MAGE_LOCALE="en_US"
