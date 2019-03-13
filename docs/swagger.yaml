@@ -108,7 +108,7 @@ paths:
         - name: "dir"
           type: "string"
           in: "query"
-          description: "Please note that when this is provided, you must use the order parameter.<br/>'asc' - returns items in the ascending order;<br/> 'dsc' - returns items in the descending order"
+          description: "Please note that when this is provided, you must use the `order` parameter.<br/>'asc' - returns items in the ascending order;<br/> 'dsc' - returns items in the descending order"
           enum: ['asc', 'dcs']
           default: 'asc'
         - name: "page"
@@ -130,6 +130,8 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/ResponseOrders"
+        400:
+          $ref: '#/definitions/PageFilterValidation'
         401:
           $ref: "#/definitions/ErrorUnauthorized"
         500:
@@ -608,6 +610,30 @@ definitions:
                 message:
                   type: "string"
                   example: "Unauthorized"
+  PageFilterValidation:
+    description: "Validation error"
+    type: "object"
+    required: ["messages"]
+    properties:
+      messages:
+        type: "object"
+        required: ["error"]
+        properties:
+          error:
+            type: "array"
+            items:
+              type: "object"
+              required: ["message", "code"]
+              properties:
+                message:
+                  description: "Maximum allowed Magento page limit is 100"
+                  type: "string"
+                  example: "The paging limit exceeds the allowed number."
+                code:
+                  description: "This is helpful, but we advise using the HTTP status instead as it is more consistent"
+                  type: "integer"
+                  format: "int32"
+                  example: 400
   ErrorValidation:
     description: "Validation error"
     type: "object"
