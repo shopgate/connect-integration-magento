@@ -2,7 +2,9 @@
 
 [![GitHub license](http://dmlc.github.io/img/apache2.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/shopgate/connect-integration-magento.svg?branch=master)](https://travis-ci.org/shopgate/connect-integration-magento)
-![Swagger Status](http://online.swagger.io/validator?url=https://raw.githubusercontent.com/shopgate/connect-integration-magento/master/docs/swagger.yaml")
+
+Swagger: ![Swagger Status](http://online.swagger.io/validator?url=https://raw.githubusercontent.com/shopgate/connect-integration-magento/master/docs/swagger.yaml)
+
 The Shopgate Connect integration for Magento enables you to utilize the Shopgate API endpoints to connect to via the App.
 
 ## Getting Started
