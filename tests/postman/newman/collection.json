@@ -27741,6 +27741,77 @@
 					"name": "Guest",
 					"item": [
 						{
+                          "name": "Errors",
+                          "item": [
+                            {
+                              "name": "Limit 101",
+                              "event": [
+                                {
+                                  "listen": "test",
+                                  "script": {
+                                    "id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+                                    "exec": [
+                                      "pm.test(\"Status code is 200\", function () {",
+                                      "    pm.response.to.have.status(200);",
+                                      "});",
+                                      "",
+                                      "pm.test(\"Retrieved 4 products with last one being 53\", function () {",
+                                      "    const jsonData = pm.response.json();",
+                                      "    const count = Object.keys(jsonData).length;",
+                                      "    const order = jsonData.pop();",
+                                      "    pm.expect(count).to.eql(4);",
+                                      "    pm.expect(order.entity_id).to.eq('53');",
+                                      "});"
+                                    ],
+                                    "type": "text/javascript"
+                                  }
+                                }
+                              ],
+                              "request": {
+                                "auth": {
+                                  "type": "bearer",
+                                  "bearer": [
+                                    {
+                                      "key": "token",
+                                      "value": "{{guest-access-token}}",
+                                      "type": "string"
+                                    }
+                                  ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": ""
+                                },
+                                "url": {
+                                  "raw": "{{domain}}{{endpoint_orders}}?page=3&limit=4",
+                                  "host": [
+                                    "{{domain}}{{endpoint_orders}}"
+                                  ],
+                                  "query": [
+                                    {
+                                      "key": "page",
+                                      "value": "3"
+                                    },
+                                    {
+                                      "key": "limit",
+                                      "value": "4"
+                                    }
+                                  ]
+                                }
+                              },
+                              "response": []
+                            }
+                          ],
+                          "_postman_isSubFolder": true
+                        },
+                      {
 							"name": "Check fields",
 							"event": [
 								{
