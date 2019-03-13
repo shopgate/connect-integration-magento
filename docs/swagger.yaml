@@ -75,11 +75,13 @@ paths:
                 example: "1234"
                 description: "Magento internal customer ID"
         400:
-          $ref: "#/definitions/ErrorValidation"
+          description: "Incorrect customer properties passes"
+          schema:
+            $ref: "#/definitions/ErrorValidationCustomerProperties"
         401:
-          $ref: "#/definitions/ErrorUnauthorized"
+          $ref: "#/responses/ErrorUnauthorized"
         500:
-          $ref: '#/definitions/ErrorUnknown'
+          $ref: '#/responses/ErrorUnknown'
   "/orders":
     get:
       tags:
@@ -129,13 +131,15 @@ paths:
         200:
           description: "Successful Operation"
           schema:
-            $ref: "#/definitions/ResponseOrders"
+            type: "array"
+            items:
+              $ref: '#/definitions/ResponseOrder'
         400:
-          $ref: '#/definitions/PageFilterValidation'
+          $ref: '#/responses/ErrorvalidationPageMaxLimit'
         401:
-          $ref: "#/definitions/ErrorUnauthorized"
+          $ref: '#/responses/ErrorUnauthorized'
         500:
-          $ref: '#/definitions/ErrorUnknown'
+          $ref: '#/responses/ErrorUnknown'
 securityDefinitions:
   AuthUser:
     description: "Client ID, a combination of [customer_number]-[shop_number] retrieved in Shopgate merchant panel when creating an interface connection to the site"
@@ -155,11 +159,20 @@ securityDefinitions:
     type: "oauth2"
     tokenUrl: "localhost/shopgate/v2/auth/token"
     flow: "password"
+responses:
+  ErrorvalidationPageMaxLimit:
+    description: "Page limit exceeded the maximum 100"
+    schema:
+      $ref: '#/definitions/ErrorValidationPageFilter'
+  ErrorUnauthorized:
+    description: "Unauthorized user"
+    schema:
+      $ref: "#/definitions/ErrorInvalidUserToken"
+  ErrorUnknown:
+    description: "Unhandled error"
+    schema:
+      $ref: '#/definitions/ErrorUnhandled'
 definitions:
-  ResponseOrders:
-    type: "array"
-    items:
-      $ref: '#/definitions/ResponseOrder'
   ResponseOrder:
     type: "object"
     properties:
@@ -587,7 +600,7 @@ definitions:
       error_description:
         type: "string"
         example: "Invalid username and password combination"
-  ErrorUnauthorized:
+  ErrorInvalidUserToken:
     description: "Unauthorized user in relationship to the Magento's REST Roles"
     type: "object"
     required: ["messages"]
@@ -610,7 +623,7 @@ definitions:
                 message:
                   type: "string"
                   example: "Unauthorized"
-  PageFilterValidation:
+  ErrorValidationPageFilter:
     description: "Validation error"
     type: "object"
     required: ["messages"]
@@ -634,7 +647,7 @@ definitions:
                   type: "integer"
                   format: "int32"
                   example: 400
-  ErrorValidation:
+  ErrorValidationCustomerProperties:
     description: "Validation error"
     type: "object"
     required: ["messages"]
@@ -666,7 +679,7 @@ definitions:
                   type: "integer"
                   format: "int32"
                   example: 400
-  ErrorUnknown:
+  ErrorUnhandled:
     description: "Unknown internal error"
     type: "object"
     required: ["messages"]
