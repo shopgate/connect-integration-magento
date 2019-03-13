@@ -27886,7 +27886,7 @@
 							"response": []
 						},
 						{
-							"name": "Page 1, Limit 4",
+                          "name": "Page 3, Limit 4",
 							"event": [
 								{
 									"listen": "test",
@@ -27930,14 +27930,14 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_orders}}?page=1&limit=4",
+                                  "raw": "{{domain}}{{endpoint_orders}}?page=3&limit=4",
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									],
 									"query": [
 										{
 											"key": "page",
-											"value": "1"
+                                          "value": "3"
 										},
 										{
 											"key": "limit",
@@ -28214,6 +28214,58 @@
 											"value": "42"
 										},
 										{
+                                          "key": "source",
+                                          "value": "webcheckout"
+                                        }
+                                    ]
+                                },
+                              "description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+                            },
+                          "response": []
+                        },
+                      {
+                        "name": "Create SG source 2",
+                        "event": [
+                          {
+                            "listen": "test",
+                            "script": {
+                              "id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+                              "exec": [
+                                "pm.test(\"The table entries were succefully created\", function () {",
+                                "    pm.expect(pm.response.text()).to.include('1');",
+                                "});"
+                              ],
+                              "type": "text/javascript"
+                            }
+                          }
+                        ],
+                        "request": {
+                          "method": "POST",
+                          "header": [],
+                          "body": {
+                            "mode": "raw",
+                            "raw": ""
+                          },
+                          "url": {
+                            "raw": "{{domain}}forwarder.php?db=order_sources&action=set&order_id=51&source=webcheckout",
+                            "host": [
+                              "{{domain}}forwarder",
+                              "php"
+                            ],
+                            "query": [
+                              {
+                                "key": "db",
+                                "value": "order_sources"
+                              },
+                              {
+                                "key": "action",
+                                "value": "set"
+                              },
+                              {
+                                "key": "order_id",
+                                "value": "51"
+                              },
+                              {
 											"key": "source",
 											"value": "webcheckout"
 										}
@@ -28280,7 +28332,7 @@
 							"response": []
 						},
 						{
-							"name": "Filter eq source",
+                          "name": "Filter eq source & limits",
 							"event": [
 								{
 									"listen": "test",
@@ -28295,7 +28347,7 @@
 											"    const jsonData = pm.response.json();",
 											"    const size = jsonData.length;",
 											"    const order = jsonData.pop();",
-											"    pm.expect(order.entity_id).to.eql('42');",
+                                          "    pm.expect(order.entity_id).to.eql('51');",
 											"    pm.expect(size).to.eql(1);",
 											"});"
 										],
@@ -28326,7 +28378,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout",
+                                  "raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=2&limit=1",
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									],
@@ -28334,6 +28386,14 @@
 										{
 											"key": "shopgate_order_source_eq",
 											"value": "webcheckout"
+                                        },
+                                      {
+                                        "key": "page",
+                                        "value": "2"
+                                      },
+                                      {
+                                        "key": "limit",
+                                        "value": "1"
 										}
 									]
 								}
@@ -28385,14 +28445,14 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{domain}}{{endpoint_orders}}?limit=4&shopgate_order_source_neq=webcheckout",
+                                  "raw": "{{domain}}{{endpoint_orders}}?page=0&shopgate_order_source_neq=webcheckout",
 									"host": [
 										"{{domain}}{{endpoint_orders}}"
 									],
 									"query": [
 										{
-											"key": "limit",
-											"value": "4"
+                                          "key": "page",
+                                          "value": "0"
 										},
 										{
 											"key": "shopgate_order_source_neq",
@@ -28466,7 +28526,7 @@
                           "response": []
                         },
                       {
-                        "name": "Edge case - empty",
+                        "name": "Limit out of bounds",
                         "event": [
                           {
                             "listen": "test",
@@ -28477,9 +28537,10 @@
                                 "    pm.response.to.have.status(200);",
                                 "});",
                                 "",
-                                "pm.test(\"Empty collection\", function () {",
-                                "    var jsonData = pm.response.json();",
-                                "    pm.expect(jsonData).to.be.a('array').be.empty;",
+                                "pm.test('Mage does not use page if it is out of bounds', function () {",
+                                "    const jsonData = pm.response.json();",
+                                "    pm.expect(jsonData).to.be.a('array').not.be.empty;",
+                                "    pm.expect(jsonData.length).to.eq(2);",
                                 "});"
                               ],
                               "type": "text/javascript"
@@ -28509,7 +28570,7 @@
                             "raw": ""
                           },
                           "url": {
-                            "raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=1",
+                            "raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=3&limit=5",
                             "host": [
                               "{{domain}}{{endpoint_orders}}"
                             ],
@@ -28520,11 +28581,15 @@
                               },
                               {
                                 "key": "page",
-                                "value": "1"
+                                "value": "3"
+                              },
+                              {
+                                "key": "limit",
+                                "value": "5"
                               }
                             ]
                           },
-                          "description": "There is an issue with using shopgate_order filter + page filter at the same time. This is in magento core, so this is a test that we handle the exception."
+                          "description": "An edge case for out of bounds limit"
                         },
 							"response": []
 						}
