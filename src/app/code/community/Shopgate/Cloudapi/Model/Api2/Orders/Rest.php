@@ -116,25 +116,11 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
      * Flatten orders instead of array('order_id' => array(ORDER_DATA))
      *
      * @return array array('entity_id' => '...', ...)
-     * @throws Mage_Api2_Exception
+     * @throws Exception
      */
     protected function _retrieveCollection()
     {
-        $collection = array();
-
-        try {
-            $collection = array_values(parent::_retrieveCollection());
-        } catch (Exception $e) {
-            /**
-             * Faulty SQL state due to how Mage handles ?page filter and a custom join condition
-             */
-            if (42 === $e->getCode()) {
-                return $collection;
-            }
-            $this->_critical($e->getMessage(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
-        }
-
-        return $collection;
+        return array_values(parent::_retrieveCollection());
     }
 
     /**
@@ -193,6 +179,8 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
                 self::FIELD_START . $agent  => "{$alias}.{$agent}"
             )
         );
+        $collection->addFilterToMap($source, "{$alias}.{$source}")
+                   ->addFilterToMap($agent, "{$alias}.{$agent}");
     }
 
     /**
@@ -244,9 +232,9 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     /**
      * Breaks down the incoming params for filtration
      *
-     * @param string $key - e.g. shopgate_source_eq
+     * @param string $key - e.g. shopgate_order_source_eq
      *
-     * @return array e.g. array('eq', 'shopgate_source')
+     * @return array e.g. array('shopgate_order_source', 'eq')
      */
     private function getShopgateParts($key)
     {
@@ -257,9 +245,9 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     }
 
     /**
-     * Truncates 'shopgate_' from string
+     * Truncates 'shopgate_order_' from string
      *
-     * @param string $field - 'shopgate_source'
+     * @param string $field - 'shopgate_order_source'
      *
      * @return string 'source'
      */

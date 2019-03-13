@@ -113,9 +113,9 @@ paths:
           default: 'asc'
         - name: "page"
           in: "query"
-          description: "Specifies the page number which items will be returned"
+          description: "Specifies the page number which items will be returned. Passing 0 will retrieve results as if set to 1."
           type: "integer"
-          default: 0
+          default: 1
         - name: "limit"
           in: "query"
           description: "Limits the number of returned items in the response. The maximum number is 100 items."
