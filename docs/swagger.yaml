@@ -108,7 +108,7 @@ paths:
         - name: "dir"
           type: "string"
           in: "query"
-          description: "'asc' - returns items in the ascending order;<br/> 'dsc' - returns items in the descending order"
+          description: "Please note that when this is provided, you must use the order parameter.<br/>'asc' - returns items in the ascending order;<br/> 'dsc' - returns items in the descending order"
           enum: ['asc', 'dcs']
           default: 'asc'
         - name: "page"
