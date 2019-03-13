@@ -102,7 +102,6 @@ class Shopgate_Cloudapi_Model_Api2_Orders extends Shopgate_Cloudapi_Model_Api2_R
                 'main_table.entity_id = order_tax.order_id',
                 $taxInfoFields
             );
-            $collection->getSelect()->group('main_table.entity_id');
         }
 
         return $this;

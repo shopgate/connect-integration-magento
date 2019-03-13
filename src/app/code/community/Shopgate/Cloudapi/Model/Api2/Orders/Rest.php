@@ -179,6 +179,8 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
                 self::FIELD_START . $agent  => "{$alias}.{$agent}"
             )
         );
+        $collection->addFilterToMap($source, "{$alias}.{$source}")
+                   ->addFilterToMap($agent, "{$alias}.{$agent}");
     }
 
     /**
@@ -230,9 +232,9 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     /**
      * Breaks down the incoming params for filtration
      *
-     * @param string $key - e.g. shopgate_source_eq
+     * @param string $key - e.g. shopgate_order_source_eq
      *
-     * @return array e.g. array('eq', 'shopgate_source')
+     * @return array e.g. array('shopgate_order_source', 'eq')
      */
     private function getShopgateParts($key)
     {
@@ -243,9 +245,9 @@ abstract class Shopgate_Cloudapi_Model_Api2_Orders_Rest extends Shopgate_Cloudap
     }
 
     /**
-     * Truncates 'shopgate_' from string
+     * Truncates 'shopgate_order_' from string
      *
-     * @param string $field - 'shopgate_source'
+     * @param string $field - 'shopgate_order_source'
      *
      * @return string 'source'
      */

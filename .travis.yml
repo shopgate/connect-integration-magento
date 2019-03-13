@@ -9,10 +9,10 @@ install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
 
 php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
+  - "5.3"
+  - "5.4"
+  - "5.5"
+  - "5.6"
 
 before_script:
   # If it's a fork PR (no secret keys will exist), then run only CE edition tests. And run only on non commit calls.
@@ -34,8 +34,13 @@ after_failure:
 
 jobs:
   include:
+    - stage: "Swagger validation"
+      before_script:
+        - npm install -g swagger-cli
+      script:
+        - swagger-cli validate ./docs/swagger.yaml
     - stage: deploy
-      php: 5.6
+      php: "5.6"
       before_script:
         - sudo apt-get install xmlstarlet
       script:
