@@ -1,8 +1,8 @@
 # Shopgate Connect Integration Magento
 
-[![GitHub license](http://dmlc.github.io/img/apache2.svg)](LICENSE.md)
+[![GitHub license](http://dmlc.github.io/img/apache2.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/shopgate/connect-integration-magento.svg?branch=master)](https://travis-ci.org/shopgate/connect-integration-magento)
-
+![Swagger Status](http://online.swagger.io/validator?url=https://raw.githubusercontent.com/shopgate/connect-integration-magento/master/docs/swagger.yaml")
 The Shopgate Connect integration for Magento enables you to utilize the Shopgate API endpoints to connect to via the App.
 
 ## Getting Started
@@ -24,7 +24,7 @@ Shopgate is the leading mobile commerce platform. Online retailers use our softw
 
 The Shopgate Shopgate Connect Integration Magento integration is available under the Apache License, Version 2.0.
 
-See the [LICENSE.md](LICENSE.md) file for more information.
+See the [LICENSE](LICENSE) file for more information.
 
 ## Magento Composer Installer
 
