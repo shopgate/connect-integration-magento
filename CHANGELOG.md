@@ -107,7 +107,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Endpoint for retrieving a temporary checkout URL
 - Endpoint for retrieving of product details
 
-[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.5.1...HEAD
+[Unreleased]: https://github.com/shopgate/cloud-integration-magento/compare/3.5.0...HEAD
 [3.5.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.4.0...3.5.0
 [3.4.0]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.3...3.4.0
 [3.3.3]: https://github.com/shopgate/cloud-integration-magento/compare/3.3.2...3.3.3
