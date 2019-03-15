@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  description: "Please note that all the proper REST aattributes and roles need to be set up for the endpoints to work. Upon installation these should be enabled automatically."
-  version: "3.4.0"
+  description: "Please note that all the proper REST attributes and roles need to be set up for the endpoints to work. Upon installation these should be enabled automatically."
+  version: "4.1.0"
   title: "Magento Connect Integration"
   contact:
     email: "support@shopgate.com"
@@ -75,11 +75,71 @@ paths:
                 example: "1234"
                 description: "Magento internal customer ID"
         400:
-          $ref: "#/definitions/ErrorValidation"
+          description: "Incorrect customer properties passes"
+          schema:
+            $ref: "#/definitions/ErrorValidationCustomerProperties"
         401:
-          $ref: "#/definitions/ErrorUnauthorized"
+          $ref: "#/responses/ErrorUnauthorized"
         500:
-          $ref: '#/definitions/ErrorUnknown'
+          $ref: '#/responses/ErrorUnknown'
+  "/orders":
+    get:
+      tags:
+        - "orders"
+      summary: "Allows you to retrieve orders."
+      description: "You can use all Magento database fields for filtering. <br/><br/>
+      The follow suffixes available for any order field:<br><br>
+      *_gt - greater than<br>
+      *_lt - less than<br>
+      *_eq - equals<br>
+      *_like - same as MySQL LIKE, can use '%' construction<br>
+      *_neq - not equals<br>
+      *_gteq - greater than or equals<br>
+      *_lteq - less than or equals<br><br>
+      Using different parameters will create request joined by `AND` conditions.<br>
+      e.g. `?entity_id_gt=5&entity_id_lteq=10` - will return between 6-10<br>
+      `OR` conditions can be created by using comma separated values<br>
+      e.g. `?status=holded,processing` - will return status holded OR processing<br/><br/>
+      Date values are in the following format - `2013-03-28 20:00:00`"
+      operationId: "orders"
+      parameters:
+        - name: "order"
+          type: "string"
+          in: "query"
+          description: "The attribute to order the results by, e.g. entity_id"
+        - name: "dir"
+          type: "string"
+          in: "query"
+          description: "Please note that when this is provided, you must use the `order` parameter.<br/>'asc' - returns items in the ascending order;<br/> 'dsc' - returns items in the descending order"
+          enum: ['asc', 'dcs']
+          default: 'asc'
+        - name: "page"
+          in: "query"
+          description: "Specifies the page number which items will be returned. Passing 0 will retrieve results as if set to 1."
+          type: "integer"
+          default: 1
+        - name: "limit"
+          in: "query"
+          description: "Limits the number of returned items in the response. The maximum number is 100 items."
+          default: 10
+          maximum: 100
+          type: "integer"
+      security:
+        - AdminToken: []
+        - CustomerToken: []
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/ResponseOrder'
+        400:
+          $ref: '#/responses/ErrorvalidationPageMaxLimit'
+        401:
+          $ref: '#/responses/ErrorUnauthorized'
+        500:
+          $ref: '#/responses/ErrorUnknown'
 securityDefinitions:
   AuthUser:
     description: "Client ID, a combination of [customer_number]-[shop_number] retrieved in Shopgate merchant panel when creating an interface connection to the site"
@@ -99,7 +159,325 @@ securityDefinitions:
     type: "oauth2"
     tokenUrl: "localhost/shopgate/v2/auth/token"
     flow: "password"
+responses:
+  ErrorvalidationPageMaxLimit:
+    description: "Page limit exceeded the maximum 100"
+    schema:
+      $ref: '#/definitions/ErrorValidationPageFilter'
+  ErrorUnauthorized:
+    description: "Unauthorized user"
+    schema:
+      $ref: "#/definitions/ErrorInvalidUserToken"
+  ErrorUnknown:
+    description: "Unhandled error"
+    schema:
+      $ref: '#/definitions/ErrorUnhandled'
 definitions:
+  ResponseOrder:
+    type: "object"
+    properties:
+      shopgate_order_source:
+        type: "string"
+        example: "webcheckout"
+      shopgate_order_http_agent:
+        type: "string"
+        example: "Mozilla/5.0"
+      entity_id:
+        type: "string"
+        example: "41"
+      state:
+        type: "string"
+        example: "new"
+      status:
+        type: "string"
+        example: "pending"
+      protect_code:
+        type: "string"
+        example: "8b86d4"
+      shipping_description:
+        type: "string"
+        example: "United Parcel Service - Ground"
+      is_virtual:
+        type: "string"
+        example: "0"
+      store_id:
+        type: "string"
+        example: "1"
+      customer_id:
+        type: "string"
+        example: null
+      base_discount_amount:
+        type: "string"
+        example: "0.0000"
+      base_discount_canceled:
+        type: "string"
+        example: "0.0000"
+      base_discount_invoiced:
+        type: "string"
+        example: null
+      base_discount_refunded:
+        type: "string"
+        example: null
+      base_grand_total:
+        type: "string"
+        example: "698.3000"
+      base_shipping_amount:
+        type: "string"
+        example: "38.3000"
+      base_shipping_canceled:
+        type: "string"
+        example: "38.3000"
+      base_shipping_invoiced:
+        type: "string"
+        example: null
+      base_shipping_refunded:
+        type: "string"
+        example: null
+      base_shipping_tax_amount:
+        type: "string"
+        example: "0.0000"
+      base_shipping_tax_refunded:
+        type: "string"
+        example: null
+      base_subtotal:
+        type: "string"
+        example: "660.0000"
+      base_subtotal_canceled:
+        type: "string"
+        example: "660.0000"
+      base_subtotal_invoiced:
+        type: "string"
+        example: null
+      base_subtotal_refunded:
+        type: "string"
+        example: null
+      base_tax_amount:
+        type: "string"
+        example: "0.0000"
+      base_tax_canceled:
+        type: "string"
+        example: "0.0000"
+      base_tax_invoiced:
+        type: "string"
+        example: null
+      base_tax_refunded:
+        type: "string"
+        example: null
+      base_to_global_rate:
+        type: "string"
+        example: "1.0000"
+      base_to_order_rate:
+        type: "string"
+        example: "1.0000"
+      base_total_canceled:
+        type: "string"
+        example: "698.3000"
+      base_total_invoiced:
+        type: "string"
+        example: null
+      base_total_invoiced_cost:
+        type: "string"
+        example: null
+      base_total_offline_refunded:
+        type: "string"
+        example: null
+      base_total_online_refunded:
+        type: "string"
+        example: null
+      base_total_paid:
+        type: "string"
+        example: null
+      base_total_qty_ordered:
+        type: "string"
+        example: null
+      base_total_refunded:
+        type: "string"
+        example: null
+      created_at:
+        type: "string"
+        example: "2013-03-28 20:00:00"
+      discount_amount:
+        type: "string"
+        example: "0.0000"
+      discount_canceled:
+        type: "string"
+        example: "0.0000"
+      discount_invoiced:
+        type: "string"
+        example: null
+      discount_refunded:
+        type: "string"
+        example: null
+      grand_total:
+        type: "string"
+        example: "698.3000"
+      shipping_amount:
+        type: "string"
+        example: "11.5700"
+      shipping_canceled:
+        type: "string"
+        example: null
+      shipping_invoiced:
+        type: "string"
+        example: null
+      shipping_refunded:
+        type: "string"
+        example: null
+      shipping_tax_amount:
+        type: "string"
+        example: "0.0000"
+      shipping_tax_refunded:
+        type: "string"
+        example: null
+      store_to_base_rate:
+        type: "string"
+        example: "1.0000"
+      store_to_order_rate:
+        type: "string"
+        example: "1.0000"
+      subtotal:
+        type: "string"
+        example: "750.0000"
+      subtotal_canceled:
+        type: "string"
+        example: null
+      subtotal_invoiced:
+        type: "string"
+        example: null
+      subtotal_refunded:
+        type: "string"
+        example: null
+      tax_amount:
+        type: "string"
+        example: "61.8800"
+      addresses:
+        type: "array"
+        items:
+          $ref: '#/definitions/ResponseAddress'
+      order_items:
+        type: "array"
+        items:
+          $ref: '#/definitions/ResponseOrderItem'
+  ResponseAddress:
+    type: "object"
+    properties:
+      region:
+        type: "string"
+        example: "California"
+      postcode:
+        type: "string"
+        example: "90232"
+      lastname:
+        type: "string"
+        example: "Doe"
+      street:
+        type: "string"
+        example: "10441 Jefferson Blvd., Suite 200"
+      city:
+        type: "string"
+        example: "Culver City"
+      email:
+        type: "string"
+        example: "mosses@ebay.com"
+      telephone:
+        type: "string"
+        example: "3105551212"
+      country_id:
+        type: "string"
+        example: "US"
+      firstname:
+        type: "string"
+        example: "John"
+      address_type:
+        type: "string"
+        example: "billing"
+      prefix:
+        type: "string"
+        example: null
+      middlename:
+        type: "string"
+        example: null
+      suffix:
+        type: "string"
+        example: null
+      company:
+        type: "string"
+        example: null
+  ResponseOrderItem:
+    type: "object"
+    properties:
+      item_id:
+        type: "string"
+        example: "108"
+      parent_item_id:
+        type: "string"
+        example: null
+      sku:
+        type: "string"
+        example: "abl007"
+      name:
+        type: "string"
+        example: "Classic Hardshell Suitcase 29"
+      qty_canceled:
+        type: "string"
+        example: "0.0000"
+      qty_invoiced:
+        type: "string"
+        example: "0.0000"
+      qty_ordered:
+        type: "string"
+        example: "1.0000"
+      qty_refunded:
+        type: "string"
+        example: "0.0000"
+      qty_shipped:
+        type: "string"
+        example: "0.0000"
+      price:
+        type: "string"
+        example: "750.0000"
+      base_price:
+        type: "string"
+        example: "750.0000"
+      original_price:
+        type: "string"
+        example: "750.0000"
+      base_original_price:
+        type: "string"
+        example: "750.0000"
+      tax_percent:
+        type: "string"
+        example: "8.2500"
+      tax_amount:
+        type: "string"
+        example: "61.8800"
+      base_tax_amount:
+        type: "string"
+        example: "61.8800"
+      discount_amount:
+        type: "string"
+        example: "0.0000"
+      base_discount_amount:
+        type: "string"
+        example: "0.0000"
+      row_total:
+        type: "string"
+        example: "750.0000"
+      base_row_total:
+        type: "string"
+        example: "750.0000"
+      price_incl_tax:
+        type: "string"
+        example: "811.8800"
+      base_price_incl_tax:
+        type: "string"
+        example: "811.8800"
+      row_total_incl_tax:
+        type: "string"
+        example: "811.8800"
+      base_row_total_incl_tax:
+        type: "string"
+        example: "811.8800"
   RequestFacebookCredentials:
     description: "The endpoint will attempt to locate the user by the user_id provided. If it cannot locate the user, it will throw an error."
     type: "object"
@@ -222,7 +600,7 @@ definitions:
       error_description:
         type: "string"
         example: "Invalid username and password combination"
-  ErrorUnauthorized:
+  ErrorInvalidUserToken:
     description: "Unauthorized user in relationship to the Magento's REST Roles"
     type: "object"
     required: ["messages"]
@@ -245,7 +623,31 @@ definitions:
                 message:
                   type: "string"
                   example: "Unauthorized"
-  ErrorValidation:
+  ErrorValidationPageFilter:
+    description: "Validation error"
+    type: "object"
+    required: ["messages"]
+    properties:
+      messages:
+        type: "object"
+        required: ["error"]
+        properties:
+          error:
+            type: "array"
+            items:
+              type: "object"
+              required: ["message", "code"]
+              properties:
+                message:
+                  description: "Maximum allowed Magento page limit is 100"
+                  type: "string"
+                  example: "The paging limit exceeds the allowed number."
+                code:
+                  description: "This is helpful, but we advise using the HTTP status instead as it is more consistent"
+                  type: "integer"
+                  format: "int32"
+                  example: 400
+  ErrorValidationCustomerProperties:
     description: "Validation error"
     type: "object"
     required: ["messages"]
@@ -277,7 +679,7 @@ definitions:
                   type: "integer"
                   format: "int32"
                   example: 400
-  ErrorUnknown:
+  ErrorUnhandled:
     description: "Unknown internal error"
     type: "object"
     required: ["messages"]

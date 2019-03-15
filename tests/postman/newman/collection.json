@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e7728e25-02a0-41ae-b74b-63be851d12fb",
+		"_postman_id": "3b473fc4-23f2-4701-9df5-81075c0170bc",
 		"name": "Mage Cloud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14209,7 +14209,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{domain}}forwarder.php?db=cart_sources&quote_id={{cartId}}",
+									"raw": "{{domain}}forwarder.php?db=cart_sources&action=get&quote_id={{cartId}}",
 									"host": [
 										"{{domain}}forwarder",
 										"php"
@@ -14218,6 +14218,10 @@
 										{
 											"key": "db",
 											"value": "cart_sources"
+										},
+										{
+											"key": "action",
+											"value": "get"
 										},
 										{
 											"key": "quote_id",
@@ -27667,6 +27671,1284 @@
 							}
 						]
 					},
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "/v2/orders",
+			"item": [
+				{
+					"name": "Customer",
+					"item": [
+						{
+							"name": "Orders",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test('Success registered', function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('An empty array means we are good to go', function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.a('array').to.be.empty;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									]
+								},
+								"description": "We do not have any customers with orders yet, that's why this is just a check for empty return"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Guest",
+					"item": [
+						{
+							"name": "Errors",
+							"item": [
+								{
+									"name": "Limit 101",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+												"exec": [
+                                                  "pm.test(\"Cannot ask for more than a 100 orders\", function () {",
+                                                  "    pm.response.to.have.status(400);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{guest-access-token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+                                          "raw": "{{domain}}{{endpoint_orders}}?page=1&limit=101",
+											"host": [
+												"{{domain}}{{endpoint_orders}}"
+											],
+											"query": [
+												{
+													"key": "page",
+                                                  "value": "1"
+												},
+												{
+													"key": "limit",
+                                                  "value": "101"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Check fields",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved 1 order and checked most properties\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const order = jsonData.pop();",
+											"    pm.expect(order.entity_id).to.be.a('string').to.eq('41');",
+											"    pm.expect(order.state).to.be.a('string').to.eq('new');",
+											"    pm.expect(order.status).to.be.a('string').to.eq('pending');",
+											"    pm.expect(order.shipping_description).to.be.a('string').to.eq('United Parcel Service - Ground');",
+											"    pm.expect(order.store_id).to.be.a('string').to.eq('1');",
+											"    pm.expect(order.grand_total).to.be.a('string').to.eq('823.4500');",
+											"    pm.expect(order.shipping_amount).to.be.a('string').to.eq('11.5700');",
+											"    pm.expect(order.subtotal).to.be.a('string').to.eq('750.0000');",
+											"    pm.expect(order.tax_amount).to.be.a('string').to.eq('61.8800');",
+											"    pm.expect(order.customer_is_guest).to.be.a('string').to.eq('0');",
+											"    pm.expect(order.billing_address_id).to.be.a('string').to.eq('77');",
+											"    pm.expect(order.customer_group_id).to.be.a('string').to.eq('1');",
+											"    pm.expect(order.shipping_address_id).to.be.a('string').to.eq('78');",
+											"    pm.expect(order.weight).to.be.a('string').to.eq('1.0000');",
+											"    pm.expect(order.increment_id).to.be.a('string').to.eq('100000049');",
+											"    pm.expect(order.customer_email).to.be.a('string').to.eq('mosses@ebay.com');",
+											"    pm.expect(order.customer_firstname).to.be.a('string').to.eq('Mosses');",
+											"    pm.expect(order.customer_lastname).to.be.a('string').to.eq('Akizian');",
+											"    pm.expect(order.order_currency_code).to.be.a('string').to.eq('USD');",
+											"    pm.expect(order.store_currency_code).to.be.a('string').to.eq('USD');",
+											"    pm.expect(order.shipping_method).to.be.a('string').to.eq('ups_GND');",
+											"    pm.expect(order.created_at).to.be.a('string').to.eq('2013-03-15 00:01:34');",
+											"    pm.expect(order.tax_rate).to.be.a('string').to.eq('8.2500');",
+											"    pm.expect(order.shopgate_order_source, 'shopgate_order_source issue').to.be.null;",
+											"    pm.expect(order.payment_method).to.be.a('string').to.eq('checkmo');",
+											"    ",
+											"    // SG framework specific test, may not exist",
+											"    if (order.hasOwnProperty('base_shopgate_payment_fee')) {",
+											"        pm.expect(order.base_shopgate_payment_fee, 'base_shopgate_payment_fee issue').to.be.null;",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?page=1&limit=1",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "No limit",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved 10 products when no limits are applied\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const count = Object.keys(jsonData).length;",
+											"    pm.expect(count).to.eql(10);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Page 3, Limit 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved 4 products with last one being 53\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const count = Object.keys(jsonData).length;",
+											"    const order = jsonData.pop();",
+											"    pm.expect(count).to.eql(4);",
+											"    pm.expect(order.entity_id).to.eq('53');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?page=3&limit=4",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "3"
+										},
+										{
+											"key": "limit",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Page 3, Limit 4, Dir dcs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved 4 products in a descending fashion with last one being 122\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const count = Object.keys(jsonData).length;",
+											"    const order = jsonData.pop();",
+                                          "    const id = 'CE' === pm.environment.get('mage_type') ? '183' : '122';",
+											"    pm.expect(count).to.eql(4);",
+                                          "    pm.expect(order.entity_id).to.eq(id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?page=3&limit=4&order=entity_id&dir=dcs",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "3"
+										},
+										{
+											"key": "limit",
+											"value": "4"
+										},
+										{
+											"key": "order",
+											"value": "entity_id"
+										},
+										{
+											"key": "dir",
+											"value": "dcs"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter gt/lt created_at",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test('Status code is 200', function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Retrieved 1 order', function () {",
+											"    const jsonData = pm.response.json();",
+											"    const count = Object.keys(jsonData).length;",
+											"    const order = jsonData.pop();",
+											"    pm.expect(order.created_at).to.eql('2013-03-15 00:01:34');",
+											"    pm.expect(count).to.eql(1);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "b6cf641f-559c-4059-81d9-3b9d4f3dceaa",
+										"exec": [
+											"var moment = require('moment')",
+											"const orderCratedAt = pm.environment.get(\"orderCreatedAt\")",
+											"const dateFrom = moment(orderCratedAt)",
+											"        .add(-1, 'seconds')",
+											"        .format('YYYY-MM-DD HH:mm:ss');",
+											"const dateTo = moment(orderCratedAt)",
+											"        .add(1, 'seconds')",
+											"        .format('YYYY-MM-DD HH:mm:ss');",
+											"        ",
+											"pm.environment.set(\"orderCreatedAtFrom\", dateFrom);",
+											"pm.environment.set(\"orderCreatedAtTo\", dateTo);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?created_at_gt=2013-03-15 00:01:30&created_at_lt=2013-03-15 00:01:35",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "created_at_gt",
+											"value": "2013-03-15 00:01:30"
+										},
+										{
+											"key": "created_at_lt",
+											"value": "2013-03-15 00:01:35"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by OR status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test('Status code is 200', function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Retrieved orders that are of holded/canceled status only', function () {",
+											"    const jsonData = pm.response.json();",
+											"    const find = jsonData.filter(item => item.status !== 'holded').filter(item => item.status !== 'canceled');",
+											"    pm.expect(find).to.be.empty;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "b6cf641f-559c-4059-81d9-3b9d4f3dceaa",
+										"exec": [
+											"var moment = require('moment')",
+											"const orderCratedAt = pm.environment.get(\"orderCreatedAt\")",
+											"const dateFrom = moment(orderCratedAt)",
+											"        .add(-1, 'seconds')",
+											"        .format('YYYY-MM-DD HH:mm:ss');",
+											"const dateTo = moment(orderCratedAt)",
+											"        .add(1, 'seconds')",
+											"        .format('YYYY-MM-DD HH:mm:ss');",
+											"        ",
+											"pm.environment.set(\"orderCreatedAtFrom\", dateFrom);",
+											"pm.environment.set(\"orderCreatedAtTo\", dateTo);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?status_eq=holded,canceled",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "status_eq",
+											"value": "holded,canceled"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter like shipping",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Will not return flat shipping rate order\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const order = jsonData.find((item) => item.entity_id === '46');",
+											"    pm.expect(order).to.be.undefined;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?shipping_description_like=United Parcel%",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "shipping_description_like",
+											"value": "United Parcel%"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create SG source",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+										"exec": [
+											"pm.test(\"The table entries were succefully created\", function () {",
+											"    pm.expect(pm.response.text()).to.include('1');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}forwarder.php?db=order_sources&action=set&order_id=42&source=webcheckout",
+									"host": [
+										"{{domain}}forwarder",
+										"php"
+									],
+									"query": [
+										{
+											"key": "db",
+											"value": "order_sources"
+										},
+										{
+											"key": "action",
+											"value": "set"
+										},
+										{
+											"key": "order_id",
+											"value": "42"
+										},
+										{
+											"key": "source",
+											"value": "webcheckout"
+										}
+									]
+								},
+								"description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+							},
+							"response": []
+						},
+						{
+							"name": "Create SG source 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+										"exec": [
+											"pm.test(\"The table entries were succefully created\", function () {",
+											"    pm.expect(pm.response.text()).to.include('1');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}forwarder.php?db=order_sources&action=set&order_id=51&source=webcheckout",
+									"host": [
+										"{{domain}}forwarder",
+										"php"
+									],
+									"query": [
+										{
+											"key": "db",
+											"value": "order_sources"
+										},
+										{
+											"key": "action",
+											"value": "set"
+										},
+										{
+											"key": "order_id",
+											"value": "51"
+										},
+										{
+											"key": "source",
+											"value": "webcheckout"
+										}
+									]
+								},
+								"description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+							},
+							"response": []
+						},
+						{
+							"name": "Create SG user_agent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc0b4296-4765-4bfa-b513-e995bfb62e6d",
+										"exec": [
+											"pm.test(\"The table entries were succefully created\", function () {",
+											"    pm.expect(pm.response.text()).to.include('1');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}forwarder.php?db=order_sources&action=set&order_id=43&source=lala&user_agent=Mozilla/5.0 (Linux; Android 8.0.0; SM-G960U Build/R16NW; wv) AppleWebKit/537.36 (KHTML, like Gecko)",
+									"host": [
+										"{{domain}}forwarder",
+										"php"
+									],
+									"query": [
+										{
+											"key": "db",
+											"value": "order_sources"
+										},
+										{
+											"key": "action",
+											"value": "set"
+										},
+										{
+											"key": "order_id",
+											"value": "43"
+										},
+										{
+											"key": "source",
+											"value": "lala"
+										},
+										{
+											"key": "user_agent",
+											"value": "Mozilla/5.0 (Linux; Android 8.0.0; SM-G960U Build/R16NW; wv) AppleWebKit/537.36 (KHTML, like Gecko)"
+										}
+									]
+								},
+								"description": "Creates cart\nAdds the specified customer by ID\nAdds simple product to cart"
+							},
+							"response": []
+						},
+						{
+							"name": "Filter eq source & limits",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test('Status code is 200', function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Retrieved 1 specific order with `webcheckout` source', function () {",
+											"    const jsonData = pm.response.json();",
+											"    const size = jsonData.length;",
+											"    const order = jsonData.pop();",
+											"    pm.expect(order.entity_id).to.eql('51');",
+											"    pm.expect(size).to.eql(1);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=2&limit=1",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "shopgate_order_source_eq",
+											"value": "webcheckout"
+										},
+										{
+											"key": "page",
+											"value": "2"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										},
+										{
+											"key": "order",
+											"value": "entity_id",
+											"disabled": true
+										},
+										{
+											"key": "dir",
+											"value": "asc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter neq source",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved orders, but no `webcheckout` order is present\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    const webcheckout = jsonData.find((item) => item.shopgate_source === 'webcheckout');",
+											"    pm.expect(webcheckout).to.be.undefined;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?page=0&shopgate_order_source_neq=webcheckout",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "shopgate_order_source_neq",
+											"value": "webcheckout"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Filter like user_agent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test('Status code is 200', function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Retrieved 1 specific order with proper `user_agent`', function () {",
+											"    const jsonData = pm.response.json();",
+											"    const size = jsonData.length;",
+											"    const order = jsonData.pop();",
+											"    pm.expect(order.entity_id).to.eq('43');",
+											"    pm.expect(order.shopgate_order_user_agent).to.eq('Mozilla/5.0 (Linux; Android 8.0.0; SM-G960U Build/R16NW; wv) AppleWebKit/537.36 (KHTML, like Gecko)');",
+											"    pm.expect(size).to.eql(1);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?shopgate_order_user_agent_like=%Android%",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "shopgate_order_user_agent_like",
+											"value": "%Android%"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Limit out of bounds",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test('Successfully returns and empty list', function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Mage does not use page if it is out of bounds', function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.a('array').not.be.empty;",
+											"    pm.expect(jsonData.length).to.eq(2);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}?shopgate_order_source_eq=webcheckout&page=3&limit=5",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"query": [
+										{
+											"key": "shopgate_order_source_eq",
+											"value": "webcheckout"
+										},
+										{
+											"key": "page",
+											"value": "3"
+										},
+										{
+											"key": "limit",
+											"value": "5"
+										}
+									]
+								},
+								"description": "An edge case for out of bounds limit"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "/v2/orders/:id",
+			"item": [
+				{
+					"name": "Guest",
+					"item": [
+						{
+							"name": "Single order load",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved one specific order\", function () {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.entity_id).to.eql('43');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}/43",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"path": [
+										"43"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check fields",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8b7464d0-9070-48f0-aa16-530afce968cd",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Retrieved 1 order and checked most properties\", function () {",
+											"    const order = pm.response.json();",
+											"    pm.expect(order.entity_id).to.be.a('string').to.eq('41');",
+											"    pm.expect(order.state).to.be.a('string').to.eq('new');",
+											"    pm.expect(order.status).to.be.a('string').to.eq('pending');",
+											"    pm.expect(order.shipping_description).to.be.a('string').to.eq('United Parcel Service - Ground');",
+											"    pm.expect(order.store_id).to.be.a('string').to.eq('1');",
+											"    pm.expect(order.grand_total).to.be.a('string').to.eq('823.4500');",
+											"    pm.expect(order.shipping_amount).to.be.a('string').to.eq('11.5700');",
+											"    pm.expect(order.subtotal).to.be.a('string').to.eq('750.0000');",
+											"    pm.expect(order.tax_amount).to.be.a('string').to.eq('61.8800');",
+											"    pm.expect(order.customer_is_guest).to.be.a('string').to.eq('0');",
+											"    pm.expect(order.billing_address_id).to.be.a('string').to.eq('77');",
+											"    pm.expect(order.customer_group_id).to.be.a('string').to.eq('1');",
+											"    pm.expect(order.shipping_address_id).to.be.a('string').to.eq('78');",
+											"    pm.expect(order.weight).to.be.a('string').to.eq('1.0000');",
+											"    pm.expect(order.increment_id).to.be.a('string').to.eq('100000049');",
+											"    pm.expect(order.customer_email).to.be.a('string').to.eq('mosses@ebay.com');",
+											"    pm.expect(order.customer_firstname).to.be.a('string').to.eq('Mosses');",
+											"    pm.expect(order.customer_lastname).to.be.a('string').to.eq('Akizian');",
+											"    pm.expect(order.order_currency_code).to.be.a('string').to.eq('USD');",
+											"    pm.expect(order.store_currency_code).to.be.a('string').to.eq('USD');",
+											"    pm.expect(order.shipping_method).to.be.a('string').to.eq('ups_GND');",
+											"    pm.expect(order.created_at).to.be.a('string').to.eq('2013-03-15 00:01:34');",
+											"    pm.expect(order.tax_rate).to.be.a('string').to.eq('8.2500');",
+											"    pm.expect(order.shopgate_order_source).to.be.null;",
+											"    pm.expect(order.payment_method).to.be.a('string').to.eq('checkmo');",
+											"    ",
+											"    // SG framework specific test, may not exist",
+											"    if (order.hasOwnProperty('base_shopgate_payment_fee')) {",
+											"        pm.expect(order.base_shopgate_payment_fee, 'base_shopgate_payment_fee issue').to.be.null;",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{guest-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}/41",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"path": [
+										"41"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Customer",
+					"item": [
+						{
+							"name": "Cannot load someone else's",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2116d1d0-1078-44e9-b21c-4c4675e680ff",
+										"exec": [
+											"pm.test(\"Order exists, but does not belong to the customer\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer-access-token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}{{endpoint_orders}}/43",
+									"host": [
+										"{{domain}}{{endpoint_orders}}"
+									],
+									"path": [
+										"43"
+									]
+								}
+							},
+							"response": []
+						}
+					],
 					"_postman_isSubFolder": true
 				}
 			]
