@@ -63,7 +63,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
             return true;
         }
 
-        return $this->cookieIsSet(self::KEY_SGCLOUD_INAPP, self::COOKIE_VALUE);
+        return $this->userAgentIsShopgateApp() || $this->cookieIsSet(self::KEY_SGCLOUD_INAPP, self::COOKIE_VALUE);
     }
 
     /**
@@ -102,6 +102,14 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
         }
 
         return !$value ? true : $data[$key] === $value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function userAgentIsShopgateApp()
+    {
+        return strstr(Mage::helper('core/http')->getHttpUserAgent(), 'libshopgate');
     }
 
     /**
