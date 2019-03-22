@@ -31,10 +31,6 @@ class Shopgate_Cloudapi_Model_Observers_AddSaleRuleTypeToMergedQuote
      */
     public function execute(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('shopgate_cloudapi/request')->isShopgateRequest()) {
-            return;
-        }
-
         $oldQuoteId = $observer->getData('source')->getId();
         $newQuoteId = $observer->getData('quote')->getId();
         /** @var Shopgate_Cloudapi_Model_Resource_Cart_Source_Collection $collection */
