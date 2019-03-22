@@ -105,7 +105,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @return bool
+     * @return string | false
      */
     public function userAgentIsShopgateApp()
     {
