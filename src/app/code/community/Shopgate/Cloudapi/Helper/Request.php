@@ -57,7 +57,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      */
     public function isShopgateRequest()
     {
-        if ($this->parameterInAppDetected()) {
+        if ($this->parameterInAppDetected() || $this->isShopgateApi()) {
             $this->setCookie();
 
             return true;
