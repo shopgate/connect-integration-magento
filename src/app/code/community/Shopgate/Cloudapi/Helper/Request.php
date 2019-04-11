@@ -109,7 +109,7 @@ class Shopgate_Cloudapi_Helper_Request extends Mage_Core_Helper_Abstract
      */
     public function userAgentIsShopgateApp()
     {
-        return strstr(Mage::helper('core/http')->getHttpUserAgent(), 'libshopgate');
+        return strstr(Mage::helper('core/http')->getHttpUserAgent(), 'libshopgate') !== false;
     }
 
     /**
