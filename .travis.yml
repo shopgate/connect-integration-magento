@@ -1,4 +1,4 @@
-dist: xenial
+dist: trusty
 sudo: required
 language: php
 services:
@@ -9,7 +9,6 @@ install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
 
 php:
-  - "5.3"
   - "5.4"
   - "5.5"
   - "5.6"
@@ -35,6 +34,7 @@ after_failure:
 jobs:
   include:
     - stage: "Swagger validation"
+      php: "5.6"
       before_script:
         - npm install -g swagger-cli
       script:
