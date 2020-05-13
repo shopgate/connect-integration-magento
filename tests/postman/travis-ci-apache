@@ -1,4 +1,5 @@
 <VirtualHost *:80>
+    ServerName travis.dev
 	DocumentRoot /var/www
 	<Directory />
 		Options FollowSymLinks

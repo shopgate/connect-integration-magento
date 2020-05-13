@@ -4,7 +4,7 @@ set -e
 
 # Install Apache & Enable php-fpm
 sudo apt-get update
-sudo apt-get install apache2 libapache2-mod-fastcgi
+sudo apt-get install -y --force-yes apache2 libapache2-mod-fastcgi
 sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
 sudo a2enmod rewrite actions fastcgi alias
 echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
@@ -14,7 +14,8 @@ sudo chown -R travis:travis /var/lib/apache2/fastcgi
 ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
 # configure apache virtual hosts
-sudo cp -f ./tests/postman/travis-ci-apache /etc/apache2/sites-available/default
+sudo cp -f ./tests/postman/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+sudo cp ./tests/postman/servername.tpl /etc/apache2/conf-available/servername.conf
 sudo chown -R travis:travis ${WEB_PATH}
 sudo chmod 750 ${WEB_PATH}
 sudo chown -R travis:travis /var/lock/apache2/
