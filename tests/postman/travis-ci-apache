@@ -10,6 +10,7 @@
 		AllowOverride All
 		Order allow,deny
         Allow from all
+        Require all granted
 	</Directory>
 	<IfModule mod_fastcgi.c>
 		AddHandler php5-fcgi .php
