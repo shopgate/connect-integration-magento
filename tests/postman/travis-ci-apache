@@ -8,7 +8,8 @@
 	<Directory /var/www/>
 		Options +FollowSymLinks -MultiViews +ExecCGI
 		AllowOverride All
-		Require all granted
+		Order allow,deny
+        Allow from all
 	</Directory>
 	<IfModule mod_fastcgi.c>
 		AddHandler php5-fcgi .php
@@ -17,7 +18,7 @@
 		FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization -pass-header Content-Type
 
 		<Directory /usr/lib/cgi-bin>
-			Require all granted
+			Allow from all
 		</Directory>
 	</IfModule>
 </VirtualHost>
