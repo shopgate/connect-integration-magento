@@ -15,6 +15,8 @@ php:
 before_script:
   # If it's a fork PR (no secret keys will exist), then run only CE edition tests. And run only on non commit calls.
   - if [[ ( "$AWS_ACCESS_KEY_ID" || "$MAGE_TYPE" == "CE" ) && ( "$TRAVIS_TAG" || "$TRAVIS_EVENT_TYPE" != "push" ) ]]; then
+      chmod +x ./tests/postman/install-mysql-5.7.sh;
+      ./tests/postman/install-mysql-5.7.sh;
       chmod +x ./tests/postman/test_env_setup.sh;
       ./tests/postman/test_env_setup.sh;
     fi
@@ -56,9 +58,6 @@ jobs:
 addons:
   hosts:
     - travis.dev
-  apt:
-    sources:
-      - mysql-5.7-trusty
 
 env:
   global:
