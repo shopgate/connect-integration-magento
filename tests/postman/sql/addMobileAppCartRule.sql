@@ -14,7 +14,7 @@ INSERT INTO `salesrule_customer_group` (`rule_id`, `customer_group_id`)
   (LAST_INSERT_ID(),1);
 
 INSERT INTO `salesrule_coupon` (`rule_id`, `code`, `usage_limit`, `usage_per_customer`, `times_used`, `expiration_date`, `is_primary`, `created_at`, `type`)
-VALUES (LAST_INSERT_ID(), 'APP10', NULL, NULL, 0, '2099-02-25 00:00:00', 1, '2018-08-01 00:00:00', 0);
+VALUES (LAST_INSERT_ID(), 'APP10', NULL, NULL, 0, NULL, 1, '2018-08-01 00:00:00', 0);
 
 /**
  * Insert non-coupon sales rule to test existing carts that were not created by us
