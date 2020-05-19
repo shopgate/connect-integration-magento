@@ -1,5 +1,4 @@
-dist: trusty
-sudo: required
+dist: xenial
 language: php
 services:
   - mysql
@@ -9,8 +8,6 @@ install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
 
 php:
-  - "5.4"
-  - "5.5"
   - "5.6"
 
 before_script:
@@ -51,7 +48,6 @@ jobs:
         provider: releases
         api_key: ${GITHUB_TOKEN}
         file: cloud-integration-magento-${TRAVIS_TAG}.tgz
-        skip_cleanup: true
         on:
           tags: true
 
