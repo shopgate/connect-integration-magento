@@ -22,6 +22,7 @@ if [[ ${MAGE_TYPE} == "EE" ]]; then
 	MAGE_PACKAGE="magento-mirror-1.9.3.6" # package needs to exist for n98 to accept install
 fi
 
+echo 'n98 setup'
 n98 script:repo:run n98-setup \
 -d folder=${MAGE_FOLDER} \
 -d package=${MAGE_PACKAGE} \

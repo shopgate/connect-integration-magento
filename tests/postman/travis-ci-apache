@@ -1,11 +1,6 @@
 <VirtualHost *:80>
     ServerName travis.dev
 	DocumentRoot /var/www
-	<Directory />
-		Options FollowSymLinks
-		AllowOverride None
-        Require all denied
-	</Directory>
 	<Directory /var/www/>
 		Options +FollowSymLinks -MultiViews +ExecCGI
 		AllowOverride All
