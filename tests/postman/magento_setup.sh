@@ -34,7 +34,7 @@ n98 script:repo:run n98-setup \
 -d user2_email=${USER2_EMAIL} \
 -d user_pass=${USER_PASS} \
 -d misc_param1=${DOWNLOAD} \
--d misc_param2=${PARAM2} > /dev/null 2>&1
+-d misc_param2=${PARAM2}
 
 # Adds support to versions < CE1.9.* && < EE1.14.* when using newer sample data
 mysql ${MAGE_FOLDER} -e "DELETE FROM eav_attribute WHERE backend_model='catalog/product_attribute_backend_startdate_specialprice';"
