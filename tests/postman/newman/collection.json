@@ -5645,8 +5645,8 @@
 																	"    pm.expect(jsonData.coupon_code).to.eql(\"APP10\");",
 																	"});",
 																	"",
-																	"pm.test(\"Check that the quote was not collected. Else it would be a non-string\", function () {",
-																	"    pm.expect(jsonData.items_qty).to.eql(\"1.0000\");",
+																	"pm.test(\"Check that the quote has been collected.\", function () {",
+																	"    pm.expect(jsonData.items_qty).to.eql(1);",
 																	"});"
 																]
 															}
@@ -7746,8 +7746,8 @@
 																	"    pm.expect(jsonData.coupon_code).to.eql(\"APP10\");",
 																	"});",
 																	"",
-																	"pm.test(\"Check that the quote was not collected. Else it would be a non-string\", function () {",
-																	"    pm.expect(jsonData.items_qty).to.eql(\"1.0000\");",
+																	"pm.test(\"Check that the quote has been collected.\", function () {",
+																	"    pm.expect(jsonData.items_qty).to.eql(1);",
 																	"});"
 																]
 															}
@@ -28746,8 +28746,8 @@
 													"    pm.expect(jsonData.coupon_code).to.eql(\"1\");",
 													"});",
 													"",
-													"pm.test(\"Check that the quote was not collected.\", function () {",
-													"    pm.expect(jsonData.items_qty).to.eql(\"1.0000\");",
+													"pm.test(\"heck that the quote has been collected.\", function () {",
+													"    pm.expect(jsonData.items_qty).to.eql(1);",
 													"});"
 												]
 											}
