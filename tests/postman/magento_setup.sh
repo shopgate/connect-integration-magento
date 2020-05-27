@@ -7,12 +7,12 @@ DOWNLOAD=""
 PARAM2=""
 if [[ ${MAGE_TYPE} == "EE" ]]; then
 	~/.local/bin/aws s3api get-object --bucket shopgate-ci --key magento/magento-shoppingsystem-files.tar.gz magento.tar.gz
-	tar -xzf magento.tar.gz ./
-	tar -xzf ./package/ee/${MAGE_PACKAGE}.tar.gz -C ./
+	bsdtar -xzf magento.tar.gz ./
+	bsdtar -xzf ./package/ee/${MAGE_PACKAGE}.tar.gz -C ./
 	mv ./${MAGE_PACKAGE} ./${MAGE_FOLDER}
 	# sample data related
 	mkdir ./sample
-	tar -xzf ./package/ee/data/magento-sample-data-1.14.2.4.tar.gz -C ./sample
+	bsdtar -xzf ./package/ee/data/magento-sample-data-1.14.2.4.tar.gz -C ./sample
 	rsync -a ./sample/magento-sample-data-1.14.2.4/ ./${MAGE_FOLDER}
 	mysql -e "CREATE database ${MAGE_FOLDER};"
 	mysql ${MAGE_FOLDER} < ./${MAGE_FOLDER}/magento_sample_data_for_1.14.2.4.sql
