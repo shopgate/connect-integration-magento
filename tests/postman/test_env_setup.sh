@@ -22,7 +22,6 @@ sudo chown -R travis:travis /var/lock/apache2/
 sudo service apache2 restart
 
 # n98 related
-sudo apt-get install bsdtar
 wget --quiet https://files.magerun.net/n98-magerun.phar
 chmod +x ./n98-magerun.phar
 sudo mv ./n98-magerun.phar /usr/local/bin/n98
