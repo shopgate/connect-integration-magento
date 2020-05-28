@@ -8,7 +8,7 @@ PARAM2=""
 if [[ ${MAGE_TYPE} == "EE" ]]; then
 	~/.local/bin/aws s3api get-object --bucket shopgate-ci --key magento/magento-shoppingsystem-files.tar.gz magento.tar.gz
 	tar -xzf magento.tar.gz
-	tar -xzf ./package/ee/${MAGE_PACKAGE}.tar.gz -C
+	tar -xzf ./package/ee/${MAGE_PACKAGE}.tar.gz -C ./
 	mv ./${MAGE_PACKAGE} ./${MAGE_FOLDER}
 	# sample data related
 	mkdir ./sample
