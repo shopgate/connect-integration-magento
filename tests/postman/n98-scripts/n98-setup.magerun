@@ -1,6 +1,6 @@
 #!/usr/bin/env magento installation script
 
-install -vvv --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="${folder}" --installSampleData=yes --useDefaultConfigParams=yes --magentoVersionByName="${package}" --installationFolder="${folder}" --baseUrl="http://travis.dev/${folder}/" --no-interaction ${misc_param1} ${misc_param2}
+install --dbHost="localhost" --dbUser="root" --dbPass="" --dbName="${folder}" --installSampleData=yes --useDefaultConfigParams=yes --magentoVersionByName="${package}" --installationFolder="${folder}" --baseUrl="http://travis.dev/${folder}/" --no-interaction ${misc_param1} ${misc_param2}
 # in magento folder right now
 
 config:set --scope="websites" --scope-id="1" "shopgate_cloudapi/authentication/customer_number" ${customer_number}
