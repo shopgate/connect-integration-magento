@@ -28746,7 +28746,7 @@
 													"    pm.expect(jsonData.coupon_code).to.eql(\"1\");",
 													"});",
 													"",
-													"pm.test(\"heck that the quote has been collected.\", function () {",
+													"pm.test(\"Check that the quote has been collected.\", function () {",
 													"    pm.expect(jsonData.items_qty).to.eql(1);",
 													"});"
 												]
