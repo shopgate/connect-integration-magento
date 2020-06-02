@@ -1,5 +1,4 @@
-dist: precise
-sudo: required
+dist: trusty
 language: php
 services:
   - mysql
@@ -9,10 +8,24 @@ install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.4
 
 php:
-  - "5.3"
   - "5.4"
   - "5.5"
   - "5.6"
+
+before_install:
+  - sudo rm -f /etc/apt/sources.list.d/mysql.list
+  - sudo service mysql stop
+  - sudo rm -rf /var/lib/mysql
+  - sudo apt-get remove apparmor
+  - sudo apt-get remove --purge mysql-common mysql-client libmysqlclient18 libmysqlclient-dev mysql-server
+  - sudo apt-get remove --purge '^mysql*' 'libmysql*'
+  - sudo apt-get autoremove
+  - sudo apt-get autoclean
+  - sudo apt-get install mysql-client-5.5 mysql-server-5.5
+  - mysql -u root -e "CREATE USER 'travis'@'%' IDENTIFIED BY ''"
+  - mysql -u root -e "CREATE USER 'travis'@'localhost' IDENTIFIED BY ''"
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'travis'@'%'"
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'travis'@'localhost'"
 
 before_script:
   # If it's a fork PR (no secret keys will exist), then run only CE edition tests. And run only on non commit calls.
@@ -35,6 +48,7 @@ after_failure:
 jobs:
   include:
     - stage: "Swagger validation"
+      php: "5.6"
       before_script:
         - npm install -g swagger-cli
       script:
@@ -51,7 +65,6 @@ jobs:
         provider: releases
         api_key: ${GITHUB_TOKEN}
         file: cloud-integration-magento-${TRAVIS_TAG}.tgz
-        skip_cleanup: true
         on:
           tags: true
 
