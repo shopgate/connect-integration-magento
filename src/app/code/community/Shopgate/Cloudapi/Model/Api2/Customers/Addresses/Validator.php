@@ -93,7 +93,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
             return false;
         }
 
-	    $configuredCountries = split(',', $configValue);
+	    $configuredCountries = explode(',', $configValue);
         return in_array($countryCode, $configuredCountries);
     }
 
