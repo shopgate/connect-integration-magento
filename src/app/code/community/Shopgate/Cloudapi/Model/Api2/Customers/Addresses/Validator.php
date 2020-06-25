@@ -67,7 +67,7 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
      */
     public function isValidDataForCreateAssociationWithCountry(array $data)
     {
-     	if (!$this->countryValidation($data)) {
+         if (!$this->countryValidation($data)) {
             return false;
         }
 
@@ -79,21 +79,28 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
         return true;
     }
 
+    /**
+     * A rewrite of the mage on as we need to get attributes as well
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
     private function isRegionCheckRequired (array $data)
     {
-        // if region is given we shall always validate
+        // if region is given we shall always require validation
         if (!empty($data['region'])) {
             return true;
         }
 
-        // if it is not given we should check if it is optional
+        // if it is not given we should check if state is optional
         $countryCode = $data['country_id'];
-     	$configValue = Mage::getStoreConfig('general/region/state_required', Mage::app()->getStore()->getStoreId());
+        $configValue = Mage::getStoreConfig('general/region/state_required', Mage::app()->getStore()->getStoreId());
         if (empty($configValue)) {
             return false;
         }
 
-	    $configuredCountries = explode(',', $configValue);
+        $configuredCountries = explode(',', $configValue);
         return in_array($countryCode, $configuredCountries);
     }
 
