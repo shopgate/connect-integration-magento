@@ -67,13 +67,41 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
      */
     public function isValidDataForCreateAssociationWithCountry(array $data)
     {
-        $result = $this->countryValidation($data)
-            && $this->getValidator()->isValidDataForCreateAssociationWithCountry($data);
-        if (!$result) {
-            $this->addRegionValidationErrors();
+         if (!$this->countryValidation($data)) {
+            return false;
         }
 
-        return $result;
+        if ($this->isRegionCheckRequired($data) && !$this->getValidator()->isValidDataForCreateAssociationWithCountry($data)) {
+                $this->addRegionValidationErrors();
+                return false;
+            }
+
+        return true;
+    }
+
+    /**
+     * A rewrite of the mage on as we need to get attributes as well
+     *
+     * @param array $data
+     *
+     * @return bool
+     */
+    private function isRegionCheckRequired (array $data)
+    {
+        // if region is given we shall always require validation
+        if (!empty($data['region'])) {
+            return true;
+        }
+
+        // if it is not given we should check if state is optional
+        $countryCode = $data['country_id'];
+        $configValue = Mage::getStoreConfig('general/region/state_required', Mage::app()->getStore()->getStoreId());
+        if (empty($configValue)) {
+            return false;
+        }
+
+        $configuredCountries = explode(',', $configValue);
+        return in_array($countryCode, $configuredCountries);
     }
 
     /**
@@ -103,13 +131,17 @@ class Shopgate_Cloudapi_Model_Api2_Customers_Addresses_Validator extends Shopgat
      */
     public function isValidDataForChangeAssociationWithCountry(Mage_Customer_Model_Address $address, array $data)
     {
-        $result = $this->countryValidation($data)
-            && $this->getValidator()->isValidDataForChangeAssociationWithCountry($address, $data);
-        if (!$result) {
-            $this->addRegionValidationErrors();
+        if (!$this->countryValidation($data)) {
+            return false;
         }
 
-        return $result;
+
+        if ($this->isRegionCheckRequired($data) && !$this->getValidator()->isValidDataForChangeAssociationWithCountry($address, $data)) {
+            $this->addRegionValidationErrors();
+            return false;
+        }
+
+        return true;
     }
 
     /**
