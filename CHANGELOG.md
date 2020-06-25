@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 ### Fixed
 - Optional state for adding newcustomer address and updating existing customer address via Api2
+- App-only discounts will not apply to app quotes in the desktop shop anymore
 
 ## [4.1.1] - 2019-04-16
 ### Fixed

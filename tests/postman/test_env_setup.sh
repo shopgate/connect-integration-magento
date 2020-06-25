@@ -14,7 +14,8 @@ sudo chown -R travis:travis /var/lib/apache2/fastcgi
 ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
 # configure apache virtual hosts
-sudo cp -f ./tests/postman/travis-ci-apache /etc/apache2/sites-available/default
+sudo cp -f ./tests/postman/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+sudo cp ./tests/postman/servername.tpl /etc/apache2/conf-available/servername.conf
 sudo chown -R travis:travis ${WEB_PATH}
 sudo chmod 750 ${WEB_PATH}
 sudo chown -R travis:travis /var/lock/apache2/

@@ -11,7 +11,7 @@ commands:
           sample-data: sample-data-1.9.1.0
 
       - name: sg-magento-mirror-1.8.0.0
-        version: 1.7.0.2
+        version: 1.8.0.0
         dist:
           url: https://github.com/OpenMage/magento-mirror/archive/1.8.0.0.zip
           type: zip

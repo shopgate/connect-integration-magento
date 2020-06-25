@@ -68,6 +68,7 @@ class Shopgate_Cloudapi_Helper_Api2_Quote extends Mage_Core_Helper_Abstract
     {
         $collection = Mage::getResourceModel('shopgate_cloudapi/cart_source_collection')->setQuoteFilter($quote->getId());
         if (!$collection->isEmpty()) {
+            $quote->collectTotals()->save();
             return;
         }
         $adminStore = Mage::app()->getStore();
