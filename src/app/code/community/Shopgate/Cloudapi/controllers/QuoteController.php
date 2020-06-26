@@ -76,6 +76,9 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
         $params = $this->getRequest()->getParams();
         unset($params[self::REQUEST_TOKEN_KEY]);
         $redirect = $this->getRedirect();
+        if ($redirect === false) {
+            $params = array_merge($params, $this->getChackoutParams());
+        }
 
         return $this->_redirectUrl(
             Mage::helper('core/url')->addRequestParam(
@@ -91,6 +94,17 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
     protected function getSession()
     {
         return Mage::getSingleton('checkout/session');
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getChackoutParams()
+    {
+        return array(
+            'sgcloud_checkout'      => 1,
+            'sgcloud_callback_data' => $this->getRequest()->getParam('sgcloud_callback_data') ? : json_encode((object)['redirectTo' => '/'])
+        );
     }
 
     /**
