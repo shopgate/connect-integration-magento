@@ -77,7 +77,7 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
         unset($params[self::REQUEST_TOKEN_KEY]);
         $redirect = $this->getRedirect();
         if ($redirect === false) {
-            $params = array_merge($params, $this->getChackoutParams());
+            $params = array_merge($params, $this->getCheckoutParams());
         }
 
         return $this->_redirectUrl(
@@ -99,7 +99,7 @@ class Shopgate_Cloudapi_QuoteController extends Mage_Core_Controller_Front_Actio
     /**
      * @return string[]
      */
-    protected function getChackoutParams()
+    protected function getCheckoutParams()
     {
         return array(
             'sgcloud_checkout'      => 1,
