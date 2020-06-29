@@ -290,18 +290,6 @@
             </modules>
         </translate>
     </frontend>
-    <crontab>
-        <jobs>
-            <shopgate_cloudapi_delete_expired_tokens>
-                <schedule>
-                    <cron_expr>0 1 * * 0</cron_expr><!-- Every Sunday at 1 am-->
-                </schedule>
-                <run>
-                    <model>shopgate_cloudapi/observer::deleteExpiredTokens</model>
-                </run>
-            </shopgate_cloudapi_delete_expired_tokens>
-        </jobs>
-    </crontab>
     <default>
         <shopgate_cloudapi>
             <layout>
