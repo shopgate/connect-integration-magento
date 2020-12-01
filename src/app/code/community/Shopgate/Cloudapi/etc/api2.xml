@@ -226,6 +226,7 @@
                         <create>1</create>
                     </customer>
                     <admin>
+                        <retrieve>1</retrieve>
                         <create>1</create>
                     </admin>
                 </privileges>
@@ -321,6 +322,9 @@
                         <create>1</create>
                         <delete>1</delete>
                     </customer>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
                 </privileges>
                 <attributes translate="entity_id is_default_billing is_default_shipping ids" module="api2">
                     <entity_id>Customer Address ID</entity_id>
@@ -371,6 +375,9 @@
                     <customer>
                         <create>1</create>
                     </customer>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
                 </privileges>
                 <force_attributes>
                     <customer>
